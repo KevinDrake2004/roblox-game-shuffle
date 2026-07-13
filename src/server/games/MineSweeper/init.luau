@@ -1,22 +1,19 @@
 --!strict
 --[=[
 	@class MineSweeper
-	Server-authoritative Mine Sweeper Arcade: per-player rounds on a 5x5 grid.
+	Server-authoritative Mine Sweeper Arcade: per-player casino Mines rounds.
 
-	## Flow (scaffold)
+	## Flow
 
 	1. Lobby portal → `MineSweeper.join` teleports into `Workspace.MineSweeperArena`.
-	2. Client may set loadout via `MineSweeperSetLoadout` (clamped to Config).
-	3. Leave returns the player to `Config.LOBBY.SpawnPosition`.
+	2. Player sets wager + mine count (1-24) via `MineSweeperSetLoadout`.
+	3. `MineSweeperStartRound` deducts wager and places a **private** mine layout (RNG).
+	4. Each safe reveal raises the multiplier (conditional survival odds).
+	5. Cash out after ≥1 gem, or hit a mine and lose the stake.
+	6. Leave returns to lobby (active round stake is forfeited - no refund).
 
-	Round start / reveal / cash-out land in a follow-up commit. Remotes and types
-	are registered so the client can wire without another shared-layer pass.
-
-	## Economy (target)
-
-	- Stake deducted on round start; mine hit loses the stake.
-	- Cash-out: `payout = floor(wager * multiplier * PlayerReturnFactor)`.
-	- Multiplier uses conditional survival odds (see `docs/MINES.md`).
+	Not Windows Minesweeper: no adjacency numbers, no shared board. Closer to
+	Shuffle/Stake Mines - pick risk (mine count), flip gems, cash out anytime.
 
 	Arena geometry lives only under `Workspace.MineSweeperArena` (west of Rocket Run).
 ]=]
@@ -38,19 +35,42 @@ local DataService = require(script.Parent.Parent.services.DataService)
 
 type MineSweeperLoadout = Types.MineSweeperLoadout
 type MineSweeperJoined = Types.MineSweeperJoined
+type MineSweeperRoundState = Types.MineSweeperRoundState
+type MineSweeperRevealPayload = Types.MineSweeperRevealPayload
+type MineSweeperResultPayload = Types.MineSweeperResultPayload
+
+type RoundSession = {
+	roundId: number,
+	wager: number,
+	mineCount: number,
+	mines: { [number]: boolean },
+	revealed: { [number]: boolean },
+	revealedTiles: { number },
+	revealedCount: number,
+	multiplier: number,
+	settled: boolean,
+}
 
 local MineSweeper = {}
 
 local ARENA_NAME = "MineSweeperArena"
+local rng = Random.new()
 local started = false
+local nextRoundId = 1
 
 local playersInArena: { [Player]: boolean } = {}
 local loadouts: { [Player]: MineSweeperLoadout } = {}
+local rounds: { [Player]: RoundSession } = {}
 local playerJanitors: { [Player]: any } = {}
 
 local spawnPart: BasePart? = nil
 local tilesFolder: Folder? = nil
 local titleSign: BasePart? = nil
+
+local function tileCount(): number
+	local size = Config.MINE_SWEEPER.GridSize
+	return size * size
+end
 
 local function clampWager(rawWager: unknown): number
 	local cfg = Config.MINE_SWEEPER
@@ -84,6 +104,45 @@ local function teleportTo(player: Player, position: Vector3)
 	if root and root:IsA("BasePart") then
 		root.CFrame = CFrame.new(position + Vector3.new(0, 3, 0))
 	end
+end
+
+local function reject(player: Player, reason: string)
+	Remotes.getEvent("MineSweeperRejected"):FireClient(player, { reason = reason })
+end
+
+local function cashOutPayout(wager: number, multiplier: number): number
+	return math.floor(wager * multiplier * Config.MINE_SWEEPER.PlayerReturnFactor)
+end
+
+local function placeMines(mineCount: number): { [number]: boolean }
+	local n = tileCount()
+	local indices = table.create(n)
+	for i = 0, n - 1 do
+		indices[i + 1] = i
+	end
+	-- Fisher-Yates shuffle, then take the first mineCount indices.
+	for i = n, 2, -1 do
+		local j = rng:NextInteger(1, i)
+		indices[i], indices[j] = indices[j], indices[i]
+	end
+	local mines: { [number]: boolean } = {}
+	for i = 1, mineCount do
+		mines[indices[i]] = true
+	end
+	return mines
+end
+
+local function roundStatePayload(player: Player, session: RoundSession): MineSweeperRoundState
+	return {
+		roundId = session.roundId,
+		phase = if session.settled then "settled" else "playing",
+		wager = session.wager,
+		mineCount = session.mineCount,
+		revealedCount = session.revealedCount,
+		multiplier = session.multiplier,
+		revealedTiles = table.clone(session.revealedTiles),
+		chips = CurrencyService.getChips(player),
+	}
 end
 
 local function ensureTitleSign()
@@ -182,6 +241,171 @@ local function joinedPayload(player: Player): MineSweeperJoined
 	}
 end
 
+local function clearRound(player: Player)
+	rounds[player] = nil
+end
+
+local function settleCashOut(player: Player, session: RoundSession)
+	if session.settled or session.revealedCount < 1 then
+		return
+	end
+	session.settled = true
+
+	local wager = session.wager
+	local multiplier = session.multiplier
+	local payout = cashOutPayout(wager, multiplier)
+	CurrencyService.creditPayout(player, payout, wager, "MineSweeper:payout")
+	local netDelta = payout - wager
+	local highScore = DataService.setHighScore(player, "MineSweeper", payout)
+
+	local payload: MineSweeperResultPayload = {
+		roundId = session.roundId,
+		outcome = "cashed_out",
+		wager = wager,
+		mineCount = session.mineCount,
+		revealedCount = session.revealedCount,
+		multiplier = multiplier,
+		payout = payout,
+		netDelta = netDelta,
+		highScore = highScore,
+		chips = CurrencyService.getChips(player),
+		hitTile = nil,
+	}
+	clearRound(player)
+	Remotes.getEvent("MineSweeperResult"):FireClient(player, payload)
+end
+
+local function settleMineHit(player: Player, session: RoundSession, tileIndex: number)
+	if session.settled then
+		return
+	end
+	session.settled = true
+
+	local wager = session.wager
+	local payload: MineSweeperResultPayload = {
+		roundId = session.roundId,
+		outcome = "mine_hit",
+		wager = wager,
+		mineCount = session.mineCount,
+		revealedCount = session.revealedCount,
+		multiplier = session.multiplier,
+		payout = 0,
+		netDelta = -wager,
+		highScore = DataService.getHighScore(player, "MineSweeper"),
+		chips = CurrencyService.getChips(player),
+		hitTile = tileIndex,
+	}
+	clearRound(player)
+	Remotes.getEvent("MineSweeperResult"):FireClient(player, payload)
+end
+
+local function beginRound(player: Player)
+	if not playersInArena[player] then
+		return
+	end
+	if rounds[player] then
+		reject(player, "Round already in progress")
+		return
+	end
+
+	local loadout = getLoadout(player)
+	local wager = loadout.wager
+	local mineCount = loadout.mineCount
+	if CurrencyService.getChips(player) < wager then
+		reject(player, string.format("Need %d chips to start", wager))
+		return
+	end
+
+	local deducted = CurrencyService.deductChips(player, wager, "MineSweeper:wager")
+	if not deducted then
+		reject(player, string.format("Need %d chips to start", wager))
+		return
+	end
+
+	local roundId = nextRoundId
+	nextRoundId += 1
+	local session: RoundSession = {
+		roundId = roundId,
+		wager = wager,
+		mineCount = mineCount,
+		mines = placeMines(mineCount),
+		revealed = {},
+		revealedTiles = {},
+		revealedCount = 0,
+		multiplier = 1,
+		settled = false,
+	}
+	rounds[player] = session
+	Remotes.getEvent("MineSweeperRoundStarted"):FireClient(player, roundStatePayload(player, session))
+end
+
+local function handleReveal(player: Player, rawRoundId: unknown, rawTileIndex: unknown)
+	local session = rounds[player]
+	if not session or session.settled then
+		return
+	end
+	if typeof(rawRoundId) ~= "number" or rawRoundId ~= session.roundId then
+		return
+	end
+	if typeof(rawTileIndex) ~= "number" then
+		return
+	end
+	if not playersInArena[player] then
+		return
+	end
+
+	local n = tileCount()
+	local tileIndex = math.floor(rawTileIndex)
+	if tileIndex < 0 or tileIndex >= n then
+		reject(player, "Invalid tile")
+		return
+	end
+	if session.revealed[tileIndex] then
+		reject(player, "Tile already revealed")
+		return
+	end
+
+	if session.mines[tileIndex] then
+		settleMineHit(player, session, tileIndex)
+		return
+	end
+
+	session.revealed[tileIndex] = true
+	table.insert(session.revealedTiles, tileIndex)
+	session.revealedCount += 1
+	session.multiplier = Config.mineSweeperMultiplier(session.revealedCount, session.mineCount)
+
+	local revealPayload: MineSweeperRevealPayload = {
+		roundId = session.roundId,
+		tileIndex = tileIndex,
+		safe = true,
+		revealedCount = session.revealedCount,
+		multiplier = session.multiplier,
+	}
+	Remotes.getEvent("MineSweeperTileRevealed"):FireClient(player, revealPayload)
+
+	-- All gems cleared → auto cash out at max multiplier.
+	local maxSafe = n - session.mineCount
+	if session.revealedCount >= maxSafe then
+		settleCashOut(player, session)
+	end
+end
+
+local function handleCashOut(player: Player, rawRoundId: unknown)
+	local session = rounds[player]
+	if not session or session.settled then
+		return
+	end
+	if typeof(rawRoundId) ~= "number" or rawRoundId ~= session.roundId then
+		return
+	end
+	if session.revealedCount < 1 then
+		reject(player, "Reveal at least one gem before cashing out")
+		return
+	end
+	settleCashOut(player, session)
+end
+
 --[=[
 	Teleport the player into the Mine Sweeper arena and bootstrap their client HUD.
 	@param player Player
@@ -216,6 +440,7 @@ end
 
 --[=[
 	Remove the player from the arena and return them to the lobby spawn.
+	Active round stake is forfeited (already deducted; no refund).
 	@param player Player
 ]=]
 function MineSweeper.leave(player: Player)
@@ -223,6 +448,7 @@ function MineSweeper.leave(player: Player)
 		return
 	end
 	playersInArena[player] = nil
+	clearRound(player)
 
 	local janitor = playerJanitors[player]
 	if janitor then
@@ -270,8 +496,25 @@ function MineSweeper.start()
 			if not playersInArena[player] then
 				return
 			end
+			-- Loadout applies to the next round; ignore mid-round edits.
+			if rounds[player] then
+				return
+			end
 			loadouts[player] = clampLoadout(wager, mineCount)
 		end)
+
+	Remotes.getEvent("MineSweeperStartRound").OnServerEvent:Connect(function(player: Player)
+		beginRound(player)
+	end)
+
+	Remotes.getEvent("MineSweeperReveal").OnServerEvent
+		:Connect(function(player: Player, roundId: unknown, tileIndex: unknown)
+			handleReveal(player, roundId, tileIndex)
+		end)
+
+	Remotes.getEvent("MineSweeperCashOut").OnServerEvent:Connect(function(player: Player, roundId: unknown)
+		handleCashOut(player, roundId)
+	end)
 
 	Remotes.getEvent("MineSweeperLeave").OnServerEvent:Connect(function(player: Player)
 		MineSweeper.leave(player)
@@ -280,6 +523,8 @@ function MineSweeper.start()
 	Players.PlayerRemoving:Connect(function(player)
 		playersInArena[player] = nil
 		loadouts[player] = nil
+		-- Disconnect mid-round: stake already taken; do not refund.
+		clearRound(player)
 		local janitor = playerJanitors[player]
 		if janitor then
 			janitor:Destroy()

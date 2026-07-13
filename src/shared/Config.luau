@@ -344,6 +344,35 @@ Config.MINE_SWEEPER = {
 	CameraOffset = Vector3.new(0, 22, 28),
 }
 
+--[=[
+	Fair cash-out multiplier after `revealedCount` safe gems with `mineCount` mines
+	on an `n = GridSize^2` board (Shuffle/Stake-style conditional survival odds).
+
+	`mult = ∏_{i=0}^{r-1} (n - i) / (n - m - i)`. Returns 1 when r < 1.
+]=]
+function Config.mineSweeperMultiplier(revealedCount: number, mineCount: number): number
+	local cfg = Config.MINE_SWEEPER
+	local n = cfg.GridSize * cfg.GridSize
+	local m = math.clamp(math.floor(mineCount), cfg.MinMines, cfg.MaxMines)
+	local r = math.floor(revealedCount)
+	if r < 1 then
+		return 1
+	end
+	local maxSafe = n - m
+	if r > maxSafe then
+		r = maxSafe
+	end
+	local mult = 1
+	for i = 0, r - 1 do
+		local denom = n - m - i
+		if denom <= 0 then
+			break
+		end
+		mult *= (n - i) / denom
+	end
+	return mult
+end
+
 Config.JOB = {
 	Reward = 15,
 	MinReadyDelay = 1.5,
