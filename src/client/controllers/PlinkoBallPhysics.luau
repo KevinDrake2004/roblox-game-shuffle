@@ -24,6 +24,9 @@ type PegState = {
 	part: BasePart,
 	radius: number,
 	lastHit: number,
+	-- After a valid leave, ignore re-resolve until the ball clears this peg.
+	-- Prevents apex re-hits from coin-flipping and canceling horizontal leave.
+	awaitingClear: boolean,
 }
 
 type BucketInfo = {
@@ -54,6 +57,8 @@ type BoardPhysics = {
 	apexNormalX: number,
 	maxUpSpeed: number,
 	railNearDamp: number,
+	-- Horizontal leave needed for ~± half peg pitch per row (Galton step).
+	galtonLeaveX: number,
 }
 
 local activeCancels: { [() -> ()]: boolean } = {}
@@ -193,6 +198,7 @@ local function collectPegs(pegsFolder: Instance): { PegState }
 				part = child,
 				radius = math.max(child.Size.X, child.Size.Y, child.Size.Z) * 0.5,
 				lastHit = -math.huge,
+				awaitingClear = false,
 			})
 		end
 	end
@@ -231,16 +237,37 @@ end
 local function railBounds(arena: Folder): (number, number)
 	local left = arena:FindFirstChild("BoardRailLeft")
 	local right = arena:FindFirstChild("BoardRailRight")
+	-- Match map rails (~40.8 stud inner width). Fallback used only if rails missing.
 	local leftX = if left and left:IsA("BasePart")
 		then left.Position.X + left.Size.X * 0.5
-		else Config.PLINKO.ArenaOrigin.X - 13
+		else Config.PLINKO.ArenaOrigin.X - 20.4
 	local rightX = if right and right:IsA("BasePart")
 		then right.Position.X - right.Size.X * 0.5
-		else Config.PLINKO.ArenaOrigin.X + 13
+		else Config.PLINKO.ArenaOrigin.X + 20.4
 	return leftX, rightX
 end
 
-local function writeBoardPhysics(board: Folder, physics: BoardPhysics, spacingX: number, rows: number, riskId: string)
+local function writeBoardPhysics(
+	board: Folder,
+	physics: {
+		ballRadius: number,
+		pegSize: number,
+		leaveSpeed: number,
+		leaveAngleDeg: number,
+		reflectBlend: number,
+		horizontalDrag: number,
+		startSpeedX: number,
+		startSpread: number,
+		pegHitCooldown: number,
+		apexNormalX: number,
+		maxUpSpeed: number,
+		railNearDamp: number,
+	},
+	spacingX: number,
+	rows: number,
+	riskId: string,
+	galtonLeaveX: number
+)
 	board:SetAttribute("RiskId", riskId)
 	board:SetAttribute("PegRows", rows)
 	board:SetAttribute("SpacingX", spacingX)
@@ -256,6 +283,7 @@ local function writeBoardPhysics(board: Folder, physics: BoardPhysics, spacingX:
 	board:SetAttribute("ApexNormalX", physics.apexNormalX)
 	board:SetAttribute("MaxUpSpeed", physics.maxUpSpeed)
 	board:SetAttribute("RailNearDamp", physics.railNearDamp)
+	board:SetAttribute("GaltonLeaveX", galtonLeaveX)
 end
 
 local function readBoardPhysics(board: Instance?, cfg: typeof(Config.PLINKO)): BoardPhysics
@@ -268,11 +296,16 @@ local function readBoardPhysics(board: Instance?, cfg: typeof(Config.PLINKO)): B
 		end
 		return fallback
 	end
+	local leaveSpeed = num("LeaveSpeed", cfg.BallPegLeaveSpeed)
+	local leaveDeg = num("LeaveAngleDeg", cfg.BallPegLeaveAngleDeg)
+	local spacingX = num("SpacingX", cfg.PegSpacingX)
+	-- Fallback half-pitch leave if board was built before GaltonLeaveX existed.
+	local fallbackLeaveX = math.max(leaveSpeed * math.sin(math.rad(leaveDeg)), spacingX * 0.45)
 	return {
 		ballRadius = num("BallRadius", cfg.BallRadius),
 		pegSize = num("PegSize", cfg.PegSpacingX * 0.32),
-		leaveSpeed = num("LeaveSpeed", cfg.BallPegLeaveSpeed),
-		leaveAngleDeg = num("LeaveAngleDeg", cfg.BallPegLeaveAngleDeg),
+		leaveSpeed = leaveSpeed,
+		leaveAngleDeg = leaveDeg,
 		reflectBlend = num("ReflectBlend", cfg.BallPegReflectBlend),
 		horizontalDrag = num("HorizontalDrag", cfg.BallHorizontalDrag),
 		startSpeedX = num("StartSpeedX", cfg.BallStartSpeedX),
@@ -281,6 +314,7 @@ local function readBoardPhysics(board: Instance?, cfg: typeof(Config.PLINKO)): B
 		apexNormalX = num("ApexNormalX", cfg.BallPegApexNormalX),
 		maxUpSpeed = num("MaxUpSpeed", cfg.BallPegMaxUpSpeed),
 		railNearDamp = num("RailNearDamp", cfg.BallRailNearDamp),
+		galtonLeaveX = num("GaltonLeaveX", fallbackLeaveX),
 	}
 end
 
@@ -328,7 +362,12 @@ function PlinkoBallPhysics.rebuildBoard(riskId: string): boolean
 	local boardZ = origin.Position.Z - 0.15
 	local originX = Config.PLINKO.ArenaOrigin.X
 	local physics = risk.physics
-	writeBoardPhysics(board, physics, spacingX, rows, risk.id)
+	-- Horizontal leave must cover ~half pitch before the next row. Effective fall
+	-- time is a bit under rest-from-rest because balls already carry downward speed.
+	local fallTime = math.max(0.10, math.sqrt(2 * spacingY / Config.PLINKO.BallGravity) * 0.82)
+	local galtonLeaveX = (spacingX * 0.48) / fallTime
+	galtonLeaveX = math.clamp(galtonLeaveX, spacingX * 1.25, spacingX * 2.4)
+	writeBoardPhysics(board, physics, spacingX, rows, risk.id, galtonLeaveX)
 
 	for row = 0, rows - 1 do
 		local pegsInRow = row + 1
@@ -617,6 +656,7 @@ function PlinkoBallPhysics.drop(onLanded: (bucketIndex: number) -> ()): SimHandl
 		local minX = leftX + radius
 		local maxX = rightX - radius
 		local inwardNudge = math.min(leaveSpeed * 0.12, spacingX * 0.08)
+		local railBand = math.max(spacingX * 0.85, radius * 2.5)
 		if stepPos.X < minX then
 			stepPos = Vector3.new(minX, stepPos.Y, boardZ)
 			-- Kill outward skate; weak bounce + gentle push back into the board.
@@ -624,10 +664,13 @@ function PlinkoBallPhysics.drop(onLanded: (bucketIndex: number) -> ()): SimHandl
 		elseif stepPos.X > maxX then
 			stepPos = Vector3.new(maxX, stepPos.Y, boardZ)
 			stepVel = Vector3.new(-inwardNudge, stepVel.Y * 0.88, 0)
-		elseif math.abs(stepVel.X) > leaveSpeed * 1.35 then
-			-- Near-rail drift: bleed excess horizontal speed before wall contact.
-			local damp = math.clamp(1 - physics.railNearDamp * stepDt, 0.82, 1)
-			stepVel = Vector3.new(stepVel.X * damp, stepVel.Y, 0)
+		else
+			local nearRail = (stepPos.X - minX) < railBand or (maxX - stepPos.X) < railBand
+			if nearRail and math.abs(stepVel.X) > leaveSpeed * 1.35 then
+				-- Near-rail only: bleed excess horizontal speed before wall contact.
+				local damp = math.clamp(1 - physics.railNearDamp * stepDt, 0.82, 1)
+				stepVel = Vector3.new(stepVel.X * damp, stepVel.Y, 0)
+			end
 		end
 		return stepPos, stepVel
 	end
@@ -638,9 +681,13 @@ function PlinkoBallPhysics.drop(onLanded: (bucketIndex: number) -> ()): SimHandl
 		local reflectBlend = math.clamp(physics.reflectBlend, 0, 1)
 		local maxUp = physics.maxUpSpeed
 		local restitution = cfg.BallBounce
+		local clearSlack = math.max(0.14, radius * 0.18)
+		local galtonLeaveX = physics.galtonLeaveX
+		local minLeaveX = galtonLeaveX * 0.92
 
 		for _, peg in pegs do
-			local delta = Vector3.new(stepPos.X - peg.part.Position.X, stepPos.Y - peg.part.Position.Y, 0)
+			local pegPos = peg.part.Position
+			local delta = Vector3.new(stepPos.X - pegPos.X, stepPos.Y - pegPos.Y, 0)
 			local dist = delta.Magnitude
 			local minDist = radius + peg.radius
 			if dist < 1e-5 then
@@ -648,47 +695,76 @@ function PlinkoBallPhysics.drop(onLanded: (bucketIndex: number) -> ()): SimHandl
 				delta = Vector3.new(if rng:NextNumber() < 0.5 then -1 else 1, 0.25, 0)
 				dist = delta.Magnitude
 			end
+
+			if peg.awaitingClear then
+				-- Ghost this peg until the leave carries past it. Re-separating here
+				-- fought gravity on the apex and pinned balls until X died.
+				local cleared = stepPos.Y < (pegPos.Y - peg.radius * 0.25)
+					or math.abs(stepPos.X - pegPos.X) >= (minDist + clearSlack)
+					or dist >= (minDist + clearSlack)
+				if cleared then
+					peg.awaitingClear = false
+				end
+				continue
+			end
+
 			if dist < minDist and (now - peg.lastHit) >= physics.pegHitCooldown then
 				local normal = delta.Unit
-				-- Separate so the ball sits on the peg surface.
-				stepPos = Vector3.new(
-					peg.part.Position.X + normal.X * minDist,
-					peg.part.Position.Y + normal.Y * minDist,
-					boardZ
-				)
 
 				local approaching = stepVel:Dot(normal)
 				if approaching < 0 then
-					-- Galton L/R from hit offset. Dead-center is unstable → coin-flip.
+					-- Galton L/R from hit offset, with soft bias so inner-face clips
+					-- don't always reverse to center and outer clips don't always edge-dump.
 					local side: number
+					local roll = rng:NextNumber()
 					if math.abs(normal.X) < apexNx then
-						side = if rng:NextNumber() < 0.5 then -1 else 1
+						side = if roll < 0.5 then -1 else 1
 					else
-						side = if normal.X > 0 then 1 else -1
+						local prefer = if normal.X > 0 then 1 else -1
+						side = if roll < 0.62 then prefer else -prefer
 					end
 
-					-- Characteristic roll-off leave velocity (angle from vertical).
-					-- Tuned so each row ≈ one ± half-spacing step → binomial lands.
-					local ang = math.rad(rng:NextNumber(leaveDeg * 0.8, leaveDeg * 1.2))
+					-- Separate onto the surface, then nudge along the leave side so the
+					-- next substeps are already moving into the gap (not sitting on apex).
+					local sep = minDist + 0.04
+					stepPos = Vector3.new(
+						pegPos.X + normal.X * sep + side * clearSlack * 0.25,
+						pegPos.Y + normal.Y * sep,
+						boardZ
+					)
+
+					-- Total leave speed for bounce feel; horizontal floored to Galton step
+					-- so the ball reaches the next row near a peg (not a pure vertical drop).
+					local ang = math.rad(rng:NextNumber(leaveDeg * 0.85, leaveDeg * 1.15))
 					local impact = math.abs(approaching)
 					local speed = leaveSpeed + 0.03 * math.max(0, impact - 14)
-					local leave = Vector3.new(side * speed * math.sin(ang), -speed * math.cos(ang), 0)
+					local leaveX = math.max(speed * math.sin(ang), minLeaveX)
+					local leaveY = -math.max(speed * math.cos(ang), leaveSpeed * 0.55)
+					local leave = Vector3.new(side * leaveX, leaveY, 0)
 
-					-- Elastic reflect along contact normal (visual bounce), blended with leave.
+					-- Mostly leave; small elastic reflect for visual bounce only.
 					local reflected = stepVel - normal * ((1 + restitution) * approaching)
 					local out = reflected * reflectBlend + leave * (1 - reflectBlend)
+
+					-- Never let reflect/blend collapse the committed horizontal leave.
+					if math.abs(out.X) < minLeaveX then
+						out = Vector3.new(side * minLeaveX, out.Y, 0)
+					end
 
 					if out.Y > maxUp then
 						out = Vector3.new(out.X, maxUp, 0)
 					end
-					-- Keep falling through the board (no pinball hang).
+					-- Keep falling through the board (no pinball hang). Preserve leave X.
 					if out.Y > -2.5 then
 						out = Vector3.new(out.X, -2.5, 0)
 					end
 					stepVel = out
 					peg.lastHit = now
+					peg.awaitingClear = true
 					flashPeg(peg.part)
 				elseif dist < minDist * 0.98 then
+					-- Overlap while moving away: separate without rewriting velocity.
+					stepPos = Vector3.new(pegPos.X + normal.X * minDist, pegPos.Y + normal.Y * minDist, boardZ)
 					peg.lastHit = now
 				end
 			end
