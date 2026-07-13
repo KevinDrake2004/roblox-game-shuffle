@@ -11,10 +11,11 @@
 	4. Client releases balls on a stagger; each runs an independent free physics sim
 	   (balls never collide with each other, only pegs).
 	5. Client reports `PlinkoPointsLanded` per ball; server settles each bucket.
+	6. Leave returns the player to `Config.LOBBY.SpawnPosition` (refunds unsettled balls).
 
 	## Economy
 
-	- Wager deducted with `CurrencyService.deductChips` before the drop starts.
+	- Total stake `wager * ballCount` deducted before the volley starts.
 	- Insufficient balance → drop rejected.
 	- Landing bucket comes from client physics; multipliers come from Config.
 	- Zero-multiplier (center) buckets are busts: stake gone, `payout = 0`.
