@@ -31,14 +31,16 @@ Roblox arcade hub inspired by [Shuffle.com](https://shuffle.com). Soft currency 
 - Plinko Points (isolated arena, per-drop wager, risk tiers, RTP)
 - Mine Sweeper Arcade (isolated arena, reveal / cash-out, RTP)
 - Skill timing job for chip earn
+- **Casino floor (first pass)** - enclosed shell, green pit / red aisles, roulette / blackjack / poker props, runtime chairs + dealer seats, lounge bar. See [`docs/CASINO.md`](docs/CASINO.md).
 
 ### In progress
 
-- **Casino shell** - Hard Rock-style building with physical game rooms inside (`feature/casino-shell`). See [`docs/CASINO.md`](docs/CASINO.md). Doorways start sessions; arenas sit in-building.
+- **Casino shell** (`feature/casino-shell`) - zone-based room entry (walk in / walk out, no teleports). Game-room interiors still get region-by-region polish later.
 
 ### Next
 
-- Casino shell phase 2 (richer props, auto-join volumes, rocket atrium polish)
+- Region passes: Mines / Rocket / Plinko room presentation
+- Casino shell client polish (free-walk toggles, HUD cleanup)
 - Leaderboards / further hub polish
 - Optional chip sinks (cosmetics, VIP) to offset RTP inflation
 
@@ -53,7 +55,7 @@ Each live game validates client requests on the server. Typical wager settlement
 `eligible` / stake deducted → cash-out → `creditPayout(...)`  
 or bust / crash / mine → stake kept by the round (`netDelta` negative).
 
-Hub entry: spawn in `Workspace.Lobby` → walk casino floor → game-room doorway → session `join`. Leave returns to that room's corridor `LeavePosition`.
+Hub entry: spawn in `Workspace.Lobby` → walk casino floor → walk into a game room → session `join` (no teleport). Walk out of the room floor → session ends.
 
 ## Monetization
 

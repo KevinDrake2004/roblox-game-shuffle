@@ -21,10 +21,7 @@ local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Workspace = game:GetService("Workspace")
 
-local Packages = ReplicatedStorage.Packages
 local Shared = ReplicatedStorage.Shared
-
-local Janitor = require(Packages.Janitor)
 
 local Config = require(Shared.Config)
 local Remotes = require(Shared.Remotes)
@@ -61,7 +58,6 @@ local nextRoundId = 1
 local playersInArena: { [Player]: boolean } = {}
 local loadouts: { [Player]: MineSweeperLoadout } = {}
 local rounds: { [Player]: RoundSession } = {}
-local playerJanitors: { [Player]: any } = {}
 
 local spawnPart: BasePart? = nil
 local tilesFolder: Folder? = nil
@@ -93,17 +89,6 @@ end
 
 local function getLoadout(player: Player): MineSweeperLoadout
 	return loadouts[player] or clampLoadout(nil, nil)
-end
-
-local function teleportTo(player: Player, position: Vector3)
-	local character = player.Character
-	if not character then
-		return
-	end
-	local root = character:FindFirstChild("HumanoidRootPart")
-	if root and root:IsA("BasePart") then
-		root.CFrame = CFrame.new(position + Vector3.new(0, 3, 0))
-	end
 end
 
 local function reject(player: Player, reason: string)
@@ -407,7 +392,8 @@ local function handleCashOut(player: Player, rawRoundId: unknown)
 end
 
 --[=[
-	Teleport the player into the Mine Sweeper arena and bootstrap their client HUD.
+	Bootstrap the player's client HUD on room entry. The player walks into the
+	physical Mine Sweeper arena; no teleport is performed.
 	@param player Player
 ]=]
 function MineSweeper.join(player: Player)
@@ -416,30 +402,12 @@ function MineSweeper.join(player: Player)
 	end
 
 	playersInArena[player] = true
-	teleportTo(player, spawnPart.Position)
-
-	local oldJanitor = playerJanitors[player]
-	if oldJanitor then
-		oldJanitor:Destroy()
-	end
-	local janitor = Janitor.new()
-	playerJanitors[player] = janitor
-	janitor:Add(
-		player.CharacterAdded:Connect(function()
-			task.defer(function()
-				if playersInArena[player] and spawnPart then
-					teleportTo(player, spawnPart.Position)
-				end
-			end)
-		end),
-		"Disconnect"
-	)
 
 	Remotes.getEvent("MineSweeperJoined"):FireClient(player, joinedPayload(player))
 end
 
 --[=[
-	Remove the player from the arena and return them to the casino corridor.
+	Remove the player from the arena on room exit. No teleport is performed.
 	Active round stake is forfeited (already deducted; no refund).
 	@param player Player
 ]=]
@@ -450,13 +418,6 @@ function MineSweeper.leave(player: Player)
 	playersInArena[player] = nil
 	clearRound(player)
 
-	local janitor = playerJanitors[player]
-	if janitor then
-		janitor:Destroy()
-		playerJanitors[player] = nil
-	end
-
-	teleportTo(player, Config.MINE_SWEEPER.LeavePosition)
 	Remotes.getEvent("MineSweeperLeft"):FireClient(player)
 end
 
@@ -480,15 +441,6 @@ function MineSweeper.start()
 
 	if not resolveArena() then
 		return
-	end
-
-	if spawnPart then
-		local leavePrompt = spawnPart:FindFirstChild("LeavePrompt")
-		if leavePrompt and leavePrompt:IsA("ProximityPrompt") then
-			leavePrompt.Triggered:Connect(function(player: Player)
-				MineSweeper.leave(player)
-			end)
-		end
 	end
 
 	Remotes.getEvent("MineSweeperSetLoadout").OnServerEvent
@@ -525,11 +477,6 @@ function MineSweeper.start()
 		loadouts[player] = nil
 		-- Disconnect mid-round: stake already taken; do not refund.
 		clearRound(player)
-		local janitor = playerJanitors[player]
-		if janitor then
-			janitor:Destroy()
-			playerJanitors[player] = nil
-		end
 	end)
 end
 

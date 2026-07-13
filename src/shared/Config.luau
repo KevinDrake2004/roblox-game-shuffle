@@ -263,7 +263,7 @@ Config.PLINKO = {
 	BallHorizontalDrag = 0.65,
 	BallStartSpeedX = 1.1,
 	BallMaxSpeed = 42,
-	BallSubsteps = 3,
+	BallSubsteps = 6,
 	-- Post-contact leave: ~half peg spacing / fall time between rows → Galton ±1 step.
 	BallPegLeaveSpeed = 5.5,
 	BallPegLeaveAngleDeg = 32,

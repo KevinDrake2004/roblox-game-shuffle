@@ -583,6 +583,7 @@ function PlinkoBallPhysics.drop(onLanded: (bucketIndex: number) -> ()): SimHandl
 		local fallback = if typeof(rows) == "number"
 			then math.floor(rows / 2)
 			else math.floor((#Config.PLINKO.BucketMultipliers - 1) / 2)
+		warn("[PlinkoBallPhysics] Sim failed; falling back to center bucket", fallback)
 		cleanup()
 		onLanded(fallback)
 	end
@@ -822,7 +823,7 @@ function PlinkoBallPhysics.drop(onLanded: (bucketIndex: number) -> ()): SimHandl
 		if cancelled or finished then
 			return
 		end
-		dt = math.clamp(dt, 0, 1 / 20)
+		dt = math.clamp(dt, 0, 1 / 40)
 		elapsed += dt
 		if elapsed >= cfg.BallMaxSimSeconds then
 			local bucket = resolveBucketAtX(buckets, pos.X)

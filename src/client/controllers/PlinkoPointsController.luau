@@ -190,10 +190,40 @@ local function showLocalMultiplierLabels()
 end
 
 local function rebuildRiskBoard(riskId: string)
+	if dropBusy then
+		return
+	end
 	bucketFlashBatch += 1
 	PlinkoBallPhysics.cancel()
-	PlinkoBallPhysics.rebuildBoard(riskId)
+	if not PlinkoBallPhysics.rebuildBoard(riskId) then
+		warn("[PlinkoPointsController] Failed to build local board for risk", riskId)
+	end
 	showLocalMultiplierLabels()
+end
+
+local function hasLocalBoard(): boolean
+	local buckets = PlinkoBallPhysics.getLocalBucketsFolder()
+	if not buckets then
+		return false
+	end
+	for _, child in buckets:GetChildren() do
+		if child:IsA("BasePart") and string.match(child.Name, "^Bucket_%d+$") then
+			return true
+		end
+	end
+	return false
+end
+
+local function ensureRiskBoard(): boolean
+	if hasLocalBoard() then
+		return true
+	end
+	if not PlinkoBallPhysics.rebuildBoard(currentRiskId) then
+		warn("[PlinkoPointsController] Local board missing; rebuild failed for", currentRiskId)
+		return false
+	end
+	showLocalMultiplierLabels()
+	return true
 end
 local function startBoardCamera()
 	local camera = Workspace.CurrentCamera
@@ -363,13 +393,18 @@ local function startFreeDrop(payload: PlinkoPointsDropStarted)
 		local wave = math.floor((index - 1) / burstSize)
 		local delaySeconds = wave * payload.staggerSeconds
 		task.delay(delaySeconds, function()
-			if not active or not activeDropIds[dropId] then
+			if not activeDropIds[dropId] then
 				noteBallFinished()
+				return
+			end
+			if not ensureRiskBoard() then
+				noteBallFinished()
+				warn("[PlinkoPointsController] Skipping ball drop; local board not ready")
 				return
 			end
 			PlinkoBallPhysics.drop(function(bucketIndex: number)
 				noteBallFinished()
-				if not active or not activeDropIds[dropId] then
+				if not activeDropIds[dropId] then
 					return
 				end
 				Remotes.getEvent("PlinkoPointsLanded"):FireServer(dropId, bucketIndex)
@@ -404,6 +439,11 @@ end
 	@param payload PlinkoPointsJoined
 ]=]
 function PlinkoPointsController.startSession(payload: PlinkoPointsJoined)
+	if active and dropBusy then
+		HubHud.setChips(payload.chips)
+		return
+	end
+
 	active = true
 	dropBusy = false
 	pendingResults = 0
@@ -464,6 +504,13 @@ function PlinkoPointsController.start()
 
 	Remotes.getEvent("PlinkoPointsDropStarted").OnClientEvent:Connect(function(payload: PlinkoPointsDropStarted)
 		if not active then
+			return
+		end
+		if not ensureRiskBoard() then
+			dropBusy = false
+			PlinkoPointsHud.setDropEnabled(true)
+			PlinkoPointsHud.setStatus("Board not ready - step fully into the room and try again")
+			PlinkoPointsHud.setResult("Blocked", Config.COLORS.NeonMagenta)
 			return
 		end
 		startFreeDrop(payload)

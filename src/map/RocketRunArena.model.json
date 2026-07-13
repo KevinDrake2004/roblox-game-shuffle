@@ -60,17 +60,6 @@
               0.933
             ]
           }
-        },
-        {
-          "name": "LeavePrompt",
-          "className": "ProximityPrompt",
-          "properties": {
-            "ActionText": "Leave",
-            "ObjectText": "Exit to casino floor",
-            "HoldDuration": 0.4,
-            "MaxActivationDistance": 14.0,
-            "RequiresLineOfSight": false
-          }
         }
       ]
     },

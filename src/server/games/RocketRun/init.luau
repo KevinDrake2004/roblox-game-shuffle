@@ -30,10 +30,7 @@ local Debris = game:GetService("Debris")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Workspace = game:GetService("Workspace")
 
-local Packages = ReplicatedStorage.Packages
 local Shared = ReplicatedStorage.Shared
-
-local Janitor = require(Packages.Janitor)
 
 local Config = require(Shared.Config)
 local Remotes = require(Shared.Remotes)
@@ -71,7 +68,6 @@ local crashMultiplier = 1
 local playersInArena: { [Player]: boolean } = {}
 local participants: { [Player]: Participant } = {}
 local loadouts: { [Player]: RocketRunLoadout } = {}
-local playerJanitors: { [Player]: any } = {}
 
 local spawnPart: BasePart? = nil
 local rocketModel: Model? = nil
@@ -424,17 +420,6 @@ local function tryBecomeEligible(player: Player, loadout: RocketRunLoadout): Par
 		wager = loadout.wager,
 		autoCashOut = loadout.autoCashOut,
 	}
-end
-
-local function teleportTo(player: Player, position: Vector3)
-	local character = player.Character
-	if not character then
-		return
-	end
-	local root = character:FindFirstChild("HumanoidRootPart")
-	if root and root:IsA("BasePart") then
-		root.CFrame = CFrame.new(position + Vector3.new(0, 3, 0))
-	end
 end
 
 local debrisFolder: Folder? = nil
@@ -915,7 +900,8 @@ local function roundLoop()
 end
 
 --[=[
-	Teleport the player into the arena and register them for the current/next round.
+	Register the player for the current/next round. The player walks into the
+	physical arena room; no teleport is performed.
 	@param player Player
 ]=]
 function RocketRun.join(player: Player)
@@ -924,24 +910,6 @@ function RocketRun.join(player: Player)
 	end
 
 	playersInArena[player] = true
-	teleportTo(player, spawnPart.Position)
-
-	local oldJanitor = playerJanitors[player]
-	if oldJanitor then
-		oldJanitor:Destroy()
-	end
-	local janitor = Janitor.new()
-	playerJanitors[player] = janitor
-	janitor:Add(
-		player.CharacterAdded:Connect(function()
-			task.defer(function()
-				if playersInArena[player] and spawnPart then
-					teleportTo(player, spawnPart.Position)
-				end
-			end)
-		end),
-		"Disconnect"
-	)
 
 	if roundPhase == "countdown" then
 		participants[player] = tryBecomeEligible(player, getLoadout(player))
@@ -958,7 +926,8 @@ function RocketRun.join(player: Player)
 end
 
 --[=[
-	Remove the player from the arena, clear participation, and return them to the casino corridor.
+	Remove the player from the arena and clear participation. Called when the
+	player walks out of the arena room; no teleport is performed.
 	@param player Player
 ]=]
 function RocketRun.leave(player: Player)
@@ -968,13 +937,6 @@ function RocketRun.leave(player: Player)
 	playersInArena[player] = nil
 	participants[player] = nil
 
-	local janitor = playerJanitors[player]
-	if janitor then
-		janitor:Destroy()
-		playerJanitors[player] = nil
-	end
-
-	teleportTo(player, Config.ROCKET_RUN.LeavePosition)
 	Remotes.getEvent("RocketRunLeft"):FireClient(player)
 end
 
@@ -1000,15 +962,6 @@ function RocketRun.start()
 		return
 	end
 	resetRocket()
-
-	if spawnPart then
-		local leavePrompt = spawnPart:FindFirstChild("LeavePrompt")
-		if leavePrompt and leavePrompt:IsA("ProximityPrompt") then
-			leavePrompt.Triggered:Connect(function(player: Player)
-				RocketRun.leave(player)
-			end)
-		end
-	end
 
 	Remotes.getEvent("RocketRunSetLoadout").OnServerEvent
 		:Connect(function(player: Player, wager: unknown, autoCashOut: unknown)
@@ -1041,11 +994,6 @@ function RocketRun.start()
 		playersInArena[player] = nil
 		participants[player] = nil
 		loadouts[player] = nil
-		local janitor = playerJanitors[player]
-		if janitor then
-			janitor:Destroy()
-			playerJanitors[player] = nil
-		end
 	end)
 
 	task.spawn(roundLoop)

@@ -31842,17 +31842,6 @@
                       0.6
                     ]
                   }
-                },
-                {
-                  "name": "EnterPrompt",
-                  "className": "ProximityPrompt",
-                  "properties": {
-                    "ActionText": "Play",
-                    "ObjectText": "Mine Sweeper Arcade",
-                    "HoldDuration": 0.25,
-                    "MaxActivationDistance": 14.0,
-                    "RequiresLineOfSight": false
-                  }
                 }
               ]
             }
@@ -31977,17 +31966,6 @@
                       0.933
                     ]
                   }
-                },
-                {
-                  "name": "EnterPrompt",
-                  "className": "ProximityPrompt",
-                  "properties": {
-                    "ActionText": "Play",
-                    "ObjectText": "Rocket Run",
-                    "HoldDuration": 0.25,
-                    "MaxActivationDistance": 14.0,
-                    "RequiresLineOfSight": false
-                  }
                 }
               ]
             }
@@ -32111,17 +32089,6 @@
                       0.333,
                       0.969
                     ]
-                  }
-                },
-                {
-                  "name": "EnterPrompt",
-                  "className": "ProximityPrompt",
-                  "properties": {
-                    "ActionText": "Play",
-                    "ObjectText": "Plinko Points",
-                    "HoldDuration": 0.25,
-                    "MaxActivationDistance": 14.0,
-                    "RequiresLineOfSight": false
                   }
                 }
               ]

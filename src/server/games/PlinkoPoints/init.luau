@@ -29,10 +29,7 @@ local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Workspace = game:GetService("Workspace")
 
-local Packages = ReplicatedStorage.Packages
 local Shared = ReplicatedStorage.Shared
-
-local Janitor = require(Packages.Janitor)
 
 local Config = require(Shared.Config)
 local Remotes = require(Shared.Remotes)
@@ -69,7 +66,6 @@ local playersInArena: { [Player]: boolean } = {}
 local loadouts: { [Player]: PlinkoPointsLoadout } = {}
 local lastDropAt: { [Player]: number } = {}
 local pendingSessions: { [Player]: PendingSession } = {}
-local playerJanitors: { [Player]: any } = {}
 
 local spawnPart: BasePart? = nil
 local dropOrigin: BasePart? = nil
@@ -118,17 +114,6 @@ local function getLoadout(player: Player): PlinkoPointsLoadout
 			ballCount = Config.PLINKO.DefaultBallCount,
 			riskId = Config.PLINKO.DefaultRiskId,
 		}
-end
-
-local function teleportTo(player: Player, position: Vector3)
-	local character = player.Character
-	if not character then
-		return
-	end
-	local root = character:FindFirstChild("HumanoidRootPart")
-	if root and root:IsA("BasePart") then
-		root.CFrame = CFrame.new(position + Vector3.new(0, 3, 0))
-	end
 end
 
 local function settleOutcome(payout: number, netDelta: number): "win" | "bust" | "loss" | "push"
@@ -469,7 +454,8 @@ local function handleLanded(player: Player, dropId: unknown, bucketIndex: unknow
 end
 
 --[=[
-	Teleport the player into the Plinko arena and bootstrap their client HUD.
+	Bootstrap the player's client HUD on room entry. The player walks into the
+	physical Plinko arena; no teleport is performed.
 	@param player Player
 ]=]
 function PlinkoPoints.join(player: Player)
@@ -477,31 +463,17 @@ function PlinkoPoints.join(player: Player)
 		return
 	end
 
-	playersInArena[player] = true
-	teleportTo(player, spawnPart.Position)
-
-	local oldJanitor = playerJanitors[player]
-	if oldJanitor then
-		oldJanitor:Destroy()
+	if playersInArena[player] then
+		return
 	end
-	local janitor = Janitor.new()
-	playerJanitors[player] = janitor
-	janitor:Add(
-		player.CharacterAdded:Connect(function()
-			task.defer(function()
-				if playersInArena[player] and spawnPart then
-					teleportTo(player, spawnPart.Position)
-				end
-			end)
-		end),
-		"Disconnect"
-	)
+
+	playersInArena[player] = true
 
 	Remotes.getEvent("PlinkoPointsJoined"):FireClient(player, joinedPayload(player))
 end
 
 --[=[
-	Remove the player from the arena and return them to the casino corridor.
+	Remove the player from the arena on room exit. No teleport is performed.
 	@param player Player
 ]=]
 function PlinkoPoints.leave(player: Player)
@@ -511,13 +483,6 @@ function PlinkoPoints.leave(player: Player)
 	playersInArena[player] = nil
 	refundSession(player, "PlinkoPoints:leave_refund")
 
-	local janitor = playerJanitors[player]
-	if janitor then
-		janitor:Destroy()
-		playerJanitors[player] = nil
-	end
-
-	teleportTo(player, Config.PLINKO.LeavePosition)
 	Remotes.getEvent("PlinkoPointsLeft"):FireClient(player)
 end
 
@@ -541,15 +506,6 @@ function PlinkoPoints.start()
 
 	if not resolveArena() then
 		return
-	end
-
-	if spawnPart then
-		local leavePrompt = spawnPart:FindFirstChild("LeavePrompt")
-		if leavePrompt and leavePrompt:IsA("ProximityPrompt") then
-			leavePrompt.Triggered:Connect(function(player: Player)
-				PlinkoPoints.leave(player)
-			end)
-		end
 	end
 
 	Remotes.getEvent("PlinkoPointsSetWager").OnServerEvent
@@ -581,11 +537,6 @@ function PlinkoPoints.start()
 		lastDropAt[player] = nil
 		-- Disconnect mid-drop: stake already taken; do not refund.
 		pendingSessions[player] = nil
-		local janitor = playerJanitors[player]
-		if janitor then
-			janitor:Destroy()
-			playerJanitors[player] = nil
-		end
 	end)
 end
 

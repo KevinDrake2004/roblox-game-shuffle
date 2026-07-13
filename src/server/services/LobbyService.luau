@@ -18,12 +18,7 @@ local Shared = ReplicatedStorage.Shared
 local Janitor = require(Packages.Janitor)
 
 local Config = require(Shared.Config)
-local Remotes = require(Shared.Remotes)
-local Types = require(Shared.Types)
 local CasinoChairs = require(script.Parent.CasinoChairs)
-
-type GameId = Types.GameId
-type PortalResultPayload = Types.PortalResultPayload
 
 local LobbyService = {}
 
@@ -490,81 +485,6 @@ local function dressCasinoTables()
 	end
 end
 
-local function handlePortalRequest(player: Player, gameId: GameId)
-	local playable = Config.PLAYABLE_GAMES[gameId] == true
-	local displayName = gameId
-	for _, portal in Config.PORTALS do
-		if portal.id == gameId then
-			displayName = portal.displayName
-			break
-		end
-	end
-
-	if playable then
-		local payload: PortalResultPayload = {
-			gameId = gameId,
-			status = "enter",
-			message = `Entering {displayName}…`,
-		}
-		Remotes.getEvent("PortalResult"):FireClient(player, payload)
-
-		if gameId == "RocketRun" then
-			local RocketRun = require(script.Parent.Parent.games.RocketRun)
-			RocketRun.join(player)
-		elseif gameId == "PlinkoPoints" then
-			local PlinkoPoints = require(script.Parent.Parent.games.PlinkoPoints)
-			PlinkoPoints.join(player)
-		elseif gameId == "MineSweeper" then
-			local MineSweeper = require(script.Parent.Parent.games.MineSweeper)
-			MineSweeper.join(player)
-		end
-	else
-		local payload: PortalResultPayload = {
-			gameId = gameId,
-			status = "coming_soon",
-			message = `{displayName} opens in a later phase.`,
-		}
-		Remotes.getEvent("PortalResult"):FireClient(player, payload)
-	end
-end
-
-local function bindPortalPrompts()
-	local lobby = Workspace:FindFirstChild(LOBBY_NAME)
-	if not lobby then
-		return
-	end
-	local portals = lobby:FindFirstChild("Portals")
-	if not portals then
-		return
-	end
-
-	for _, model in portals:GetChildren() do
-		if not model:IsA("Model") then
-			continue
-		end
-		local gameId = model:GetAttribute("GameId")
-		if typeof(gameId) ~= "string" then
-			continue
-		end
-
-		local gate = model:FindFirstChild("Gate")
-		if not gate then
-			continue
-		end
-		local prompt = gate:FindFirstChild("EnterPrompt")
-		if not (prompt and prompt:IsA("ProximityPrompt")) then
-			continue
-		end
-
-		janitor:Add(
-			prompt.Triggered:Connect(function(player: Player)
-				handlePortalRequest(player, gameId :: GameId)
-			end),
-			"Disconnect"
-		)
-	end
-end
-
 local function applyWalkSpeed(character: Model)
 	local humanoid = character:FindFirstChildOfClass("Humanoid")
 	if not humanoid then
@@ -613,32 +533,10 @@ function LobbyService.start()
 		CasinoChairs.place(lobby)
 	end
 
-	bindPortalPrompts()
-
 	janitor:Add(Players.PlayerAdded:Connect(bindPlayerMovement), "Disconnect")
 	for _, player in Players:GetPlayers() do
 		bindPlayerMovement(player)
 	end
-
-	janitor:Add(
-		Remotes.getEvent("EnterPortal").OnServerEvent:Connect(function(player: Player, gameId: unknown)
-			if typeof(gameId) ~= "string" then
-				return
-			end
-			local valid = false
-			for _, portal in Config.PORTALS do
-				if portal.id == gameId then
-					valid = true
-					break
-				end
-			end
-			if not valid then
-				return
-			end
-			handlePortalRequest(player, gameId :: GameId)
-		end),
-		"Disconnect"
-	)
 end
 
 return LobbyService
