@@ -180,7 +180,11 @@ local function startBoardCamera()
 		if not cam or not target then
 			return
 		end
-		cam.CFrame = CFrame.lookAt(target.Position + offset, target.Position)
+		-- Top-down only. lookAt needs a non-Y up vector when the look axis is vertical;
+		-- -Z keeps the spawn side toward the bottom of the screen.
+		local lookAt = target.Position
+		local from = lookAt + offset
+		cam.CFrame = CFrame.lookAt(from, lookAt, -Vector3.zAxis)
 	end))
 end
 
@@ -240,7 +244,8 @@ local function raycastTileIndex(screenPos: Vector2): number?
 	if not camera then
 		return nil
 	end
-	local ray = camera:ViewportPointToRay(screenPos.X, screenPos.Y)
+	-- ScreenPointToRay matches GetMouseLocation (includes Gui inset).
+	local ray = camera:ScreenPointToRay(screenPos.X, screenPos.Y)
 	local params = RaycastParams.new()
 	params.FilterType = Enum.RaycastFilterType.Include
 	local tiles = getTilesFolder()
@@ -248,7 +253,7 @@ local function raycastTileIndex(screenPos: Vector2): number?
 		return nil
 	end
 	params.FilterDescendantsInstances = { tiles }
-	local result = Workspace:Raycast(ray.Origin, ray.Direction * 200, params)
+	local result = Workspace:Raycast(ray.Origin, ray.Direction * 250, params)
 	if not result or not result.Instance then
 		return nil
 	end
@@ -275,8 +280,8 @@ local function bindTileInput()
 		then
 			return
 		end
-		local pos = input.Position
-		local tileIndex = raycastTileIndex(Vector2.new(pos.X, pos.Y))
+		local mouse = UserInputService:GetMouseLocation()
+		local tileIndex = raycastTileIndex(mouse)
 		if tileIndex ~= nil then
 			requestReveal(tileIndex)
 		end

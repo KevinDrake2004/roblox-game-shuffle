@@ -129,6 +129,7 @@ Geometry only under `Workspace.MineSweeperArena`. Tile color changes are **clien
 ## 8. Verify (manual)
 
 - [ ] Lobby portal enters arena (no "coming soon"); Rocket Run / Plinko unchanged
+- [ ] Top-down board cam; click selects the tile under the cursor
 - [ ] Mines slider 1-24; more mines → higher 1-gem preview mult
 - [ ] Wager 10, 3 mines, 1 safe reveal, cash out → payout > 0, chips update
 - [ ] Hit a mine → `netDelta = -wager`

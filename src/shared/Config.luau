@@ -340,8 +340,8 @@ Config.MINE_SWEEPER = {
 	PlayerReturnFactor = 1.05,
 	-- World / camera (west of Rocket Run at 0, 5, -140 - ~90 studs apart)
 	ArenaOrigin = Vector3.new(-90, 5, -140),
-	-- Elevated board cam: look down from spawn side toward the grid.
-	CameraOffset = Vector3.new(0, 22, 28),
+	-- Straight top-down so cursor raycasts hit the hovered tile (height only).
+	CameraOffset = Vector3.new(0, 32, 0),
 }
 
 --[=[
