@@ -134,6 +134,8 @@ local function showLocalMultiplierLabels()
 		if not (bucket and bucket:IsA("BasePart")) then
 			continue
 		end
+		bucket.Anchored = true
+		bucket.CanCollide = false
 
 		local gui = Instance.new("BillboardGui")
 		gui.Name = "LocalMultiplierGui"

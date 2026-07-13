@@ -2,6 +2,27 @@
 
 Session notes for `feature/plinko-dev`. Flaws and successes as we iterate.
 
+## 2026-07-13 - Softer payouts + pinned buckets
+
+### Flaw
+
+1. Design 105% RTP with a hard center `0x` still felt punishing in short sessions
+   (easy to dump ~30 chips to variance).
+2. Landing FX tweened bucket `Size`, which scales from center and stacked badly under
+   multi-ball hits - boxes visibly drifted / "moved" after lands.
+
+### Fix
+
+1. Raised `BucketMultipliers` and `TargetRTP` (~134% under `C(8,k)`). Center is now
+   `0.2x` (soft return) instead of a total wipe; near-center and mid buckets bumped too.
+2. Land glow is color + light only. Buckets capture a home CFrame/Size once, stay
+   `Anchored` / `CanCollide = false`, and get re-pinned after every flash.
+
+### Successes
+
+- Short sessions should feel less brutal while edges stay exciting (26x).
+- Bottom boxes stay tethered in place across multi-ball volleys.
+
 ## 2026-07-13 - Peg leave velocity restores Galton spread
 
 ### Flaw

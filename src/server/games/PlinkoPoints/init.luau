@@ -18,10 +18,10 @@
 	- Total stake `wager * ballCount` deducted before the volley starts.
 	- Insufficient balance → drop rejected.
 	- Landing bucket comes from client physics; multipliers come from Config.
-	- Zero-multiplier (center) buckets are busts: stake gone, `payout = 0`.
-	- Design RTP ≈ 105% by tuning `BucketMultipliers` against the Galton / binomial
+	- Soft-center lands still hurt (0.2x); edge jackpots pay big.
+	- Design RTP ≈ 134% by tuning `BucketMultipliers` against the Galton / binomial
 	  land curve (`TargetRTP` is the aim, not an extra payout multiply).
-	- Unreported lands time out as a center bust (anti-hang). Leave mid-drop refunds.
+	- Unreported lands time out as a center land (anti-hang). Leave mid-drop refunds.
 
 	Arena geometry lives only under `Workspace.PlinkoArena` (east of Rocket Run).
 ]=]

@@ -33,6 +33,8 @@ type BucketInfo = {
 	maxX: number,
 	centerX: number,
 	landY: number,
+	homeCFrame: CFrame,
+	homeSize: Vector3,
 }
 
 type SimHandles = {
@@ -40,6 +42,82 @@ type SimHandles = {
 }
 
 local activeCancels: { [() -> ()]: boolean } = {}
+
+type BucketHome = {
+	cframe: CFrame,
+	size: Vector3,
+}
+
+local bucketHomes: { [BasePart]: BucketHome } = {}
+
+local function getBucketHome(bucket: BasePart): BucketHome
+	local existing = bucketHomes[bucket]
+	if existing then
+		return existing
+	end
+	local home = {
+		cframe = bucket.CFrame,
+		size = bucket.Size,
+	}
+	bucketHomes[bucket] = home
+	return home
+end
+
+local function pinBucket(bucket: BasePart, homeCFrame: CFrame, homeSize: Vector3)
+	bucket.Anchored = true
+	bucket.CanCollide = false
+	bucket.AssemblyLinearVelocity = Vector3.zero
+	bucket.AssemblyAngularVelocity = Vector3.zero
+	bucket.Size = homeSize
+	bucket.CFrame = homeCFrame
+end
+
+-- Flash color + light only. Never tween Size/CFrame - that made buckets drift under multi-hit.
+local function glowBucket(bucket: BasePart, color: Color3, homeCFrame: CFrame, homeSize: Vector3)
+	pinBucket(bucket, homeCFrame, homeSize)
+
+	local light = Instance.new("PointLight")
+	light.Name = "LandGlow"
+	light.Brightness = 4
+	light.Range = 14
+	light.Color = color
+	light.Parent = bucket
+
+	local originalColor = bucket.Color
+	local flash = TweenService:Create(
+		bucket,
+		TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
+		{ Color = color }
+	)
+	local restore = TweenService:Create(
+		bucket,
+		TweenInfo.new(0.35, Enum.EasingStyle.Quad, Enum.EasingDirection.In),
+		{ Color = originalColor }
+	)
+	flash:Play()
+	flash.Completed:Connect(function()
+		if bucket.Parent then
+			pinBucket(bucket, homeCFrame, homeSize)
+			restore:Play()
+		end
+	end)
+	restore.Completed:Connect(function()
+		if bucket.Parent then
+			pinBucket(bucket, homeCFrame, homeSize)
+		end
+	end)
+	Debris:AddItem(light, 0.7)
+end
+
+local function flashPeg(part: BasePart)
+	local original = part.Color
+	part.Color = Color3.fromRGB(255, 240, 255)
+	task.delay(0.08, function()
+		if part.Parent then
+			part.Color = original
+		end
+	end)
+end
 
 local function getArena(): Folder?
 	local arena = Workspace:FindFirstChild("PlinkoArena")
@@ -60,44 +138,6 @@ local function getLocalFxFolder(): Folder
 	folder.Name = "PlinkoLocalFx"
 	folder.Parent = parent
 	return folder
-end
-
-local function flashPeg(part: BasePart)
-	local original = part.Color
-	part.Color = Color3.fromRGB(255, 240, 255)
-	task.delay(0.08, function()
-		if part.Parent then
-			part.Color = original
-		end
-	end)
-end
-
-local function glowBucket(bucket: BasePart, color: Color3)
-	local light = Instance.new("PointLight")
-	light.Name = "LandGlow"
-	light.Brightness = 4
-	light.Range = 14
-	light.Color = color
-	light.Parent = bucket
-
-	local baseSize = bucket.Size
-	local grow = TweenService:Create(
-		bucket,
-		TweenInfo.new(0.12, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
-		{ Size = baseSize + Vector3.new(0.35, 0.35, 0.35) }
-	)
-	local shrink = TweenService:Create(
-		bucket,
-		TweenInfo.new(0.28, Enum.EasingStyle.Quad, Enum.EasingDirection.In),
-		{ Size = baseSize }
-	)
-	grow:Play()
-	grow.Completed:Connect(function()
-		if bucket.Parent then
-			shrink:Play()
-		end
-	end)
-	Debris:AddItem(light, 0.7)
 end
 
 local function collectPegs(arena: Folder): { PegState }
@@ -128,14 +168,20 @@ local function collectBuckets(arena: Folder): { BucketInfo }
 		if child:IsA("BasePart") then
 			local index = tonumber(string.match(child.Name, "^Bucket_(%d+)$"))
 			if index ~= nil then
-				local half = child.Size.X * 0.5
+				-- Capture home pose once; pin so land FX / multi-hits never drift the box.
+				local home = getBucketHome(child)
+				pinBucket(child, home.cframe, home.size)
+				local half = home.size.X * 0.5
+				local pos = home.cframe.Position
 				table.insert(list, {
 					index = index,
 					part = child,
-					minX = child.Position.X - half,
-					maxX = child.Position.X + half,
-					centerX = child.Position.X,
-					landY = child.Position.Y + child.Size.Y * 0.35,
+					minX = pos.X - half,
+					maxX = pos.X + half,
+					centerX = pos.X,
+					landY = pos.Y + home.size.Y * 0.35,
+					homeCFrame = home.cframe,
+					homeSize = home.size,
 				})
 			end
 		end
@@ -316,7 +362,7 @@ function PlinkoBallPhysics.drop(onLanded: (bucketIndex: number) -> ()): SimHandl
 		pos = Vector3.new(pos.X, bucket.landY, boardZ)
 		ball.Position = pos
 		local glowColor = if bucket.index == 4 then Config.COLORS.NeonMagenta else Config.COLORS.NeonLime
-		glowBucket(bucket.part, glowColor)
+		glowBucket(bucket.part, glowColor, bucket.homeCFrame, bucket.homeSize)
 		if connection then
 			connection:Disconnect()
 			connection = nil
