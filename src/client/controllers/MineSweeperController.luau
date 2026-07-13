@@ -43,6 +43,7 @@ local sessionNet = 0
 local cameraJanitor = Janitor.new()
 local inputJanitor = Janitor.new()
 local savedCameraType: Enum.CameraType? = nil
+local savedCameraFov: number? = nil
 local cameraActive = false
 
 local tileIdleColors: { [BasePart]: Color3 } = {}
@@ -206,10 +207,16 @@ local function stopBoardCamera()
 	cameraJanitor:Cleanup()
 	cameraActive = false
 	local camera = Workspace.CurrentCamera
-	if camera and savedCameraType then
-		camera.CameraType = savedCameraType
+	if camera then
+		if savedCameraType then
+			camera.CameraType = savedCameraType
+		end
+		if savedCameraFov then
+			camera.FieldOfView = savedCameraFov
+		end
 	end
 	savedCameraType = nil
+	savedCameraFov = nil
 end
 
 local function startBoardCamera()
@@ -221,7 +228,9 @@ local function startBoardCamera()
 
 	stopBoardCamera()
 	savedCameraType = camera.CameraType
+	savedCameraFov = camera.FieldOfView
 	camera.CameraType = Enum.CameraType.Scriptable
+	camera.FieldOfView = Config.MINE_SWEEPER.CameraFov
 	cameraActive = true
 
 	local offset = Config.MINE_SWEEPER.CameraOffset
@@ -239,6 +248,7 @@ local function startBoardCamera()
 		local lookAt = target.Position
 		local from = lookAt + offset
 		cam.CFrame = CFrame.lookAt(from, lookAt, -Vector3.zAxis)
+		cam.FieldOfView = Config.MINE_SWEEPER.CameraFov
 	end))
 end
 

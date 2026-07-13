@@ -341,7 +341,9 @@ Config.MINE_SWEEPER = {
 	-- World / camera (west of Rocket Run at 0, 5, -140 - ~90 studs apart)
 	ArenaOrigin = Vector3.new(-90, 5, -140),
 	-- Straight top-down so cursor raycasts hit the hovered tile (height only).
-	CameraOffset = Vector3.new(0, 32, 0),
+	-- ~18 stud board; keep cam low enough to fill the frame with a small margin.
+	CameraOffset = Vector3.new(0, 18, 0),
+	CameraFov = 55,
 }
 
 --[=[
