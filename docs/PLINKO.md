@@ -94,16 +94,17 @@ All Plinko geometry lives under `Workspace.PlinkoArena` only.
 | Key | Role |
 |-----|------|
 | `DefaultWager` / `MinWager` / `MaxWager` | Stake clamps |
-| `DefaultRiskId` / `RiskLevels` | Risk scale: multipliers, target RTP, ball cap per tier |
+| `DefaultRiskId` / `RiskLevels` | Risk scale: multipliers, target RTP, ball cap, **per-tier physics profile** |
 | `TargetRTP` / `BucketMultipliers` | Mirror of Medium tier (convenience / fallbacks) |
 | `BucketWeights` | Tuning reference for physical land spread (not rolled) |
 | `DropCooldownSeconds` | Per-player drop throttle |
 | `LandReportTimeoutSeconds` | Max wait for client land report |
 | `ArenaOrigin` | World center of PlinkoArena |
 | `CameraOffset` | Client board-cam offset from `CameraFocus` |
-| `PegRows` | Visual peg grid rows |
-| `BallRadius` / `BallGravity` / `BallBounce` | Client gravity sim feel |
-| `BallMaxSimSeconds` / `BallPegHitCooldown` | Sim limits |
+| `PegRows` | Default peg grid rows (Medium mirror) |
+| `RiskLevels[].physics` | Per-risk ball/peg size, leave speed, drag, rail damp (Low / Medium / High) |
+| `BallGravity` / `BallBounce` / `BallMaxSpeed` | Shared client sim constants (fallback when board attrs missing) |
+| `BallMaxSimSeconds` | Sim time limit |
 
 Full table lives in `src/shared/Config.luau`.
 

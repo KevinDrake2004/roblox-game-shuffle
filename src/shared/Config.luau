@@ -145,6 +145,8 @@ Config.PLINKO = {
 	-- Risk scale: board size (pegRows) grows with risk; RTP approaches 100% at High.
 	-- Buckets = pegRows + 1. E[mult] under binomial C(pegRows, k):
 	--   low 8 rows ≈ 1.203, medium 12 rows ≈ 1.150, high 16 rows ≈ 1.060.
+	-- Each tier carries its own Galton physics profile (ball/peg size, leave speed, drag).
+	-- Peg/bucket layout still scales from rail width; sim tunables do NOT share one formula.
 	RiskLevels = {
 		{
 			id = "low",
@@ -154,6 +156,21 @@ Config.PLINKO = {
 			maxMultiplier = 10,
 			pegRows = 8,
 			bucketMultipliers = { 10, 4, 2, 1, 0, 1, 2, 4, 10 },
+			-- Wide pitch (~4.4 stud): larger ball/pegs, moderate leave speed, forgiving rails.
+			physics = {
+				ballRadius = 1.0,
+				pegSize = 1.35,
+				leaveSpeed = 4.8,
+				leaveAngleDeg = 32,
+				reflectBlend = 0.16,
+				horizontalDrag = 1.20,
+				startSpeedX = 1.35,
+				startSpread = 0.55,
+				pegHitCooldown = 0.05,
+				apexNormalX = 0.14,
+				maxUpSpeed = 6.5,
+				railNearDamp = 2.2,
+			},
 		},
 		{
 			id = "medium",
@@ -163,6 +180,21 @@ Config.PLINKO = {
 			maxMultiplier = 120,
 			pegRows = 12,
 			bucketMultipliers = { 120, 35, 10, 3, 1, 0, 0, 0, 1, 3, 10, 35, 120 },
+			-- Mid pitch (~3.1 stud): reference Galton feel.
+			physics = {
+				ballRadius = 0.72,
+				pegSize = 0.98,
+				leaveSpeed = 4.0,
+				leaveAngleDeg = 30,
+				reflectBlend = 0.18,
+				horizontalDrag = 1.35,
+				startSpeedX = 1.05,
+				startSpread = 0.38,
+				pegHitCooldown = 0.05,
+				apexNormalX = 0.14,
+				maxUpSpeed = 6.0,
+				railNearDamp = 2.4,
+			},
 		},
 		{
 			id = "high",
@@ -172,6 +204,21 @@ Config.PLINKO = {
 			maxMultiplier = 320,
 			pegRows = 16,
 			bucketMultipliers = { 320, 90, 28, 10, 4, 2, 1, 0, 0, 0, 1, 2, 4, 10, 28, 90, 320 },
+			-- Tight pitch (~2.35 stud): smaller ball/pegs, careful leave speed, stronger anti-skate.
+			physics = {
+				ballRadius = 0.52,
+				pegSize = 0.70,
+				leaveSpeed = 2.9,
+				leaveAngleDeg = 28,
+				reflectBlend = 0.20,
+				horizontalDrag = 1.55,
+				startSpeedX = 0.70,
+				startSpread = 0.24,
+				pegHitCooldown = 0.055,
+				apexNormalX = 0.12,
+				maxUpSpeed = 5.5,
+				railNearDamp = 2.8,
+			},
 		},
 	},
 	-- Convenience mirror of medium tier (fallbacks / docs).
@@ -191,9 +238,8 @@ Config.PLINKO = {
 	PegSpacingY = 2.4,
 	PegLayoutVersion = 4,
 	-- Client gravity sim (free path; Galton pegs create center-biased lands).
-	-- Each peg hit: hit-offset L/R + characteristic leave velocity (not over-damped pure fall).
-	-- BallRadius is the *max* cap; live size scales down with peg channel on dense boards.
-	BallRadius = 0.85,
+	-- Per-risk ball/peg/leave tunables live on RiskLevels[].physics; globals below are fallbacks only.
+	BallRadius = 0.72,
 	BallGravity = 62,
 	BallBounce = 0.42,
 	BallRailBounce = 0.18,
@@ -216,6 +262,21 @@ Config.PLINKO = {
 	LandReportTimeoutSeconds = 9,
 }
 
+type PlinkoPhysicsProfile = {
+	ballRadius: number,
+	pegSize: number,
+	leaveSpeed: number,
+	leaveAngleDeg: number,
+	reflectBlend: number,
+	horizontalDrag: number,
+	startSpeedX: number,
+	startSpread: number,
+	pegHitCooldown: number,
+	apexNormalX: number,
+	maxUpSpeed: number,
+	railNearDamp: number,
+}
+
 type PlinkoRiskLevel = {
 	id: string,
 	displayName: string,
@@ -224,6 +285,7 @@ type PlinkoRiskLevel = {
 	maxMultiplier: number,
 	pegRows: number,
 	bucketMultipliers: { number },
+	physics: PlinkoPhysicsProfile,
 }
 
 --[=[

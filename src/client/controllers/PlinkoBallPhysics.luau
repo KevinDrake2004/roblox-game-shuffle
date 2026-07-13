@@ -41,6 +41,21 @@ type SimHandles = {
 	cancel: () -> (),
 }
 
+type BoardPhysics = {
+	ballRadius: number,
+	pegSize: number,
+	leaveSpeed: number,
+	leaveAngleDeg: number,
+	reflectBlend: number,
+	horizontalDrag: number,
+	startSpeedX: number,
+	startSpread: number,
+	pegHitCooldown: number,
+	apexNormalX: number,
+	maxUpSpeed: number,
+	railNearDamp: number,
+}
+
 local activeCancels: { [() -> ()]: boolean } = {}
 
 type BucketHome = {
@@ -225,6 +240,50 @@ local function railBounds(arena: Folder): (number, number)
 	return leftX, rightX
 end
 
+local function writeBoardPhysics(board: Folder, physics: BoardPhysics, spacingX: number, rows: number, riskId: string)
+	board:SetAttribute("RiskId", riskId)
+	board:SetAttribute("PegRows", rows)
+	board:SetAttribute("SpacingX", spacingX)
+	board:SetAttribute("BallRadius", physics.ballRadius)
+	board:SetAttribute("PegSize", physics.pegSize)
+	board:SetAttribute("LeaveSpeed", physics.leaveSpeed)
+	board:SetAttribute("LeaveAngleDeg", physics.leaveAngleDeg)
+	board:SetAttribute("ReflectBlend", physics.reflectBlend)
+	board:SetAttribute("HorizontalDrag", physics.horizontalDrag)
+	board:SetAttribute("StartSpeedX", physics.startSpeedX)
+	board:SetAttribute("StartSpread", physics.startSpread)
+	board:SetAttribute("PegHitCooldown", physics.pegHitCooldown)
+	board:SetAttribute("ApexNormalX", physics.apexNormalX)
+	board:SetAttribute("MaxUpSpeed", physics.maxUpSpeed)
+	board:SetAttribute("RailNearDamp", physics.railNearDamp)
+end
+
+local function readBoardPhysics(board: Instance?, cfg: typeof(Config.PLINKO)): BoardPhysics
+	local function num(attr: string, fallback: number): number
+		if board then
+			local value = board:GetAttribute(attr)
+			if typeof(value) == "number" then
+				return value
+			end
+		end
+		return fallback
+	end
+	return {
+		ballRadius = num("BallRadius", cfg.BallRadius),
+		pegSize = num("PegSize", cfg.PegSpacingX * 0.32),
+		leaveSpeed = num("LeaveSpeed", cfg.BallPegLeaveSpeed),
+		leaveAngleDeg = num("LeaveAngleDeg", cfg.BallPegLeaveAngleDeg),
+		reflectBlend = num("ReflectBlend", cfg.BallPegReflectBlend),
+		horizontalDrag = num("HorizontalDrag", cfg.BallHorizontalDrag),
+		startSpeedX = num("StartSpeedX", cfg.BallStartSpeedX),
+		startSpread = num("StartSpread", cfg.BallStartSpeedX * 0.35),
+		pegHitCooldown = num("PegHitCooldown", cfg.BallPegHitCooldown),
+		apexNormalX = num("ApexNormalX", cfg.BallPegApexNormalX),
+		maxUpSpeed = num("MaxUpSpeed", cfg.BallPegMaxUpSpeed),
+		railNearDamp = num("RailNearDamp", cfg.BallRailNearDamp),
+	}
+end
+
 --[=[
 	Build a local-only Galton board for the selected risk (pegs + buckets).
 	Hides the shared arena decor so each player sees their own row count.
@@ -268,24 +327,8 @@ function PlinkoBallPhysics.rebuildBoard(riskId: string): boolean
 	local spacingY = math.max(1.45, (topY - bottomY) / rows)
 	local boardZ = origin.Position.Z - 0.15
 	local originX = Config.PLINKO.ArenaOrigin.X
-	-- Galton sizing: peg ~30-34% of pitch; ball ~48-52% so it fits the channel with margin.
-	local pegSize = math.clamp(spacingX * 0.32, 0.30, 1.05)
-	local clearGap = math.max(0.28, spacingX - pegSize)
-	local ballDiameter = math.clamp(spacingX * 0.50, 0.44, clearGap * 0.88)
-	if ballDiameter >= clearGap * 0.92 then
-		ballDiameter = clearGap * 0.86
-	end
-	local ballRadius = math.min(ballDiameter * 0.5, Config.PLINKO.BallRadius)
-	-- Leave speed: ~half spacing per row fall time (Galton ±1 step), not a fixed high cap.
-	local fallTime = math.max(0.12, math.sqrt(2 * spacingY / Config.PLINKO.BallGravity))
-	local leaveSpeed = (spacingX * 0.5) / fallTime
-	leaveSpeed = math.clamp(leaveSpeed, spacingX * 1.0, spacingX * 2.5)
-	board:SetAttribute("RiskId", risk.id)
-	board:SetAttribute("PegRows", rows)
-	board:SetAttribute("LeaveSpeed", leaveSpeed)
-	board:SetAttribute("SpacingX", spacingX)
-	board:SetAttribute("BallRadius", ballRadius)
-	board:SetAttribute("PegSize", pegSize)
+	local physics = risk.physics
+	writeBoardPhysics(board, physics, spacingX, rows, risk.id)
 
 	for row = 0, rows - 1 do
 		local pegsInRow = row + 1
@@ -301,7 +344,7 @@ function PlinkoBallPhysics.rebuildBoard(riskId: string): boolean
 			peg.CanQuery = false
 			peg.CanTouch = false
 			peg.CastShadow = false
-			peg.Size = Vector3.new(pegSize, pegSize, pegSize)
+			peg.Size = Vector3.new(physics.pegSize, physics.pegSize, physics.pegSize)
 			peg.Position = Vector3.new(startX + col * spacingX, y, boardZ)
 			peg.Color = Config.COLORS.NeonPurple
 			peg.Material = Enum.Material.Neon
@@ -490,13 +533,12 @@ function PlinkoBallPhysics.drop(onLanded: (bucketIndex: number) -> ()): SimHandl
 	end
 
 	local cfg = Config.PLINKO
-	local radiusAttr = if board then board:GetAttribute("BallRadius") else nil
-	local radius = if typeof(radiusAttr) == "number" then radiusAttr else cfg.BallRadius
+	local physics = readBoardPhysics(board, cfg)
+	local radius = physics.ballRadius
 	local pegs = collectPegs(pegsFolder)
 	local leftX, rightX = railBounds(arena)
 	local boardZ = origin.Position.Z - 0.15
-	local leaveSpeedAttr = if board then board:GetAttribute("LeaveSpeed") else nil
-	local leaveSpeed = if typeof(leaveSpeedAttr) == "number" then leaveSpeedAttr else cfg.BallPegLeaveSpeed
+	local leaveSpeed = physics.leaveSpeed
 	local spacingXAttr = if board then board:GetAttribute("SpacingX") else nil
 	local spacingX = if typeof(spacingXAttr) == "number" then spacingXAttr else cfg.PegSpacingX
 	local landY = buckets[1].landY
@@ -506,9 +548,8 @@ function PlinkoBallPhysics.drop(onLanded: (bucketIndex: number) -> ()): SimHandl
 	local centerBucketIndex = math.floor((#buckets - 1) / 2)
 
 	local rng = Random.new()
-	-- Start jitter scales with ball size / channel width so dense boards don't spawn wedged.
-	local startSpread = math.max(radius * 0.35, math.min(radius * 1.2, cfg.BallStartSpeedX * 0.15))
-	local startSpeedX = math.clamp(radius * 2.2, 0.35, cfg.BallStartSpeedX)
+	local startSpread = physics.startSpread
+	local startSpeedX = physics.startSpeedX
 	local pos = Vector3.new(origin.Position.X + rng:NextNumber(-startSpread, startSpread), origin.Position.Y, boardZ)
 	local vel = Vector3.new(rng:NextNumber(-startSpeedX, startSpeedX), rng:NextNumber(-2, 0), 0)
 
@@ -585,17 +626,17 @@ function PlinkoBallPhysics.drop(onLanded: (bucketIndex: number) -> ()): SimHandl
 			stepVel = Vector3.new(-inwardNudge, stepVel.Y * 0.88, 0)
 		elseif math.abs(stepVel.X) > leaveSpeed * 1.35 then
 			-- Near-rail drift: bleed excess horizontal speed before wall contact.
-			local damp = math.clamp(1 - cfg.BallRailNearDamp * stepDt, 0.82, 1)
+			local damp = math.clamp(1 - physics.railNearDamp * stepDt, 0.82, 1)
 			stepVel = Vector3.new(stepVel.X * damp, stepVel.Y, 0)
 		end
 		return stepPos, stepVel
 	end
 
 	local function collidePegs(stepPos: Vector3, stepVel: Vector3, now: number): (Vector3, Vector3)
-		local leaveDeg = cfg.BallPegLeaveAngleDeg
-		local apexNx = cfg.BallPegApexNormalX
-		local reflectBlend = math.clamp(cfg.BallPegReflectBlend, 0, 1)
-		local maxUp = cfg.BallPegMaxUpSpeed
+		local leaveDeg = physics.leaveAngleDeg
+		local apexNx = physics.apexNormalX
+		local reflectBlend = math.clamp(physics.reflectBlend, 0, 1)
+		local maxUp = physics.maxUpSpeed
 		local restitution = cfg.BallBounce
 
 		for _, peg in pegs do
@@ -607,7 +648,7 @@ function PlinkoBallPhysics.drop(onLanded: (bucketIndex: number) -> ()): SimHandl
 				delta = Vector3.new(if rng:NextNumber() < 0.5 then -1 else 1, 0.25, 0)
 				dist = delta.Magnitude
 			end
-			if dist < minDist and (now - peg.lastHit) >= cfg.BallPegHitCooldown then
+			if dist < minDist and (now - peg.lastHit) >= physics.pegHitCooldown then
 				local normal = delta.Unit
 				-- Separate so the ball sits on the peg surface.
 				stepPos = Vector3.new(
@@ -675,7 +716,7 @@ function PlinkoBallPhysics.drop(onLanded: (bucketIndex: number) -> ()): SimHandl
 		local stepDt = dt / substeps
 		for _ = 1, substeps do
 			-- Gravity + light air drag (does not erase impact sideways motion).
-			local drag = math.clamp(1 - cfg.BallHorizontalDrag * stepDt, 0.92, 1)
+			local drag = math.clamp(1 - physics.horizontalDrag * stepDt, 0.92, 1)
 			vel = Vector3.new(vel.X * drag, vel.Y - cfg.BallGravity * stepDt, 0)
 			vel = clampSpeed(vel, cfg.BallMaxSpeed)
 			pos = Vector3.new(pos.X + vel.X * stepDt, pos.Y + vel.Y * stepDt, boardZ)
