@@ -6,7 +6,7 @@
       "className": "Part",
       "properties": {
         "Anchored": true,
-        "Size": [40.0, 1.0, 40.0],
+        "Size": [56.0, 1.0, 48.0],
         "Position": [90.0, 5.0, -140.0],
         "Color": [0.071, 0.047, 0.125],
         "Material": "SmoothPlastic"
@@ -52,8 +52,8 @@
       "properties": {
         "Anchored": true,
         "CanCollide": false,
-        "Size": [28.0, 32.0, 1.0],
-        "Position": [90.0, 20.0, -152.0],
+        "Size": [44.0, 48.0, 1.0],
+        "Position": [90.0, 28.0, -152.0],
         "Color": [0.09, 0.055, 0.16],
         "Material": "SmoothPlastic"
       }
@@ -64,8 +64,8 @@
       "properties": {
         "Anchored": true,
         "CanCollide": false,
-        "Size": [1.0, 32.0, 2.5],
-        "Position": [76.5, 20.0, -150.5],
+        "Size": [1.2, 48.0, 3.0],
+        "Position": [69.0, 28.0, -150.5],
         "Color": [0.659, 0.333, 0.969],
         "Material": "Neon"
       }
@@ -76,8 +76,8 @@
       "properties": {
         "Anchored": true,
         "CanCollide": false,
-        "Size": [1.0, 32.0, 2.5],
-        "Position": [103.5, 20.0, -150.5],
+        "Size": [1.2, 48.0, 3.0],
+        "Position": [111.0, 28.0, -150.5],
         "Color": [0.659, 0.333, 0.969],
         "Material": "Neon"
       }
@@ -91,7 +91,7 @@
         "CanQuery": false,
         "Transparency": 1,
         "Size": [1.0, 1.0, 1.0],
-        "Position": [90.0, 34.0, -150.5]
+        "Position": [90.0, 50.0, -150.5]
       }
     },
     {
@@ -103,7 +103,7 @@
         "CanQuery": false,
         "Transparency": 1,
         "Size": [1.0, 1.0, 1.0],
-        "Position": [90.0, 18.0, -150.0]
+        "Position": [90.0, 24.0, -150.0]
       }
     },
     {
@@ -112,8 +112,8 @@
       "properties": {
         "Anchored": true,
         "CanCollide": false,
-        "Size": [16.0, 3.0, 0.5],
-        "Position": [90.0, 37.5, -151.5],
+        "Size": [24.0, 4.0, 0.5],
+        "Position": [90.0, 54.0, -151.5],
         "Color": [0.12, 0.07, 0.22],
         "Material": "SmoothPlastic"
       }

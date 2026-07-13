@@ -265,15 +265,15 @@ function PlinkoBallPhysics.rebuildBoard(riskId: string): boolean
 	local spacingX = bucketWidth
 	local topY = origin.Position.Y - 1.5
 	local bottomY = Config.PLINKO.ArenaOrigin.Y + 2.4
-	local spacingY = math.max(1.1, (topY - bottomY) / rows)
+	local spacingY = math.max(1.45, (topY - bottomY) / rows)
 	local boardZ = origin.Position.Z - 0.15
 	local originX = Config.PLINKO.ArenaOrigin.X
 	-- Leave speed + ball size scale with peg pitch so denser boards stay passable.
-	local pegSize = math.clamp(spacingX * 0.3, 0.22, 0.65)
-	local clearGap = math.max(0.2, spacingX - pegSize)
+	local pegSize = math.clamp(spacingX * 0.32, 0.35, 1.05)
+	local clearGap = math.max(0.35, spacingX - pegSize)
 	-- Diameter stays under the peg channel so balls zigzag instead of wedging outward.
-	local ballRadius = math.clamp(clearGap * 0.38, 0.12, Config.PLINKO.BallRadius)
-	local leaveSpeed = math.clamp(spacingX * 2.15, 3.2, 7.5)
+	local ballRadius = math.clamp(clearGap * 0.4, 0.22, Config.PLINKO.BallRadius)
+	local leaveSpeed = math.clamp(spacingX * 2.15, 4.5, 9.5)
 	board:SetAttribute("RiskId", risk.id)
 	board:SetAttribute("PegRows", rows)
 	board:SetAttribute("LeaveSpeed", leaveSpeed)
@@ -304,9 +304,9 @@ function PlinkoBallPhysics.rebuildBoard(riskId: string): boolean
 	end
 
 	-- Edge-to-edge cups: width == spacing so the bottom reads as one solid bar.
-	local bucketHeight = 2.0
-	local bucketDepth = 2.0
-	local bucketY = bottomY - 0.35
+	local bucketHeight = 2.8
+	local bucketDepth = 2.6
+	local bucketY = bottomY - 0.2
 	local firstCenter = originX - usableWidth * 0.5 + bucketWidth * 0.5
 	local sizeX = bucketWidth + 0.02 -- tiny overlap hides seam gaps
 	for index = 0, bucketCount - 1 do

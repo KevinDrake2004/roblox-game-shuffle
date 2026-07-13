@@ -85,7 +85,7 @@ The Galton peg board (row `r` has `r+1` pegs) creates that center bias; row coun
 | Rocket Run arena | `(0, 5, -140)` | Cyan; do not modify |
 | **Plinko arena origin** | `(90, 5, -140)` | Purple; ~90 studs east of Rocket Run |
 | Plinko spawn pad | `(90, 6, -126)` | Leave prompt attached |
-| Plinko board / buckets | z ≈ -150.5 | Facing spawn (+Z) |
+| Plinko board / buckets | z ≈ -150.5 | Wider/taller playfield (~40 stud rails) |
 
 All Plinko geometry lives under `Workspace.PlinkoArena` only.
 

@@ -236,7 +236,7 @@ local function ensurePegs()
 			peg.Anchored = true
 			peg.CanCollide = false
 			peg.CanQuery = false
-			peg.Size = Vector3.new(0.65, 0.65, 0.65)
+			peg.Size = Vector3.new(0.9, 0.9, 0.9)
 			peg.Position = Vector3.new(startX + col * spacingX, y, boardZ)
 			peg.Color = Config.COLORS.NeonPurple
 			peg.Material = Enum.Material.Neon

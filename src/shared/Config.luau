@@ -181,33 +181,35 @@ Config.PLINKO = {
 	-- Reference weights for the default medium row count (C(12,k)); per-risk uses C(pegRows,k).
 	BucketWeights = { 1, 12, 66, 220, 495, 792, 924, 792, 495, 220, 66, 12, 1 },
 	-- World / camera (east of Rocket Run at 0, 5, -140 — ~90 studs apart)
+	-- Larger playfield + closer camera so pegs/balls stay easy to track on all risk tiers.
 	ArenaOrigin = Vector3.new(90, 5, -140),
-	CameraOffset = Vector3.new(0, 4, 28),
+	CameraOffset = Vector3.new(0, 6, 20),
 	-- Default Galton spacing; local boards may scale X/Y to fit the rails.
 	PegRows = 12,
-	PegSpacingX = 2.0,
-	PegSpacingY = 1.85,
-	PegLayoutVersion = 3,
+	PegSpacingX = 2.8,
+	PegSpacingY = 2.4,
+	PegLayoutVersion = 4,
 	-- Client gravity sim (free path; Galton pegs create center-biased lands).
 	-- Each peg hit: hit-offset L/R + characteristic leave velocity (not over-damped pure fall).
-	BallRadius = 0.5,
-	BallGravity = 55,
+	-- BallRadius is the *max* cap; live size scales down with peg channel on dense boards.
+	BallRadius = 0.85,
+	BallGravity = 62,
 	BallBounce = 0.42,
 	BallMaxSimSeconds = 8,
 	BallPegHitCooldown = 0.05,
 	-- Light air drag so leave speed carries to the next row without rail flings.
 	BallHorizontalDrag = 1.15,
-	BallStartSpeedX = 1.0,
-	BallMaxSpeed = 40,
+	BallStartSpeedX = 1.35,
+	BallMaxSpeed = 48,
 	BallSubsteps = 3,
 	-- Post-contact leave: ~half peg spacing / fall time between rows → Galton ±1 step.
-	BallPegLeaveSpeed = 5.6,
+	BallPegLeaveSpeed = 7.2,
 	BallPegLeaveAngleDeg = 33,
 	-- |normal.X| below this → unstable apex; coin-flip L/R.
 	BallPegApexNormalX = 0.12,
 	-- Blend of elastic reflect (visual) vs roll-off leave velocity (distribution).
 	BallPegReflectBlend = 0.25,
-	BallPegMaxUpSpeed = 5,
+	BallPegMaxUpSpeed = 6,
 	LandReportTimeoutSeconds = 9,
 }
 
