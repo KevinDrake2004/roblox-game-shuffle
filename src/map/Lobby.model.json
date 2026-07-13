@@ -15,98 +15,24 @@
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  180.0,
+                  184.0,
                   1.0,
-                  160.0
+                  206.0
                 ],
                 "Position": [
                   0.0,
                   0.0,
-                  -14.0
+                  -37.0
                 ],
                 "Color": [
-                  0.05,
-                  0.12,
-                  0.09
+                  0.04,
+                  0.1,
+                  0.08
                 ],
                 "Material": "SmoothPlastic",
                 "TopSurface": "Smooth",
-                "BottomSurface": "Smooth"
-              }
-            },
-            {
-              "name": "FloorSheen",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  170.0,
-                  0.12,
-                  150.0
-                ],
-                "Position": [
-                  0.0,
-                  0.56,
-                  -14.0
-                ],
-                "Color": [
-                  0.08,
-                  0.2,
-                  0.14
-                ],
-                "Material": "Glass",
-                "CanCollide": false,
-                "Transparency": 0.8
-              }
-            },
-            {
-              "name": "Inlay_W",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  22.0,
-                  0.14,
-                  100.0
-                ],
-                "Position": [
-                  -12.0,
-                  0.58,
-                  -8.0
-                ],
-                "Color": [
-                  0.05,
-                  0.2,
-                  0.12
-                ],
-                "Material": "Fabric",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth"
-              }
-            },
-            {
-              "name": "Inlay_E",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  22.0,
-                  0.14,
-                  100.0
-                ],
-                "Position": [
-                  12.0,
-                  0.58,
-                  -8.0
-                ],
-                "Color": [
-                  0.05,
-                  0.2,
-                  0.12
-                ],
-                "Material": "Fabric",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth"
+                "BottomSurface": "Smooth",
+                "CanCollide": true
               }
             },
             {
@@ -115,23 +41,24 @@
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  70.0,
-                  0.16,
-                  118.0
+                  78.0,
+                  0.12,
+                  112.0
                 ],
                 "Position": [
-                  -42.0,
-                  0.58,
-                  -8.0
+                  -49.0,
+                  0.52,
+                  2.0
                 ],
                 "Color": [
-                  0.06,
-                  0.28,
-                  0.16
+                  0.05,
+                  0.26,
+                  0.15
                 ],
                 "Material": "Fabric",
                 "TopSurface": "Smooth",
-                "BottomSurface": "Smooth"
+                "BottomSurface": "Smooth",
+                "CanCollide": false
               }
             },
             {
@@ -140,23 +67,76 @@
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  70.0,
-                  0.16,
-                  118.0
+                  78.0,
+                  0.12,
+                  112.0
                 ],
                 "Position": [
-                  42.0,
-                  0.58,
-                  -8.0
+                  49.0,
+                  0.52,
+                  2.0
                 ],
                 "Color": [
-                  0.06,
-                  0.28,
-                  0.16
+                  0.05,
+                  0.26,
+                  0.15
                 ],
                 "Material": "Fabric",
                 "TopSurface": "Smooth",
-                "BottomSurface": "Smooth"
+                "BottomSurface": "Smooth",
+                "CanCollide": false
+              }
+            },
+            {
+              "name": "CasinoField_EntryW",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  34.0,
+                  0.12,
+                  28.0
+                ],
+                "Position": [
+                  -49.0,
+                  0.52,
+                  48.0
+                ],
+                "Color": [
+                  0.05,
+                  0.26,
+                  0.15
+                ],
+                "Material": "Fabric",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": false
+              }
+            },
+            {
+              "name": "CasinoField_EntryE",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  34.0,
+                  0.12,
+                  28.0
+                ],
+                "Position": [
+                  49.0,
+                  0.52,
+                  48.0
+                ],
+                "Color": [
+                  0.05,
+                  0.26,
+                  0.15
+                ],
+                "Material": "Fabric",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": false
               }
             },
             {
@@ -165,234 +145,14 @@
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  70.0,
-                  0.16,
-                  40.0
-                ],
-                "Position": [
-                  -42.0,
-                  0.58,
-                  -72.0
-                ],
-                "Color": [
-                  0.04,
-                  0.18,
-                  0.11
-                ],
-                "Material": "Fabric",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth"
-              }
-            },
-            {
-              "name": "CasinoField_HallE",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  70.0,
-                  0.16,
-                  40.0
-                ],
-                "Position": [
-                  42.0,
-                  0.58,
-                  -72.0
-                ],
-                "Color": [
-                  0.04,
-                  0.18,
-                  0.11
-                ],
-                "Material": "Fabric",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth"
-              }
-            },
-            {
-              "name": "FieldInlay_W1",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  24.0,
-                  0.14,
-                  24.0
-                ],
-                "Position": [
-                  -42.0,
-                  0.66,
-                  22.0
-                ],
-                "Color": [
-                  0.08,
-                  0.35,
-                  0.2
-                ],
-                "Material": "Fabric",
-                "Orientation": [
-                  0.0,
-                  45.0,
-                  0.0
-                ],
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth"
-              }
-            },
-            {
-              "name": "FieldInlay_W2",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  24.0,
-                  0.14,
-                  24.0
-                ],
-                "Position": [
-                  -42.0,
-                  0.66,
-                  -18.0
-                ],
-                "Color": [
-                  0.08,
-                  0.35,
-                  0.2
-                ],
-                "Material": "Fabric",
-                "Orientation": [
-                  0.0,
-                  45.0,
-                  0.0
-                ],
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth"
-              }
-            },
-            {
-              "name": "FieldInlay_E1",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  24.0,
-                  0.14,
-                  24.0
-                ],
-                "Position": [
-                  42.0,
-                  0.66,
-                  22.0
-                ],
-                "Color": [
-                  0.08,
-                  0.35,
-                  0.2
-                ],
-                "Material": "Fabric",
-                "Orientation": [
-                  0.0,
-                  45.0,
-                  0.0
-                ],
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth"
-              }
-            },
-            {
-              "name": "FieldInlay_E2",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  24.0,
-                  0.14,
-                  24.0
-                ],
-                "Position": [
-                  42.0,
-                  0.66,
-                  -18.0
-                ],
-                "Color": [
-                  0.08,
-                  0.35,
-                  0.2
-                ],
-                "Material": "Fabric",
-                "Orientation": [
-                  0.0,
-                  45.0,
-                  0.0
-                ],
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth"
-              }
-            },
-            {
-              "name": "CasinoField_CenterN",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  28.0,
-                  0.16,
-                  36.0
-                ],
-                "Position": [
-                  0.0,
-                  0.58,
+                  78.0,
+                  0.12,
                   28.0
                 ],
-                "Color": [
-                  0.05,
-                  0.26,
-                  0.15
-                ],
-                "Material": "Fabric",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth"
-              }
-            },
-            {
-              "name": "CasinoField_CenterS",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  28.0,
-                  0.16,
-                  40.0
-                ],
                 "Position": [
-                  0.0,
-                  0.58,
-                  -32.0
-                ],
-                "Color": [
-                  0.05,
-                  0.26,
-                  0.15
-                ],
-                "Material": "Fabric",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth"
-              }
-            },
-            {
-              "name": "CasinoField_Rear",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  160.0,
-                  0.16,
-                  36.0
-                ],
-                "Position": [
-                  0.0,
-                  0.58,
-                  -72.0
+                  -49.0,
+                  0.52,
+                  -68.0
                 ],
                 "Color": [
                   0.04,
@@ -401,23 +161,76 @@
                 ],
                 "Material": "Fabric",
                 "TopSurface": "Smooth",
-                "BottomSurface": "Smooth"
+                "BottomSurface": "Smooth",
+                "CanCollide": false
               }
             },
             {
-              "name": "FieldDiamond_C1",
+              "name": "CasinoField_HallE",
               "className": "Part",
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  18.0,
-                  0.14,
-                  18.0
+                  78.0,
+                  0.12,
+                  28.0
+                ],
+                "Position": [
+                  49.0,
+                  0.52,
+                  -68.0
+                ],
+                "Color": [
+                  0.04,
+                  0.2,
+                  0.12
+                ],
+                "Material": "Fabric",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": false
+              }
+            },
+            {
+              "name": "CasinoField_Rooms",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  178.0,
+                  0.12,
+                  54.0
                 ],
                 "Position": [
                   0.0,
-                  0.66,
-                  18.0
+                  0.52,
+                  -111.0
+                ],
+                "Color": [
+                  0.04,
+                  0.2,
+                  0.12
+                ],
+                "Material": "Fabric",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": false
+              }
+            },
+            {
+              "name": "FieldAccent_W1",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  16.0,
+                  0.08,
+                  16.0
+                ],
+                "Position": [
+                  -52.0,
+                  0.58,
+                  24.0
                 ],
                 "Color": [
                   0.07,
@@ -427,57 +240,28 @@
                 "Material": "Fabric",
                 "TopSurface": "Smooth",
                 "BottomSurface": "Smooth",
+                "CanCollide": false,
                 "Orientation": [
-                  0,
-                  45,
-                  0
-                ]
-              }
-            },
-            {
-              "name": "FieldDiamond_C2",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  18.0,
-                  0.14,
-                  18.0
-                ],
-                "Position": [
                   0.0,
-                  0.66,
-                  -20.0
-                ],
-                "Color": [
-                  0.07,
-                  0.32,
-                  0.18
-                ],
-                "Material": "Fabric",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "Orientation": [
-                  0,
-                  45,
-                  0
+                  45.0,
+                  0.0
                 ]
               }
             },
             {
-              "name": "FieldDiamond_W3",
+              "name": "FieldAccent_W2",
               "className": "Part",
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  18.0,
-                  0.14,
-                  18.0
+                  16.0,
+                  0.08,
+                  16.0
                 ],
                 "Position": [
-                  -42.0,
-                  0.66,
-                  -42.0
+                  -52.0,
+                  0.58,
+                  -16.0
                 ],
                 "Color": [
                   0.07,
@@ -487,27 +271,28 @@
                 "Material": "Fabric",
                 "TopSurface": "Smooth",
                 "BottomSurface": "Smooth",
+                "CanCollide": false,
                 "Orientation": [
-                  0,
-                  45,
-                  0
+                  0.0,
+                  45.0,
+                  0.0
                 ]
               }
             },
             {
-              "name": "FieldDiamond_E3",
+              "name": "FieldAccent_E1",
               "className": "Part",
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  18.0,
-                  0.14,
-                  18.0
+                  16.0,
+                  0.08,
+                  16.0
                 ],
                 "Position": [
-                  42.0,
-                  0.66,
-                  -42.0
+                  52.0,
+                  0.58,
+                  24.0
                 ],
                 "Color": [
                   0.07,
@@ -517,10 +302,42 @@
                 "Material": "Fabric",
                 "TopSurface": "Smooth",
                 "BottomSurface": "Smooth",
+                "CanCollide": false,
                 "Orientation": [
-                  0,
-                  45,
-                  0
+                  0.0,
+                  45.0,
+                  0.0
+                ]
+              }
+            },
+            {
+              "name": "FieldAccent_E2",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  16.0,
+                  0.08,
+                  16.0
+                ],
+                "Position": [
+                  52.0,
+                  0.58,
+                  -16.0
+                ],
+                "Color": [
+                  0.07,
+                  0.32,
+                  0.18
+                ],
+                "Material": "Fabric",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": false,
+                "Orientation": [
+                  0.0,
+                  45.0,
+                  0.0
                 ]
               }
             }
@@ -536,23 +353,24 @@
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  28.0,
-                  0.22,
-                  36.0
+                  14.0,
+                  0.14,
+                  30.0
                 ],
                 "Position": [
                   0.0,
-                  0.72,
-                  40.0
+                  0.64,
+                  42.0
                 ],
                 "Color": [
-                  0.62,
-                  0.05,
-                  0.12
+                  0.55,
+                  0.04,
+                  0.1
                 ],
                 "Material": "Fabric",
                 "TopSurface": "Smooth",
-                "BottomSurface": "Smooth"
+                "BottomSurface": "Smooth",
+                "CanCollide": false
               }
             },
             {
@@ -561,23 +379,24 @@
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  0.55,
-                  0.26,
-                  36.0
+                  0.4,
+                  0.16,
+                  30.0
                 ],
                 "Position": [
-                  -14.2,
-                  0.84,
-                  40.0
+                  -7.15,
+                  0.7,
+                  42.0
                 ],
                 "Color": [
-                  0.85,
-                  0.55,
-                  0.18
+                  0.92,
+                  0.75,
+                  0.32
                 ],
                 "Material": "Neon",
-                "CanCollide": false,
-                "Transparency": 0.25
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": false
               }
             },
             {
@@ -586,23 +405,24 @@
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  0.55,
-                  0.26,
-                  36.0
+                  0.4,
+                  0.16,
+                  30.0
                 ],
                 "Position": [
-                  14.2,
-                  0.84,
-                  40.0
+                  7.15,
+                  0.7,
+                  42.0
                 ],
                 "Color": [
-                  0.85,
-                  0.55,
-                  0.18
+                  0.92,
+                  0.75,
+                  0.32
                 ],
                 "Material": "Neon",
-                "CanCollide": false,
-                "Transparency": 0.25
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": false
               }
             },
             {
@@ -611,23 +431,24 @@
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  28.0,
-                  0.22,
-                  100.0
+                  14.0,
+                  0.14,
+                  96.0
                 ],
                 "Position": [
                   0.0,
-                  0.72,
-                  -12.0
+                  0.64,
+                  -10.0
                 ],
                 "Color": [
-                  0.62,
-                  0.05,
-                  0.12
+                  0.55,
+                  0.04,
+                  0.1
                 ],
                 "Material": "Fabric",
                 "TopSurface": "Smooth",
-                "BottomSurface": "Smooth"
+                "BottomSurface": "Smooth",
+                "CanCollide": false
               }
             },
             {
@@ -636,23 +457,24 @@
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  0.55,
-                  0.26,
-                  100.0
+                  0.4,
+                  0.16,
+                  96.0
                 ],
                 "Position": [
-                  -14.2,
-                  0.84,
-                  -12.0
+                  -7.15,
+                  0.7,
+                  -10.0
                 ],
                 "Color": [
-                  0.85,
-                  0.55,
-                  0.18
+                  0.92,
+                  0.75,
+                  0.32
                 ],
                 "Material": "Neon",
-                "CanCollide": false,
-                "Transparency": 0.25
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": false
               }
             },
             {
@@ -661,23 +483,24 @@
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  0.55,
-                  0.26,
-                  100.0
+                  0.4,
+                  0.16,
+                  96.0
                 ],
                 "Position": [
-                  14.2,
-                  0.84,
-                  -12.0
+                  7.15,
+                  0.7,
+                  -10.0
                 ],
                 "Color": [
-                  0.85,
-                  0.55,
-                  0.18
+                  0.92,
+                  0.75,
+                  0.32
                 ],
                 "Material": "Neon",
-                "CanCollide": false,
-                "Transparency": 0.25
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": false
               }
             },
             {
@@ -686,23 +509,24 @@
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  100.0,
-                  0.22,
-                  16.0
+                  22.0,
+                  0.14,
+                  10.0
                 ],
                 "Position": [
                   0.0,
-                  0.72,
-                  10.0
+                  0.64,
+                  12.0
                 ],
                 "Color": [
-                  0.62,
-                  0.05,
-                  0.12
+                  0.55,
+                  0.04,
+                  0.1
                 ],
                 "Material": "Fabric",
                 "TopSurface": "Smooth",
-                "BottomSurface": "Smooth"
+                "BottomSurface": "Smooth",
+                "CanCollide": false
               }
             },
             {
@@ -711,23 +535,24 @@
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  90.0,
-                  0.22,
-                  14.0
+                  22.0,
+                  0.14,
+                  10.0
                 ],
                 "Position": [
                   0.0,
-                  0.72,
-                  -28.0
+                  0.64,
+                  -26.0
                 ],
                 "Color": [
-                  0.62,
-                  0.05,
-                  0.12
+                  0.55,
+                  0.04,
+                  0.1
                 ],
                 "Material": "Fabric",
                 "TopSurface": "Smooth",
-                "BottomSurface": "Smooth"
+                "BottomSurface": "Smooth",
+                "CanCollide": false
               }
             },
             {
@@ -736,23 +561,24 @@
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  170.0,
-                  0.22,
-                  24.0
+                  160.0,
+                  0.14,
+                  14.0
                 ],
                 "Position": [
                   0.0,
-                  0.72,
+                  0.64,
                   -70.0
                 ],
                 "Color": [
-                  0.62,
-                  0.05,
-                  0.12
+                  0.55,
+                  0.04,
+                  0.1
                 ],
                 "Material": "Fabric",
                 "TopSurface": "Smooth",
-                "BottomSurface": "Smooth"
+                "BottomSurface": "Smooth",
+                "CanCollide": false
               }
             },
             {
@@ -761,14 +587,14 @@
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  170.0,
-                  0.26,
-                  0.55
+                  160.0,
+                  0.16,
+                  0.4
                 ],
                 "Position": [
                   0.0,
-                  0.84,
-                  -82.0
+                  0.7,
+                  -77.0
                 ],
                 "Color": [
                   0.92,
@@ -776,8 +602,9 @@
                   0.32
                 ],
                 "Material": "Neon",
-                "CanCollide": false,
-                "Transparency": 0.25
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": false
               }
             },
             {
@@ -786,14 +613,14 @@
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  170.0,
-                  0.26,
-                  0.55
+                  160.0,
+                  0.16,
+                  0.4
                 ],
                 "Position": [
                   0.0,
-                  0.84,
-                  -58.0
+                  0.7,
+                  -63.0
                 ],
                 "Color": [
                   0.92,
@@ -801,8 +628,9 @@
                   0.32
                 ],
                 "Material": "Neon",
-                "CanCollide": false,
-                "Transparency": 0.25
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": false
               }
             },
             {
@@ -811,23 +639,24 @@
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  20.0,
-                  0.22,
-                  20.0
+                  12.0,
+                  0.14,
+                  12.0
                 ],
                 "Position": [
                   -55.0,
-                  0.72,
+                  0.64,
                   -82.0
                 ],
                 "Color": [
-                  0.62,
-                  0.05,
-                  0.12
+                  0.55,
+                  0.04,
+                  0.1
                 ],
                 "Material": "Fabric",
                 "TopSurface": "Smooth",
-                "BottomSurface": "Smooth"
+                "BottomSurface": "Smooth",
+                "CanCollide": false
               }
             },
             {
@@ -836,23 +665,24 @@
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  20.0,
-                  0.22,
-                  20.0
+                  12.0,
+                  0.14,
+                  12.0
                 ],
                 "Position": [
                   0.0,
-                  0.72,
+                  0.64,
                   -82.0
                 ],
                 "Color": [
-                  0.62,
-                  0.05,
-                  0.12
+                  0.55,
+                  0.04,
+                  0.1
                 ],
                 "Material": "Fabric",
                 "TopSurface": "Smooth",
-                "BottomSurface": "Smooth"
+                "BottomSurface": "Smooth",
+                "CanCollide": false
               }
             },
             {
@@ -861,23 +691,24 @@
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  20.0,
-                  0.22,
-                  20.0
+                  12.0,
+                  0.14,
+                  12.0
                 ],
                 "Position": [
                   55.0,
-                  0.72,
+                  0.64,
                   -82.0
                 ],
                 "Color": [
-                  0.62,
-                  0.05,
-                  0.12
+                  0.55,
+                  0.04,
+                  0.1
                 ],
                 "Material": "Fabric",
                 "TopSurface": "Smooth",
-                "BottomSurface": "Smooth"
+                "BottomSurface": "Smooth",
+                "CanCollide": false
               }
             },
             {
@@ -886,23 +717,24 @@
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  18.0,
-                  0.22,
-                  18.0
+                  10.0,
+                  0.12,
+                  10.0
                 ],
                 "Position": [
                   0.0,
-                  0.74,
-                  8.0
+                  0.68,
+                  12.0
                 ],
                 "Color": [
-                  0.45,
-                  0.04,
-                  0.1
+                  0.62,
+                  0.08,
+                  0.14
                 ],
                 "Material": "Fabric",
                 "TopSurface": "Smooth",
-                "BottomSurface": "Smooth"
+                "BottomSurface": "Smooth",
+                "CanCollide": false
               }
             },
             {
@@ -911,115 +743,15 @@
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  16.0,
-                  0.18,
-                  16.0
+                  8.5,
+                  0.08,
+                  8.5
                 ],
                 "Position": [
                   0.0,
-                  0.85,
-                  8.0
-                ],
-                "Color": [
-                  0.92,
-                  0.75,
-                  0.32
-                ],
-                "Material": "Neon",
-                "CanCollide": false,
-                "Transparency": 0.45
-              }
-            },
-            {
-              "name": "Carpet_Cross_Mid",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  80.0,
-                  0.22,
+                  0.74,
                   12.0
                 ],
-                "Position": [
-                  0.0,
-                  0.72,
-                  -8.0
-                ],
-                "Color": [
-                  0.62,
-                  0.05,
-                  0.12
-                ],
-                "Material": "Fabric",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth"
-              }
-            },
-            {
-              "name": "Carpet_Pit_W",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  16.0,
-                  0.22,
-                  70.0
-                ],
-                "Position": [
-                  -28.0,
-                  0.72,
-                  5.0
-                ],
-                "Color": [
-                  0.58,
-                  0.04,
-                  0.11
-                ],
-                "Material": "Fabric",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth"
-              }
-            },
-            {
-              "name": "Carpet_Pit_E",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  16.0,
-                  0.22,
-                  70.0
-                ],
-                "Position": [
-                  28.0,
-                  0.72,
-                  5.0
-                ],
-                "Color": [
-                  0.58,
-                  0.04,
-                  0.11
-                ],
-                "Material": "Fabric",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth"
-              }
-            },
-            {
-              "name": "CarpetEdge_CrossN_N",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  100.0,
-                  0.26,
-                  0.5
-                ],
-                "Position": [
-                  0.0,
-                  0.84,
-                  18.0
-                ],
                 "Color": [
                   0.92,
                   0.75,
@@ -1027,32 +759,8 @@
                 ],
                 "Material": "Neon",
                 "TopSurface": "Smooth",
-                "BottomSurface": "Smooth"
-              }
-            },
-            {
-              "name": "CarpetEdge_CrossN_S",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  100.0,
-                  0.26,
-                  0.5
-                ],
-                "Position": [
-                  0.0,
-                  0.84,
-                  2.0
-                ],
-                "Color": [
-                  0.92,
-                  0.75,
-                  0.32
-                ],
-                "Material": "Neon",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth"
+                "BottomSurface": "Smooth",
+                "CanCollide": false
               }
             },
             {
@@ -1061,14 +769,14 @@
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  1.5,
-                  0.12,
-                  1.5
+                  1.35,
+                  0.08,
+                  1.35
                 ],
                 "Position": [
-                  -60,
-                  0.74,
-                  30
+                  -60.0,
+                  0.72,
+                  30.0
                 ],
                 "Color": [
                   0.85,
@@ -1077,7 +785,8 @@
                 ],
                 "Material": "SmoothPlastic",
                 "TopSurface": "Smooth",
-                "BottomSurface": "Smooth"
+                "BottomSurface": "Smooth",
+                "CanCollide": false
               }
             },
             {
@@ -1086,14 +795,14 @@
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  1.7,
-                  0.06,
-                  1.7
+                  1.55,
+                  0.04,
+                  1.55
                 ],
                 "Position": [
-                  -60,
-                  0.8,
-                  30
+                  -60.0,
+                  0.76,
+                  30.0
                 ],
                 "Color": [
                   0.92,
@@ -1112,14 +821,14 @@
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  0.55,
-                  0.05,
-                  0.55
+                  0.45,
+                  0.03,
+                  0.45
                 ],
                 "Position": [
-                  -60,
-                  0.82,
-                  30
+                  -60.0,
+                  0.78,
+                  30.0
                 ],
                 "Color": [
                   0.95,
@@ -1138,14 +847,14 @@
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  1.5,
-                  0.12,
-                  1.5
+                  1.35,
+                  0.08,
+                  1.35
                 ],
                 "Position": [
-                  -48,
-                  0.74,
-                  12
+                  -48.0,
+                  0.72,
+                  12.0
                 ],
                 "Color": [
                   0.15,
@@ -1154,7 +863,8 @@
                 ],
                 "Material": "SmoothPlastic",
                 "TopSurface": "Smooth",
-                "BottomSurface": "Smooth"
+                "BottomSurface": "Smooth",
+                "CanCollide": false
               }
             },
             {
@@ -1163,14 +873,14 @@
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  1.7,
-                  0.06,
-                  1.7
+                  1.55,
+                  0.04,
+                  1.55
                 ],
                 "Position": [
-                  -48,
-                  0.8,
-                  12
+                  -48.0,
+                  0.76,
+                  12.0
                 ],
                 "Color": [
                   0.92,
@@ -1189,14 +899,14 @@
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  0.55,
-                  0.05,
-                  0.55
+                  0.45,
+                  0.03,
+                  0.45
                 ],
                 "Position": [
-                  -48,
-                  0.82,
-                  12
+                  -48.0,
+                  0.78,
+                  12.0
                 ],
                 "Color": [
                   0.95,
@@ -1215,14 +925,14 @@
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  1.5,
-                  0.12,
-                  1.5
+                  1.35,
+                  0.08,
+                  1.35
                 ],
                 "Position": [
-                  -52,
-                  0.74,
-                  -8
+                  -52.0,
+                  0.72,
+                  -8.0
                 ],
                 "Color": [
                   0.95,
@@ -1231,7 +941,8 @@
                 ],
                 "Material": "SmoothPlastic",
                 "TopSurface": "Smooth",
-                "BottomSurface": "Smooth"
+                "BottomSurface": "Smooth",
+                "CanCollide": false
               }
             },
             {
@@ -1240,14 +951,14 @@
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  1.7,
-                  0.06,
-                  1.7
+                  1.55,
+                  0.04,
+                  1.55
                 ],
                 "Position": [
-                  -52,
-                  0.8,
-                  -8
+                  -52.0,
+                  0.76,
+                  -8.0
                 ],
                 "Color": [
                   0.92,
@@ -1266,14 +977,14 @@
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  0.55,
-                  0.05,
-                  0.55
+                  0.45,
+                  0.03,
+                  0.45
                 ],
                 "Position": [
-                  -52,
-                  0.82,
-                  -8
+                  -52.0,
+                  0.78,
+                  -8.0
                 ],
                 "Color": [
                   0.95,
@@ -1292,14 +1003,14 @@
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  1.5,
-                  0.12,
-                  1.5
+                  1.35,
+                  0.08,
+                  1.35
                 ],
                 "Position": [
-                  -38,
-                  0.74,
-                  -48
+                  -38.0,
+                  0.72,
+                  -48.0
                 ],
                 "Color": [
                   0.1,
@@ -1308,7 +1019,8 @@
                 ],
                 "Material": "SmoothPlastic",
                 "TopSurface": "Smooth",
-                "BottomSurface": "Smooth"
+                "BottomSurface": "Smooth",
+                "CanCollide": false
               }
             },
             {
@@ -1317,14 +1029,14 @@
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  1.7,
-                  0.06,
-                  1.7
+                  1.55,
+                  0.04,
+                  1.55
                 ],
                 "Position": [
-                  -38,
-                  0.8,
-                  -48
+                  -38.0,
+                  0.76,
+                  -48.0
                 ],
                 "Color": [
                   0.92,
@@ -1343,14 +1055,14 @@
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  0.55,
-                  0.05,
-                  0.55
+                  0.45,
+                  0.03,
+                  0.45
                 ],
                 "Position": [
-                  -38,
-                  0.82,
-                  -48
+                  -38.0,
+                  0.78,
+                  -48.0
                 ],
                 "Color": [
                   0.95,
@@ -1369,14 +1081,14 @@
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  1.5,
-                  0.12,
-                  1.5
+                  1.35,
+                  0.08,
+                  1.35
                 ],
                 "Position": [
-                  -20,
-                  0.74,
-                  32
+                  -65.0,
+                  0.72,
+                  -30.0
                 ],
                 "Color": [
                   0.08,
@@ -1385,7 +1097,8 @@
                 ],
                 "Material": "SmoothPlastic",
                 "TopSurface": "Smooth",
-                "BottomSurface": "Smooth"
+                "BottomSurface": "Smooth",
+                "CanCollide": false
               }
             },
             {
@@ -1394,14 +1107,14 @@
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  1.7,
-                  0.06,
-                  1.7
+                  1.55,
+                  0.04,
+                  1.55
                 ],
                 "Position": [
-                  -20,
-                  0.8,
-                  32
+                  -65.0,
+                  0.76,
+                  -30.0
                 ],
                 "Color": [
                   0.92,
@@ -1420,14 +1133,14 @@
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  0.55,
-                  0.05,
-                  0.55
+                  0.45,
+                  0.03,
+                  0.45
                 ],
                 "Position": [
-                  -20,
-                  0.82,
-                  32
+                  -65.0,
+                  0.78,
+                  -30.0
                 ],
                 "Color": [
                   0.95,
@@ -1446,14 +1159,14 @@
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  1.5,
-                  0.12,
-                  1.5
+                  1.35,
+                  0.08,
+                  1.35
                 ],
                 "Position": [
-                  -18,
-                  0.74,
-                  -40
+                  -45.0,
+                  0.72,
+                  -18.0
                 ],
                 "Color": [
                   0.92,
@@ -1462,7 +1175,8 @@
                 ],
                 "Material": "SmoothPlastic",
                 "TopSurface": "Smooth",
-                "BottomSurface": "Smooth"
+                "BottomSurface": "Smooth",
+                "CanCollide": false
               }
             },
             {
@@ -1471,14 +1185,14 @@
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  1.7,
-                  0.06,
-                  1.7
+                  1.55,
+                  0.04,
+                  1.55
                 ],
                 "Position": [
-                  -18,
-                  0.8,
-                  -40
+                  -45.0,
+                  0.76,
+                  -18.0
                 ],
                 "Color": [
                   0.92,
@@ -1497,14 +1211,14 @@
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  0.55,
-                  0.05,
-                  0.55
+                  0.45,
+                  0.03,
+                  0.45
                 ],
                 "Position": [
-                  -18,
-                  0.82,
-                  -40
+                  -45.0,
+                  0.78,
+                  -18.0
                 ],
                 "Color": [
                   0.95,
@@ -1523,14 +1237,14 @@
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  1.5,
-                  0.12,
-                  1.5
+                  1.35,
+                  0.08,
+                  1.35
                 ],
                 "Position": [
-                  -65,
-                  0.74,
-                  -30
+                  60.0,
+                  0.72,
+                  30.0
                 ],
                 "Color": [
                   0.85,
@@ -1539,7 +1253,8 @@
                 ],
                 "Material": "SmoothPlastic",
                 "TopSurface": "Smooth",
-                "BottomSurface": "Smooth"
+                "BottomSurface": "Smooth",
+                "CanCollide": false
               }
             },
             {
@@ -1548,14 +1263,14 @@
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  1.7,
-                  0.06,
-                  1.7
+                  1.55,
+                  0.04,
+                  1.55
                 ],
                 "Position": [
-                  -65,
-                  0.8,
-                  -30
+                  60.0,
+                  0.76,
+                  30.0
                 ],
                 "Color": [
                   0.92,
@@ -1574,14 +1289,14 @@
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  0.55,
-                  0.05,
-                  0.55
+                  0.45,
+                  0.03,
+                  0.45
                 ],
                 "Position": [
-                  -65,
-                  0.82,
-                  -30
+                  60.0,
+                  0.78,
+                  30.0
                 ],
                 "Color": [
                   0.95,
@@ -1600,14 +1315,14 @@
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  1.5,
-                  0.12,
-                  1.5
+                  1.35,
+                  0.08,
+                  1.35
                 ],
                 "Position": [
-                  -28,
-                  0.74,
-                  18
+                  48.0,
+                  0.72,
+                  12.0
                 ],
                 "Color": [
                   0.15,
@@ -1616,7 +1331,8 @@
                 ],
                 "Material": "SmoothPlastic",
                 "TopSurface": "Smooth",
-                "BottomSurface": "Smooth"
+                "BottomSurface": "Smooth",
+                "CanCollide": false
               }
             },
             {
@@ -1625,14 +1341,14 @@
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  1.7,
-                  0.06,
-                  1.7
+                  1.55,
+                  0.04,
+                  1.55
                 ],
                 "Position": [
-                  -28,
-                  0.8,
-                  18
+                  48.0,
+                  0.76,
+                  12.0
                 ],
                 "Color": [
                   0.92,
@@ -1651,14 +1367,14 @@
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  0.55,
-                  0.05,
-                  0.55
+                  0.45,
+                  0.03,
+                  0.45
                 ],
                 "Position": [
-                  -28,
-                  0.82,
-                  18
+                  48.0,
+                  0.78,
+                  12.0
                 ],
                 "Color": [
                   0.95,
@@ -1677,14 +1393,14 @@
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  1.5,
-                  0.12,
-                  1.5
+                  1.35,
+                  0.08,
+                  1.35
                 ],
                 "Position": [
-                  60,
-                  0.74,
-                  30
+                  52.0,
+                  0.72,
+                  -8.0
                 ],
                 "Color": [
                   0.95,
@@ -1693,7 +1409,8 @@
                 ],
                 "Material": "SmoothPlastic",
                 "TopSurface": "Smooth",
-                "BottomSurface": "Smooth"
+                "BottomSurface": "Smooth",
+                "CanCollide": false
               }
             },
             {
@@ -1702,14 +1419,14 @@
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  1.7,
-                  0.06,
-                  1.7
+                  1.55,
+                  0.04,
+                  1.55
                 ],
                 "Position": [
-                  60,
-                  0.8,
-                  30
+                  52.0,
+                  0.76,
+                  -8.0
                 ],
                 "Color": [
                   0.92,
@@ -1728,14 +1445,14 @@
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  0.55,
-                  0.05,
-                  0.55
+                  0.45,
+                  0.03,
+                  0.45
                 ],
                 "Position": [
-                  60,
-                  0.82,
-                  30
+                  52.0,
+                  0.78,
+                  -8.0
                 ],
                 "Color": [
                   0.95,
@@ -1754,14 +1471,14 @@
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  1.5,
-                  0.12,
-                  1.5
+                  1.35,
+                  0.08,
+                  1.35
                 ],
                 "Position": [
-                  48,
-                  0.74,
-                  12
+                  38.0,
+                  0.72,
+                  -48.0
                 ],
                 "Color": [
                   0.1,
@@ -1770,7 +1487,8 @@
                 ],
                 "Material": "SmoothPlastic",
                 "TopSurface": "Smooth",
-                "BottomSurface": "Smooth"
+                "BottomSurface": "Smooth",
+                "CanCollide": false
               }
             },
             {
@@ -1779,14 +1497,14 @@
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  1.7,
-                  0.06,
-                  1.7
+                  1.55,
+                  0.04,
+                  1.55
                 ],
                 "Position": [
-                  48,
-                  0.8,
-                  12
+                  38.0,
+                  0.76,
+                  -48.0
                 ],
                 "Color": [
                   0.92,
@@ -1805,14 +1523,14 @@
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  0.55,
-                  0.05,
-                  0.55
+                  0.45,
+                  0.03,
+                  0.45
                 ],
                 "Position": [
-                  48,
-                  0.82,
-                  12
+                  38.0,
+                  0.78,
+                  -48.0
                 ],
                 "Color": [
                   0.95,
@@ -1831,14 +1549,14 @@
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  1.5,
-                  0.12,
-                  1.5
+                  1.35,
+                  0.08,
+                  1.35
                 ],
                 "Position": [
-                  52,
-                  0.74,
-                  -8
+                  65.0,
+                  0.72,
+                  -30.0
                 ],
                 "Color": [
                   0.08,
@@ -1847,7 +1565,8 @@
                 ],
                 "Material": "SmoothPlastic",
                 "TopSurface": "Smooth",
-                "BottomSurface": "Smooth"
+                "BottomSurface": "Smooth",
+                "CanCollide": false
               }
             },
             {
@@ -1856,14 +1575,14 @@
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  1.7,
-                  0.06,
-                  1.7
+                  1.55,
+                  0.04,
+                  1.55
                 ],
                 "Position": [
-                  52,
-                  0.8,
-                  -8
+                  65.0,
+                  0.76,
+                  -30.0
                 ],
                 "Color": [
                   0.92,
@@ -1882,14 +1601,14 @@
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  0.55,
-                  0.05,
-                  0.55
+                  0.45,
+                  0.03,
+                  0.45
                 ],
                 "Position": [
-                  52,
-                  0.82,
-                  -8
+                  65.0,
+                  0.78,
+                  -30.0
                 ],
                 "Color": [
                   0.95,
@@ -1908,14 +1627,14 @@
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  1.5,
-                  0.12,
-                  1.5
+                  1.35,
+                  0.08,
+                  1.35
                 ],
                 "Position": [
-                  38,
-                  0.74,
-                  -48
+                  45.0,
+                  0.72,
+                  -18.0
                 ],
                 "Color": [
                   0.92,
@@ -1924,7 +1643,8 @@
                 ],
                 "Material": "SmoothPlastic",
                 "TopSurface": "Smooth",
-                "BottomSurface": "Smooth"
+                "BottomSurface": "Smooth",
+                "CanCollide": false
               }
             },
             {
@@ -1933,14 +1653,14 @@
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  1.7,
-                  0.06,
-                  1.7
+                  1.55,
+                  0.04,
+                  1.55
                 ],
                 "Position": [
-                  38,
-                  0.8,
-                  -48
+                  45.0,
+                  0.76,
+                  -18.0
                 ],
                 "Color": [
                   0.92,
@@ -1959,14 +1679,14 @@
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  0.55,
-                  0.05,
-                  0.55
+                  0.45,
+                  0.03,
+                  0.45
                 ],
                 "Position": [
-                  38,
-                  0.82,
-                  -48
+                  45.0,
+                  0.78,
+                  -18.0
                 ],
                 "Color": [
                   0.95,
@@ -1985,14 +1705,14 @@
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  1.5,
-                  0.12,
-                  1.5
+                  1.35,
+                  0.08,
+                  1.35
                 ],
                 "Position": [
-                  20,
-                  0.74,
-                  32
+                  -55.0,
+                  0.72,
+                  40.0
                 ],
                 "Color": [
                   0.85,
@@ -2001,7 +1721,8 @@
                 ],
                 "Material": "SmoothPlastic",
                 "TopSurface": "Smooth",
-                "BottomSurface": "Smooth"
+                "BottomSurface": "Smooth",
+                "CanCollide": false
               }
             },
             {
@@ -2010,14 +1731,14 @@
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  1.7,
-                  0.06,
-                  1.7
+                  1.55,
+                  0.04,
+                  1.55
                 ],
                 "Position": [
-                  20,
-                  0.8,
-                  32
+                  -55.0,
+                  0.76,
+                  40.0
                 ],
                 "Color": [
                   0.92,
@@ -2036,14 +1757,14 @@
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  0.55,
-                  0.05,
-                  0.55
+                  0.45,
+                  0.03,
+                  0.45
                 ],
                 "Position": [
-                  20,
-                  0.82,
-                  32
+                  -55.0,
+                  0.78,
+                  40.0
                 ],
                 "Color": [
                   0.95,
@@ -2062,14 +1783,14 @@
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  1.5,
-                  0.12,
-                  1.5
+                  1.35,
+                  0.08,
+                  1.35
                 ],
                 "Position": [
-                  18,
-                  0.74,
-                  -40
+                  55.0,
+                  0.72,
+                  40.0
                 ],
                 "Color": [
                   0.15,
@@ -2078,7 +1799,8 @@
                 ],
                 "Material": "SmoothPlastic",
                 "TopSurface": "Smooth",
-                "BottomSurface": "Smooth"
+                "BottomSurface": "Smooth",
+                "CanCollide": false
               }
             },
             {
@@ -2087,14 +1809,14 @@
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  1.7,
-                  0.06,
-                  1.7
+                  1.55,
+                  0.04,
+                  1.55
                 ],
                 "Position": [
-                  18,
-                  0.8,
-                  -40
+                  55.0,
+                  0.76,
+                  40.0
                 ],
                 "Color": [
                   0.92,
@@ -2113,14 +1835,14 @@
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  0.55,
-                  0.05,
-                  0.55
+                  0.45,
+                  0.03,
+                  0.45
                 ],
                 "Position": [
-                  18,
-                  0.82,
-                  -40
+                  55.0,
+                  0.78,
+                  40.0
                 ],
                 "Color": [
                   0.95,
@@ -2139,14 +1861,14 @@
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  1.5,
-                  0.12,
-                  1.5
+                  1.35,
+                  0.08,
+                  1.35
                 ],
                 "Position": [
-                  65,
-                  0.74,
-                  -30
+                  -70.0,
+                  0.72,
+                  8.0
                 ],
                 "Color": [
                   0.95,
@@ -2155,7 +1877,8 @@
                 ],
                 "Material": "SmoothPlastic",
                 "TopSurface": "Smooth",
-                "BottomSurface": "Smooth"
+                "BottomSurface": "Smooth",
+                "CanCollide": false
               }
             },
             {
@@ -2164,14 +1887,14 @@
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  1.7,
-                  0.06,
-                  1.7
+                  1.55,
+                  0.04,
+                  1.55
                 ],
                 "Position": [
-                  65,
-                  0.8,
-                  -30
+                  -70.0,
+                  0.76,
+                  8.0
                 ],
                 "Color": [
                   0.92,
@@ -2190,14 +1913,14 @@
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  0.55,
-                  0.05,
-                  0.55
+                  0.45,
+                  0.03,
+                  0.45
                 ],
                 "Position": [
-                  65,
-                  0.82,
-                  -30
+                  -70.0,
+                  0.78,
+                  8.0
                 ],
                 "Color": [
                   0.95,
@@ -2216,14 +1939,14 @@
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  1.5,
-                  0.12,
-                  1.5
+                  1.35,
+                  0.08,
+                  1.35
                 ],
                 "Position": [
-                  28,
-                  0.74,
-                  18
+                  70.0,
+                  0.72,
+                  8.0
                 ],
                 "Color": [
                   0.1,
@@ -2232,7 +1955,8 @@
                 ],
                 "Material": "SmoothPlastic",
                 "TopSurface": "Smooth",
-                "BottomSurface": "Smooth"
+                "BottomSurface": "Smooth",
+                "CanCollide": false
               }
             },
             {
@@ -2241,14 +1965,14 @@
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  1.7,
-                  0.06,
-                  1.7
+                  1.55,
+                  0.04,
+                  1.55
                 ],
                 "Position": [
-                  28,
-                  0.8,
-                  18
+                  70.0,
+                  0.76,
+                  8.0
                 ],
                 "Color": [
                   0.92,
@@ -2267,14 +1991,14 @@
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  0.55,
-                  0.05,
-                  0.55
+                  0.45,
+                  0.03,
+                  0.45
                 ],
                 "Position": [
-                  28,
-                  0.82,
-                  18
+                  70.0,
+                  0.78,
+                  8.0
                 ],
                 "Color": [
                   0.95,
@@ -2293,14 +2017,14 @@
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  1.5,
-                  0.12,
-                  1.5
+                  1.35,
+                  0.08,
+                  1.35
                 ],
                 "Position": [
-                  -10,
-                  0.74,
-                  22
+                  -42.0,
+                  0.72,
+                  -58.0
                 ],
                 "Color": [
                   0.08,
@@ -2309,7 +2033,8 @@
                 ],
                 "Material": "SmoothPlastic",
                 "TopSurface": "Smooth",
-                "BottomSurface": "Smooth"
+                "BottomSurface": "Smooth",
+                "CanCollide": false
               }
             },
             {
@@ -2318,14 +2043,14 @@
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  1.7,
-                  0.06,
-                  1.7
+                  1.55,
+                  0.04,
+                  1.55
                 ],
                 "Position": [
-                  -10,
-                  0.8,
-                  22
+                  -42.0,
+                  0.76,
+                  -58.0
                 ],
                 "Color": [
                   0.92,
@@ -2344,14 +2069,14 @@
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  0.55,
-                  0.05,
-                  0.55
+                  0.45,
+                  0.03,
+                  0.45
                 ],
                 "Position": [
-                  -10,
-                  0.82,
-                  22
+                  -42.0,
+                  0.78,
+                  -58.0
                 ],
                 "Color": [
                   0.95,
@@ -2370,14 +2095,14 @@
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  1.5,
-                  0.12,
-                  1.5
+                  1.35,
+                  0.08,
+                  1.35
                 ],
                 "Position": [
-                  10,
-                  0.74,
-                  22
+                  42.0,
+                  0.72,
+                  -58.0
                 ],
                 "Color": [
                   0.92,
@@ -2386,7 +2111,8 @@
                 ],
                 "Material": "SmoothPlastic",
                 "TopSurface": "Smooth",
-                "BottomSurface": "Smooth"
+                "BottomSurface": "Smooth",
+                "CanCollide": false
               }
             },
             {
@@ -2395,14 +2121,14 @@
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  1.7,
-                  0.06,
-                  1.7
+                  1.55,
+                  0.04,
+                  1.55
                 ],
                 "Position": [
-                  10,
-                  0.8,
-                  22
+                  42.0,
+                  0.76,
+                  -58.0
                 ],
                 "Color": [
                   0.92,
@@ -2421,14 +2147,14 @@
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  0.55,
-                  0.05,
-                  0.55
+                  0.45,
+                  0.03,
+                  0.45
                 ],
                 "Position": [
-                  10,
-                  0.82,
-                  22
+                  42.0,
+                  0.78,
+                  -58.0
                 ],
                 "Color": [
                   0.95,
@@ -2447,14 +2173,14 @@
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  1.5,
-                  0.12,
-                  1.5
+                  1.35,
+                  0.08,
+                  1.35
                 ],
                 "Position": [
-                  -10,
-                  0.74,
-                  -45
+                  -30.0,
+                  0.72,
+                  -40.0
                 ],
                 "Color": [
                   0.85,
@@ -2463,7 +2189,8 @@
                 ],
                 "Material": "SmoothPlastic",
                 "TopSurface": "Smooth",
-                "BottomSurface": "Smooth"
+                "BottomSurface": "Smooth",
+                "CanCollide": false
               }
             },
             {
@@ -2472,14 +2199,14 @@
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  1.7,
-                  0.06,
-                  1.7
+                  1.55,
+                  0.04,
+                  1.55
                 ],
                 "Position": [
-                  -10,
-                  0.8,
-                  -45
+                  -30.0,
+                  0.76,
+                  -40.0
                 ],
                 "Color": [
                   0.92,
@@ -2498,14 +2225,14 @@
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  0.55,
-                  0.05,
-                  0.55
+                  0.45,
+                  0.03,
+                  0.45
                 ],
                 "Position": [
-                  -10,
-                  0.82,
-                  -45
+                  -30.0,
+                  0.78,
+                  -40.0
                 ],
                 "Color": [
                   0.95,
@@ -2524,14 +2251,14 @@
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  1.5,
-                  0.12,
-                  1.5
+                  1.35,
+                  0.08,
+                  1.35
                 ],
                 "Position": [
-                  10,
-                  0.74,
-                  -45
+                  30.0,
+                  0.72,
+                  -40.0
                 ],
                 "Color": [
                   0.15,
@@ -2540,7 +2267,8 @@
                 ],
                 "Material": "SmoothPlastic",
                 "TopSurface": "Smooth",
-                "BottomSurface": "Smooth"
+                "BottomSurface": "Smooth",
+                "CanCollide": false
               }
             },
             {
@@ -2549,14 +2277,14 @@
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  1.7,
-                  0.06,
-                  1.7
+                  1.55,
+                  0.04,
+                  1.55
                 ],
                 "Position": [
-                  10,
-                  0.8,
-                  -45
+                  30.0,
+                  0.76,
+                  -40.0
                 ],
                 "Color": [
                   0.92,
@@ -2575,322 +2303,14 @@
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  0.55,
-                  0.05,
-                  0.55
+                  0.45,
+                  0.03,
+                  0.45
                 ],
                 "Position": [
-                  10,
-                  0.82,
-                  -45
-                ],
-                "Color": [
-                  0.95,
-                  0.95,
-                  0.98
-                ],
-                "Material": "SmoothPlastic",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false
-              }
-            },
-            {
-              "name": "FloorChip_20",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  1.5,
-                  0.12,
-                  1.5
-                ],
-                "Position": [
-                  -70,
-                  0.74,
-                  5
-                ],
-                "Color": [
-                  0.95,
-                  0.95,
-                  0.98
-                ],
-                "Material": "SmoothPlastic",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth"
-              }
-            },
-            {
-              "name": "FloorChipRim_20",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  1.7,
-                  0.06,
-                  1.7
-                ],
-                "Position": [
-                  -70,
-                  0.8,
-                  5
-                ],
-                "Color": [
-                  0.92,
-                  0.75,
-                  0.32
-                ],
-                "Material": "Neon",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false
-              }
-            },
-            {
-              "name": "FloorChipPip_20",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  0.55,
-                  0.05,
-                  0.55
-                ],
-                "Position": [
-                  -70,
-                  0.82,
-                  5
-                ],
-                "Color": [
-                  0.95,
-                  0.95,
-                  0.98
-                ],
-                "Material": "SmoothPlastic",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false
-              }
-            },
-            {
-              "name": "FloorChip_21",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  1.5,
-                  0.12,
-                  1.5
-                ],
-                "Position": [
-                  70,
-                  0.74,
-                  5
-                ],
-                "Color": [
-                  0.1,
-                  0.55,
-                  0.3
-                ],
-                "Material": "SmoothPlastic",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth"
-              }
-            },
-            {
-              "name": "FloorChipRim_21",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  1.7,
-                  0.06,
-                  1.7
-                ],
-                "Position": [
-                  70,
-                  0.8,
-                  5
-                ],
-                "Color": [
-                  0.92,
-                  0.75,
-                  0.32
-                ],
-                "Material": "Neon",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false
-              }
-            },
-            {
-              "name": "FloorChipPip_21",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  0.55,
-                  0.05,
-                  0.55
-                ],
-                "Position": [
-                  70,
-                  0.82,
-                  5
-                ],
-                "Color": [
-                  0.95,
-                  0.95,
-                  0.98
-                ],
-                "Material": "SmoothPlastic",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false
-              }
-            },
-            {
-              "name": "FloorChip_22",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  1.5,
-                  0.12,
-                  1.5
-                ],
-                "Position": [
-                  -45,
-                  0.74,
-                  -60
-                ],
-                "Color": [
-                  0.08,
-                  0.08,
-                  0.1
-                ],
-                "Material": "SmoothPlastic",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth"
-              }
-            },
-            {
-              "name": "FloorChipRim_22",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  1.7,
-                  0.06,
-                  1.7
-                ],
-                "Position": [
-                  -45,
-                  0.8,
-                  -60
-                ],
-                "Color": [
-                  0.92,
-                  0.75,
-                  0.32
-                ],
-                "Material": "Neon",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false
-              }
-            },
-            {
-              "name": "FloorChipPip_22",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  0.55,
-                  0.05,
-                  0.55
-                ],
-                "Position": [
-                  -45,
-                  0.82,
-                  -60
-                ],
-                "Color": [
-                  0.95,
-                  0.95,
-                  0.98
-                ],
-                "Material": "SmoothPlastic",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false
-              }
-            },
-            {
-              "name": "FloorChip_23",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  1.5,
-                  0.12,
-                  1.5
-                ],
-                "Position": [
-                  45,
-                  0.74,
-                  -60
-                ],
-                "Color": [
-                  0.92,
-                  0.75,
-                  0.32
-                ],
-                "Material": "SmoothPlastic",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth"
-              }
-            },
-            {
-              "name": "FloorChipRim_23",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  1.7,
-                  0.06,
-                  1.7
-                ],
-                "Position": [
-                  45,
-                  0.8,
-                  -60
-                ],
-                "Color": [
-                  0.92,
-                  0.75,
-                  0.32
-                ],
-                "Material": "Neon",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false
-              }
-            },
-            {
-              "name": "FloorChipPip_23",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  0.55,
-                  0.05,
-                  0.55
-                ],
-                "Position": [
-                  45,
-                  0.82,
-                  -60
+                  30.0,
+                  0.78,
+                  -40.0
                 ],
                 "Color": [
                   0.95,
@@ -2915,14 +2335,14 @@
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  75.0,
+                  80.0,
                   22.0,
                   2.5
                 ],
                 "Position": [
-                  -47.5,
+                  -52.0,
                   11.0,
-                  60.0
+                  66.0
                 ],
                 "Color": [
                   0.035,
@@ -2940,14 +2360,14 @@
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  75.0,
+                  80.0,
                   22.0,
                   2.5
                 ],
                 "Position": [
-                  47.5,
+                  52.0,
                   11.0,
-                  60.0
+                  66.0
                 ],
                 "Color": [
                   0.035,
@@ -2965,14 +2385,14 @@
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  20.0,
+                  24.0,
                   4.0,
                   2.5
                 ],
                 "Position": [
                   0.0,
                   20.0,
-                  60.0
+                  66.0
                 ],
                 "Color": [
                   0.035,
@@ -2997,7 +2417,7 @@
                 "Position": [
                   0.0,
                   21.0,
-                  61.4
+                  67.4
                 ],
                 "Color": [
                   0.133,
@@ -3020,9 +2440,9 @@
                   3.5
                 ],
                 "Position": [
-                  -11.5,
+                  -13.0,
                   11.0,
-                  58.5
+                  64.5
                 ],
                 "Color": [
                   0.09,
@@ -3045,9 +2465,9 @@
                   3.5
                 ],
                 "Position": [
-                  11.5,
+                  13.0,
                   11.0,
-                  58.5
+                  64.5
                 ],
                 "Color": [
                   0.09,
@@ -3070,9 +2490,9 @@
                   0.45
                 ],
                 "Position": [
-                  -11.5,
+                  -13.0,
                   11.0,
-                  60.3
+                  66.3
                 ],
                 "Color": [
                   0.92,
@@ -3095,9 +2515,9 @@
                   0.45
                 ],
                 "Position": [
-                  11.5,
+                  13.0,
                   11.0,
-                  60.3
+                  66.3
                 ],
                 "Color": [
                   0.92,
@@ -3117,12 +2537,12 @@
                 "Size": [
                   2.5,
                   54.0,
-                  200.0
+                  210.0
                 ],
                 "Position": [
-                  -90.0,
+                  -92.0,
                   27.0,
-                  -40.0
+                  -37.0
                 ],
                 "Color": [
                   0.035,
@@ -3142,12 +2562,12 @@
                 "Size": [
                   2.5,
                   54.0,
-                  200.0
+                  210.0
                 ],
                 "Position": [
-                  90.0,
+                  92.0,
                   27.0,
-                  -40.0
+                  -37.0
                 ],
                 "Color": [
                   0.035,
@@ -3165,7 +2585,7 @@
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  182.5,
+                  186.5,
                   54.0,
                   2.5
                 ],
@@ -3190,12 +2610,12 @@
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  60.0,
+                  70.0,
                   22.0,
                   1.5
                 ],
                 "Position": [
-                  -45.0,
+                  -47.0,
                   11.0,
                   -55.0
                 ],
@@ -3215,12 +2635,12 @@
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  60.0,
+                  70.0,
                   22.0,
                   1.5
                 ],
                 "Position": [
-                  45.0,
+                  47.0,
                   11.0,
                   -55.0
                 ],
@@ -3290,12 +2710,12 @@
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  19.0,
+                  26.0,
                   54.0,
                   1.5
                 ],
                 "Position": [
-                  -70.5,
+                  -79.0,
                   27.0,
                   -82.0
                 ],
@@ -3615,12 +3035,12 @@
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  22.0,
+                  26.0,
                   54.0,
                   1.5
                 ],
                 "Position": [
-                  72.0,
+                  79.0,
                   27.0,
                   -82.0
                 ],
@@ -3795,7 +3215,7 @@
                   18.0
                 ],
                 "Position": [
-                  -88.5,
+                  -90.5,
                   20.8,
                   -50.0
                 ],
@@ -3820,7 +3240,7 @@
                   18.0
                 ],
                 "Position": [
-                  88.5,
+                  90.5,
                   20.8,
                   -50.0
                 ],
@@ -3845,7 +3265,7 @@
                   18.0
                 ],
                 "Position": [
-                  -88.5,
+                  -90.5,
                   20.8,
                   -30.0
                 ],
@@ -3870,7 +3290,7 @@
                   18.0
                 ],
                 "Position": [
-                  88.5,
+                  90.5,
                   20.8,
                   -30.0
                 ],
@@ -3895,7 +3315,7 @@
                   18.0
                 ],
                 "Position": [
-                  -88.5,
+                  -90.5,
                   20.8,
                   -10.0
                 ],
@@ -3920,7 +3340,7 @@
                   18.0
                 ],
                 "Position": [
-                  88.5,
+                  90.5,
                   20.8,
                   -10.0
                 ],
@@ -3945,7 +3365,7 @@
                   18.0
                 ],
                 "Position": [
-                  -88.5,
+                  -90.5,
                   20.8,
                   10.0
                 ],
@@ -3970,7 +3390,7 @@
                   18.0
                 ],
                 "Position": [
-                  88.5,
+                  90.5,
                   20.8,
                   10.0
                 ],
@@ -3995,7 +3415,7 @@
                   18.0
                 ],
                 "Position": [
-                  -88.5,
+                  -90.5,
                   20.8,
                   30.0
                 ],
@@ -4020,7 +3440,7 @@
                   18.0
                 ],
                 "Position": [
-                  88.5,
+                  90.5,
                   20.8,
                   30.0
                 ],
@@ -4045,7 +3465,7 @@
                   18.0
                 ],
                 "Position": [
-                  -88.5,
+                  -90.5,
                   20.8,
                   50.0
                 ],
@@ -4070,7 +3490,7 @@
                   18.0
                 ],
                 "Position": [
-                  88.5,
+                  90.5,
                   20.8,
                   50.0
                 ],
@@ -4082,6 +3502,110 @@
                 "Material": "Neon",
                 "CanCollide": false,
                 "Transparency": 0.35
+              }
+            },
+            {
+              "name": "Corner_SW",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  3.0,
+                  22.0,
+                  3.0
+                ],
+                "Position": [
+                  -91.0,
+                  11.0,
+                  65.0
+                ],
+                "Color": [
+                  0.12,
+                  0.05,
+                  0.18
+                ],
+                "Material": "SmoothPlastic",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": true
+              }
+            },
+            {
+              "name": "Corner_SE",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  3.0,
+                  22.0,
+                  3.0
+                ],
+                "Position": [
+                  91.0,
+                  11.0,
+                  65.0
+                ],
+                "Color": [
+                  0.12,
+                  0.05,
+                  0.18
+                ],
+                "Material": "SmoothPlastic",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": true
+              }
+            },
+            {
+              "name": "Corner_NW",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  3.0,
+                  54.0,
+                  3.0
+                ],
+                "Position": [
+                  -91.0,
+                  27.0,
+                  -139.0
+                ],
+                "Color": [
+                  0.12,
+                  0.05,
+                  0.18
+                ],
+                "Material": "SmoothPlastic",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": true
+              }
+            },
+            {
+              "name": "Corner_NE",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  3.0,
+                  54.0,
+                  3.0
+                ],
+                "Position": [
+                  91.0,
+                  27.0,
+                  -139.0
+                ],
+                "Color": [
+                  0.12,
+                  0.05,
+                  0.18
+                ],
+                "Material": "SmoothPlastic",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": true
               }
             }
           ]

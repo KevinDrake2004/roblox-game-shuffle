@@ -43,7 +43,9 @@ This document covers **world layout** only. Game rules live in [`ROCKET_RUN.md`]
                          +Z (south)
 ```
 
-Envelope ≈ **180 × 200** studs. Pit roof ~22 studs; game-room roof ~54 studs (Plinko board height).
+Envelope ≈ **184 × 206** studs (outer walls at X±92, Z +66 / −140). Pit roof ~22 studs; game-room roof ~54 studs (Plinko board height).
+
+Floor layers use a fixed height ladder (base → green field → red aisle runners → chips) so carpets do not z-fight. Red carpet stays on walk aisles only; table pits stay on green so chairs do not sit on red.
 
 ## Arena origins (inside the building)
 
@@ -77,10 +79,10 @@ These are **room doorways**, not destination teleporters.
 `Workspace.Lobby.Atmosphere`:
 
 - `Tables` - roulette / blackjack / poker props (felt, rims, chips, lamps)
-- **Chairs** are placed at runtime by `CasinoChairs` via `CFrame.lookAt` so every seat faces its table (including angled tables)
+- **Chairs** are placed at runtime by `CasinoChairs` via `CFrame.lookAt` so every seat faces its table (including angled tables). Each table also gets a distinct **dealer** seat (dark cushion / gold trim).
 - Felt labels (roulette grid / BET spots) via `LobbyService.dressCasinoTables`
 - `LoungeBar` - marble bar + bottle shelf; stools placed by `CasinoChairs`
-- Floor: green casino field carpet + red runners + decorative floor chips
+- Floor: green casino field under pits + red aisle runners only (chairs stay off red) + decorative floor chips
 
 `Workspace.Lobby.Structure.CeilingLights` / `Chandeliers` / `Sconces` - pit and hall lighting.
 
