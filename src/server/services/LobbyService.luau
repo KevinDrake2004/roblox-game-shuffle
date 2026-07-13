@@ -168,6 +168,98 @@ local function ensurePortalLabels()
 	end
 end
 
+local function dressFeltLayout(layout: BasePart)
+	if layout:FindFirstChild("FeltGui") then
+		return
+	end
+	local gui = Instance.new("SurfaceGui")
+	gui.Name = "FeltGui"
+	gui.Face = Enum.NormalId.Top
+	gui.SizingMode = Enum.SurfaceGuiSizingMode.PixelsPerStud
+	gui.PixelsPerStud = 40
+	gui.Parent = layout
+
+	local grid = Instance.new("Frame")
+	grid.Name = "Grid"
+	grid.BackgroundTransparency = 1
+	grid.Size = UDim2.fromScale(1, 1)
+	grid.Parent = gui
+
+	local layoutGrid = Instance.new("UIGridLayout")
+	layoutGrid.CellPadding = UDim2.fromOffset(2, 2)
+	layoutGrid.CellSize = UDim2.fromScale(0.32, 0.08)
+	layoutGrid.FillDirectionMaxCells = 3
+	layoutGrid.SortOrder = Enum.SortOrder.LayoutOrder
+	layoutGrid.Parent = grid
+
+	local red = Color3.fromRGB(180, 30, 40)
+	local black = Color3.fromRGB(20, 20, 24)
+	for n = 1, 24 do
+		local cell = Instance.new("TextLabel")
+		cell.BackgroundColor3 = if n % 2 == 0 then black else red
+		cell.BackgroundTransparency = 0.15
+		cell.BorderSizePixel = 0
+		cell.Font = Enum.Font.GothamBold
+		cell.Text = tostring(n)
+		cell.TextColor3 = Config.COLORS.Text
+		cell.TextScaled = true
+		cell.Parent = grid
+	end
+end
+
+local function dressBetSpot(spot: BasePart, index: number)
+	if spot:FindFirstChild("BetGui") then
+		return
+	end
+	local gui = Instance.new("SurfaceGui")
+	gui.Name = "BetGui"
+	gui.Face = Enum.NormalId.Top
+	gui.SizingMode = Enum.SurfaceGuiSizingMode.PixelsPerStud
+	gui.PixelsPerStud = 50
+	gui.Parent = spot
+
+	local label = Instance.new("TextLabel")
+	label.BackgroundTransparency = 1
+	label.Size = UDim2.fromScale(1, 1)
+	label.Font = Enum.Font.GothamBold
+	label.Text = `BET {index}`
+	label.TextColor3 = Config.COLORS.NeonGold
+	label.TextScaled = true
+	label.TextStrokeTransparency = 0.5
+	label.Parent = gui
+end
+
+local function dressCasinoTables()
+	local lobby = Workspace:FindFirstChild(LOBBY_NAME)
+	if not lobby then
+		return
+	end
+	local atmosphere = lobby:FindFirstChild("Atmosphere")
+	if not atmosphere then
+		return
+	end
+	local tables = atmosphere:FindFirstChild("Tables")
+	if not tables then
+		return
+	end
+
+	for _, tableFolder in tables:GetChildren() do
+		if not tableFolder:IsA("Folder") then
+			continue
+		end
+		local layout = tableFolder:FindFirstChild("FeltLayout")
+		if layout and layout:IsA("BasePart") then
+			dressFeltLayout(layout)
+		end
+		for _, child in tableFolder:GetChildren() do
+			if child:IsA("BasePart") and string.sub(child.Name, 1, 8) == "BetSpot_" then
+				local index = tonumber(string.sub(child.Name, 9)) or 1
+				dressBetSpot(child, index)
+			end
+		end
+	end
+end
+
 local function handlePortalRequest(player: Player, gameId: GameId)
 	local playable = Config.PLAYABLE_GAMES[gameId] == true
 	local displayName = gameId
@@ -283,6 +375,7 @@ function LobbyService.start()
 
 	applyLighting()
 	ensurePortalLabels()
+	dressCasinoTables()
 	bindPortalPrompts()
 
 	janitor:Add(Players.PlayerAdded:Connect(bindPlayerMovement), "Disconnect")

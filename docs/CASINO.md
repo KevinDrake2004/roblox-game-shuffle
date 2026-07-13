@@ -76,12 +76,13 @@ These are **room doorways**, not destination teleporters.
 
 `Workspace.Lobby.Atmosphere`:
 
-- `Tables` - premium roulette / blackjack / poker set dressing (chairs, chips, overhead spots)
-- `LoungeBar` - west-wall marble bar + bottle shelf
+- `Tables` - roulette / blackjack / poker with **fabric cushion chairs**, wood rims, chip stacks, overhead lamps
+- Felt labels (roulette grid / BET spots) are applied at runtime by `LobbyService.dressCasinoTables`
+- `LoungeBar` - marble bar, bottle shelf, bar stools
 
 `Workspace.Lobby.Structure.CeilingLights` / `Chandeliers` / `Sconces` - pit and hall lighting.
 
-Do not wire these to remotes or currency.
+Do not wire these to remotes or currency. True MeshPart catalog props can replace these later once owned in the place.
 
 ## What not to touch
 
