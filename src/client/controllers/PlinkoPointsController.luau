@@ -40,6 +40,8 @@ local sessionNet = 0
 local dropBusy = false
 local pendingResults = 0
 local activeDropIds: { [number]: boolean } = {}
+-- Invalidates in-flight cup-flash batch counters on cancel / new drop.
+local bucketFlashBatch = 0
 local currentBallCount = Config.PLINKO.DefaultBallCount
 local currentRiskId = Config.PLINKO.DefaultRiskId
 local savedCameraType: Enum.CameraType? = nil
@@ -188,6 +190,7 @@ local function showLocalMultiplierLabels()
 end
 
 local function rebuildRiskBoard(riskId: string)
+	bucketFlashBatch += 1
 	PlinkoBallPhysics.cancel()
 	PlinkoBallPhysics.rebuildBoard(riskId)
 	showLocalMultiplierLabels()
@@ -340,6 +343,20 @@ local function startFreeDrop(payload: PlinkoPointsDropStarted)
 		string.format("Wager %d × %d  |  Balance %d", payload.wager, payload.ballCount, payload.chips)
 	)
 
+	-- Track local sim completions so cup colors reset when the whole drop batch finishes.
+	bucketFlashBatch += 1
+	local batchId = bucketFlashBatch
+	local ballsLeft = #payload.dropIds
+	local function noteBallFinished()
+		if batchId ~= bucketFlashBatch then
+			return
+		end
+		ballsLeft = math.max(0, ballsLeft - 1)
+		if ballsLeft <= 0 then
+			PlinkoBallPhysics.resetBucketsIdle()
+		end
+	end
+
 	local burstSize = math.max(1, math.floor(payload.burstSize or 1))
 	for index, dropId in payload.dropIds do
 		activeDropIds[dropId] = true
@@ -347,9 +364,11 @@ local function startFreeDrop(payload: PlinkoPointsDropStarted)
 		local delaySeconds = wave * payload.staggerSeconds
 		task.delay(delaySeconds, function()
 			if not active or not activeDropIds[dropId] then
+				noteBallFinished()
 				return
 			end
 			PlinkoBallPhysics.drop(function(bucketIndex: number)
+				noteBallFinished()
 				if not active or not activeDropIds[dropId] then
 					return
 				end
@@ -367,8 +386,10 @@ function PlinkoPointsController.stopSession()
 	dropBusy = false
 	pendingResults = 0
 	table.clear(activeDropIds)
+	bucketFlashBatch += 1
 	sessionNet = 0
 	PlinkoBallPhysics.cancel()
+	PlinkoBallPhysics.resetBucketsIdle()
 	clearLocalMultiplierLabels()
 	PlinkoBallPhysics.clearBoard()
 	cameraJanitor:Cleanup()
@@ -459,7 +480,9 @@ function PlinkoPointsController.start()
 		dropBusy = false
 		pendingResults = 0
 		table.clear(activeDropIds)
+		bucketFlashBatch += 1
 		PlinkoBallPhysics.cancel()
+		PlinkoBallPhysics.resetBucketsIdle()
 		PlinkoPointsHud.setDropEnabled(true)
 		PlinkoPointsHud.setDropLabel(dropButtonLabel(currentBallCount))
 		PlinkoPointsHud.setStatus(payload.reason or "Drop rejected")

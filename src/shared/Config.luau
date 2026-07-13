@@ -29,6 +29,8 @@ Config.COLORS = {
 	NeonCyan = Color3.fromRGB(34, 211, 238),
 	NeonMagenta = Color3.fromRGB(236, 72, 153),
 	NeonLime = Color3.fromRGB(163, 230, 53),
+	-- Jackpot / near-max Plinko bucket flash (distinct from lime mid-high hits).
+	NeonGold = Color3.fromRGB(250, 204, 21),
 	Text = Color3.fromRGB(248, 250, 252),
 }
 

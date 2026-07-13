@@ -92,7 +92,30 @@ local function pinBucket(bucket: BasePart, homeCFrame: CFrame, homeSize: Vector3
 	bucket.CFrame = homeCFrame
 end
 
+-- Idle cup color after a drop batch (and at board build).
+local IDLE_BUCKET_COLOR = Config.COLORS.NeonPurple
+
+--[=[
+	Map a bucket multiplier to a land-flash color, normalized by the risk's max.
+	Bands stay distinct across Low (~17x), Med (~121x), and High (~316x) tables.
+]=]
+local function bucketLandColor(multiplier: number, maxMultiplier: number): Color3
+	if multiplier <= 0 then
+		return Config.COLORS.NeonMagenta
+	end
+	local t = if maxMultiplier > 0 then multiplier / maxMultiplier else 0
+	if t < 0.06 then
+		return Config.COLORS.NeonCyan
+	elseif t < 0.20 then
+		return Config.COLORS.NeonPurple
+	elseif t < 0.50 then
+		return Config.COLORS.NeonLime
+	end
+	return Config.COLORS.NeonGold
+end
+
 -- Flash color + light only. Never tween Size/CFrame - that made buckets drift under multi-hit.
+-- Land color persists until resetBucketsIdle (batch complete / cancel).
 local function glowBucket(bucket: BasePart, color: Color3, homeCFrame: CFrame, homeSize: Vector3)
 	pinBucket(bucket, homeCFrame, homeSize)
 
@@ -103,30 +126,29 @@ local function glowBucket(bucket: BasePart, color: Color3, homeCFrame: CFrame, h
 	light.Color = color
 	light.Parent = bucket
 
-	local originalColor = bucket.Color
 	local flash = TweenService:Create(
 		bucket,
 		TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
 		{ Color = color }
 	)
-	local restore = TweenService:Create(
-		bucket,
-		TweenInfo.new(0.35, Enum.EasingStyle.Quad, Enum.EasingDirection.In),
-		{ Color = originalColor }
-	)
 	flash:Play()
 	flash.Completed:Connect(function()
 		if bucket.Parent then
 			pinBucket(bucket, homeCFrame, homeSize)
-			restore:Play()
-		end
-	end)
-	restore.Completed:Connect(function()
-		if bucket.Parent then
-			pinBucket(bucket, homeCFrame, homeSize)
+			bucket.Color = color
 		end
 	end)
 	Debris:AddItem(light, 0.7)
+end
+
+local function setBucketLandColor(
+	bucket: BasePart,
+	multiplier: number,
+	maxMultiplier: number,
+	homeCFrame: CFrame,
+	homeSize: Vector3
+)
+	glowBucket(bucket, bucketLandColor(multiplier, maxMultiplier), homeCFrame, homeSize)
 end
 
 local function flashPeg(part: BasePart)
@@ -408,13 +430,9 @@ function PlinkoBallPhysics.rebuildBoard(riskId: string): boolean
 		bucket.Size = Vector3.new(sizeX, bucketHeight, bucketDepth)
 		bucket.Position = Vector3.new(firstCenter + index * bucketWidth, bucketY, boardZ)
 		local mult = multipliers[index + 1] or 0
-		if mult <= 0 then
-			bucket.Color = Config.COLORS.NeonMagenta
-		elseif mult >= risk.maxMultiplier * 0.5 then
-			bucket.Color = Config.COLORS.NeonLime
-		else
-			bucket.Color = Config.COLORS.NeonPurple
-		end
+		bucket:SetAttribute("Multiplier", mult)
+		-- Idle cups are all base purple; land flash paints by multiplier.
+		bucket.Color = IDLE_BUCKET_COLOR
 		bucket.Material = Enum.Material.Neon
 		bucket.Parent = bucketsFolder
 	end
@@ -466,6 +484,27 @@ function PlinkoBallPhysics.getLocalBucketsFolder(): Folder?
 	return nil
 end
 
+--[=[
+	Reset every local cup to idle base purple (after a drop batch or cancel/leave).
+]=]
+function PlinkoBallPhysics.resetBucketsIdle()
+	local buckets = PlinkoBallPhysics.getLocalBucketsFolder()
+	if not buckets then
+		return
+	end
+	for _, child in buckets:GetChildren() do
+		if child:IsA("BasePart") and string.match(child.Name, "^Bucket_%d+$") then
+			local home = getBucketHome(child)
+			pinBucket(child, home.cframe, home.size)
+			child.Color = IDLE_BUCKET_COLOR
+			local glow = child:FindFirstChild("LandGlow")
+			if glow then
+				glow:Destroy()
+			end
+		end
+	end
+end
+
 local function resolveBucketAtX(buckets: { BucketInfo }, x: number): BucketInfo?
 	if #buckets == 0 then
 		return nil
@@ -494,6 +533,7 @@ end
 
 --[=[
 	Cancel every in-flight local ball simulation (keeps the local risk board).
+	Also restores cups to idle purple so land flashes do not stick.
 ]=]
 function PlinkoBallPhysics.cancel()
 	local snapshot: { () -> () } = {}
@@ -506,6 +546,7 @@ function PlinkoBallPhysics.cancel()
 	table.clear(activeCancels)
 	local ballsFolder = getOrCreateSubfolder("Balls")
 	ballsFolder:ClearAllChildren()
+	PlinkoBallPhysics.resetBucketsIdle()
 end
 
 --[=[
@@ -584,7 +625,11 @@ function PlinkoBallPhysics.drop(onLanded: (bucketIndex: number) -> ()): SimHandl
 	for _, bucket in buckets do
 		landY = math.min(landY, bucket.landY)
 	end
-	local centerBucketIndex = math.floor((#buckets - 1) / 2)
+
+	local riskIdAttr = if board then board:GetAttribute("RiskId") else nil
+	local riskId = if typeof(riskIdAttr) == "string" then riskIdAttr else Config.PLINKO.DefaultRiskId
+	local risk = Config.getPlinkoRisk(riskId)
+	local maxMultiplier = risk.maxMultiplier
 
 	local rng = Random.new()
 	local startSpread = physics.startSpread
@@ -634,10 +679,11 @@ function PlinkoBallPhysics.drop(onLanded: (bucketIndex: number) -> ()): SimHandl
 		-- Keep the natural X; only settle Y into the cup.
 		pos = Vector3.new(pos.X, bucket.landY, boardZ)
 		ball.Position = pos
-		local glowColor = if bucket.index == centerBucketIndex
-			then Config.COLORS.NeonMagenta
-			else Config.COLORS.NeonLime
-		glowBucket(bucket.part, glowColor, bucket.homeCFrame, bucket.homeSize)
+		local multAttr = bucket.part:GetAttribute("Multiplier")
+		local multiplier = if typeof(multAttr) == "number"
+			then multAttr
+			else (risk.bucketMultipliers[bucket.index + 1] or 0)
+		setBucketLandColor(bucket.part, multiplier, maxMultiplier, bucket.homeCFrame, bucket.homeSize)
 		if connection then
 			connection:Disconnect()
 			connection = nil
