@@ -74,7 +74,14 @@ These are **room doorways**, not destination teleporters.
 
 ## Atmosphere props (non-playable)
 
-`Workspace.Lobby.Atmosphere.Tables` and `LoungeBar` - decoration only.
+`Workspace.Lobby.Atmosphere`:
+
+- `Tables` - premium roulette / blackjack / poker set dressing (chairs, chips, overhead spots)
+- `LoungeBar` - west-wall marble bar + bottle shelf
+
+`Workspace.Lobby.Structure.CeilingLights` / `Chandeliers` / `Sconces` - pit and hall lighting.
+
+Do not wire these to remotes or currency.
 
 ## What not to touch
 

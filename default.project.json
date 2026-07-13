@@ -56,29 +56,29 @@
       "ShuffleBloom": {
         "$className": "BloomEffect",
         "$properties": {
-          "Intensity": 0.55,
-          "Size": 18.0,
-          "Threshold": 0.75
+          "Intensity": 0.75,
+          "Size": 24.0,
+          "Threshold": 0.65
         }
       },
       "ShuffleColorCorrection": {
         "$className": "ColorCorrectionEffect",
         "$properties": {
-          "Brightness": 0.02,
-          "Contrast": 0.08,
-          "Saturation": 0.12,
-          "TintColor": [0.96, 0.92, 1.0]
+          "Brightness": 0.04,
+          "Contrast": 0.12,
+          "Saturation": 0.18,
+          "TintColor": [1.0, 0.94, 1.0]
         }
       },
       "ShuffleAtmosphere": {
         "$className": "Atmosphere",
         "$properties": {
-          "Density": 0.08,
+          "Density": 0.1,
           "Offset": 0.05,
-          "Color": [0.35, 0.27, 0.55],
-          "Decay": [0.22, 0.14, 0.35],
-          "Glare": 0.18,
-          "Haze": 0.35
+          "Color": [0.39, 0.29, 0.59],
+          "Decay": [0.24, 0.14, 0.37],
+          "Glare": 0.28,
+          "Haze": 0.42
         }
       },
       "ShuffleSky": {

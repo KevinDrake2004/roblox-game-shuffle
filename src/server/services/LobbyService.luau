@@ -45,26 +45,26 @@ local function applyLighting()
 
 	local atmosphere = Lighting:FindFirstChild("ShuffleAtmosphere")
 	if atmosphere and atmosphere:IsA("Atmosphere") then
-		atmosphere.Density = 0.08
-		atmosphere.Haze = 0.35
-		atmosphere.Color = Color3.fromRGB(90, 70, 140)
-		atmosphere.Decay = Color3.fromRGB(55, 35, 90)
-		atmosphere.Glare = 0.18
+		atmosphere.Density = 0.1
+		atmosphere.Haze = 0.42
+		atmosphere.Color = Color3.fromRGB(100, 75, 150)
+		atmosphere.Decay = Color3.fromRGB(60, 35, 95)
+		atmosphere.Glare = 0.28
 	end
 
 	local colorCorrection = Lighting:FindFirstChild("ShuffleColorCorrection")
 	if colorCorrection and colorCorrection:IsA("ColorCorrectionEffect") then
-		colorCorrection.Brightness = 0.02
-		colorCorrection.Contrast = 0.08
-		colorCorrection.Saturation = 0.12
-		colorCorrection.TintColor = Color3.fromRGB(245, 235, 255)
+		colorCorrection.Brightness = 0.04
+		colorCorrection.Contrast = 0.12
+		colorCorrection.Saturation = 0.18
+		colorCorrection.TintColor = Color3.fromRGB(255, 240, 255)
 	end
 
 	local bloom = Lighting:FindFirstChild("ShuffleBloom")
 	if bloom and bloom:IsA("BloomEffect") then
-		bloom.Intensity = 0.55
-		bloom.Size = 18
-		bloom.Threshold = 0.75
+		bloom.Intensity = 0.75
+		bloom.Size = 24
+		bloom.Threshold = 0.65
 	end
 end
 
