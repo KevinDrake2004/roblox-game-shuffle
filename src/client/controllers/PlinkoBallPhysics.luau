@@ -268,14 +268,19 @@ function PlinkoBallPhysics.rebuildBoard(riskId: string): boolean
 	local spacingY = math.max(1.1, (topY - bottomY) / rows)
 	local boardZ = origin.Position.Z - 0.15
 	local originX = Config.PLINKO.ArenaOrigin.X
-	-- Leave speed scales with peg spacing so denser boards still Galton-step.
-	local leaveSpeed = math.clamp(spacingX * 2.15, 3.8, 7.5)
+	-- Leave speed + ball size scale with peg pitch so denser boards stay passable.
+	local pegSize = math.clamp(spacingX * 0.3, 0.22, 0.65)
+	local clearGap = math.max(0.2, spacingX - pegSize)
+	-- Diameter stays under the peg channel so balls zigzag instead of wedging outward.
+	local ballRadius = math.clamp(clearGap * 0.38, 0.12, Config.PLINKO.BallRadius)
+	local leaveSpeed = math.clamp(spacingX * 2.15, 3.2, 7.5)
 	board:SetAttribute("RiskId", risk.id)
 	board:SetAttribute("PegRows", rows)
 	board:SetAttribute("LeaveSpeed", leaveSpeed)
 	board:SetAttribute("SpacingX", spacingX)
+	board:SetAttribute("BallRadius", ballRadius)
+	board:SetAttribute("PegSize", pegSize)
 
-	local pegSize = math.clamp(spacingX * 0.28, 0.4, 0.7)
 	for row = 0, rows - 1 do
 		local pegsInRow = row + 1
 		local rowWidth = (pegsInRow - 1) * spacingX
@@ -479,7 +484,8 @@ function PlinkoBallPhysics.drop(onLanded: (bucketIndex: number) -> ()): SimHandl
 	end
 
 	local cfg = Config.PLINKO
-	local radius = cfg.BallRadius
+	local radiusAttr = if board then board:GetAttribute("BallRadius") else nil
+	local radius = if typeof(radiusAttr) == "number" then radiusAttr else cfg.BallRadius
 	local pegs = collectPegs(pegsFolder)
 	local leftX, rightX = railBounds(arena)
 	local boardZ = origin.Position.Z - 0.15
@@ -492,9 +498,11 @@ function PlinkoBallPhysics.drop(onLanded: (bucketIndex: number) -> ()): SimHandl
 	local centerBucketIndex = math.floor((#buckets - 1) / 2)
 
 	local rng = Random.new()
-	local startSpread = math.max(0.15, cfg.BallStartSpeedX * 0.15)
+	-- Start jitter scales with ball size / channel width so dense boards don't spawn wedged.
+	local startSpread = math.max(radius * 0.35, math.min(radius * 1.2, cfg.BallStartSpeedX * 0.15))
+	local startSpeedX = math.clamp(radius * 2.2, 0.35, cfg.BallStartSpeedX)
 	local pos = Vector3.new(origin.Position.X + rng:NextNumber(-startSpread, startSpread), origin.Position.Y, boardZ)
-	local vel = Vector3.new(rng:NextNumber(-cfg.BallStartSpeedX, cfg.BallStartSpeedX), rng:NextNumber(-2, 0), 0)
+	local vel = Vector3.new(rng:NextNumber(-startSpeedX, startSpeedX), rng:NextNumber(-2, 0), 0)
 
 	local ballsFolder = getOrCreateSubfolder("Balls")
 	local ball = Instance.new("Part")
