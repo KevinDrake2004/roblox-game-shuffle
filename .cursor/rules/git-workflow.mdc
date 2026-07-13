@@ -7,9 +7,9 @@ alwaysApply: true
 
 Remote: `https://github.com/KevinDrake2004/roblox-game-shuffle`
 
-## Branch requirement
+## Branch requirement (required)
 
-Every implementation prompt should name a branch, e.g.:
+Every implementation prompt **must** name a branch on the first line:
 
 ```
 Branch: feature/plinko-dev
@@ -21,18 +21,12 @@ Accepted forms: `Branch:`, `branch:`, or `Work on branch feature/plinko-dev`.
 
 If the user does **not** specify a branch:
 
-1. Check `.cursor/ACTIVE_BRANCH` (local, gitignored) for a default branch name.
-2. If that file is missing or empty, do **not** commit or push yet.
-3. Report the current branch (`git branch --show-current`).
-4. Ask whether to:
-   - create a new branch (suggest a name like `feature/<game>-<topic>`),
-   - continue on the current branch, or
-   - stay on `main`.
-5. Wait for an answer before committing.
+1. Do **not** commit or push.
+2. Report the current branch (`git branch --show-current`).
+3. Ask the user which branch to use (suggest `feature/<game>-<topic>` for new work).
+4. Wait for an answer before making changes or committing.
 
-When the user picks a branch, update `.cursor/ACTIVE_BRANCH` so later prompts inherit it.
-
-Question-only prompts (no file changes) do not need a commit.
+Question-only prompts (no file changes) do not need a branch line or a commit.
 
 ## At task start
 
