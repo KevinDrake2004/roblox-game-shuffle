@@ -2,218 +2,1197 @@
   "className": "Folder",
   "children": [
     {
-      "name": "Floor",
-      "className": "Part",
-      "properties": {
-        "Anchored": true,
-        "Size": [96.0, 1.0, 96.0],
-        "Position": [0.0, 0.0, 0.0],
-        "Color": [0.086, 0.055, 0.157],
-        "Material": "SmoothPlastic",
-        "TopSurface": "Smooth",
-        "BottomSurface": "Smooth"
-      }
-    },
-    {
-      "name": "FloorSheen",
-      "className": "Part",
-      "properties": {
-        "Anchored": true,
-        "CanCollide": false,
-        "Size": [88.0, 0.15, 88.0],
-        "Position": [0.0, 0.58, 0.0],
-        "Color": [0.118, 0.078, 0.216],
-        "Material": "Glass",
-        "Transparency": 0.72,
-        "TopSurface": "Smooth",
-        "BottomSurface": "Smooth"
-      }
-    },
-    {
-      "name": "Trim",
+      "name": "Structure",
       "className": "Folder",
       "children": [
         {
-          "name": "Edge_North",
-          "className": "Part",
-          "properties": {
-            "Anchored": true,
-            "CanCollide": false,
-            "Size": [96.0, 0.35, 0.6],
-            "Position": [0.0, 0.7, -47.7],
-            "Color": [0.659, 0.333, 0.969],
-            "Material": "Neon",
-            "Transparency": 0.15
-          }
+          "name": "Floors",
+          "className": "Folder",
+          "children": [
+            {
+              "name": "MainHallFloor",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  52.0,
+                  1.0,
+                  44.0
+                ],
+                "Position": [
+                  0.0,
+                  0.0,
+                  2.0
+                ],
+                "Color": [
+                  0.086,
+                  0.055,
+                  0.157
+                ],
+                "Material": "SmoothPlastic",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth"
+              }
+            },
+            {
+              "name": "MainHallSheen",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  46.0,
+                  0.12,
+                  38.0
+                ],
+                "Position": [
+                  0.0,
+                  0.56,
+                  2.0
+                ],
+                "Color": [
+                  0.118,
+                  0.078,
+                  0.216
+                ],
+                "Material": "Glass",
+                "CanCollide": false,
+                "Transparency": 0.72
+              }
+            },
+            {
+              "name": "PlinkoFloor",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  28.0,
+                  1.0,
+                  32.0
+                ],
+                "Position": [
+                  40.0,
+                  0.0,
+                  -4.0
+                ],
+                "Color": [
+                  0.055,
+                  0.035,
+                  0.11
+                ],
+                "Material": "SmoothPlastic",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth"
+              }
+            },
+            {
+              "name": "PlinkoSheen",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  24.0,
+                  0.12,
+                  28.0
+                ],
+                "Position": [
+                  40.0,
+                  0.56,
+                  -4.0
+                ],
+                "Color": [
+                  0.2,
+                  0.1,
+                  0.32
+                ],
+                "Material": "Glass",
+                "CanCollide": false,
+                "Transparency": 0.7
+              }
+            },
+            {
+              "name": "MinesFloor",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  28.0,
+                  1.0,
+                  32.0
+                ],
+                "Position": [
+                  -40.0,
+                  0.0,
+                  -4.0
+                ],
+                "Color": [
+                  0.055,
+                  0.035,
+                  0.11
+                ],
+                "Material": "SmoothPlastic",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth"
+              }
+            },
+            {
+              "name": "MinesSheen",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  24.0,
+                  0.12,
+                  28.0
+                ],
+                "Position": [
+                  -40.0,
+                  0.56,
+                  -4.0
+                ],
+                "Color": [
+                  0.28,
+                  0.08,
+                  0.18
+                ],
+                "Material": "Glass",
+                "CanCollide": false,
+                "Transparency": 0.7
+              }
+            },
+            {
+              "name": "RocketApron",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  22.0,
+                  1.0,
+                  16.0
+                ],
+                "Position": [
+                  0.0,
+                  0.0,
+                  -32.0
+                ],
+                "Color": [
+                  0.04,
+                  0.05,
+                  0.09
+                ],
+                "Material": "SmoothPlastic",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth"
+              }
+            },
+            {
+              "name": "RocketApronTrim",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  20.0,
+                  0.25,
+                  0.4
+                ],
+                "Position": [
+                  0.0,
+                  0.7,
+                  -24.2
+                ],
+                "Color": [
+                  0.133,
+                  0.827,
+                  0.933
+                ],
+                "Material": "Neon",
+                "CanCollide": false,
+                "Transparency": 0.2
+              }
+            }
+          ]
         },
         {
-          "name": "Edge_South",
-          "className": "Part",
-          "properties": {
-            "Anchored": true,
-            "CanCollide": false,
-            "Size": [96.0, 0.35, 0.6],
-            "Position": [0.0, 0.7, 47.7],
-            "Color": [0.133, 0.827, 0.933],
-            "Material": "Neon",
-            "Transparency": 0.15
-          }
+          "name": "Walls",
+          "className": "Folder",
+          "children": [
+            {
+              "name": "Hall_South_L",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  17.0,
+                  16.0,
+                  1.5
+                ],
+                "Position": [
+                  -17.5,
+                  8.0,
+                  24.0
+                ],
+                "Color": [
+                  0.047,
+                  0.031,
+                  0.094
+                ],
+                "Material": "SmoothPlastic",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth"
+              }
+            },
+            {
+              "name": "Hall_South_R",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  17.0,
+                  16.0,
+                  1.5
+                ],
+                "Position": [
+                  17.5,
+                  8.0,
+                  24.0
+                ],
+                "Color": [
+                  0.047,
+                  0.031,
+                  0.094
+                ],
+                "Material": "SmoothPlastic",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth"
+              }
+            },
+            {
+              "name": "Hall_South_Lint",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  16.0,
+                  2.0,
+                  1.5
+                ],
+                "Position": [
+                  0.0,
+                  14.0,
+                  24.0
+                ],
+                "Color": [
+                  0.047,
+                  0.031,
+                  0.094
+                ],
+                "Material": "SmoothPlastic",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth"
+              }
+            },
+            {
+              "name": "Hall_EntryNeon",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  16.5,
+                  0.35,
+                  0.35
+                ],
+                "Position": [
+                  0.0,
+                  15.2,
+                  24.85
+                ],
+                "Color": [
+                  0.133,
+                  0.827,
+                  0.933
+                ],
+                "Material": "Neon",
+                "CanCollide": false,
+                "Transparency": 0.1
+              }
+            },
+            {
+              "name": "Hall_North_L",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  20.0,
+                  16.0,
+                  1.5
+                ],
+                "Position": [
+                  -16.0,
+                  8.0,
+                  -20.0
+                ],
+                "Color": [
+                  0.047,
+                  0.031,
+                  0.094
+                ],
+                "Material": "SmoothPlastic",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth"
+              }
+            },
+            {
+              "name": "Hall_North_R",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  20.0,
+                  16.0,
+                  1.5
+                ],
+                "Position": [
+                  16.0,
+                  8.0,
+                  -20.0
+                ],
+                "Color": [
+                  0.047,
+                  0.031,
+                  0.094
+                ],
+                "Material": "SmoothPlastic",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth"
+              }
+            },
+            {
+              "name": "Hall_North_Lint",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  12.0,
+                  2.0,
+                  1.5
+                ],
+                "Position": [
+                  0.0,
+                  14.0,
+                  -20.0
+                ],
+                "Color": [
+                  0.047,
+                  0.031,
+                  0.094
+                ],
+                "Material": "SmoothPlastic",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth"
+              }
+            },
+            {
+              "name": "Hall_RocketExitNeon",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  12.5,
+                  0.35,
+                  0.35
+                ],
+                "Position": [
+                  0.0,
+                  15.2,
+                  -19.15
+                ],
+                "Color": [
+                  0.133,
+                  0.827,
+                  0.933
+                ],
+                "Material": "Neon",
+                "CanCollide": false,
+                "Transparency": 0.08
+              }
+            },
+            {
+              "name": "Hall_East_N",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  1.5,
+                  16.0,
+                  12.0
+                ],
+                "Position": [
+                  26.0,
+                  8.0,
+                  -14.0
+                ],
+                "Color": [
+                  0.047,
+                  0.031,
+                  0.094
+                ],
+                "Material": "SmoothPlastic",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth"
+              }
+            },
+            {
+              "name": "Hall_East_S",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  1.5,
+                  16.0,
+                  24.0
+                ],
+                "Position": [
+                  26.0,
+                  8.0,
+                  12.0
+                ],
+                "Color": [
+                  0.047,
+                  0.031,
+                  0.094
+                ],
+                "Material": "SmoothPlastic",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth"
+              }
+            },
+            {
+              "name": "Hall_East_Lint",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  1.5,
+                  2.0,
+                  8.0
+                ],
+                "Position": [
+                  26.0,
+                  14.0,
+                  -4.0
+                ],
+                "Color": [
+                  0.047,
+                  0.031,
+                  0.094
+                ],
+                "Material": "SmoothPlastic",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth"
+              }
+            },
+            {
+              "name": "Hall_PlinkoDoorNeon",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  0.35,
+                  0.35,
+                  8.5
+                ],
+                "Position": [
+                  26.85,
+                  15.2,
+                  -4.0
+                ],
+                "Color": [
+                  0.659,
+                  0.333,
+                  0.969
+                ],
+                "Material": "Neon",
+                "CanCollide": false,
+                "Transparency": 0.1
+              }
+            },
+            {
+              "name": "Hall_West_N",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  1.5,
+                  16.0,
+                  12.0
+                ],
+                "Position": [
+                  -26.0,
+                  8.0,
+                  -14.0
+                ],
+                "Color": [
+                  0.047,
+                  0.031,
+                  0.094
+                ],
+                "Material": "SmoothPlastic",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth"
+              }
+            },
+            {
+              "name": "Hall_West_S",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  1.5,
+                  16.0,
+                  24.0
+                ],
+                "Position": [
+                  -26.0,
+                  8.0,
+                  12.0
+                ],
+                "Color": [
+                  0.047,
+                  0.031,
+                  0.094
+                ],
+                "Material": "SmoothPlastic",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth"
+              }
+            },
+            {
+              "name": "Hall_West_Lint",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  1.5,
+                  2.0,
+                  8.0
+                ],
+                "Position": [
+                  -26.0,
+                  14.0,
+                  -4.0
+                ],
+                "Color": [
+                  0.047,
+                  0.031,
+                  0.094
+                ],
+                "Material": "SmoothPlastic",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth"
+              }
+            },
+            {
+              "name": "Hall_MinesDoorNeon",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  0.35,
+                  0.35,
+                  8.5
+                ],
+                "Position": [
+                  -26.85,
+                  15.2,
+                  -4.0
+                ],
+                "Color": [
+                  0.925,
+                  0.282,
+                  0.6
+                ],
+                "Material": "Neon",
+                "CanCollide": false,
+                "Transparency": 0.1
+              }
+            },
+            {
+              "name": "Plinko_North",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  28.0,
+                  16.0,
+                  1.5
+                ],
+                "Position": [
+                  40.0,
+                  8.0,
+                  -20.0
+                ],
+                "Color": [
+                  0.047,
+                  0.031,
+                  0.094
+                ],
+                "Material": "SmoothPlastic",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth"
+              }
+            },
+            {
+              "name": "Plinko_South",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  28.0,
+                  16.0,
+                  1.5
+                ],
+                "Position": [
+                  40.0,
+                  8.0,
+                  12.0
+                ],
+                "Color": [
+                  0.047,
+                  0.031,
+                  0.094
+                ],
+                "Material": "SmoothPlastic",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth"
+              }
+            },
+            {
+              "name": "Plinko_East",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  1.5,
+                  16.0,
+                  32.0
+                ],
+                "Position": [
+                  54.0,
+                  8.0,
+                  -4.0
+                ],
+                "Color": [
+                  0.047,
+                  0.031,
+                  0.094
+                ],
+                "Material": "SmoothPlastic",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth"
+              }
+            },
+            {
+              "name": "Mines_North",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  28.0,
+                  16.0,
+                  1.5
+                ],
+                "Position": [
+                  -40.0,
+                  8.0,
+                  -20.0
+                ],
+                "Color": [
+                  0.047,
+                  0.031,
+                  0.094
+                ],
+                "Material": "SmoothPlastic",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth"
+              }
+            },
+            {
+              "name": "Mines_South",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  28.0,
+                  16.0,
+                  1.5
+                ],
+                "Position": [
+                  -40.0,
+                  8.0,
+                  12.0
+                ],
+                "Color": [
+                  0.047,
+                  0.031,
+                  0.094
+                ],
+                "Material": "SmoothPlastic",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth"
+              }
+            },
+            {
+              "name": "Mines_West",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  1.5,
+                  16.0,
+                  32.0
+                ],
+                "Position": [
+                  -54.0,
+                  8.0,
+                  -4.0
+                ],
+                "Color": [
+                  0.047,
+                  0.031,
+                  0.094
+                ],
+                "Material": "SmoothPlastic",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth"
+              }
+            }
+          ]
         },
         {
-          "name": "Edge_West",
-          "className": "Part",
-          "properties": {
-            "Anchored": true,
-            "CanCollide": false,
-            "Size": [0.6, 0.35, 96.0],
-            "Position": [-47.7, 0.7, 0.0],
-            "Color": [0.925, 0.282, 0.6],
-            "Material": "Neon",
-            "Transparency": 0.15
-          }
+          "name": "Ceilings",
+          "className": "Folder",
+          "children": [
+            {
+              "name": "HallCeiling",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  52.0,
+                  1.0,
+                  44.0
+                ],
+                "Position": [
+                  0.0,
+                  16.5,
+                  2.0
+                ],
+                "Color": [
+                  0.035,
+                  0.022,
+                  0.07
+                ],
+                "Material": "SmoothPlastic",
+                "CanCollide": false,
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth"
+              }
+            },
+            {
+              "name": "PlinkoCeiling",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  28.0,
+                  1.0,
+                  32.0
+                ],
+                "Position": [
+                  40.0,
+                  16.5,
+                  -4.0
+                ],
+                "Color": [
+                  0.035,
+                  0.022,
+                  0.07
+                ],
+                "Material": "SmoothPlastic",
+                "CanCollide": false,
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth"
+              }
+            },
+            {
+              "name": "MinesCeiling",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  28.0,
+                  1.0,
+                  32.0
+                ],
+                "Position": [
+                  -40.0,
+                  16.5,
+                  -4.0
+                ],
+                "Color": [
+                  0.035,
+                  0.022,
+                  0.07
+                ],
+                "Material": "SmoothPlastic",
+                "CanCollide": false,
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth"
+              }
+            }
+          ]
         },
         {
-          "name": "Edge_East",
-          "className": "Part",
-          "properties": {
-            "Anchored": true,
-            "CanCollide": false,
-            "Size": [0.6, 0.35, 96.0],
-            "Position": [47.7, 0.7, 0.0],
-            "Color": [0.659, 0.333, 0.969],
-            "Material": "Neon",
-            "Transparency": 0.15
-          }
+          "name": "Trim",
+          "className": "Folder",
+          "children": [
+            {
+              "name": "Aisle_Hall",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  2.0,
+                  0.2,
+                  36.0
+                ],
+                "Position": [
+                  0.0,
+                  0.62,
+                  2.0
+                ],
+                "Color": [
+                  0.133,
+                  0.827,
+                  0.933
+                ],
+                "Material": "Neon",
+                "CanCollide": false,
+                "Transparency": 0.45
+              }
+            },
+            {
+              "name": "Aisle_ToPlinko",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  18.0,
+                  0.2,
+                  1.4
+                ],
+                "Position": [
+                  17.0,
+                  0.62,
+                  -4.0
+                ],
+                "Color": [
+                  0.659,
+                  0.333,
+                  0.969
+                ],
+                "Material": "Neon",
+                "CanCollide": false,
+                "Transparency": 0.5
+              }
+            },
+            {
+              "name": "Aisle_ToMines",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  18.0,
+                  0.2,
+                  1.4
+                ],
+                "Position": [
+                  -17.0,
+                  0.62,
+                  -4.0
+                ],
+                "Color": [
+                  0.925,
+                  0.282,
+                  0.6
+                ],
+                "Material": "Neon",
+                "CanCollide": false,
+                "Transparency": 0.5
+              }
+            },
+            {
+              "name": "Plinko_FloorEdge",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  24.0,
+                  0.25,
+                  0.4
+                ],
+                "Position": [
+                  40.0,
+                  0.7,
+                  11.2
+                ],
+                "Color": [
+                  0.659,
+                  0.333,
+                  0.969
+                ],
+                "Material": "Neon",
+                "CanCollide": false,
+                "Transparency": 0.2
+              }
+            },
+            {
+              "name": "Mines_FloorEdge",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  24.0,
+                  0.25,
+                  0.4
+                ],
+                "Position": [
+                  -40.0,
+                  0.7,
+                  11.2
+                ],
+                "Color": [
+                  0.925,
+                  0.282,
+                  0.6
+                ],
+                "Material": "Neon",
+                "CanCollide": false,
+                "Transparency": 0.2
+              }
+            }
+          ]
         },
         {
-          "name": "Aisle_Center",
-          "className": "Part",
-          "properties": {
-            "Anchored": true,
-            "CanCollide": false,
-            "Size": [2.2, 0.2, 52.0],
-            "Position": [0.0, 0.62, -2.0],
-            "Color": [0.133, 0.827, 0.933],
-            "Material": "Neon",
-            "Transparency": 0.45
-          }
+          "name": "Rails",
+          "className": "Folder",
+          "children": [
+            {
+              "name": "Plinko_Rail_N",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  22.0,
+                  1.2,
+                  0.6
+                ],
+                "Position": [
+                  40.0,
+                  1.1,
+                  -18.5
+                ],
+                "Color": [
+                  0.071,
+                  0.039,
+                  0.125
+                ],
+                "Material": "SmoothPlastic",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth"
+              }
+            },
+            {
+              "name": "Mines_Rail_N",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  22.0,
+                  1.2,
+                  0.6
+                ],
+                "Position": [
+                  -40.0,
+                  1.1,
+                  -18.5
+                ],
+                "Color": [
+                  0.071,
+                  0.039,
+                  0.125
+                ],
+                "Material": "SmoothPlastic",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth"
+              }
+            }
+          ]
         },
         {
-          "name": "Aisle_Cross",
-          "className": "Part",
-          "properties": {
-            "Anchored": true,
-            "CanCollide": false,
-            "Size": [56.0, 0.2, 1.4],
-            "Position": [0.0, 0.62, -22.0],
-            "Color": [0.659, 0.333, 0.969],
-            "Material": "Neon",
-            "Transparency": 0.5
-          }
-        }
-      ]
-    },
-    {
-      "name": "Walls",
-      "className": "Folder",
-      "children": [
-        {
-          "name": "BackWall",
-          "className": "Part",
-          "properties": {
-            "Anchored": true,
-            "Size": [96.0, 18.0, 2.0],
-            "Position": [0.0, 9.0, -48.0],
-            "Color": [0.047, 0.031, 0.094],
-            "Material": "SmoothPlastic",
-            "TopSurface": "Smooth",
-            "BottomSurface": "Smooth"
-          }
-        },
-        {
-          "name": "BackWallAccent",
-          "className": "Part",
-          "properties": {
-            "Anchored": true,
-            "CanCollide": false,
-            "Size": [90.0, 0.5, 0.4],
-            "Position": [0.0, 16.5, -46.9],
-            "Color": [0.659, 0.333, 0.969],
-            "Material": "Neon",
-            "Transparency": 0.2
-          }
-        },
-        {
-          "name": "SideWall_West",
-          "className": "Part",
-          "properties": {
-            "Anchored": true,
-            "Size": [2.0, 14.0, 96.0],
-            "Position": [-49.0, 7.0, 0.0],
-            "Color": [0.055, 0.035, 0.11],
-            "Material": "SmoothPlastic",
-            "TopSurface": "Smooth",
-            "BottomSurface": "Smooth"
-          }
-        },
-        {
-          "name": "SideWall_East",
-          "className": "Part",
-          "properties": {
-            "Anchored": true,
-            "Size": [2.0, 14.0, 96.0],
-            "Position": [49.0, 7.0, 0.0],
-            "Color": [0.055, 0.035, 0.11],
-            "Material": "SmoothPlastic",
-            "TopSurface": "Smooth",
-            "BottomSurface": "Smooth"
-          }
-        },
-        {
-          "name": "EntryArch_Left",
-          "className": "Part",
-          "properties": {
-            "Anchored": true,
-            "Size": [2.5, 12.0, 2.5],
-            "Position": [-10.0, 6.0, 40.0],
-            "Color": [0.071, 0.039, 0.125],
-            "Material": "SmoothPlastic"
-          }
-        },
-        {
-          "name": "EntryArch_Right",
-          "className": "Part",
-          "properties": {
-            "Anchored": true,
-            "Size": [2.5, 12.0, 2.5],
-            "Position": [10.0, 6.0, 40.0],
-            "Color": [0.071, 0.039, 0.125],
-            "Material": "SmoothPlastic"
-          }
-        },
-        {
-          "name": "EntryArch_Beam",
-          "className": "Part",
-          "properties": {
-            "Anchored": true,
-            "Size": [22.5, 1.5, 2.5],
-            "Position": [0.0, 12.5, 40.0],
-            "Color": [0.071, 0.039, 0.125],
-            "Material": "SmoothPlastic"
-          }
-        },
-        {
-          "name": "EntryArch_Neon",
-          "className": "Part",
-          "properties": {
-            "Anchored": true,
-            "CanCollide": false,
-            "Size": [23.0, 0.4, 0.4],
-            "Position": [0.0, 13.4, 41.2],
-            "Color": [0.133, 0.827, 0.933],
-            "Material": "Neon",
-            "Transparency": 0.1
-          }
+          "name": "DoorMarks",
+          "className": "Folder",
+          "children": [
+            {
+              "name": "DoorMark_Plinko_L",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  0.4,
+                  10.0,
+                  0.4
+                ],
+                "Position": [
+                  26.0,
+                  5.5,
+                  -8.0
+                ],
+                "Color": [
+                  0.659,
+                  0.333,
+                  0.969
+                ],
+                "Material": "Neon",
+                "CanCollide": false,
+                "Transparency": 0.15
+              }
+            },
+            {
+              "name": "DoorMark_Plinko_R",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  0.4,
+                  10.0,
+                  0.4
+                ],
+                "Position": [
+                  26.0,
+                  5.5,
+                  0.0
+                ],
+                "Color": [
+                  0.659,
+                  0.333,
+                  0.969
+                ],
+                "Material": "Neon",
+                "CanCollide": false,
+                "Transparency": 0.15
+              }
+            },
+            {
+              "name": "DoorMark_Mines_L",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  0.4,
+                  10.0,
+                  0.4
+                ],
+                "Position": [
+                  -26.0,
+                  5.5,
+                  -8.0
+                ],
+                "Color": [
+                  0.925,
+                  0.282,
+                  0.6
+                ],
+                "Material": "Neon",
+                "CanCollide": false,
+                "Transparency": 0.15
+              }
+            },
+            {
+              "name": "DoorMark_Mines_R",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  0.4,
+                  10.0,
+                  0.4
+                ],
+                "Position": [
+                  -26.0,
+                  5.5,
+                  0.0
+                ],
+                "Color": [
+                  0.925,
+                  0.282,
+                  0.6
+                ],
+                "Material": "Neon",
+                "CanCollide": false,
+                "Transparency": 0.15
+              }
+            },
+            {
+              "name": "DoorMark_Rocket_L",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  0.4,
+                  10.0,
+                  0.4
+                ],
+                "Position": [
+                  -6.0,
+                  5.5,
+                  -20.0
+                ],
+                "Color": [
+                  0.133,
+                  0.827,
+                  0.933
+                ],
+                "Material": "Neon",
+                "CanCollide": false,
+                "Transparency": 0.12
+              }
+            },
+            {
+              "name": "DoorMark_Rocket_R",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  0.4,
+                  10.0,
+                  0.4
+                ],
+                "Position": [
+                  6.0,
+                  5.5,
+                  -20.0
+                ],
+                "Color": [
+                  0.133,
+                  0.827,
+                  0.933
+                ],
+                "Material": "Neon",
+                "CanCollide": false,
+                "Transparency": 0.12
+              }
+            }
+          ]
         }
       ]
     },
@@ -224,9 +1203,21 @@
         "Anchored": true,
         "Duration": 0,
         "Neutral": true,
-        "Size": [8.0, 1.0, 8.0],
-        "Position": [0.0, 3.0, 20.0],
-        "Color": [0.133, 0.827, 0.933],
+        "Size": [
+          8.0,
+          1.0,
+          8.0
+        ],
+        "Position": [
+          0.0,
+          3.0,
+          20.0
+        ],
+        "Color": [
+          0.133,
+          0.827,
+          0.933
+        ],
         "Material": "Neon",
         "Transparency": 0.4
       },
@@ -236,11 +1227,23 @@
           "className": "Part",
           "properties": {
             "Anchored": true,
-            "CanCollide": false,
-            "Size": [12.0, 0.25, 12.0],
-            "Position": [0.0, 0.7, 20.0],
-            "Color": [0.133, 0.827, 0.933],
+            "Size": [
+              12.0,
+              0.25,
+              12.0
+            ],
+            "Position": [
+              0.0,
+              0.7,
+              20.0
+            ],
+            "Color": [
+              0.133,
+              0.827,
+              0.933
+            ],
             "Material": "Neon",
+            "CanCollide": false,
             "Transparency": 0.55
           }
         },
@@ -250,7 +1253,11 @@
           "properties": {
             "Brightness": 1.8,
             "Range": 28.0,
-            "Color": [0.133, 0.827, 0.933],
+            "Color": [
+              0.133,
+              0.827,
+              0.933
+            ],
             "Shadows": false
           }
         }
@@ -261,10 +1268,27 @@
       "className": "Part",
       "properties": {
         "Anchored": true,
-        "Size": [36.0, 8.0, 1.2],
-        "Position": [0.0, 12.0, -46.2],
-        "Color": [0.071, 0.039, 0.125],
-        "Material": "SmoothPlastic"
+        "Size": [
+          28.0,
+          6.5,
+          1.0
+        ],
+        "Position": [
+          0.0,
+          11.5,
+          -18.8
+        ],
+        "Color": [
+          0.071,
+          0.039,
+          0.125
+        ],
+        "Material": "SmoothPlastic",
+        "Orientation": [
+          0.0,
+          180.0,
+          0.0
+        ]
       },
       "children": [
         {
@@ -272,21 +1296,42 @@
           "className": "Part",
           "properties": {
             "Anchored": true,
-            "CanCollide": false,
-            "Size": [38.0, 9.2, 0.4],
-            "Position": [0.0, 12.0, -46.9],
-            "Color": [0.133, 0.827, 0.933],
+            "Size": [
+              30.0,
+              7.5,
+              0.35
+            ],
+            "Position": [
+              0.0,
+              11.5,
+              -19.5
+            ],
+            "Color": [
+              0.133,
+              0.827,
+              0.933
+            ],
             "Material": "Neon",
-            "Transparency": 0.25
+            "CanCollide": false,
+            "Transparency": 0.25,
+            "Orientation": [
+              0.0,
+              180.0,
+              0.0
+            ]
           }
         },
         {
           "name": "SignLight",
           "className": "PointLight",
           "properties": {
-            "Brightness": 2.2,
-            "Range": 42.0,
-            "Color": [0.133, 0.827, 0.933]
+            "Brightness": 2.0,
+            "Range": 36.0,
+            "Color": [
+              0.133,
+              0.827,
+              0.933
+            ]
           }
         }
       ]
@@ -302,109 +1347,169 @@
             "Anchored": true,
             "CanCollide": false,
             "Transparency": 1.0,
-            "Size": [1.0, 1.0, 1.0],
-            "Position": [0.0, 12.0, 20.0]
+            "Size": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "Position": [
+              0.0,
+              12.0,
+              18.0
+            ]
           },
           "children": [
             {
               "name": "Light",
               "className": "PointLight",
               "properties": {
-                "Brightness": 1.6,
-                "Range": 40.0,
-                "Color": [0.133, 0.827, 0.933],
+                "Brightness": 1.5,
+                "Range": 36.0,
+                "Color": [
+                  0.133,
+                  0.827,
+                  0.933
+                ],
                 "Shadows": false
               }
             }
           ]
         },
         {
-          "name": "Wash_Center",
+          "name": "Wash_Hall",
           "className": "Part",
           "properties": {
             "Anchored": true,
             "CanCollide": false,
             "Transparency": 1.0,
-            "Size": [1.0, 1.0, 1.0],
-            "Position": [0.0, 16.0, 0.0]
+            "Size": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "Position": [
+              0.0,
+              14.0,
+              0.0
+            ]
           },
           "children": [
             {
               "name": "Light",
               "className": "PointLight",
               "properties": {
-                "Brightness": 1.35,
-                "Range": 56.0,
-                "Color": [0.55, 0.4, 0.85],
-                "Shadows": false
-              }
-            }
-          ]
-        },
-        {
-          "name": "Wash_PortalRow",
-          "className": "Part",
-          "properties": {
-            "Anchored": true,
-            "CanCollide": false,
-            "Transparency": 1.0,
-            "Size": [1.0, 1.0, 1.0],
-            "Position": [0.0, 14.0, -28.0]
-          },
-          "children": [
-            {
-              "name": "Light",
-              "className": "PointLight",
-              "properties": {
-                "Brightness": 1.1,
+                "Brightness": 1.3,
                 "Range": 48.0,
-                "Color": [0.45, 0.32, 0.72],
+                "Color": [
+                  0.55,
+                  0.4,
+                  0.85
+                ],
                 "Shadows": false
               }
             }
           ]
         },
         {
-          "name": "Wash_West",
+          "name": "Wash_Plinko",
           "className": "Part",
           "properties": {
             "Anchored": true,
             "CanCollide": false,
             "Transparency": 1.0,
-            "Size": [1.0, 1.0, 1.0],
-            "Position": [-28.0, 12.0, -10.0]
+            "Size": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "Position": [
+              40.0,
+              12.0,
+              -4.0
+            ]
           },
           "children": [
             {
               "name": "Light",
               "className": "PointLight",
               "properties": {
-                "Brightness": 0.9,
-                "Range": 32.0,
-                "Color": [0.925, 0.282, 0.6],
+                "Brightness": 1.4,
+                "Range": 34.0,
+                "Color": [
+                  0.659,
+                  0.333,
+                  0.969
+                ],
                 "Shadows": false
               }
             }
           ]
         },
         {
-          "name": "Wash_East",
+          "name": "Wash_Mines",
           "className": "Part",
           "properties": {
             "Anchored": true,
             "CanCollide": false,
             "Transparency": 1.0,
-            "Size": [1.0, 1.0, 1.0],
-            "Position": [28.0, 12.0, -10.0]
+            "Size": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "Position": [
+              -40.0,
+              12.0,
+              -4.0
+            ]
           },
           "children": [
             {
               "name": "Light",
               "className": "PointLight",
               "properties": {
-                "Brightness": 0.9,
-                "Range": 32.0,
-                "Color": [0.659, 0.333, 0.969],
+                "Brightness": 1.4,
+                "Range": 34.0,
+                "Color": [
+                  0.925,
+                  0.282,
+                  0.6
+                ],
+                "Shadows": false
+              }
+            }
+          ]
+        },
+        {
+          "name": "Wash_RocketExit",
+          "className": "Part",
+          "properties": {
+            "Anchored": true,
+            "CanCollide": false,
+            "Transparency": 1.0,
+            "Size": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "Position": [
+              0.0,
+              10.0,
+              -28.0
+            ]
+          },
+          "children": [
+            {
+              "name": "Light",
+              "className": "PointLight",
+              "properties": {
+                "Brightness": 1.5,
+                "Range": 28.0,
+                "Color": [
+                  0.133,
+                  0.827,
+                  0.933
+                ],
                 "Shadows": false
               }
             }
@@ -428,11 +1533,23 @@
               "className": "Part",
               "properties": {
                 "Anchored": true,
-                "CanCollide": false,
-                "Size": [14.0, 0.3, 10.0],
-                "Position": [-24.0, 0.7, -26.0],
-                "Color": [0.133, 0.827, 0.933],
+                "Size": [
+                  12.0,
+                  0.3,
+                  8.0
+                ],
+                "Position": [
+                  0.0,
+                  0.7,
+                  -28.0
+                ],
+                "Color": [
+                  0.133,
+                  0.827,
+                  0.933
+                ],
                 "Material": "Neon",
+                "CanCollide": false,
                 "Transparency": 0.55
               }
             },
@@ -441,10 +1558,24 @@
               "className": "Part",
               "properties": {
                 "Anchored": true,
-                "Size": [1.4, 14.0, 1.4],
-                "Position": [-29.5, 7.0, -28.0],
-                "Color": [0.071, 0.039, 0.125],
-                "Material": "SmoothPlastic"
+                "Size": [
+                  1.2,
+                  12.0,
+                  1.2
+                ],
+                "Position": [
+                  -5.0,
+                  6.5,
+                  -30.8
+                ],
+                "Color": [
+                  0.071,
+                  0.039,
+                  0.125
+                ],
+                "Material": "SmoothPlastic",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth"
               }
             },
             {
@@ -452,10 +1583,24 @@
               "className": "Part",
               "properties": {
                 "Anchored": true,
-                "Size": [1.4, 14.0, 1.4],
-                "Position": [-18.5, 7.0, -28.0],
-                "Color": [0.071, 0.039, 0.125],
-                "Material": "SmoothPlastic"
+                "Size": [
+                  1.2,
+                  12.0,
+                  1.2
+                ],
+                "Position": [
+                  5.0,
+                  6.5,
+                  -30.8
+                ],
+                "Color": [
+                  0.071,
+                  0.039,
+                  0.125
+                ],
+                "Material": "SmoothPlastic",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth"
               }
             },
             {
@@ -463,11 +1608,23 @@
               "className": "Part",
               "properties": {
                 "Anchored": true,
-                "CanCollide": false,
-                "Size": [0.35, 13.0, 0.35],
-                "Position": [-29.5, 7.0, -27.2],
-                "Color": [0.133, 0.827, 0.933],
+                "Size": [
+                  0.3,
+                  11.0,
+                  0.3
+                ],
+                "Position": [
+                  -5.0,
+                  6.5,
+                  -30.1
+                ],
+                "Color": [
+                  0.133,
+                  0.827,
+                  0.933
+                ],
                 "Material": "Neon",
+                "CanCollide": false,
                 "Transparency": 0.1
               }
             },
@@ -476,11 +1633,23 @@
               "className": "Part",
               "properties": {
                 "Anchored": true,
-                "CanCollide": false,
-                "Size": [0.35, 13.0, 0.35],
-                "Position": [-18.5, 7.0, -27.2],
-                "Color": [0.133, 0.827, 0.933],
+                "Size": [
+                  0.3,
+                  11.0,
+                  0.3
+                ],
+                "Position": [
+                  5.0,
+                  6.5,
+                  -30.1
+                ],
+                "Color": [
+                  0.133,
+                  0.827,
+                  0.933
+                ],
                 "Material": "Neon",
+                "CanCollide": false,
                 "Transparency": 0.1
               }
             },
@@ -489,10 +1658,24 @@
               "className": "Part",
               "properties": {
                 "Anchored": true,
-                "Size": [12.4, 1.2, 1.4],
-                "Position": [-24.0, 14.2, -28.0],
-                "Color": [0.071, 0.039, 0.125],
-                "Material": "SmoothPlastic"
+                "Size": [
+                  11.2,
+                  1.0,
+                  1.2
+                ],
+                "Position": [
+                  0.0,
+                  13.0,
+                  -30.8
+                ],
+                "Color": [
+                  0.071,
+                  0.039,
+                  0.125
+                ],
+                "Material": "SmoothPlastic",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth"
               }
             },
             {
@@ -500,11 +1683,23 @@
               "className": "Part",
               "properties": {
                 "Anchored": true,
-                "CanCollide": false,
-                "Size": [12.8, 0.35, 0.35],
-                "Position": [-24.0, 14.9, -27.2],
-                "Color": [0.133, 0.827, 0.933],
+                "Size": [
+                  11.6,
+                  0.3,
+                  0.3
+                ],
+                "Position": [
+                  0.0,
+                  13.6,
+                  -30.1
+                ],
+                "Color": [
+                  0.133,
+                  0.827,
+                  0.933
+                ],
                 "Material": "Neon",
+                "CanCollide": false,
                 "Transparency": 0.05
               }
             },
@@ -513,10 +1708,24 @@
               "className": "Part",
               "properties": {
                 "Anchored": true,
-                "Size": [10.0, 12.0, 1.5],
-                "Position": [-24.0, 6.5, -28.0],
-                "Color": [0.1, 0.065, 0.18],
-                "Material": "SmoothPlastic"
+                "Size": [
+                  9.0,
+                  11.0,
+                  1.4
+                ],
+                "Position": [
+                  0.0,
+                  6.0,
+                  -30.8
+                ],
+                "Color": [
+                  0.1,
+                  0.065,
+                  0.18
+                ],
+                "Material": "SmoothPlastic",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth"
               }
             },
             {
@@ -525,9 +1734,21 @@
               "properties": {
                 "Anchored": true,
                 "CanCollide": false,
-                "Size": [7.2, 9.5, 0.45],
-                "Position": [-24.0, 6.2, -27.2],
-                "Color": [0.133, 0.827, 0.933],
+                "Size": [
+                  6.5,
+                  9.0,
+                  0.4
+                ],
+                "Position": [
+                  0.0,
+                  5.8,
+                  -30.0
+                ],
+                "Color": [
+                  0.133,
+                  0.827,
+                  0.933
+                ],
                 "Material": "Neon",
                 "Transparency": 0.32
               },
@@ -537,16 +1758,20 @@
                   "className": "PointLight",
                   "properties": {
                     "Brightness": 2.2,
-                    "Range": 28.0,
-                    "Color": [0.133, 0.827, 0.933]
+                    "Range": 26.0,
+                    "Color": [
+                      0.133,
+                      0.827,
+                      0.933
+                    ]
                   }
                 },
                 {
                   "name": "EnterPrompt",
                   "className": "ProximityPrompt",
                   "properties": {
-                    "ActionText": "Enter",
-                    "ObjectText": "Rocket Run",
+                    "ActionText": "Launch",
+                    "ObjectText": "Rocket Run \u00b7 Launch Pad",
                     "HoldDuration": 0.35,
                     "MaxActivationDistance": 12.0,
                     "RequiresLineOfSight": false
@@ -568,11 +1793,23 @@
               "className": "Part",
               "properties": {
                 "Anchored": true,
-                "CanCollide": false,
-                "Size": [14.0, 0.3, 10.0],
-                "Position": [0.0, 0.7, -26.0],
-                "Color": [0.659, 0.333, 0.969],
+                "Size": [
+                  12.0,
+                  0.3,
+                  8.0
+                ],
+                "Position": [
+                  42.0,
+                  0.7,
+                  -12.0
+                ],
+                "Color": [
+                  0.659,
+                  0.333,
+                  0.969
+                ],
                 "Material": "Neon",
+                "CanCollide": false,
                 "Transparency": 0.55
               }
             },
@@ -581,10 +1818,24 @@
               "className": "Part",
               "properties": {
                 "Anchored": true,
-                "Size": [1.4, 14.0, 1.4],
-                "Position": [-5.5, 7.0, -28.0],
-                "Color": [0.071, 0.039, 0.125],
-                "Material": "SmoothPlastic"
+                "Size": [
+                  1.2,
+                  12.0,
+                  1.2
+                ],
+                "Position": [
+                  37.0,
+                  6.5,
+                  -14.8
+                ],
+                "Color": [
+                  0.071,
+                  0.039,
+                  0.125
+                ],
+                "Material": "SmoothPlastic",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth"
               }
             },
             {
@@ -592,10 +1843,24 @@
               "className": "Part",
               "properties": {
                 "Anchored": true,
-                "Size": [1.4, 14.0, 1.4],
-                "Position": [5.5, 7.0, -28.0],
-                "Color": [0.071, 0.039, 0.125],
-                "Material": "SmoothPlastic"
+                "Size": [
+                  1.2,
+                  12.0,
+                  1.2
+                ],
+                "Position": [
+                  47.0,
+                  6.5,
+                  -14.8
+                ],
+                "Color": [
+                  0.071,
+                  0.039,
+                  0.125
+                ],
+                "Material": "SmoothPlastic",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth"
               }
             },
             {
@@ -603,11 +1868,23 @@
               "className": "Part",
               "properties": {
                 "Anchored": true,
-                "CanCollide": false,
-                "Size": [0.35, 13.0, 0.35],
-                "Position": [-5.5, 7.0, -27.2],
-                "Color": [0.659, 0.333, 0.969],
+                "Size": [
+                  0.3,
+                  11.0,
+                  0.3
+                ],
+                "Position": [
+                  37.0,
+                  6.5,
+                  -14.100000000000001
+                ],
+                "Color": [
+                  0.659,
+                  0.333,
+                  0.969
+                ],
                 "Material": "Neon",
+                "CanCollide": false,
                 "Transparency": 0.1
               }
             },
@@ -616,11 +1893,23 @@
               "className": "Part",
               "properties": {
                 "Anchored": true,
-                "CanCollide": false,
-                "Size": [0.35, 13.0, 0.35],
-                "Position": [5.5, 7.0, -27.2],
-                "Color": [0.659, 0.333, 0.969],
+                "Size": [
+                  0.3,
+                  11.0,
+                  0.3
+                ],
+                "Position": [
+                  47.0,
+                  6.5,
+                  -14.100000000000001
+                ],
+                "Color": [
+                  0.659,
+                  0.333,
+                  0.969
+                ],
                 "Material": "Neon",
+                "CanCollide": false,
                 "Transparency": 0.1
               }
             },
@@ -629,10 +1918,24 @@
               "className": "Part",
               "properties": {
                 "Anchored": true,
-                "Size": [12.4, 1.2, 1.4],
-                "Position": [0.0, 14.2, -28.0],
-                "Color": [0.071, 0.039, 0.125],
-                "Material": "SmoothPlastic"
+                "Size": [
+                  11.2,
+                  1.0,
+                  1.2
+                ],
+                "Position": [
+                  42.0,
+                  13.0,
+                  -14.8
+                ],
+                "Color": [
+                  0.071,
+                  0.039,
+                  0.125
+                ],
+                "Material": "SmoothPlastic",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth"
               }
             },
             {
@@ -640,11 +1943,23 @@
               "className": "Part",
               "properties": {
                 "Anchored": true,
-                "CanCollide": false,
-                "Size": [12.8, 0.35, 0.35],
-                "Position": [0.0, 14.9, -27.2],
-                "Color": [0.659, 0.333, 0.969],
+                "Size": [
+                  11.6,
+                  0.3,
+                  0.3
+                ],
+                "Position": [
+                  42.0,
+                  13.6,
+                  -14.100000000000001
+                ],
+                "Color": [
+                  0.659,
+                  0.333,
+                  0.969
+                ],
                 "Material": "Neon",
+                "CanCollide": false,
                 "Transparency": 0.05
               }
             },
@@ -653,10 +1968,24 @@
               "className": "Part",
               "properties": {
                 "Anchored": true,
-                "Size": [10.0, 12.0, 1.5],
-                "Position": [0.0, 6.5, -28.0],
-                "Color": [0.1, 0.065, 0.18],
-                "Material": "SmoothPlastic"
+                "Size": [
+                  9.0,
+                  11.0,
+                  1.4
+                ],
+                "Position": [
+                  42.0,
+                  6.0,
+                  -14.8
+                ],
+                "Color": [
+                  0.1,
+                  0.065,
+                  0.18
+                ],
+                "Material": "SmoothPlastic",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth"
               }
             },
             {
@@ -665,9 +1994,21 @@
               "properties": {
                 "Anchored": true,
                 "CanCollide": false,
-                "Size": [7.2, 9.5, 0.45],
-                "Position": [0.0, 6.2, -27.2],
-                "Color": [0.659, 0.333, 0.969],
+                "Size": [
+                  6.5,
+                  9.0,
+                  0.4
+                ],
+                "Position": [
+                  42.0,
+                  5.8,
+                  -14.0
+                ],
+                "Color": [
+                  0.659,
+                  0.333,
+                  0.969
+                ],
                 "Material": "Neon",
                 "Transparency": 0.32
               },
@@ -677,8 +2018,12 @@
                   "className": "PointLight",
                   "properties": {
                     "Brightness": 2.2,
-                    "Range": 28.0,
-                    "Color": [0.659, 0.333, 0.969]
+                    "Range": 26.0,
+                    "Color": [
+                      0.659,
+                      0.333,
+                      0.969
+                    ]
                   }
                 },
                 {
@@ -708,11 +2053,23 @@
               "className": "Part",
               "properties": {
                 "Anchored": true,
-                "CanCollide": false,
-                "Size": [14.0, 0.3, 10.0],
-                "Position": [24.0, 0.7, -26.0],
-                "Color": [0.925, 0.282, 0.6],
+                "Size": [
+                  12.0,
+                  0.3,
+                  8.0
+                ],
+                "Position": [
+                  -42.0,
+                  0.7,
+                  -12.0
+                ],
+                "Color": [
+                  0.925,
+                  0.282,
+                  0.6
+                ],
                 "Material": "Neon",
+                "CanCollide": false,
                 "Transparency": 0.55
               }
             },
@@ -721,10 +2078,24 @@
               "className": "Part",
               "properties": {
                 "Anchored": true,
-                "Size": [1.4, 14.0, 1.4],
-                "Position": [18.5, 7.0, -28.0],
-                "Color": [0.071, 0.039, 0.125],
-                "Material": "SmoothPlastic"
+                "Size": [
+                  1.2,
+                  12.0,
+                  1.2
+                ],
+                "Position": [
+                  -47.0,
+                  6.5,
+                  -14.8
+                ],
+                "Color": [
+                  0.071,
+                  0.039,
+                  0.125
+                ],
+                "Material": "SmoothPlastic",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth"
               }
             },
             {
@@ -732,10 +2103,24 @@
               "className": "Part",
               "properties": {
                 "Anchored": true,
-                "Size": [1.4, 14.0, 1.4],
-                "Position": [29.5, 7.0, -28.0],
-                "Color": [0.071, 0.039, 0.125],
-                "Material": "SmoothPlastic"
+                "Size": [
+                  1.2,
+                  12.0,
+                  1.2
+                ],
+                "Position": [
+                  -37.0,
+                  6.5,
+                  -14.8
+                ],
+                "Color": [
+                  0.071,
+                  0.039,
+                  0.125
+                ],
+                "Material": "SmoothPlastic",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth"
               }
             },
             {
@@ -743,11 +2128,23 @@
               "className": "Part",
               "properties": {
                 "Anchored": true,
-                "CanCollide": false,
-                "Size": [0.35, 13.0, 0.35],
-                "Position": [18.5, 7.0, -27.2],
-                "Color": [0.925, 0.282, 0.6],
+                "Size": [
+                  0.3,
+                  11.0,
+                  0.3
+                ],
+                "Position": [
+                  -47.0,
+                  6.5,
+                  -14.100000000000001
+                ],
+                "Color": [
+                  0.925,
+                  0.282,
+                  0.6
+                ],
                 "Material": "Neon",
+                "CanCollide": false,
                 "Transparency": 0.1
               }
             },
@@ -756,11 +2153,23 @@
               "className": "Part",
               "properties": {
                 "Anchored": true,
-                "CanCollide": false,
-                "Size": [0.35, 13.0, 0.35],
-                "Position": [29.5, 7.0, -27.2],
-                "Color": [0.925, 0.282, 0.6],
+                "Size": [
+                  0.3,
+                  11.0,
+                  0.3
+                ],
+                "Position": [
+                  -37.0,
+                  6.5,
+                  -14.100000000000001
+                ],
+                "Color": [
+                  0.925,
+                  0.282,
+                  0.6
+                ],
                 "Material": "Neon",
+                "CanCollide": false,
                 "Transparency": 0.1
               }
             },
@@ -769,10 +2178,24 @@
               "className": "Part",
               "properties": {
                 "Anchored": true,
-                "Size": [12.4, 1.2, 1.4],
-                "Position": [24.0, 14.2, -28.0],
-                "Color": [0.071, 0.039, 0.125],
-                "Material": "SmoothPlastic"
+                "Size": [
+                  11.2,
+                  1.0,
+                  1.2
+                ],
+                "Position": [
+                  -42.0,
+                  13.0,
+                  -14.8
+                ],
+                "Color": [
+                  0.071,
+                  0.039,
+                  0.125
+                ],
+                "Material": "SmoothPlastic",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth"
               }
             },
             {
@@ -780,11 +2203,23 @@
               "className": "Part",
               "properties": {
                 "Anchored": true,
-                "CanCollide": false,
-                "Size": [12.8, 0.35, 0.35],
-                "Position": [24.0, 14.9, -27.2],
-                "Color": [0.925, 0.282, 0.6],
+                "Size": [
+                  11.6,
+                  0.3,
+                  0.3
+                ],
+                "Position": [
+                  -42.0,
+                  13.6,
+                  -14.100000000000001
+                ],
+                "Color": [
+                  0.925,
+                  0.282,
+                  0.6
+                ],
                 "Material": "Neon",
+                "CanCollide": false,
                 "Transparency": 0.05
               }
             },
@@ -793,10 +2228,24 @@
               "className": "Part",
               "properties": {
                 "Anchored": true,
-                "Size": [10.0, 12.0, 1.5],
-                "Position": [24.0, 6.5, -28.0],
-                "Color": [0.1, 0.065, 0.18],
-                "Material": "SmoothPlastic"
+                "Size": [
+                  9.0,
+                  11.0,
+                  1.4
+                ],
+                "Position": [
+                  -42.0,
+                  6.0,
+                  -14.8
+                ],
+                "Color": [
+                  0.1,
+                  0.065,
+                  0.18
+                ],
+                "Material": "SmoothPlastic",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth"
               }
             },
             {
@@ -805,9 +2254,21 @@
               "properties": {
                 "Anchored": true,
                 "CanCollide": false,
-                "Size": [7.2, 9.5, 0.45],
-                "Position": [24.0, 6.2, -27.2],
-                "Color": [0.925, 0.282, 0.6],
+                "Size": [
+                  6.5,
+                  9.0,
+                  0.4
+                ],
+                "Position": [
+                  -42.0,
+                  5.8,
+                  -14.0
+                ],
+                "Color": [
+                  0.925,
+                  0.282,
+                  0.6
+                ],
                 "Material": "Neon",
                 "Transparency": 0.32
               },
@@ -817,8 +2278,12 @@
                   "className": "PointLight",
                   "properties": {
                     "Brightness": 2.2,
-                    "Range": 28.0,
-                    "Color": [0.925, 0.282, 0.6]
+                    "Range": 26.0,
+                    "Color": [
+                      0.925,
+                      0.282,
+                      0.6
+                    ]
                   }
                 },
                 {
