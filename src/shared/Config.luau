@@ -19,6 +19,9 @@ local Config = {}
 Config.GAME_NAME = "Shuffle Arcade"
 Config.STARTING_CHIPS = 100
 
+-- Default Roblox WalkSpeed is 16; casino floor is large so we run faster.
+Config.WALK_SPEED = 28
+
 -- Daily earn cap (chips) for awardChips only. VIP may raise this later via game pass.
 -- Wager payouts are not clipped by this cap (see CurrencyService).
 Config.DAILY_EARN_CAP = 5_000

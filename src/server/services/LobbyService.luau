@@ -8,6 +8,7 @@
 	inside the same building (see docs/CASINO.md).
 ]=]
 local Lighting = game:GetService("Lighting")
+local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Workspace = game:GetService("Workspace")
 
@@ -242,6 +243,28 @@ local function bindPortalPrompts()
 	end
 end
 
+local function applyWalkSpeed(character: Model)
+	local humanoid = character:FindFirstChildOfClass("Humanoid")
+	if not humanoid then
+		humanoid = character:WaitForChild("Humanoid", 5) :: Humanoid?
+	end
+	if humanoid and humanoid:IsA("Humanoid") then
+		humanoid.WalkSpeed = Config.WALK_SPEED
+	end
+end
+
+local function bindPlayerMovement(player: Player)
+	janitor:Add(
+		player.CharacterAdded:Connect(function(character)
+			task.defer(applyWalkSpeed, character)
+		end),
+		"Disconnect"
+	)
+	if player.Character then
+		task.defer(applyWalkSpeed, player.Character)
+	end
+end
+
 function LobbyService.start()
 	if started then
 		return
@@ -261,6 +284,11 @@ function LobbyService.start()
 	applyLighting()
 	ensurePortalLabels()
 	bindPortalPrompts()
+
+	janitor:Add(Players.PlayerAdded:Connect(bindPlayerMovement), "Disconnect")
+	for _, player in Players:GetPlayers() do
+		bindPlayerMovement(player)
+	end
 
 	janitor:Add(
 		Remotes.getEvent("EnterPortal").OnServerEvent:Connect(function(player: Player, gameId: unknown)
