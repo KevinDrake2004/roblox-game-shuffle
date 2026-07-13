@@ -133,37 +133,41 @@ export type JobResultPayload = {
 }
 
 --[=[
-	Per-player Plinko wager. Clamped to `Config.PLINKO` min/max on the server.
+	Per-player Plinko loadout. Clamped to `Config.PLINKO` min/max on the server.
 
-	@type PlinkoPointsLoadout {wager: number}
+	@type PlinkoPointsLoadout {wager: number, ballCount: number}
 	@within Types
 ]=]
 export type PlinkoPointsLoadout = {
 	wager: number,
+	ballCount: number,
 }
 
 --[=[
 	Fired when the player enters the Plinko arena (HUD bootstrap).
 
-	@type PlinkoPointsJoined {wager: number, chips: number, highScore: number}
+	@type PlinkoPointsJoined {wager: number, ballCount: number, chips: number, highScore: number}
 	@within Types
 ]=]
 export type PlinkoPointsJoined = {
 	wager: number,
+	ballCount: number,
 	chips: number,
 	highScore: number,
 }
 
 --[=[
-	Fired after the server accepts a drop (wager deducted). Client runs free
-	physics; landing bucket is not chosen yet.
+	Fired after the server accepts a drop (total stake deducted). Client releases
+	`dropIds` in order with stagger; each ball is an independent free physics sim.
 
-	@type PlinkoPointsDropStarted {dropId: number, wager: number, chips: number}
+	@type PlinkoPointsDropStarted {dropIds: {number}, wager: number, ballCount: number, staggerSeconds: number, chips: number}
 	@within Types
 ]=]
 export type PlinkoPointsDropStarted = {
-	dropId: number,
+	dropIds: { number },
 	wager: number,
+	ballCount: number,
+	staggerSeconds: number,
 	chips: number,
 }
 

@@ -7,11 +7,10 @@
 
 	1. Lobby portal → `PlinkoPoints.join` teleports into `Workspace.PlinkoArena`.
 	2. Client sets wager via `PlinkoPointsSetWager` (clamped to Config).
-	3. `PlinkoPointsDrop` deducts the wager and fires `PlinkoPointsDropStarted`.
-	4. Client runs a **free** local gravity/peg sim (landing is not pre-rolled).
-	5. Client reports `PlinkoPointsLanded` with the bucket the ball entered.
-	6. Server credits `floor(wager * multiplier)` for that bucket.
-	7. Leave returns the player to `Config.LOBBY.SpawnPosition`.
+	3. `PlinkoPointsDrop` deducts `wager * ballCount` and fires `PlinkoPointsDropStarted`.
+	4. Client releases balls on a stagger; each runs an independent free physics sim
+	   (balls never collide with each other, only pegs).
+	5. Client reports `PlinkoPointsLanded` per ball; server settles each bucket.
 
 	## Economy
 
@@ -46,9 +45,15 @@ type PlinkoPointsJoined = Types.PlinkoPointsJoined
 type PlinkoPointsDropStarted = Types.PlinkoPointsDropStarted
 type PlinkoPointsResultPayload = Types.PlinkoPointsResultPayload
 
-type PendingDrop = {
+type PendingBall = {
 	dropId: number,
 	wager: number,
+}
+
+type PendingSession = {
+	balls: { [number]: PendingBall },
+	expected: number,
+	settled: number,
 	startedAt: number,
 }
 
@@ -61,7 +66,7 @@ local nextDropId = 1
 local playersInArena: { [Player]: boolean } = {}
 local loadouts: { [Player]: PlinkoPointsLoadout } = {}
 local lastDropAt: { [Player]: number } = {}
-local pendingDrops: { [Player]: PendingDrop } = {}
+local pendingSessions: { [Player]: PendingSession } = {}
 local playerJanitors: { [Player]: any } = {}
 
 local spawnPart: BasePart? = nil
@@ -76,8 +81,17 @@ local function clampWager(rawWager: unknown): number
 	return math.clamp(wager, cfg.MinWager, cfg.MaxWager)
 end
 
+local function clampBallCount(rawCount: unknown): number
+	local cfg = Config.PLINKO
+	local count = math.floor(tonumber(rawCount) or cfg.DefaultBallCount)
+	return math.clamp(count, cfg.MinBallCount, cfg.MaxBallCount)
+end
+
 local function getLoadout(player: Player): PlinkoPointsLoadout
-	return loadouts[player] or { wager = Config.PLINKO.DefaultWager }
+	return loadouts[player] or {
+		wager = Config.PLINKO.DefaultWager,
+		ballCount = Config.PLINKO.DefaultBallCount,
+	}
 end
 
 local function teleportTo(player: Player, position: Vector3)
@@ -228,6 +242,7 @@ local function joinedPayload(player: Player): PlinkoPointsJoined
 	local loadout = getLoadout(player)
 	return {
 		wager = loadout.wager,
+		ballCount = loadout.ballCount,
 		chips = CurrencyService.getChips(player),
 		highScore = DataService.getHighScore(player, "PlinkoPoints"),
 	}
@@ -237,18 +252,12 @@ local function rejectDrop(player: Player, reason: string)
 	Remotes.getEvent("PlinkoPointsDropRejected"):FireClient(player, { reason = reason })
 end
 
-local function settlePending(player: Player, bucketIndex0: number)
-	local pending = pendingDrops[player]
-	if not pending then
-		return
-	end
-	pendingDrops[player] = nil
-
+local function settleBall(player: Player, ball: PendingBall, bucketIndex0: number)
 	local multipliers = Config.PLINKO.BucketMultipliers
 	local maxIndex = #multipliers - 1
 	local bucketIndex0Clamped = math.clamp(math.floor(bucketIndex0), 0, maxIndex)
 	local multiplier = multipliers[bucketIndex0Clamped + 1] or 0
-	local wager = pending.wager
+	local wager = ball.wager
 	local payout = math.floor(wager * multiplier)
 	if payout > 0 then
 		CurrencyService.creditPayout(player, payout, wager, "PlinkoPoints:payout")
@@ -259,7 +268,7 @@ local function settlePending(player: Player, bucketIndex0: number)
 	local highScore = DataService.setHighScore(player, "PlinkoPoints", payout)
 
 	local payload: PlinkoPointsResultPayload = {
-		dropId = pending.dropId,
+		dropId = ball.dropId,
 		bucketIndex = bucketIndex0Clamped,
 		multiplier = multiplier,
 		wager = wager,
@@ -272,20 +281,42 @@ local function settlePending(player: Player, bucketIndex0: number)
 	Remotes.getEvent("PlinkoPointsResult"):FireClient(player, payload)
 end
 
-local function refundPending(player: Player, source: string)
-	local pending = pendingDrops[player]
-	if not pending then
+local function refundSession(player: Player, source: string)
+	local session = pendingSessions[player]
+	if not session then
 		return
 	end
-	pendingDrops[player] = nil
-	CurrencyService.creditPayout(player, pending.wager, pending.wager, source)
+	pendingSessions[player] = nil
+	local refund = 0
+	for _, ball in session.balls do
+		refund += ball.wager
+	end
+	if refund > 0 then
+		CurrencyService.creditPayout(player, refund, refund, source)
+	end
+end
+
+local function settleTimedOutBalls(player: Player, session: PendingSession)
+	local center = math.floor((#Config.PLINKO.BucketMultipliers - 1) / 2)
+	local remaining: { PendingBall } = {}
+	for _, ball in session.balls do
+		table.insert(remaining, ball)
+	end
+	for _, ball in remaining do
+		session.balls[ball.dropId] = nil
+		session.settled += 1
+		settleBall(player, ball, center)
+	end
+	if session.settled >= session.expected then
+		pendingSessions[player] = nil
+	end
 end
 
 local function beginDrop(player: Player)
 	if not playersInArena[player] then
 		return
 	end
-	if pendingDrops[player] then
+	if pendingSessions[player] then
 		rejectDrop(player, "Drop already in progress")
 		return
 	end
@@ -299,59 +330,79 @@ local function beginDrop(player: Player)
 
 	local loadout = getLoadout(player)
 	local wager = loadout.wager
-	if CurrencyService.getChips(player) < wager then
-		rejectDrop(player, "Insufficient chips for this wager")
+	local ballCount = loadout.ballCount
+	local totalStake = wager * ballCount
+	if CurrencyService.getChips(player) < totalStake then
+		rejectDrop(player, string.format("Need %d chips for %d balls", totalStake, ballCount))
 		return
 	end
 
-	local deducted = CurrencyService.deductChips(player, wager, "PlinkoPoints:wager")
+	local deducted = CurrencyService.deductChips(player, totalStake, "PlinkoPoints:wager")
 	if not deducted then
-		rejectDrop(player, "Insufficient chips for this wager")
+		rejectDrop(player, string.format("Need %d chips for %d balls", totalStake, ballCount))
 		return
 	end
 
 	lastDropAt[player] = now
-	local dropId = nextDropId
-	nextDropId += 1
-	pendingDrops[player] = {
-		dropId = dropId,
-		wager = wager,
+	local dropIds: { number } = {}
+	local balls: { [number]: PendingBall } = {}
+	for _ = 1, ballCount do
+		local dropId = nextDropId
+		nextDropId += 1
+		table.insert(dropIds, dropId)
+		balls[dropId] = {
+			dropId = dropId,
+			wager = wager,
+		}
+	end
+
+	pendingSessions[player] = {
+		balls = balls,
+		expected = ballCount,
+		settled = 0,
 		startedAt = now,
 	}
 
 	local startedPayload: PlinkoPointsDropStarted = {
-		dropId = dropId,
+		dropIds = dropIds,
 		wager = wager,
+		ballCount = ballCount,
+		staggerSeconds = Config.PLINKO.BallDropStaggerSeconds,
 		chips = CurrencyService.getChips(player),
 	}
 	Remotes.getEvent("PlinkoPointsDropStarted"):FireClient(player, startedPayload)
 
-	task.delay(Config.PLINKO.LandReportTimeoutSeconds, function()
-		local pending = pendingDrops[player]
-		if not pending or pending.dropId ~= dropId then
+	local timeout = Config.PLINKO.LandReportTimeoutSeconds + (ballCount - 1) * Config.PLINKO.BallDropStaggerSeconds + 2
+	task.delay(timeout, function()
+		local session = pendingSessions[player]
+		if not session or session.startedAt ~= now then
 			return
 		end
-		-- Timed out without a land report: treat as center bust.
-		local center = math.floor((#Config.PLINKO.BucketMultipliers - 1) / 2)
-		settlePending(player, center)
+		settleTimedOutBalls(player, session)
 	end)
 end
 
 local function handleLanded(player: Player, dropId: unknown, bucketIndex: unknown)
-	local pending = pendingDrops[player]
-	if not pending then
+	local session = pendingSessions[player]
+	if not session then
 		return
 	end
-	if typeof(dropId) ~= "number" or dropId ~= pending.dropId then
-		return
-	end
-	if typeof(bucketIndex) ~= "number" then
+	if typeof(dropId) ~= "number" or typeof(bucketIndex) ~= "number" then
 		return
 	end
 	if not playersInArena[player] then
 		return
 	end
-	settlePending(player, bucketIndex)
+	local ball = session.balls[dropId]
+	if not ball then
+		return
+	end
+	session.balls[dropId] = nil
+	session.settled += 1
+	settleBall(player, ball, bucketIndex)
+	if session.settled >= session.expected then
+		pendingSessions[player] = nil
+	end
 end
 
 --[=[
@@ -395,7 +446,7 @@ function PlinkoPoints.leave(player: Player)
 		return
 	end
 	playersInArena[player] = nil
-	refundPending(player, "PlinkoPoints:leave_refund")
+	refundSession(player, "PlinkoPoints:leave_refund")
 
 	local janitor = playerJanitors[player]
 	if janitor then
@@ -438,9 +489,13 @@ function PlinkoPoints.start()
 		end
 	end
 
-	Remotes.getEvent("PlinkoPointsSetWager").OnServerEvent:Connect(function(player: Player, wager: unknown)
-		loadouts[player] = { wager = clampWager(wager) }
-	end)
+	Remotes.getEvent("PlinkoPointsSetWager").OnServerEvent
+		:Connect(function(player: Player, wager: unknown, ballCount: unknown)
+			loadouts[player] = {
+				wager = clampWager(wager),
+				ballCount = clampBallCount(ballCount),
+			}
+		end)
 
 	Remotes.getEvent("PlinkoPointsDrop").OnServerEvent:Connect(function(player: Player)
 		beginDrop(player)
@@ -460,7 +515,7 @@ function PlinkoPoints.start()
 		loadouts[player] = nil
 		lastDropAt[player] = nil
 		-- Disconnect mid-drop: stake already taken; do not refund.
-		pendingDrops[player] = nil
+		pendingSessions[player] = nil
 		local janitor = playerJanitors[player]
 		if janitor then
 			janitor:Destroy()

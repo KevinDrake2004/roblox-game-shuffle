@@ -16,19 +16,17 @@ This document describes **current** behavior for playtesting and economy tuning.
 ## Drop flow
 
 ```
-idle → deduct wager → DropStarted → free client physics → Landed(bucket) → credit payout → Result HUD
+idle → deduct wager×balls → DropStarted(dropIds) → staggered free physics → Landed each → settle each
 ```
 
 | Step | What happens |
 |------|----------------|
-| Request drop | Client fires `PlinkoPointsDrop`. Server rejects if not in arena, on cooldown, already dropping, or balance `<` wager. |
-| Deduct | `CurrencyService.deductChips(wager, "PlinkoPoints:wager")`. |
-| DropStarted | Server fires `PlinkoPointsDropStarted` (`dropId`, wager, chips). **No bucket is chosen yet.** |
-| Physics | Client runs local gravity + peg bounce. Landing is **not** steered or pre-rolled. |
-| Landed | Client fires `PlinkoPointsLanded(dropId, bucketIndex)` for the slot the ball entered. |
-| Settle | `payout = floor(wager * BucketMultipliers[bucket])`; credit when payout `>` 0. |
-| Timeout | If no land report within `LandReportTimeoutSeconds`, server settles as center bust. |
-| Leave mid-drop | Pending wager is refunded. |
+| Request drop | Client fires `PlinkoPointsDrop`. Server rejects if busy, on cooldown, or balance `<` wager×balls. |
+| Deduct | `CurrencyService.deductChips(wager * ballCount)`. |
+| DropStarted | Server sends `dropIds` + stagger. **No buckets chosen yet.** |
+| Physics | Client releases balls back-to-back; each is an independent gravity sim. Balls ignore each other (peg/rail only). |
+| Landed | Client fires `PlinkoPointsLanded(dropId, bucketIndex)` per ball. |
+| Settle | Per ball: `payout = floor(wager * BucketMultipliers[bucket])`. |
 
 Ball visuals are client-only (`CurrentCamera.PlinkoLocalFx`). Other players never see your ball. Multiplier labels are local and only spawn while you are in the Plinko arena.
 
@@ -104,7 +102,8 @@ Full table lives in `src/shared/Config.luau`.
 
 | Piece | Behavior |
 |-------|----------|
-| Ball | Free gravity + elastic peg bounce (substeps); **no** soft bias toward a target bucket |
+| Ball | Free gravity + soft peg bounce; multi-ball overlap allowed; **no ball-ball collision** |
+| Multi-drop | Choose 1–10 balls; stake = wager×count; balls release on a short stagger |
 | Peg hits | Brief color flash on contact |
 | Bucket land | Local light + size pulse on the slot physics entered |
 | Multiplier labels | Created on join, destroyed on leave |

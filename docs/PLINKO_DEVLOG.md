@@ -13,6 +13,8 @@ Session notes for `feature/plinko-dev`. Flaws and successes as we iterate.
 - Multipliers retuned so `E[mult]` under binomial weights is **exactly 105%**; removed Plinko `PlayerReturnFactor` (RTP is the curve × multipliers only).
 - Bounce feel: soft peg deflects (low restitution + side/up damp) so hits read, but the ball keeps falling instead of pinballing to the rails.
 
+- Multi-ball: pick ball count (1–10); balls release staggered, no ball-ball collision (peg-only).
+
 ### Flaws / follow-ups
 
 - Land report is still client-trusted (soft-currency alpha). A cheater could lie about the bucket; later: server-side seed replay or hash commit.

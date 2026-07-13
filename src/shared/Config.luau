@@ -118,6 +118,7 @@ Config.ROCKET_RUN = {
 	Plinko Points tuning: per-drop wager clamps, bucket payouts, and RTP.
 
 	- `DefaultWager` / `MinWager` / `MaxWager` - stake clamps per ball drop
+	- `DefaultBallCount` / `MinBallCount` / `MaxBallCount` / `BallDropStaggerSeconds` - multi-ball drops
 	- `BucketMultipliers` - payout multipliers left→right (edges high, center bust)
 	- `BucketWeights` - documented binomial land curve for RTP math (not rolled)
 	- `TargetRTP` - design aim only (~1.05); achieved by tuning multipliers vs the land curve
@@ -138,6 +139,11 @@ Config.PLINKO = {
 	DefaultWager = 10,
 	MinWager = 1,
 	MaxWager = 50,
+	DefaultBallCount = 1,
+	MinBallCount = 1,
+	MaxBallCount = 10,
+	-- Seconds between releasing each ball in a multi-drop (they may overlap in flight).
+	BallDropStaggerSeconds = 0.3,
 	-- Design aim: E[BucketMultipliers] under BucketWeights ≈ TargetRTP (no extra factor).
 	TargetRTP = 1.05,
 	DropCooldownSeconds = 0.75,

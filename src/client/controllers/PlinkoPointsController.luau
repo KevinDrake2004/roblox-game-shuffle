@@ -3,10 +3,10 @@
 	@class PlinkoPointsController
 	Client controller for Plinko Points UI, board camera, and remote handling.
 
-	- Forwards wager / drop / leave requests.
-	- After DropStarted, runs a free local gravity sim; reports the landed bucket.
+	- Forwards wager / ball-count / drop / leave requests.
+	- After DropStarted, releases balls on a stagger; each is an independent sim
+	  (balls do not collide with each other, only pegs).
 	- Multiplier labels and balls exist only for the local player while in-arena.
-	- Tracks session net P/L locally from result payloads.
 ]=]
 local RunService = game:GetService("RunService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -38,7 +38,9 @@ local cameraJanitor = Janitor.new()
 local labelJanitor = Janitor.new()
 local sessionNet = 0
 local dropBusy = false
-local activeDropId: number? = nil
+local pendingResults = 0
+local activeDropIds: { [number]: boolean } = {}
+local currentBallCount = Config.PLINKO.DefaultBallCount
 local savedCameraType: Enum.CameraType? = nil
 local cameraActive = false
 
@@ -56,7 +58,7 @@ local function formatMultiplierLabel(multiplier: number): string
 	if multiplier == math.floor(multiplier) then
 		return string.format("%dx", multiplier)
 	end
-	return string.format("%.1fx", multiplier)
+	return string.format("%.2fx", multiplier)
 end
 
 local function sessionColor(): Color3
@@ -70,6 +72,13 @@ end
 
 local function refreshSessionLine()
 	PlinkoPointsHud.setSessionLine(string.format("Session: %s", formatNetDelta(sessionNet)), sessionColor())
+end
+
+local function dropButtonLabel(ballCount: number): string
+	if ballCount <= 1 then
+		return "DROP 1 BALL"
+	end
+	return string.format("DROP %d BALLS", ballCount)
 end
 
 local function getCameraFocus(): BasePart?
@@ -235,9 +244,18 @@ local function applyResultHud(payload: PlinkoPointsResultPayload)
 		string.format("Wager %d  |  Balance %d  |  High score: %d", payload.wager, payload.chips, payload.highScore)
 	)
 	refreshSessionLine()
-	dropBusy = false
-	activeDropId = nil
-	PlinkoPointsHud.setDropEnabled(true)
+
+	activeDropIds[payload.dropId] = nil
+	pendingResults = math.max(0, pendingResults - 1)
+	if pendingResults <= 0 then
+		dropBusy = false
+		table.clear(activeDropIds)
+		PlinkoPointsHud.setDropEnabled(true)
+		PlinkoPointsHud.setDropLabel(dropButtonLabel(currentBallCount))
+		PlinkoPointsHud.setStatus("Set wager & balls, then drop")
+	else
+		PlinkoPointsHud.setStatus(string.format("%d ball(s) still in play…", pendingResults))
+	end
 end
 
 local function requestDrop()
@@ -254,26 +272,46 @@ local function requestLeave()
 	Remotes.getEvent("PlinkoPointsLeave"):FireServer()
 end
 
-local function applyWager(wager: number)
-	local clamped = math.clamp(math.floor(wager), Config.PLINKO.MinWager, Config.PLINKO.MaxWager)
-	Remotes.getEvent("PlinkoPointsSetWager"):FireServer(clamped)
-	PlinkoPointsHud.setWagerValue(clamped)
-	PlinkoPointsHud.setStatus(string.format("Wager set to %d chips", clamped))
+local function applyLoadout(wager: number, ballCount: number)
+	local clampedWager = math.clamp(math.floor(wager), Config.PLINKO.MinWager, Config.PLINKO.MaxWager)
+	local clampedBalls = math.clamp(math.floor(ballCount), Config.PLINKO.MinBallCount, Config.PLINKO.MaxBallCount)
+	Remotes.getEvent("PlinkoPointsSetWager"):FireServer(clampedWager, clampedBalls)
+	currentBallCount = clampedBalls
+	PlinkoPointsHud.setLoadoutValues(clampedWager, clampedBalls)
+	PlinkoPointsHud.setDropLabel(dropButtonLabel(clampedBalls))
+	PlinkoPointsHud.setStatus(
+		string.format("Wager %d × %d ball(s) = %d chips", clampedWager, clampedBalls, clampedWager * clampedBalls)
+	)
 end
 
 local function startFreeDrop(payload: PlinkoPointsDropStarted)
-	activeDropId = payload.dropId
+	table.clear(activeDropIds)
+	pendingResults = #payload.dropIds
+	currentBallCount = payload.ballCount
 	HubHud.setChips(payload.chips)
-	PlinkoPointsHud.setStatus("Ball in play…")
-	PlinkoPointsHud.setScoreLine(string.format("Wager %d  |  Balance %d", payload.wager, payload.chips))
+	PlinkoPointsHud.setDropLabel(dropButtonLabel(payload.ballCount))
+	PlinkoPointsHud.setStatus(
+		if payload.ballCount > 1 then string.format("Releasing %d balls…", payload.ballCount) else "Ball in play…"
+	)
+	PlinkoPointsHud.setScoreLine(
+		string.format("Wager %d × %d  |  Balance %d", payload.wager, payload.ballCount, payload.chips)
+	)
 
-	PlinkoBallPhysics.drop(function(bucketIndex: number)
-		if not active or activeDropId ~= payload.dropId then
-			return
-		end
-		Remotes.getEvent("PlinkoPointsLanded"):FireServer(payload.dropId, bucketIndex)
-		PlinkoPointsHud.setStatus("Settling…")
-	end)
+	for index, dropId in payload.dropIds do
+		activeDropIds[dropId] = true
+		local delaySeconds = (index - 1) * payload.staggerSeconds
+		task.delay(delaySeconds, function()
+			if not active or not activeDropIds[dropId] then
+				return
+			end
+			PlinkoBallPhysics.drop(function(bucketIndex: number)
+				if not active or not activeDropIds[dropId] then
+					return
+				end
+				Remotes.getEvent("PlinkoPointsLanded"):FireServer(dropId, bucketIndex)
+			end)
+		end)
+	end
 end
 
 --[=[
@@ -282,7 +320,8 @@ end
 function PlinkoPointsController.stopSession()
 	active = false
 	dropBusy = false
-	activeDropId = nil
+	pendingResults = 0
+	table.clear(activeDropIds)
 	sessionNet = 0
 	PlinkoBallPhysics.cancel()
 	clearLocalMultiplierLabels()
@@ -300,19 +339,28 @@ end
 function PlinkoPointsController.startSession(payload: PlinkoPointsJoined)
 	active = true
 	dropBusy = false
-	activeDropId = nil
+	pendingResults = 0
+	table.clear(activeDropIds)
 	sessionNet = 0
+	currentBallCount = payload.ballCount
 
 	HubHud.setTitle("Plinko Points")
 	HubHud.setChips(payload.chips)
 	PlinkoPointsHud.setVisible(true)
 	PlinkoPointsHud.setWagerEnabled(true)
-	PlinkoPointsHud.setWagerValue(payload.wager)
+	PlinkoPointsHud.setLoadoutValues(payload.wager, payload.ballCount)
 	PlinkoPointsHud.setDropEnabled(true)
+	PlinkoPointsHud.setDropLabel(dropButtonLabel(payload.ballCount))
 	PlinkoPointsHud.setResult("Drop a ball", Config.COLORS.NeonPurple)
-	PlinkoPointsHud.setStatus("Set wager, then drop")
+	PlinkoPointsHud.setStatus("Set wager & balls, then drop")
 	PlinkoPointsHud.setScoreLine(
-		string.format("Wager %d  |  Balance %d  |  High score: %d", payload.wager, payload.chips, payload.highScore)
+		string.format(
+			"Wager %d × %d  |  Balance %d  |  High score: %d",
+			payload.wager,
+			payload.ballCount,
+			payload.chips,
+			payload.highScore
+		)
 	)
 	refreshSessionLine()
 	showLocalMultiplierLabels()
@@ -330,8 +378,8 @@ function PlinkoPointsController.start()
 
 	clearLocalMultiplierLabels()
 
-	PlinkoPointsHud.start(requestDrop, requestLeave, applyWager)
-	applyWager(Config.PLINKO.DefaultWager)
+	PlinkoPointsHud.start(requestDrop, requestLeave, applyLoadout)
+	applyLoadout(Config.PLINKO.DefaultWager, Config.PLINKO.DefaultBallCount)
 
 	Remotes.getEvent("PlinkoPointsJoined").OnClientEvent:Connect(function(payload: PlinkoPointsJoined)
 		PlinkoPointsController.startSession(payload)
@@ -353,9 +401,11 @@ function PlinkoPointsController.start()
 
 	Remotes.getEvent("PlinkoPointsDropRejected").OnClientEvent:Connect(function(payload: { reason: string })
 		dropBusy = false
-		activeDropId = nil
+		pendingResults = 0
+		table.clear(activeDropIds)
 		PlinkoBallPhysics.cancel()
 		PlinkoPointsHud.setDropEnabled(true)
+		PlinkoPointsHud.setDropLabel(dropButtonLabel(currentBallCount))
 		PlinkoPointsHud.setStatus(payload.reason or "Drop rejected")
 		PlinkoPointsHud.setResult("Blocked", Config.COLORS.NeonMagenta)
 	end)

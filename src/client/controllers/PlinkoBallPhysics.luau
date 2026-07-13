@@ -37,7 +37,7 @@ type SimHandles = {
 	cancel: () -> (),
 }
 
-local activeCancel: (() -> ())? = nil
+local activeCancels: { [() -> ()]: boolean } = {}
 
 local function getArena(): Folder?
 	local arena = Workspace:FindFirstChild("PlinkoArena")
@@ -187,13 +187,17 @@ local function clampSpeed(vel: Vector3, maxSpeed: number): Vector3
 end
 
 --[=[
-	Cancel any in-flight local ball simulation.
+	Cancel every in-flight local ball simulation.
 ]=]
 function PlinkoBallPhysics.cancel()
-	if activeCancel then
-		activeCancel()
-		activeCancel = nil
+	local snapshot: { () -> () } = {}
+	for cancelFn in activeCancels do
+		table.insert(snapshot, cancelFn)
 	end
+	for _, cancelFn in snapshot do
+		cancelFn()
+	end
+	table.clear(activeCancels)
 	local camera = Workspace.CurrentCamera
 	local folder = if camera then camera:FindFirstChild("PlinkoLocalFx") else nil
 	if folder then
@@ -203,28 +207,28 @@ end
 
 --[=[
 	Run a free local gravity/peg bounce drop. Landing bucket is decided by physics.
+	Multiple drops may run at once; balls do not collide with each other (peg-only).
 
 	@param onLanded (bucketIndex: number) -> () -- 0-based bucket the ball actually entered
 	@return SimHandles
 ]=]
 function PlinkoBallPhysics.drop(onLanded: (bucketIndex: number) -> ()): SimHandles
-	PlinkoBallPhysics.cancel()
-
 	local arena = getArena()
 	local cancelled = false
 	local connection: RBXScriptConnection? = nil
 
 	local function cleanup()
+		if cancelled then
+			return
+		end
 		cancelled = true
 		if connection then
 			connection:Disconnect()
 			connection = nil
 		end
-		if activeCancel == cleanup then
-			activeCancel = nil
-		end
+		activeCancels[cleanup] = nil
 	end
-	activeCancel = cleanup
+	activeCancels[cleanup] = true
 
 	local function failLand()
 		if cancelled then
@@ -321,9 +325,7 @@ function PlinkoBallPhysics.drop(onLanded: (bucketIndex: number) -> ()): SimHandl
 			if not cancelled then
 				onLanded(landedIndex)
 			end
-			if activeCancel == cleanup then
-				activeCancel = nil
-			end
+			activeCancels[cleanup] = nil
 		end)
 	end
 

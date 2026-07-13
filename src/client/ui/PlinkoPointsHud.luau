@@ -21,13 +21,14 @@ local resultLabel: TextLabel? = nil
 local scoreLabel: TextLabel? = nil
 local sessionLabel: TextLabel? = nil
 local wagerBox: TextBox? = nil
+local ballsBox: TextBox? = nil
 local dropButton: TextButton? = nil
 local loadoutFrame: Frame? = nil
 local feedbackFlash: Frame? = nil
 
 local onDrop: (() -> ())? = nil
 local onLeave: (() -> ())? = nil
-local onApplyWager: ((wager: number) -> ())? = nil
+local onApplyLoadout: ((wager: number, ballCount: number) -> ())? = nil
 
 local ensureGui: () -> ()
 
@@ -130,7 +131,7 @@ ensureGui = function()
 	panel.Name = "Loadout"
 	panel.AnchorPoint = Vector2.new(0, 0.5)
 	panel.Position = UDim2.new(0, 24, 0.5, 0)
-	panel.Size = UDim2.fromOffset(220, 168)
+	panel.Size = UDim2.fromOffset(220, 248)
 	panel.BackgroundColor3 = Color3.fromRGB(16, 10, 28)
 	panel.BackgroundTransparency = 0.1
 	panel.BorderSizePixel = 0
@@ -151,18 +152,18 @@ ensureGui = function()
 	local panelTitle = Instance.new("TextLabel")
 	panelTitle.BackgroundTransparency = 1
 	panelTitle.Position = UDim2.fromOffset(12, 10)
-	panelTitle.Size = UDim2.new(1, -24, 0, 24)
+	panelTitle.Size = UDim2.new(1, -24, 0, 22)
 	panelTitle.Font = Enum.Font.GothamBold
 	panelTitle.TextXAlignment = Enum.TextXAlignment.Left
 	panelTitle.TextColor3 = Config.COLORS.Text
 	panelTitle.TextScaled = true
-	panelTitle.Text = "Wager"
+	panelTitle.Text = "Wager / ball"
 	panelTitle.Parent = panel
 
 	local wager = Instance.new("TextBox")
 	wager.Name = "Wager"
-	wager.Position = UDim2.fromOffset(12, 42)
-	wager.Size = UDim2.new(1, -24, 0, 34)
+	wager.Position = UDim2.fromOffset(12, 36)
+	wager.Size = UDim2.new(1, -24, 0, 32)
 	wager.BackgroundColor3 = Color3.fromRGB(28, 18, 48)
 	wager.BorderSizePixel = 0
 	wager.Font = Enum.Font.GothamBold
@@ -178,9 +179,39 @@ ensureGui = function()
 	wagerCorner.CornerRadius = UDim.new(0, 8)
 	wagerCorner.Parent = wager
 
+	local ballsLabel = Instance.new("TextLabel")
+	ballsLabel.BackgroundTransparency = 1
+	ballsLabel.Position = UDim2.fromOffset(12, 74)
+	ballsLabel.Size = UDim2.new(1, -24, 0, 20)
+	ballsLabel.Font = Enum.Font.GothamBold
+	ballsLabel.TextXAlignment = Enum.TextXAlignment.Left
+	ballsLabel.TextColor3 = Config.COLORS.Text
+	ballsLabel.TextScaled = true
+	ballsLabel.Text = "Balls"
+	ballsLabel.Parent = panel
+
+	local balls = Instance.new("TextBox")
+	balls.Name = "Balls"
+	balls.Position = UDim2.fromOffset(12, 96)
+	balls.Size = UDim2.new(1, -24, 0, 32)
+	balls.BackgroundColor3 = Color3.fromRGB(28, 18, 48)
+	balls.BorderSizePixel = 0
+	balls.Font = Enum.Font.GothamBold
+	balls.TextColor3 = Config.COLORS.NeonLime
+	balls.PlaceholderText = "1-10"
+	balls.Text = tostring(Config.PLINKO.DefaultBallCount)
+	balls.TextScaled = true
+	balls.ClearTextOnFocus = false
+	balls.Parent = panel
+	ballsBox = balls
+
+	local ballsCorner = Instance.new("UICorner")
+	ballsCorner.CornerRadius = UDim.new(0, 8)
+	ballsCorner.Parent = balls
+
 	local apply = Instance.new("TextButton")
 	apply.Name = "Apply"
-	apply.Position = UDim2.fromOffset(12, 90)
+	apply.Position = UDim2.fromOffset(12, 140)
 	apply.Size = UDim2.new(1, -24, 0, 36)
 	apply.BackgroundColor3 = Color3.fromRGB(42, 28, 72)
 	apply.BorderSizePixel = 0
@@ -195,34 +226,35 @@ ensureGui = function()
 	applyCorner.Parent = apply
 
 	apply.MouseButton1Click:Connect(function()
-		if not onApplyWager then
+		if not onApplyLoadout then
 			return
 		end
 		local wagerValue = tonumber(wager.Text) or Config.PLINKO.DefaultWager
-		onApplyWager(wagerValue)
+		local ballsValue = tonumber(balls.Text) or Config.PLINKO.DefaultBallCount
+		onApplyLoadout(wagerValue, ballsValue)
 	end)
 
 	local note = Instance.new("TextLabel")
 	note.BackgroundTransparency = 1
-	note.Position = UDim2.fromOffset(12, 134)
-	note.Size = UDim2.new(1, -24, 0, 22)
+	note.Position = UDim2.fromOffset(12, 184)
+	note.Size = UDim2.new(1, -24, 0, 48)
 	note.Font = Enum.Font.Gotham
 	note.TextColor3 = Color3.fromRGB(170, 160, 200)
 	note.TextScaled = true
-	note.Text = "Per ball drop"
+	note.Text = "Wager is per ball.\nBalls release back-to-back."
 	note.Parent = panel
 
 	local drop = Instance.new("TextButton")
 	drop.Name = "Drop"
 	drop.AnchorPoint = Vector2.new(0.5, 1)
 	drop.Position = UDim2.new(0.5, 0, 1, -96)
-	drop.Size = UDim2.fromOffset(240, 56)
+	drop.Size = UDim2.fromOffset(260, 56)
 	drop.BackgroundColor3 = Color3.fromRGB(40, 22, 64)
 	drop.BorderSizePixel = 0
 	drop.Font = Enum.Font.GothamBold
 	drop.TextColor3 = Config.COLORS.NeonPurple
 	drop.TextScaled = true
-	drop.Text = "DROP BALL"
+	drop.Text = "DROP"
 	drop.AutoButtonColor = true
 	drop.ZIndex = 4
 	drop.Parent = screen
@@ -269,12 +301,16 @@ ensureGui = function()
 end
 
 --[=[
-	Build the HUD (once) and register drop / leave / wager callbacks.
+	Build the HUD (once) and register drop / leave / loadout callbacks.
 ]=]
-function PlinkoPointsHud.start(dropHandler: () -> (), leaveHandler: () -> (), applyHandler: (wager: number) -> ())
+function PlinkoPointsHud.start(
+	dropHandler: () -> (),
+	leaveHandler: () -> (),
+	applyHandler: (wager: number, ballCount: number) -> ()
+)
 	onDrop = dropHandler
 	onLeave = leaveHandler
-	onApplyWager = applyHandler
+	onApplyLoadout = applyHandler
 	ensureGui()
 end
 
@@ -357,10 +393,36 @@ function PlinkoPointsHud.setWagerEnabled(enabled: boolean)
 	if wagerBox then
 		wagerBox.TextEditable = enabled
 	end
+	if ballsBox then
+		ballsBox.TextEditable = enabled
+	end
 end
 
 --[=[
-	Sync wager text box from server / default values.
+	Sync wager + ball-count text boxes from server / default values.
+]=]
+function PlinkoPointsHud.setLoadoutValues(wager: number, ballCount: number)
+	ensureGui()
+	if wagerBox then
+		wagerBox.Text = tostring(wager)
+	end
+	if ballsBox then
+		ballsBox.Text = tostring(ballCount)
+	end
+end
+
+--[=[
+	Update the drop button label (e.g. DROP 5 BALLS).
+]=]
+function PlinkoPointsHud.setDropLabel(text: string)
+	ensureGui()
+	if dropButton then
+		dropButton.Text = text
+	end
+end
+
+--[=[
+	Sync wager text box only.
 ]=]
 function PlinkoPointsHud.setWagerValue(wager: number)
 	ensureGui()
