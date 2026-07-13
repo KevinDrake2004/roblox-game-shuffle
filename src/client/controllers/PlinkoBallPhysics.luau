@@ -268,12 +268,18 @@ function PlinkoBallPhysics.rebuildBoard(riskId: string): boolean
 	local spacingY = math.max(1.45, (topY - bottomY) / rows)
 	local boardZ = origin.Position.Z - 0.15
 	local originX = Config.PLINKO.ArenaOrigin.X
-	-- Leave speed + ball size scale with peg pitch so denser boards stay passable.
-	local pegSize = math.clamp(spacingX * 0.32, 0.35, 1.05)
-	local clearGap = math.max(0.35, spacingX - pegSize)
-	-- Diameter stays under the peg channel so balls zigzag instead of wedging outward.
-	local ballRadius = math.clamp(clearGap * 0.4, 0.22, Config.PLINKO.BallRadius)
-	local leaveSpeed = math.clamp(spacingX * 2.15, 4.5, 9.5)
+	-- Galton sizing: peg ~30-34% of pitch; ball ~48-52% so it fits the channel with margin.
+	local pegSize = math.clamp(spacingX * 0.32, 0.30, 1.05)
+	local clearGap = math.max(0.28, spacingX - pegSize)
+	local ballDiameter = math.clamp(spacingX * 0.50, 0.44, clearGap * 0.88)
+	if ballDiameter >= clearGap * 0.92 then
+		ballDiameter = clearGap * 0.86
+	end
+	local ballRadius = math.min(ballDiameter * 0.5, Config.PLINKO.BallRadius)
+	-- Leave speed: ~half spacing per row fall time (Galton ±1 step), not a fixed high cap.
+	local fallTime = math.max(0.12, math.sqrt(2 * spacingY / Config.PLINKO.BallGravity))
+	local leaveSpeed = (spacingX * 0.5) / fallTime
+	leaveSpeed = math.clamp(leaveSpeed, spacingX * 1.0, spacingX * 2.5)
 	board:SetAttribute("RiskId", risk.id)
 	board:SetAttribute("PegRows", rows)
 	board:SetAttribute("LeaveSpeed", leaveSpeed)
@@ -491,6 +497,8 @@ function PlinkoBallPhysics.drop(onLanded: (bucketIndex: number) -> ()): SimHandl
 	local boardZ = origin.Position.Z - 0.15
 	local leaveSpeedAttr = if board then board:GetAttribute("LeaveSpeed") else nil
 	local leaveSpeed = if typeof(leaveSpeedAttr) == "number" then leaveSpeedAttr else cfg.BallPegLeaveSpeed
+	local spacingXAttr = if board then board:GetAttribute("SpacingX") else nil
+	local spacingX = if typeof(spacingXAttr) == "number" then spacingXAttr else cfg.PegSpacingX
 	local landY = buckets[1].landY
 	for _, bucket in buckets do
 		landY = math.min(landY, bucket.landY)
@@ -564,15 +572,21 @@ function PlinkoBallPhysics.drop(onLanded: (bucketIndex: number) -> ()): SimHandl
 		end)
 	end
 
-	local function collideRails(stepPos: Vector3, stepVel: Vector3): (Vector3, Vector3)
+	local function collideRails(stepPos: Vector3, stepVel: Vector3, stepDt: number): (Vector3, Vector3)
 		local minX = leftX + radius
 		local maxX = rightX - radius
+		local inwardNudge = math.min(leaveSpeed * 0.12, spacingX * 0.08)
 		if stepPos.X < minX then
 			stepPos = Vector3.new(minX, stepPos.Y, boardZ)
-			stepVel = Vector3.new(math.abs(stepVel.X) * cfg.BallBounce, stepVel.Y * 0.95, 0)
+			-- Kill outward skate; weak bounce + gentle push back into the board.
+			stepVel = Vector3.new(inwardNudge, stepVel.Y * 0.88, 0)
 		elseif stepPos.X > maxX then
 			stepPos = Vector3.new(maxX, stepPos.Y, boardZ)
-			stepVel = Vector3.new(-(math.abs(stepVel.X) * cfg.BallBounce), stepVel.Y * 0.95, 0)
+			stepVel = Vector3.new(-inwardNudge, stepVel.Y * 0.88, 0)
+		elseif math.abs(stepVel.X) > leaveSpeed * 1.35 then
+			-- Near-rail drift: bleed excess horizontal speed before wall contact.
+			local damp = math.clamp(1 - cfg.BallRailNearDamp * stepDt, 0.82, 1)
+			stepVel = Vector3.new(stepVel.X * damp, stepVel.Y, 0)
 		end
 		return stepPos, stepVel
 	end
@@ -616,7 +630,7 @@ function PlinkoBallPhysics.drop(onLanded: (bucketIndex: number) -> ()): SimHandl
 					-- Tuned so each row ≈ one ± half-spacing step → binomial lands.
 					local ang = math.rad(rng:NextNumber(leaveDeg * 0.8, leaveDeg * 1.2))
 					local impact = math.abs(approaching)
-					local speed = leaveSpeed + 0.06 * math.max(0, impact - 12)
+					local speed = leaveSpeed + 0.03 * math.max(0, impact - 14)
 					local leave = Vector3.new(side * speed * math.sin(ang), -speed * math.cos(ang), 0)
 
 					-- Elastic reflect along contact normal (visual bounce), blended with leave.
@@ -666,7 +680,7 @@ function PlinkoBallPhysics.drop(onLanded: (bucketIndex: number) -> ()): SimHandl
 			vel = clampSpeed(vel, cfg.BallMaxSpeed)
 			pos = Vector3.new(pos.X + vel.X * stepDt, pos.Y + vel.Y * stepDt, boardZ)
 
-			pos, vel = collideRails(pos, vel)
+			pos, vel = collideRails(pos, vel, stepDt)
 			pos, vel = collidePegs(pos, vel, elapsed)
 			vel = clampSpeed(vel, cfg.BallMaxSpeed)
 		end

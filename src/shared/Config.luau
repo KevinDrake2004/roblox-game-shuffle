@@ -144,39 +144,39 @@ Config.PLINKO = {
 	DefaultRiskId = "medium",
 	-- Risk scale: board size (pegRows) grows with risk; RTP approaches 100% at High.
 	-- Buckets = pegRows + 1. E[mult] under binomial C(pegRows, k):
-	--   low 8 rows ≈ 1.477, medium 12 rows ≈ 1.375, high 16 rows ≈ 0.996.
+	--   low 8 rows ≈ 1.203, medium 12 rows ≈ 1.150, high 16 rows ≈ 1.060.
 	RiskLevels = {
 		{
 			id = "low",
 			displayName = "Low",
-			targetRTP = 1.48,
+			targetRTP = 1.20,
 			maxBallCount = 200,
 			maxMultiplier = 10,
 			pegRows = 8,
-			bucketMultipliers = { 10, 4, 2, 1, 1, 1, 2, 4, 10 },
+			bucketMultipliers = { 10, 4, 2, 1, 0, 1, 2, 4, 10 },
 		},
 		{
 			id = "medium",
 			displayName = "Medium",
-			targetRTP = 1.37,
+			targetRTP = 1.15,
 			maxBallCount = 100,
-			maxMultiplier = 50,
+			maxMultiplier = 120,
 			pegRows = 12,
-			bucketMultipliers = { 50, 15, 6, 2, 1, 1, 1, 1, 1, 2, 6, 15, 50 },
+			bucketMultipliers = { 120, 35, 10, 3, 1, 0, 0, 0, 1, 3, 10, 35, 120 },
 		},
 		{
 			id = "high",
 			displayName = "High",
-			targetRTP = 1.0,
+			targetRTP = 1.06,
 			maxBallCount = 25,
-			maxMultiplier = 100,
+			maxMultiplier = 320,
 			pegRows = 16,
-			bucketMultipliers = { 100, 38, 14, 5, 2, 1, 1, 1, 0, 1, 1, 1, 2, 5, 14, 38, 100 },
+			bucketMultipliers = { 320, 90, 28, 10, 4, 2, 1, 0, 0, 0, 1, 2, 4, 10, 28, 90, 320 },
 		},
 	},
 	-- Convenience mirror of medium tier (fallbacks / docs).
-	TargetRTP = 1.37,
-	BucketMultipliers = { 50, 15, 6, 2, 1, 1, 1, 1, 1, 2, 6, 15, 50 },
+	TargetRTP = 1.15,
+	BucketMultipliers = { 120, 35, 10, 3, 1, 0, 0, 0, 1, 3, 10, 35, 120 },
 	DropCooldownSeconds = 0.75,
 	-- Reference weights for the default medium row count (C(12,k)); per-risk uses C(pegRows,k).
 	BucketWeights = { 1, 12, 66, 220, 495, 792, 924, 792, 495, 220, 66, 12, 1 },
@@ -196,20 +196,22 @@ Config.PLINKO = {
 	BallRadius = 0.85,
 	BallGravity = 62,
 	BallBounce = 0.42,
+	BallRailBounce = 0.18,
+	BallRailNearDamp = 2.4,
 	BallMaxSimSeconds = 8,
 	BallPegHitCooldown = 0.05,
 	-- Light air drag so leave speed carries to the next row without rail flings.
-	BallHorizontalDrag = 1.15,
-	BallStartSpeedX = 1.35,
-	BallMaxSpeed = 48,
+	BallHorizontalDrag = 1.35,
+	BallStartSpeedX = 1.1,
+	BallMaxSpeed = 42,
 	BallSubsteps = 3,
 	-- Post-contact leave: ~half peg spacing / fall time between rows → Galton ±1 step.
-	BallPegLeaveSpeed = 7.2,
-	BallPegLeaveAngleDeg = 33,
+	BallPegLeaveSpeed = 5.5,
+	BallPegLeaveAngleDeg = 30,
 	-- |normal.X| below this → unstable apex; coin-flip L/R.
-	BallPegApexNormalX = 0.12,
+	BallPegApexNormalX = 0.14,
 	-- Blend of elastic reflect (visual) vs roll-off leave velocity (distribution).
-	BallPegReflectBlend = 0.25,
+	BallPegReflectBlend = 0.18,
 	BallPegMaxUpSpeed = 6,
 	LandReportTimeoutSeconds = 9,
 }

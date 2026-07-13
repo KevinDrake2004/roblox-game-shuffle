@@ -44,14 +44,14 @@ Ball visuals are client-only (`CurrentCamera.PlinkoLocalFx`). Other players neve
 - Players pick a **risk tier**; each tier has its own integer `bucketMultipliers`, design RTP, and **ball cap**.
 - Higher risk → larger max jackpot, design RTP approaches **100%**, lower ball cap.
 - Lower risk → smaller jackpots, higher design RTP, higher ball cap.
-- Default is **Medium** (current ~139% / 26x max / 100 ball cap).
+- Default is **Medium** (current ~115% / 120x max / 100 ball cap).
 - Multipliers are **integers** so `floor(wager * mult)` does not wipe sub-1x buckets at wager `1`.
 
 | Risk | Rows | Buckets | Max mult | Design RTP | Ball cap | Multipliers (edges…center…) |
 |------|------|---------|----------|------------|----------|------------------------------|
-| Low | 8 | 9 | 10x | ~148% | 200 | `10, 4, 2, 1, 1, 1, 2, 4, 10` |
-| Medium | 12 | 13 | 50x | ~137% | 100 | `50, 15, 6, 2, 1, 1, 1, 1, 1, 2, 6, 15, 50` |
-| High | 16 | 17 | 100x | ~100% | 25 | `100, 38, 14, 5, 2, 1, 1, 1, 0, …` |
+| Low | 8 | 9 | 10x | ~120% | 200 | `10, 4, 2, 1, 0, 1, 2, 4, 10` |
+| Medium | 12 | 13 | 120x | ~115% | 100 | `120, 35, 10, 3, 1, 0, 0, 0, 1, 3, 10, 35, 120` |
+| High | 16 | 17 | 320x | ~106% | 25 | `320, 90, 28, 10, 4, 2, 1, 0, 0, 0, …` |
 
 Each player rebuilds a **local** peg/bucket board for their risk (shared arena decor hides while playing).
 
@@ -65,15 +65,15 @@ Left → right (13 buckets). Design land curve ≈ binomial `C(12, k)`.
 
 | Index | Multiplier | Weight `C(12,k)` |
 |-------|------------|------------------|
-| 0 / 12 | 50x | 1 |
-| 1 / 11 | 15x | 12 |
-| 2 / 10 | 6x | 66 |
-| 3 / 9 | 2x | 220 |
+| 0 / 12 | 120x | 1 |
+| 1 / 11 | 35x | 12 |
+| 2 / 10 | 10x | 66 |
+| 3 / 9 | 3x | 220 |
 | 4 / 8 | 1x | 495 |
-| 5 / 7 | 1x | 792 |
-| 6 | 1x | 924 |
+| 5 / 7 | 0x | 792 |
+| 6 | 0x | 924 |
 
-`E[multiplier] ≈ 1.375` on Medium when lands match `C(12,k)`.
+`E[multiplier] ≈ 1.150` on Medium when lands match `C(12,k)`.
 
 The Galton peg board (row `r` has `r+1` pegs) creates that center bias; row count follows risk.
 
@@ -136,9 +136,9 @@ Full table lives in `src/shared/Config.luau`.
 - Lobby → Plinko portal → arena at x≈90; Rocket Run at `(0, 5, -140)` unchanged
 - Multiplier labels visible in Plinko only; gone in lobby / Rocket Run
 - Ball bounces off pegs with gravity; path does **not** curve toward a pre-chosen slot
-- Repeated drops cluster toward center (normal / Galton curve); edge 26x is rare
+- Repeated drops cluster toward center (normal / Galton curve); edge jackpots are rare
 - Other clients do not see your ball
-- Over many drops, average return trends near ~139% RTP (variance still hurts short sessions)
+- Over many drops, average return trends near design RTP per risk tier (variance still hurts short sessions)
 - Balance `<` wager → drop rejected, no deduct
 - Leave mid-drop → wager refunded
 - Leave after settle → hub spawn `(0, 3, 20)`
