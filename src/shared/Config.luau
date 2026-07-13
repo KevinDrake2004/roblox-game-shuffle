@@ -143,19 +143,20 @@ Config.PLINKO = {
 	BallDropMaxReleaseSeconds = 1.5,
 	DefaultRiskId = "medium",
 	-- Risk scale: board size (pegRows) grows with risk; RTP approaches 100% at High.
-	-- Buckets = pegRows + 1. E[mult] under binomial C(pegRows, k):
-	--   low 8 rows ≈ 1.203, medium 12 rows ≈ 1.150, high 16 rows ≈ 1.060.
+	-- Buckets = pegRows + 1. Exact binomial RTP = Σ C(pegRows,k)·m[k] / 2^pegRows:
+	--   low 8 rows = 354/256 = 177/128 ≈ 1.383, medium 12 = 4916/4096 = 1229/1024 ≈ 1.200,
+	--   high 16 = 65536/65536 = 1.000. (Prior tables were ~1.203 / ~1.150 / ~1.060.)
 	-- Each tier carries its own Galton physics profile (ball/peg size, leave speed, drag).
 	-- Peg/bucket layout still scales from rail width; sim tunables do NOT share one formula.
 	RiskLevels = {
 		{
 			id = "low",
 			displayName = "Low",
-			targetRTP = 1.20,
+			targetRTP = 1.38,
 			maxBallCount = 200,
-			maxMultiplier = 10,
+			maxMultiplier = 17,
 			pegRows = 8,
-			bucketMultipliers = { 10, 4, 2, 1, 0, 1, 2, 4, 10 },
+			bucketMultipliers = { 17, 6, 2, 1, 0, 1, 2, 6, 17 },
 			-- Wide pitch (~4.4 stud): larger ball/pegs, strong leave X, light mid-board drag.
 			physics = {
 				ballRadius = 1.0,
@@ -175,11 +176,11 @@ Config.PLINKO = {
 		{
 			id = "medium",
 			displayName = "Medium",
-			targetRTP = 1.15,
+			targetRTP = 1.20,
 			maxBallCount = 100,
-			maxMultiplier = 120,
+			maxMultiplier = 121,
 			pegRows = 12,
-			bucketMultipliers = { 120, 35, 10, 3, 1, 0, 0, 0, 1, 3, 10, 35, 120 },
+			bucketMultipliers = { 121, 38, 11, 3, 1, 0, 0, 0, 1, 3, 11, 38, 121 },
 			-- Mid pitch (~3.1 stud): reference Galton feel.
 			physics = {
 				ballRadius = 0.72,
@@ -199,11 +200,11 @@ Config.PLINKO = {
 		{
 			id = "high",
 			displayName = "High",
-			targetRTP = 1.06,
+			targetRTP = 1.00,
 			maxBallCount = 25,
-			maxMultiplier = 320,
+			maxMultiplier = 316,
 			pegRows = 16,
-			bucketMultipliers = { 320, 90, 28, 10, 4, 2, 1, 0, 0, 0, 1, 2, 4, 10, 28, 90, 320 },
+			bucketMultipliers = { 316, 88, 27, 10, 3, 2, 1, 0, 0, 0, 1, 2, 3, 10, 27, 88, 316 },
 			-- Tight pitch (~2.35 stud): smaller ball/pegs, careful leave, light drag so X survives.
 			physics = {
 				ballRadius = 0.52,
@@ -222,8 +223,8 @@ Config.PLINKO = {
 		},
 	},
 	-- Convenience mirror of medium tier (fallbacks / docs).
-	TargetRTP = 1.15,
-	BucketMultipliers = { 120, 35, 10, 3, 1, 0, 0, 0, 1, 3, 10, 35, 120 },
+	TargetRTP = 1.20,
+	BucketMultipliers = { 121, 38, 11, 3, 1, 0, 0, 0, 1, 3, 11, 38, 121 },
 	DropCooldownSeconds = 0.75,
 	-- Reference weights for the default medium row count (C(12,k)); per-risk uses C(pegRows,k).
 	BucketWeights = { 1, 12, 66, 220, 495, 792, 924, 792, 495, 220, 66, 12, 1 },

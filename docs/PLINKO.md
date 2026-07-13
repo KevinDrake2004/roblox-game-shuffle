@@ -44,14 +44,14 @@ Ball visuals are client-only (`CurrentCamera.PlinkoLocalFx`). Other players neve
 - Players pick a **risk tier**; each tier has its own integer `bucketMultipliers`, design RTP, and **ball cap**.
 - Higher risk → larger max jackpot, design RTP approaches **100%**, lower ball cap.
 - Lower risk → smaller jackpots, higher design RTP, higher ball cap.
-- Default is **Medium** (current ~115% / 120x max / 100 ball cap).
+- Default is **Medium** (exact binomial ~120% / 121x max / 100 ball cap).
 - Multipliers are **integers** so `floor(wager * mult)` does not wipe sub-1x buckets at wager `1`.
 
 | Risk | Rows | Buckets | Max mult | Design RTP | Ball cap | Multipliers (edges…center…) |
 |------|------|---------|----------|------------|----------|------------------------------|
-| Low | 8 | 9 | 10x | ~120% | 200 | `10, 4, 2, 1, 0, 1, 2, 4, 10` |
-| Medium | 12 | 13 | 120x | ~115% | 100 | `120, 35, 10, 3, 1, 0, 0, 0, 1, 3, 10, 35, 120` |
-| High | 16 | 17 | 320x | ~106% | 25 | `320, 90, 28, 10, 4, 2, 1, 0, 0, 0, …` |
+| Low | 8 | 9 | 17x | ~138% (`354/256`) | 200 | `17, 6, 2, 1, 0, 1, 2, 6, 17` |
+| Medium | 12 | 13 | 121x | ~120% (`4916/4096`) | 100 | `121, 38, 11, 3, 1, 0, 0, 0, 1, 3, 11, 38, 121` |
+| High | 16 | 17 | 316x | 100% (`65536/65536`) | 25 | `316, 88, 27, 10, 3, 2, 1, 0, 0, 0, …` |
 
 Each player rebuilds a **local** peg/bucket board for their risk (shared arena decor hides while playing).
 
@@ -65,15 +65,15 @@ Left → right (13 buckets). Design land curve ≈ binomial `C(12, k)`.
 
 | Index | Multiplier | Weight `C(12,k)` |
 |-------|------------|------------------|
-| 0 / 12 | 120x | 1 |
-| 1 / 11 | 35x | 12 |
-| 2 / 10 | 10x | 66 |
+| 0 / 12 | 121x | 1 |
+| 1 / 11 | 38x | 12 |
+| 2 / 10 | 11x | 66 |
 | 3 / 9 | 3x | 220 |
 | 4 / 8 | 1x | 495 |
 | 5 / 7 | 0x | 792 |
 | 6 | 0x | 924 |
 
-`E[multiplier] ≈ 1.150` on Medium when lands match `C(12,k)`.
+`E[multiplier] = 4916/4096 = 1229/1024 ≈ 1.200` on Medium when lands match `C(12,k)`.
 
 The Galton peg board (row `r` has `r+1` pegs) creates that center bias; row count follows risk.
 
