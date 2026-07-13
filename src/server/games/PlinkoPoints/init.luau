@@ -85,7 +85,11 @@ end
 local function clampBallCount(rawCount: unknown): number
 	local cfg = Config.PLINKO
 	local count = math.floor(tonumber(rawCount) or cfg.DefaultBallCount)
-	return math.clamp(count, cfg.MinBallCount, cfg.MaxBallCount)
+	if count ~= count or count < cfg.MinBallCount then
+		return cfg.MinBallCount
+	end
+	-- No hard max: affordability is enforced at drop time (wager * balls ≤ balance).
+	return count
 end
 
 local function getLoadout(player: Player): PlinkoPointsLoadout
@@ -126,29 +130,54 @@ local function ensureTitleSign()
 	if not titleSign then
 		return
 	end
-	if titleSign:FindFirstChild("SignGui") then
-		return
+
+	local existing = titleSign:FindFirstChild("SignGui")
+	if existing then
+		existing:Destroy()
 	end
+
+	-- Dark plate + high-contrast lime title so it does not melt into the purple board.
+	titleSign.Color = Color3.fromRGB(8, 4, 16)
+	titleSign.Material = Enum.Material.SmoothPlastic
 
 	local gui = Instance.new("SurfaceGui")
 	gui.Name = "SignGui"
 	gui.Face = Enum.NormalId.Back
 	gui.SizingMode = Enum.SurfaceGuiSizingMode.PixelsPerStud
-	gui.PixelsPerStud = 40
+	gui.PixelsPerStud = 50
+	gui.LightInfluence = 0
+	gui.Brightness = 2.5
 	gui.Parent = titleSign
+
+	local plate = Instance.new("Frame")
+	plate.Name = "Plate"
+	plate.BackgroundColor3 = Color3.fromRGB(6, 3, 14)
+	plate.BackgroundTransparency = 0.05
+	plate.BorderSizePixel = 0
+	plate.Size = UDim2.fromScale(1, 1)
+	plate.Parent = gui
 
 	local title = Instance.new("TextLabel")
 	title.BackgroundTransparency = 1
 	title.Size = UDim2.fromScale(1, 1)
 	title.Font = Enum.Font.GothamBlack
 	title.TextScaled = true
-	title.TextColor3 = Config.COLORS.Text
+	title.TextColor3 = Config.COLORS.NeonLime
+	title.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+	title.TextStrokeTransparency = 0
 	title.Text = "PLINKO POINTS"
-	title.Parent = gui
+	title.Parent = plate
+
+	local pad = Instance.new("UIPadding")
+	pad.PaddingLeft = UDim.new(0.04, 0)
+	pad.PaddingRight = UDim.new(0.04, 0)
+	pad.PaddingTop = UDim.new(0.12, 0)
+	pad.PaddingBottom = UDim.new(0.12, 0)
+	pad.Parent = plate
 
 	local stroke = Instance.new("UIStroke")
-	stroke.Color = Config.COLORS.NeonPurple
-	stroke.Thickness = 2
+	stroke.Color = Config.COLORS.Text
+	stroke.Thickness = 2.5
 	stroke.Parent = title
 end
 

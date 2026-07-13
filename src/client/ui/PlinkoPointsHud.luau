@@ -198,7 +198,7 @@ ensureGui = function()
 	balls.BorderSizePixel = 0
 	balls.Font = Enum.Font.GothamBold
 	balls.TextColor3 = Config.COLORS.NeonLime
-	balls.PlaceholderText = "1-10"
+	balls.PlaceholderText = "Balls"
 	balls.Text = tostring(Config.PLINKO.DefaultBallCount)
 	balls.TextScaled = true
 	balls.ClearTextOnFocus = false
@@ -241,7 +241,7 @@ ensureGui = function()
 	note.Font = Enum.Font.Gotham
 	note.TextColor3 = Color3.fromRGB(170, 160, 200)
 	note.TextScaled = true
-	note.Text = "Wager is per ball.\nBalls release back-to-back."
+	note.Text = "Wager is per ball.\nBalls: as many as you can afford."
 	note.Parent = panel
 
 	local drop = Instance.new("TextButton")

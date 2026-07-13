@@ -52,11 +52,16 @@ local function formatNetDelta(netDelta: number): string
 end
 
 local function formatMultiplierLabel(multiplier: number): string
-	if multiplier == 0 then
+	if multiplier <= 0 then
 		return "0x"
 	end
 	if multiplier == math.floor(multiplier) then
 		return string.format("%dx", multiplier)
+	end
+	-- Prefer short labels so they fit on the bucket face (0.85x, 1.8x, 0.2x).
+	local tenths = math.floor(multiplier * 10 + 1e-6)
+	if math.abs(multiplier * 10 - tenths) < 1e-6 then
+		return string.format("%.1fx", multiplier)
 	end
 	return string.format("%.2fx", multiplier)
 end
@@ -137,14 +142,35 @@ local function showLocalMultiplierLabels()
 		bucket.Anchored = true
 		bucket.CanCollide = false
 
-		local gui = Instance.new("BillboardGui")
+		-- SurfaceGui on the player-facing face so the label sits on the box, not above it.
+		local gui = Instance.new("SurfaceGui")
 		gui.Name = "LocalMultiplierGui"
-		gui.Size = UDim2.fromOffset(72, 36)
-		gui.StudsOffset = Vector3.new(0, 1.6, 0)
-		gui.AlwaysOnTop = true
-		gui.MaxDistance = 80
+		gui.Face = Enum.NormalId.Back
+		gui.SizingMode = Enum.SurfaceGuiSizingMode.PixelsPerStud
+		gui.PixelsPerStud = 64
+		gui.LightInfluence = 0
+		gui.Brightness = 2
 		gui.Parent = bucket
 		labelJanitor:Add(gui)
+
+		local bg = Instance.new("Frame")
+		bg.Name = "Plate"
+		bg.BackgroundColor3 = Color3.fromRGB(10, 6, 20)
+		bg.BackgroundTransparency = 0.12
+		bg.BorderSizePixel = 0
+		bg.Size = UDim2.fromScale(1, 1)
+		bg.Parent = gui
+
+		local bgCorner = Instance.new("UICorner")
+		bgCorner.CornerRadius = UDim.new(0, 6)
+		bgCorner.Parent = bg
+
+		local pad = Instance.new("UIPadding")
+		pad.PaddingLeft = UDim.new(0.06, 0)
+		pad.PaddingRight = UDim.new(0.06, 0)
+		pad.PaddingTop = UDim.new(0.12, 0)
+		pad.PaddingBottom = UDim.new(0.12, 0)
+		pad.Parent = bg
 
 		local label = Instance.new("TextLabel")
 		label.Name = "Label"
@@ -152,21 +178,22 @@ local function showLocalMultiplierLabels()
 		label.Size = UDim2.fromScale(1, 1)
 		label.Font = Enum.Font.GothamBlack
 		label.TextScaled = true
-		label.TextStrokeTransparency = 0.35
+		label.TextStrokeTransparency = 0
+		label.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
 		label.Text = formatMultiplierLabel(multiplier)
-		if multiplier <= 0 then
+		if multiplier < 1 then
 			label.TextColor3 = Config.COLORS.NeonMagenta
-		elseif multiplier >= 4 then
+		elseif multiplier >= 5 then
 			label.TextColor3 = Config.COLORS.NeonLime
 		else
 			label.TextColor3 = Config.COLORS.Text
 		end
-		label.Parent = gui
+		label.Parent = bg
 
-		local stroke = Instance.new("UIStroke")
-		stroke.Color = Config.COLORS.NeonPurple
-		stroke.Thickness = 1.5
-		stroke.Parent = label
+		local sizeConstraint = Instance.new("UITextSizeConstraint")
+		sizeConstraint.MaxTextSize = 42
+		sizeConstraint.MinTextSize = 10
+		sizeConstraint.Parent = label
 	end
 end
 
@@ -276,7 +303,7 @@ end
 
 local function applyLoadout(wager: number, ballCount: number)
 	local clampedWager = math.clamp(math.floor(wager), Config.PLINKO.MinWager, Config.PLINKO.MaxWager)
-	local clampedBalls = math.clamp(math.floor(ballCount), Config.PLINKO.MinBallCount, Config.PLINKO.MaxBallCount)
+	local clampedBalls = math.max(Config.PLINKO.MinBallCount, math.floor(ballCount))
 	Remotes.getEvent("PlinkoPointsSetWager"):FireServer(clampedWager, clampedBalls)
 	currentBallCount = clampedBalls
 	PlinkoPointsHud.setLoadoutValues(clampedWager, clampedBalls)

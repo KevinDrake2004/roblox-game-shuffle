@@ -2,6 +2,26 @@
 
 Session notes for `feature/plinko-dev`. Flaws and successes as we iterate.
 
+## 2026-07-13 - UI: bucket labels, title contrast, uncapped balls
+
+### Flaw
+
+1. Multiplier billboards floated above the cups and did not read as sitting on them.
+2. "PLINKO POINTS" title used pale text + purple stroke that melted into the board.
+3. Ball count was hard-capped at 10 even when the player could afford more.
+
+### Fix
+
+1. Local multiplier labels are now `SurfaceGui` plates on each bucket face (short text,
+   dark plate, black stroke) so they fit the boxes.
+2. Title sign rebuilds with dark plate, lime text, white outline, `LightInfluence = 0`.
+3. Removed `MaxBallCount`; only `MinBallCount` + `wager * balls ≤ balance` gate drops.
+
+### Successes
+
+- Labels align with the cups; title is readable against the purple board.
+- Players can drop as many balls as their chip balance allows.
+
 ## 2026-07-13 - Softer payouts + pinned buckets
 
 ### Flaw
@@ -62,7 +82,7 @@ Offline Monte Carlo (~5k drops) with the tuned leave params matches `C(8,k)` clo
 - Multipliers retuned so `E[mult]` under binomial weights is **exactly 105%**; removed Plinko `PlayerReturnFactor` (RTP is the curve × multipliers only).
 - Bounce feel: soft peg deflects (low restitution + side/up damp) so hits read, but the ball keeps falling instead of pinballing to the rails.
 
-- Multi-ball: pick ball count (1–10); balls release staggered, no ball-ball collision (peg-only).
+- Multi-ball: pick any affordable ball count; balls release staggered, no ball-ball collision (peg-only).
 
 ### Flaws / follow-ups
 
