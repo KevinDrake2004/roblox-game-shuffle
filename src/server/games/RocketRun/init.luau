@@ -437,16 +437,6 @@ local function teleportTo(player: Player, position: Vector3)
 	end
 end
 
--- Rooms are inside the casino: only snap to the pad if the player is still outside the room.
-local function teleportIntoRoom(player: Player, position: Vector3)
-	local character = player.Character
-	local root = character and character:FindFirstChild("HumanoidRootPart")
-	if root and root:IsA("BasePart") and (root.Position - position).Magnitude < 45 then
-		return
-	end
-	teleportTo(player, position)
-end
-
 local debrisFolder: Folder? = nil
 local hiddenPartStates: { [BasePart]: number } = {}
 
@@ -934,7 +924,7 @@ function RocketRun.join(player: Player)
 	end
 
 	playersInArena[player] = true
-	teleportIntoRoom(player, spawnPart.Position)
+	teleportTo(player, spawnPart.Position)
 
 	local oldJanitor = playerJanitors[player]
 	if oldJanitor then
@@ -946,7 +936,7 @@ function RocketRun.join(player: Player)
 		player.CharacterAdded:Connect(function()
 			task.defer(function()
 				if playersInArena[player] and spawnPart then
-					teleportIntoRoom(player, spawnPart.Position)
+					teleportTo(player, spawnPart.Position)
 				end
 			end)
 		end),

@@ -215,8 +215,31 @@ local function outsideCell(text: string, order: number, color: Color3?): TextLab
 	return cell
 end
 
+-- Horizontal band (dozens / even-money) of equally sized outside-bet cells.
+-- Clips its children so a padded grid can never bleed into the neighbouring band.
+local function outsideBand(parent: Instance, region: UDim2, position: UDim2, cells: number): Frame
+	local band = Instance.new("Frame")
+	band.BackgroundTransparency = 1
+	band.BorderSizePixel = 0
+	band.ClipsDescendants = true
+	band.Size = region
+	band.Position = position
+	band.Parent = parent
+
+	local layout = Instance.new("UIGridLayout")
+	layout.CellPadding = UDim2.fromOffset(3, 0)
+	-- Subtract the padding from each cell so all cells fit inside the band.
+	layout.CellSize = UDim2.new(1 / cells, -3 + 3 / cells, 1, 0)
+	layout.FillDirectionMaxCells = cells
+	layout.SortOrder = Enum.SortOrder.LayoutOrder
+	layout.Parent = band
+	return band
+end
+
 -- Real European single-zero betting layout: green 0 at the wheel end, a 3x12
 -- number grid across the felt, and outside bets (dozens + colours) below.
+-- Bands are laid out with explicit gaps and clip their contents, so the number
+-- grid and the outside bets can never overlap regardless of text sizing.
 local function dressFeltLayout(layout: BasePart)
 	if layout:FindFirstChild("FeltGui") then
 		return
@@ -225,7 +248,7 @@ local function dressFeltLayout(layout: BasePart)
 	gui.Name = "FeltGui"
 	gui.Face = Enum.NormalId.Top
 	gui.SizingMode = Enum.SurfaceGuiSizingMode.PixelsPerStud
-	gui.PixelsPerStud = 64
+	gui.PixelsPerStud = 80
 	gui.Parent = layout
 
 	local root = Instance.new("Frame")
@@ -237,18 +260,25 @@ local function dressFeltLayout(layout: BasePart)
 	root.Parent = gui
 
 	local pad = Instance.new("UIPadding")
-	pad.PaddingTop = UDim.new(0.03, 0)
-	pad.PaddingBottom = UDim.new(0.03, 0)
-	pad.PaddingLeft = UDim.new(0.02, 0)
-	pad.PaddingRight = UDim.new(0.02, 0)
+	pad.PaddingTop = UDim.new(0.04, 0)
+	pad.PaddingBottom = UDim.new(0.04, 0)
+	pad.PaddingLeft = UDim.new(0.03, 0)
+	pad.PaddingRight = UDim.new(0.03, 0)
 	pad.Parent = root
 
-	-- Top: zero + number grid. Bottom: outside bets.
-	local topRow = Instance.new("Frame")
-	topRow.Name = "Numbers"
-	topRow.BackgroundTransparency = 1
-	topRow.Size = UDim2.fromScale(1, 0.7)
-	topRow.Parent = root
+	-- Column x-anchor shared by the grid and the outside bands so they align.
+	local gridX = 0.08
+	local gridW = 1 - gridX
+
+	-- Band 1: zero + 3x12 number grid (top ~56%).
+	local numbers = Instance.new("Frame")
+	numbers.Name = "Numbers"
+	numbers.BackgroundTransparency = 1
+	numbers.BorderSizePixel = 0
+	numbers.ClipsDescendants = true
+	numbers.Size = UDim2.fromScale(1, 0.56)
+	numbers.Position = UDim2.fromScale(0, 0)
+	numbers.Parent = root
 
 	local zero = Instance.new("TextLabel")
 	zero.BackgroundColor3 = ZERO_GREEN
@@ -257,21 +287,22 @@ local function dressFeltLayout(layout: BasePart)
 	zero.Text = "0"
 	zero.TextColor3 = Config.COLORS.Text
 	zero.TextScaled = true
-	zero.Size = UDim2.new(0.075, -2, 1, 0)
+	zero.Size = UDim2.new(gridX, -3, 1, 0)
 	zero.Position = UDim2.fromScale(0, 0)
 	styleCell(zero, 1.5)
-	zero.Parent = topRow
+	zero.Parent = numbers
 
 	local grid = Instance.new("Frame")
 	grid.Name = "Grid"
 	grid.BackgroundTransparency = 1
-	grid.Size = UDim2.new(0.925, 0, 1, 0)
-	grid.Position = UDim2.fromScale(0.075, 0)
-	grid.Parent = topRow
+	grid.BorderSizePixel = 0
+	grid.Size = UDim2.fromScale(gridW, 1)
+	grid.Position = UDim2.fromScale(gridX, 0)
+	grid.Parent = numbers
 
 	local gridLayout = Instance.new("UIGridLayout")
-	gridLayout.CellPadding = UDim2.fromOffset(2, 2)
-	gridLayout.CellSize = UDim2.fromScale(1 / 12, 1 / 3)
+	gridLayout.CellPadding = UDim2.fromOffset(3, 3)
+	gridLayout.CellSize = UDim2.new(1 / 12, -3 + 3 / 12, 1 / 3, -3 + 3 / 3)
 	gridLayout.FillDirectionMaxCells = 12
 	gridLayout.SortOrder = Enum.SortOrder.LayoutOrder
 	gridLayout.Parent = grid
@@ -284,44 +315,13 @@ local function dressFeltLayout(layout: BasePart)
 		end
 	end
 
-	local bottom = Instance.new("Frame")
-	bottom.Name = "Outside"
-	bottom.BackgroundTransparency = 1
-	bottom.Size = UDim2.new(0.925, 0, 0.28, 0)
-	bottom.Position = UDim2.fromScale(0.075, 0.72)
-	bottom.Parent = root
-
-	local bottomList = Instance.new("UIListLayout")
-	bottomList.FillDirection = Enum.FillDirection.Vertical
-	bottomList.Padding = UDim.new(0, 2)
-	bottomList.Parent = bottom
-
-	local dozens = Instance.new("Frame")
-	dozens.BackgroundTransparency = 1
-	dozens.Size = UDim2.fromScale(1, 0.5)
-	dozens.LayoutOrder = 1
-	dozens.Parent = bottom
-	local dozenGrid = Instance.new("UIGridLayout")
-	dozenGrid.CellPadding = UDim2.fromOffset(2, 0)
-	dozenGrid.CellSize = UDim2.fromScale(1 / 3, 1)
-	dozenGrid.FillDirectionMaxCells = 3
-	dozenGrid.SortOrder = Enum.SortOrder.LayoutOrder
-	dozenGrid.Parent = dozens
+	-- Band 2: dozens (3 cells). Band 3: even-money (6 cells). Gaps between bands.
+	local dozens = outsideBand(root, UDim2.fromScale(gridW, 0.18), UDim2.fromScale(gridX, 0.60), 3)
 	outsideCell("1st 12", 1).Parent = dozens
 	outsideCell("2nd 12", 2).Parent = dozens
 	outsideCell("3rd 12", 3).Parent = dozens
 
-	local evens = Instance.new("Frame")
-	evens.BackgroundTransparency = 1
-	evens.Size = UDim2.fromScale(1, 0.5)
-	evens.LayoutOrder = 2
-	evens.Parent = bottom
-	local evenGrid = Instance.new("UIGridLayout")
-	evenGrid.CellPadding = UDim2.fromOffset(2, 0)
-	evenGrid.CellSize = UDim2.fromScale(1 / 6, 1)
-	evenGrid.FillDirectionMaxCells = 6
-	evenGrid.SortOrder = Enum.SortOrder.LayoutOrder
-	evenGrid.Parent = evens
+	local evens = outsideBand(root, UDim2.fromScale(gridW, 0.20), UDim2.fromScale(gridX, 0.80), 6)
 	outsideCell("1-18", 1).Parent = evens
 	outsideCell("EVEN", 2).Parent = evens
 	outsideCell("RED", 3, NUMBER_RED).Parent = evens

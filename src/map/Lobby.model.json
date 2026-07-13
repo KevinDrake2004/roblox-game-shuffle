@@ -22340,12 +22340,12 @@
                     "Anchored": true,
                     "Size": [
                       0.9,
-                      0.14,
+                      0.08,
                       0.9
                     ],
                     "Position": [
                       -41.5,
-                      2.1300000000000003,
+                      2.08,
                       -6.35
                     ],
                     "Color": [
@@ -22360,7 +22360,8 @@
                       0.0
                     ],
                     "TopSurface": "Smooth",
-                    "BottomSurface": "Smooth"
+                    "BottomSurface": "Smooth",
+                    "CanCollide": false
                   }
                 },
                 {
@@ -22370,12 +22371,12 @@
                     "Anchored": true,
                     "Size": [
                       1.2,
-                      0.06,
+                      0.05,
                       1.2
                     ],
                     "Position": [
                       -41.5,
-                      2.06,
+                      2.035,
                       -6.35
                     ],
                     "Color": [
@@ -22499,12 +22500,12 @@
                     "Anchored": true,
                     "Size": [
                       0.9,
-                      0.14,
+                      0.08,
                       0.9
                     ],
                     "Position": [
                       -38.75,
-                      2.1300000000000003,
+                      2.08,
                       -6.35
                     ],
                     "Color": [
@@ -22519,7 +22520,8 @@
                       0.0
                     ],
                     "TopSurface": "Smooth",
-                    "BottomSurface": "Smooth"
+                    "BottomSurface": "Smooth",
+                    "CanCollide": false
                   }
                 },
                 {
@@ -22529,12 +22531,12 @@
                     "Anchored": true,
                     "Size": [
                       1.2,
-                      0.06,
+                      0.05,
                       1.2
                     ],
                     "Position": [
                       -38.75,
-                      2.06,
+                      2.035,
                       -6.35
                     ],
                     "Color": [
@@ -22689,12 +22691,12 @@
                     "Anchored": true,
                     "Size": [
                       0.9,
-                      0.14,
+                      0.08,
                       0.9
                     ],
                     "Position": [
                       -36.0,
-                      2.1300000000000003,
+                      2.08,
                       -6.35
                     ],
                     "Color": [
@@ -22709,7 +22711,8 @@
                       0.0
                     ],
                     "TopSurface": "Smooth",
-                    "BottomSurface": "Smooth"
+                    "BottomSurface": "Smooth",
+                    "CanCollide": false
                   }
                 },
                 {
@@ -22719,12 +22722,12 @@
                     "Anchored": true,
                     "Size": [
                       1.2,
-                      0.06,
+                      0.05,
                       1.2
                     ],
                     "Position": [
                       -36.0,
-                      2.06,
+                      2.035,
                       -6.35
                     ],
                     "Color": [
@@ -22848,12 +22851,12 @@
                     "Anchored": true,
                     "Size": [
                       0.9,
-                      0.14,
+                      0.08,
                       0.9
                     ],
                     "Position": [
                       -33.25,
-                      2.1300000000000003,
+                      2.08,
                       -6.35
                     ],
                     "Color": [
@@ -22868,7 +22871,8 @@
                       0.0
                     ],
                     "TopSurface": "Smooth",
-                    "BottomSurface": "Smooth"
+                    "BottomSurface": "Smooth",
+                    "CanCollide": false
                   }
                 },
                 {
@@ -22878,12 +22882,12 @@
                     "Anchored": true,
                     "Size": [
                       1.2,
-                      0.06,
+                      0.05,
                       1.2
                     ],
                     "Position": [
                       -33.25,
-                      2.06,
+                      2.035,
                       -6.35
                     ],
                     "Color": [
@@ -23038,12 +23042,12 @@
                     "Anchored": true,
                     "Size": [
                       0.9,
-                      0.14,
+                      0.08,
                       0.9
                     ],
                     "Position": [
                       -30.5,
-                      2.1300000000000003,
+                      2.08,
                       -6.35
                     ],
                     "Color": [
@@ -23058,7 +23062,8 @@
                       0.0
                     ],
                     "TopSurface": "Smooth",
-                    "BottomSurface": "Smooth"
+                    "BottomSurface": "Smooth",
+                    "CanCollide": false
                   }
                 },
                 {
@@ -23068,12 +23073,12 @@
                     "Anchored": true,
                     "Size": [
                       1.2,
-                      0.06,
+                      0.05,
                       1.2
                     ],
                     "Position": [
                       -30.5,
-                      2.06,
+                      2.035,
                       -6.35
                     ],
                     "Color": [
@@ -23531,12 +23536,12 @@
                     "Anchored": true,
                     "Size": [
                       0.9,
-                      0.14,
+                      0.08,
                       0.9
                     ],
                     "Position": [
                       -61.72286609388524,
-                      2.1300000000000003,
+                      2.08,
                       28.470429241713102
                     ],
                     "Color": [
@@ -23551,7 +23556,8 @@
                       0.0
                     ],
                     "TopSurface": "Smooth",
-                    "BottomSurface": "Smooth"
+                    "BottomSurface": "Smooth",
+                    "CanCollide": false
                   }
                 },
                 {
@@ -23561,12 +23567,12 @@
                     "Anchored": true,
                     "Size": [
                       1.2,
-                      0.06,
+                      0.05,
                       1.2
                     ],
                     "Position": [
                       -61.72286609388524,
-                      2.06,
+                      2.035,
                       28.470429241713102
                     ],
                     "Color": [
@@ -23690,12 +23696,12 @@
                     "Anchored": true,
                     "Size": [
                       0.9,
-                      0.14,
+                      0.08,
                       0.9
                     ],
                     "Position": [
                       -59.032960191867275,
-                      2.1300000000000003,
+                      2.08,
                       29.042186391461943
                     ],
                     "Color": [
@@ -23710,7 +23716,8 @@
                       0.0
                     ],
                     "TopSurface": "Smooth",
-                    "BottomSurface": "Smooth"
+                    "BottomSurface": "Smooth",
+                    "CanCollide": false
                   }
                 },
                 {
@@ -23720,12 +23727,12 @@
                     "Anchored": true,
                     "Size": [
                       1.2,
-                      0.06,
+                      0.05,
                       1.2
                     ],
                     "Position": [
                       -59.032960191867275,
-                      2.06,
+                      2.035,
                       29.042186391461943
                     ],
                     "Color": [
@@ -23880,12 +23887,12 @@
                     "Anchored": true,
                     "Size": [
                       0.9,
-                      0.14,
+                      0.08,
                       0.9
                     ],
                     "Position": [
                       -56.343054289849306,
-                      2.1300000000000003,
+                      2.08,
                       29.61394354121078
                     ],
                     "Color": [
@@ -23900,7 +23907,8 @@
                       0.0
                     ],
                     "TopSurface": "Smooth",
-                    "BottomSurface": "Smooth"
+                    "BottomSurface": "Smooth",
+                    "CanCollide": false
                   }
                 },
                 {
@@ -23910,12 +23918,12 @@
                     "Anchored": true,
                     "Size": [
                       1.2,
-                      0.06,
+                      0.05,
                       1.2
                     ],
                     "Position": [
                       -56.343054289849306,
-                      2.06,
+                      2.035,
                       29.61394354121078
                     ],
                     "Color": [
@@ -24039,12 +24047,12 @@
                     "Anchored": true,
                     "Size": [
                       0.9,
-                      0.14,
+                      0.08,
                       0.9
                     ],
                     "Position": [
                       -53.65314838783134,
-                      2.1300000000000003,
+                      2.08,
                       30.185700690959617
                     ],
                     "Color": [
@@ -24059,7 +24067,8 @@
                       0.0
                     ],
                     "TopSurface": "Smooth",
-                    "BottomSurface": "Smooth"
+                    "BottomSurface": "Smooth",
+                    "CanCollide": false
                   }
                 },
                 {
@@ -24069,12 +24078,12 @@
                     "Anchored": true,
                     "Size": [
                       1.2,
-                      0.06,
+                      0.05,
                       1.2
                     ],
                     "Position": [
                       -53.65314838783134,
-                      2.06,
+                      2.035,
                       30.185700690959617
                     ],
                     "Color": [
@@ -24229,12 +24238,12 @@
                     "Anchored": true,
                     "Size": [
                       0.9,
-                      0.14,
+                      0.08,
                       0.9
                     ],
                     "Position": [
                       -50.963242485813375,
-                      2.1300000000000003,
+                      2.08,
                       30.757457840708458
                     ],
                     "Color": [
@@ -24249,7 +24258,8 @@
                       0.0
                     ],
                     "TopSurface": "Smooth",
-                    "BottomSurface": "Smooth"
+                    "BottomSurface": "Smooth",
+                    "CanCollide": false
                   }
                 },
                 {
@@ -24259,12 +24269,12 @@
                     "Anchored": true,
                     "Size": [
                       1.2,
-                      0.06,
+                      0.05,
                       1.2
                     ],
                     "Position": [
                       -50.963242485813375,
-                      2.06,
+                      2.035,
                       30.757457840708458
                     ],
                     "Color": [
@@ -24722,12 +24732,12 @@
                     "Anchored": true,
                     "Size": [
                       0.9,
-                      0.14,
+                      0.08,
                       0.9
                     ],
                     "Position": [
                       30.5,
-                      2.1300000000000003,
+                      2.08,
                       -6.35
                     ],
                     "Color": [
@@ -24742,7 +24752,8 @@
                       0.0
                     ],
                     "TopSurface": "Smooth",
-                    "BottomSurface": "Smooth"
+                    "BottomSurface": "Smooth",
+                    "CanCollide": false
                   }
                 },
                 {
@@ -24752,12 +24763,12 @@
                     "Anchored": true,
                     "Size": [
                       1.2,
-                      0.06,
+                      0.05,
                       1.2
                     ],
                     "Position": [
                       30.5,
-                      2.06,
+                      2.035,
                       -6.35
                     ],
                     "Color": [
@@ -24881,12 +24892,12 @@
                     "Anchored": true,
                     "Size": [
                       0.9,
-                      0.14,
+                      0.08,
                       0.9
                     ],
                     "Position": [
                       33.25,
-                      2.1300000000000003,
+                      2.08,
                       -6.35
                     ],
                     "Color": [
@@ -24901,7 +24912,8 @@
                       0.0
                     ],
                     "TopSurface": "Smooth",
-                    "BottomSurface": "Smooth"
+                    "BottomSurface": "Smooth",
+                    "CanCollide": false
                   }
                 },
                 {
@@ -24911,12 +24923,12 @@
                     "Anchored": true,
                     "Size": [
                       1.2,
-                      0.06,
+                      0.05,
                       1.2
                     ],
                     "Position": [
                       33.25,
-                      2.06,
+                      2.035,
                       -6.35
                     ],
                     "Color": [
@@ -25071,12 +25083,12 @@
                     "Anchored": true,
                     "Size": [
                       0.9,
-                      0.14,
+                      0.08,
                       0.9
                     ],
                     "Position": [
                       36.0,
-                      2.1300000000000003,
+                      2.08,
                       -6.35
                     ],
                     "Color": [
@@ -25091,7 +25103,8 @@
                       0.0
                     ],
                     "TopSurface": "Smooth",
-                    "BottomSurface": "Smooth"
+                    "BottomSurface": "Smooth",
+                    "CanCollide": false
                   }
                 },
                 {
@@ -25101,12 +25114,12 @@
                     "Anchored": true,
                     "Size": [
                       1.2,
-                      0.06,
+                      0.05,
                       1.2
                     ],
                     "Position": [
                       36.0,
-                      2.06,
+                      2.035,
                       -6.35
                     ],
                     "Color": [
@@ -25230,12 +25243,12 @@
                     "Anchored": true,
                     "Size": [
                       0.9,
-                      0.14,
+                      0.08,
                       0.9
                     ],
                     "Position": [
                       38.75,
-                      2.1300000000000003,
+                      2.08,
                       -6.35
                     ],
                     "Color": [
@@ -25250,7 +25263,8 @@
                       0.0
                     ],
                     "TopSurface": "Smooth",
-                    "BottomSurface": "Smooth"
+                    "BottomSurface": "Smooth",
+                    "CanCollide": false
                   }
                 },
                 {
@@ -25260,12 +25274,12 @@
                     "Anchored": true,
                     "Size": [
                       1.2,
-                      0.06,
+                      0.05,
                       1.2
                     ],
                     "Position": [
                       38.75,
-                      2.06,
+                      2.035,
                       -6.35
                     ],
                     "Color": [
@@ -25420,12 +25434,12 @@
                     "Anchored": true,
                     "Size": [
                       0.9,
-                      0.14,
+                      0.08,
                       0.9
                     ],
                     "Position": [
                       41.5,
-                      2.1300000000000003,
+                      2.08,
                       -6.35
                     ],
                     "Color": [
@@ -25440,7 +25454,8 @@
                       0.0
                     ],
                     "TopSurface": "Smooth",
-                    "BottomSurface": "Smooth"
+                    "BottomSurface": "Smooth",
+                    "CanCollide": false
                   }
                 },
                 {
@@ -25450,12 +25465,12 @@
                     "Anchored": true,
                     "Size": [
                       1.2,
-                      0.06,
+                      0.05,
                       1.2
                     ],
                     "Position": [
                       41.5,
-                      2.06,
+                      2.035,
                       -6.35
                     ],
                     "Color": [
@@ -25913,12 +25928,12 @@
                     "Anchored": true,
                     "Size": [
                       0.9,
-                      0.14,
+                      0.08,
                       0.9
                     ],
                     "Position": [
                       50.963242485813375,
-                      2.1300000000000003,
+                      2.08,
                       30.757457840708458
                     ],
                     "Color": [
@@ -25933,7 +25948,8 @@
                       0.0
                     ],
                     "TopSurface": "Smooth",
-                    "BottomSurface": "Smooth"
+                    "BottomSurface": "Smooth",
+                    "CanCollide": false
                   }
                 },
                 {
@@ -25943,12 +25959,12 @@
                     "Anchored": true,
                     "Size": [
                       1.2,
-                      0.06,
+                      0.05,
                       1.2
                     ],
                     "Position": [
                       50.963242485813375,
-                      2.06,
+                      2.035,
                       30.757457840708458
                     ],
                     "Color": [
@@ -26072,12 +26088,12 @@
                     "Anchored": true,
                     "Size": [
                       0.9,
-                      0.14,
+                      0.08,
                       0.9
                     ],
                     "Position": [
                       53.65314838783134,
-                      2.1300000000000003,
+                      2.08,
                       30.185700690959617
                     ],
                     "Color": [
@@ -26092,7 +26108,8 @@
                       0.0
                     ],
                     "TopSurface": "Smooth",
-                    "BottomSurface": "Smooth"
+                    "BottomSurface": "Smooth",
+                    "CanCollide": false
                   }
                 },
                 {
@@ -26102,12 +26119,12 @@
                     "Anchored": true,
                     "Size": [
                       1.2,
-                      0.06,
+                      0.05,
                       1.2
                     ],
                     "Position": [
                       53.65314838783134,
-                      2.06,
+                      2.035,
                       30.185700690959617
                     ],
                     "Color": [
@@ -26262,12 +26279,12 @@
                     "Anchored": true,
                     "Size": [
                       0.9,
-                      0.14,
+                      0.08,
                       0.9
                     ],
                     "Position": [
                       56.343054289849306,
-                      2.1300000000000003,
+                      2.08,
                       29.61394354121078
                     ],
                     "Color": [
@@ -26282,7 +26299,8 @@
                       0.0
                     ],
                     "TopSurface": "Smooth",
-                    "BottomSurface": "Smooth"
+                    "BottomSurface": "Smooth",
+                    "CanCollide": false
                   }
                 },
                 {
@@ -26292,12 +26310,12 @@
                     "Anchored": true,
                     "Size": [
                       1.2,
-                      0.06,
+                      0.05,
                       1.2
                     ],
                     "Position": [
                       56.343054289849306,
-                      2.06,
+                      2.035,
                       29.61394354121078
                     ],
                     "Color": [
@@ -26421,12 +26439,12 @@
                     "Anchored": true,
                     "Size": [
                       0.9,
-                      0.14,
+                      0.08,
                       0.9
                     ],
                     "Position": [
                       59.032960191867275,
-                      2.1300000000000003,
+                      2.08,
                       29.042186391461943
                     ],
                     "Color": [
@@ -26441,7 +26459,8 @@
                       0.0
                     ],
                     "TopSurface": "Smooth",
-                    "BottomSurface": "Smooth"
+                    "BottomSurface": "Smooth",
+                    "CanCollide": false
                   }
                 },
                 {
@@ -26451,12 +26470,12 @@
                     "Anchored": true,
                     "Size": [
                       1.2,
-                      0.06,
+                      0.05,
                       1.2
                     ],
                     "Position": [
                       59.032960191867275,
-                      2.06,
+                      2.035,
                       29.042186391461943
                     ],
                     "Color": [
@@ -26611,12 +26630,12 @@
                     "Anchored": true,
                     "Size": [
                       0.9,
-                      0.14,
+                      0.08,
                       0.9
                     ],
                     "Position": [
                       61.72286609388524,
-                      2.1300000000000003,
+                      2.08,
                       28.470429241713102
                     ],
                     "Color": [
@@ -26631,7 +26650,8 @@
                       0.0
                     ],
                     "TopSurface": "Smooth",
-                    "BottomSurface": "Smooth"
+                    "BottomSurface": "Smooth",
+                    "CanCollide": false
                   }
                 },
                 {
@@ -26641,12 +26661,12 @@
                     "Anchored": true,
                     "Size": [
                       1.2,
-                      0.06,
+                      0.05,
                       1.2
                     ],
                     "Position": [
                       61.72286609388524,
-                      2.06,
+                      2.035,
                       28.470429241713102
                     ],
                     "Color": [
@@ -27104,12 +27124,12 @@
                     "Anchored": true,
                     "Size": [
                       0.9,
-                      0.14,
+                      0.08,
                       0.9
                     ],
                     "Position": [
                       -31.5,
-                      2.1300000000000003,
+                      2.08,
                       47.65
                     ],
                     "Color": [
@@ -27124,7 +27144,8 @@
                       0.0
                     ],
                     "TopSurface": "Smooth",
-                    "BottomSurface": "Smooth"
+                    "BottomSurface": "Smooth",
+                    "CanCollide": false
                   }
                 },
                 {
@@ -27134,12 +27155,12 @@
                     "Anchored": true,
                     "Size": [
                       1.2,
-                      0.06,
+                      0.05,
                       1.2
                     ],
                     "Position": [
                       -31.5,
-                      2.06,
+                      2.035,
                       47.65
                     ],
                     "Color": [
@@ -27263,12 +27284,12 @@
                     "Anchored": true,
                     "Size": [
                       0.9,
-                      0.14,
+                      0.08,
                       0.9
                     ],
                     "Position": [
                       -28.75,
-                      2.1300000000000003,
+                      2.08,
                       47.65
                     ],
                     "Color": [
@@ -27283,7 +27304,8 @@
                       0.0
                     ],
                     "TopSurface": "Smooth",
-                    "BottomSurface": "Smooth"
+                    "BottomSurface": "Smooth",
+                    "CanCollide": false
                   }
                 },
                 {
@@ -27293,12 +27315,12 @@
                     "Anchored": true,
                     "Size": [
                       1.2,
-                      0.06,
+                      0.05,
                       1.2
                     ],
                     "Position": [
                       -28.75,
-                      2.06,
+                      2.035,
                       47.65
                     ],
                     "Color": [
@@ -27453,12 +27475,12 @@
                     "Anchored": true,
                     "Size": [
                       0.9,
-                      0.14,
+                      0.08,
                       0.9
                     ],
                     "Position": [
                       -26.0,
-                      2.1300000000000003,
+                      2.08,
                       47.65
                     ],
                     "Color": [
@@ -27473,7 +27495,8 @@
                       0.0
                     ],
                     "TopSurface": "Smooth",
-                    "BottomSurface": "Smooth"
+                    "BottomSurface": "Smooth",
+                    "CanCollide": false
                   }
                 },
                 {
@@ -27483,12 +27506,12 @@
                     "Anchored": true,
                     "Size": [
                       1.2,
-                      0.06,
+                      0.05,
                       1.2
                     ],
                     "Position": [
                       -26.0,
-                      2.06,
+                      2.035,
                       47.65
                     ],
                     "Color": [
@@ -27612,12 +27635,12 @@
                     "Anchored": true,
                     "Size": [
                       0.9,
-                      0.14,
+                      0.08,
                       0.9
                     ],
                     "Position": [
                       -23.25,
-                      2.1300000000000003,
+                      2.08,
                       47.65
                     ],
                     "Color": [
@@ -27632,7 +27655,8 @@
                       0.0
                     ],
                     "TopSurface": "Smooth",
-                    "BottomSurface": "Smooth"
+                    "BottomSurface": "Smooth",
+                    "CanCollide": false
                   }
                 },
                 {
@@ -27642,12 +27666,12 @@
                     "Anchored": true,
                     "Size": [
                       1.2,
-                      0.06,
+                      0.05,
                       1.2
                     ],
                     "Position": [
                       -23.25,
-                      2.06,
+                      2.035,
                       47.65
                     ],
                     "Color": [
@@ -27802,12 +27826,12 @@
                     "Anchored": true,
                     "Size": [
                       0.9,
-                      0.14,
+                      0.08,
                       0.9
                     ],
                     "Position": [
                       -20.5,
-                      2.1300000000000003,
+                      2.08,
                       47.65
                     ],
                     "Color": [
@@ -27822,7 +27846,8 @@
                       0.0
                     ],
                     "TopSurface": "Smooth",
-                    "BottomSurface": "Smooth"
+                    "BottomSurface": "Smooth",
+                    "CanCollide": false
                   }
                 },
                 {
@@ -27832,12 +27857,12 @@
                     "Anchored": true,
                     "Size": [
                       1.2,
-                      0.06,
+                      0.05,
                       1.2
                     ],
                     "Position": [
                       -20.5,
-                      2.06,
+                      2.035,
                       47.65
                     ],
                     "Color": [
@@ -28295,12 +28320,12 @@
                     "Anchored": true,
                     "Size": [
                       0.9,
-                      0.14,
+                      0.08,
                       0.9
                     ],
                     "Position": [
                       20.5,
-                      2.1300000000000003,
+                      2.08,
                       47.65
                     ],
                     "Color": [
@@ -28315,7 +28340,8 @@
                       0.0
                     ],
                     "TopSurface": "Smooth",
-                    "BottomSurface": "Smooth"
+                    "BottomSurface": "Smooth",
+                    "CanCollide": false
                   }
                 },
                 {
@@ -28325,12 +28351,12 @@
                     "Anchored": true,
                     "Size": [
                       1.2,
-                      0.06,
+                      0.05,
                       1.2
                     ],
                     "Position": [
                       20.5,
-                      2.06,
+                      2.035,
                       47.65
                     ],
                     "Color": [
@@ -28454,12 +28480,12 @@
                     "Anchored": true,
                     "Size": [
                       0.9,
-                      0.14,
+                      0.08,
                       0.9
                     ],
                     "Position": [
                       23.25,
-                      2.1300000000000003,
+                      2.08,
                       47.65
                     ],
                     "Color": [
@@ -28474,7 +28500,8 @@
                       0.0
                     ],
                     "TopSurface": "Smooth",
-                    "BottomSurface": "Smooth"
+                    "BottomSurface": "Smooth",
+                    "CanCollide": false
                   }
                 },
                 {
@@ -28484,12 +28511,12 @@
                     "Anchored": true,
                     "Size": [
                       1.2,
-                      0.06,
+                      0.05,
                       1.2
                     ],
                     "Position": [
                       23.25,
-                      2.06,
+                      2.035,
                       47.65
                     ],
                     "Color": [
@@ -28644,12 +28671,12 @@
                     "Anchored": true,
                     "Size": [
                       0.9,
-                      0.14,
+                      0.08,
                       0.9
                     ],
                     "Position": [
                       26.0,
-                      2.1300000000000003,
+                      2.08,
                       47.65
                     ],
                     "Color": [
@@ -28664,7 +28691,8 @@
                       0.0
                     ],
                     "TopSurface": "Smooth",
-                    "BottomSurface": "Smooth"
+                    "BottomSurface": "Smooth",
+                    "CanCollide": false
                   }
                 },
                 {
@@ -28674,12 +28702,12 @@
                     "Anchored": true,
                     "Size": [
                       1.2,
-                      0.06,
+                      0.05,
                       1.2
                     ],
                     "Position": [
                       26.0,
-                      2.06,
+                      2.035,
                       47.65
                     ],
                     "Color": [
@@ -28803,12 +28831,12 @@
                     "Anchored": true,
                     "Size": [
                       0.9,
-                      0.14,
+                      0.08,
                       0.9
                     ],
                     "Position": [
                       28.75,
-                      2.1300000000000003,
+                      2.08,
                       47.65
                     ],
                     "Color": [
@@ -28823,7 +28851,8 @@
                       0.0
                     ],
                     "TopSurface": "Smooth",
-                    "BottomSurface": "Smooth"
+                    "BottomSurface": "Smooth",
+                    "CanCollide": false
                   }
                 },
                 {
@@ -28833,12 +28862,12 @@
                     "Anchored": true,
                     "Size": [
                       1.2,
-                      0.06,
+                      0.05,
                       1.2
                     ],
                     "Position": [
                       28.75,
-                      2.06,
+                      2.035,
                       47.65
                     ],
                     "Color": [
@@ -28993,12 +29022,12 @@
                     "Anchored": true,
                     "Size": [
                       0.9,
-                      0.14,
+                      0.08,
                       0.9
                     ],
                     "Position": [
                       31.5,
-                      2.1300000000000003,
+                      2.08,
                       47.65
                     ],
                     "Color": [
@@ -29013,7 +29042,8 @@
                       0.0
                     ],
                     "TopSurface": "Smooth",
-                    "BottomSurface": "Smooth"
+                    "BottomSurface": "Smooth",
+                    "CanCollide": false
                   }
                 },
                 {
@@ -29023,12 +29053,12 @@
                     "Anchored": true,
                     "Size": [
                       1.2,
-                      0.06,
+                      0.05,
                       1.2
                     ],
                     "Position": [
                       31.5,
-                      2.06,
+                      2.035,
                       47.65
                     ],
                     "Color": [

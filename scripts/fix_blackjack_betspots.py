@@ -1,8 +1,12 @@
 #!/usr/bin/env python3
-"""Fix blackjack bet-spot flicker: the gold BetRing was larger AND taller than the
-numbered BetSpot, so it occluded / z-fought the number label. Re-layer so the
-numbered spot is clearly on top and the ring is a lower halo. Idempotent (sets
-absolute heights derived from each table's felt)."""
+"""Layer blackjack bet spots so the numbered tile sits flush ON the felt (not a
+floating puck) while its number stays un-occluded (no flicker).
+
+- BetSpot: numbered disc, bottom flush with the felt top, only slightly proud.
+- BetRing: wider gold halo that sits basically flush around it, clearly lower
+  than the spot's top face so it never covers the number.
+
+Idempotent (sets absolute heights derived from each table's felt)."""
 
 from __future__ import annotations
 
@@ -47,15 +51,18 @@ def main() -> None:
             if not p or "Size" not in p:
                 continue
             if name.startswith("BetRing_"):
-                # Lower, wider gold halo just above the felt.
-                p["Size"] = [1.2, 0.06, 1.2]
-                set_top(p, felt_top + 0.05)
+                # Wide gold halo, nearly flush with the felt and well below the
+                # spot's top face so it never covers the number.
+                p["Size"] = [1.2, 0.05, 1.2]
+                set_top(p, felt_top + 0.02)
                 p["CanCollide"] = False
                 changed += 1
             elif name.startswith("BetSpot_"):
-                # Numbered disc clearly on top (SurfaceGui number stays visible).
-                p["Size"] = [0.9, 0.14, 0.9]
-                set_top(p, felt_top + 0.16)
+                # Numbered tile planted ON the felt (bottom flush), only slightly
+                # proud so it reads as painted-on, not a floating puck.
+                p["Size"] = [0.9, 0.08, 0.9]
+                set_top(p, felt_top + 0.08)
+                p["CanCollide"] = False
                 changed += 1
 
     LOBBY.write_text(json.dumps(data, indent=2) + "\n")
