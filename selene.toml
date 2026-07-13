@@ -1,0 +1,7 @@
+std = "roblox"
+
+[rules]
+global_usage = "allow"
+
+[config]
+empty_if = { comments = "both", whitespace = "both" }

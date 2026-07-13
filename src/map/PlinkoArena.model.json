@@ -1,0 +1,241 @@
+{
+  "className": "Folder",
+  "children": [
+    {
+      "name": "Floor",
+      "className": "Part",
+      "properties": {
+        "Anchored": true,
+        "Size": [40.0, 1.0, 40.0],
+        "Position": [90.0, 5.0, -140.0],
+        "Color": [0.071, 0.047, 0.125],
+        "Material": "SmoothPlastic"
+      }
+    },
+    {
+      "name": "SpawnPad",
+      "className": "Part",
+      "properties": {
+        "Anchored": true,
+        "Size": [10.0, 1.0, 10.0],
+        "Position": [90.0, 6.0, -126.0],
+        "Color": [0.659, 0.333, 0.969],
+        "Material": "Neon",
+        "Transparency": 0.35
+      },
+      "children": [
+        {
+          "name": "PadLight",
+          "className": "PointLight",
+          "properties": {
+            "Brightness": 1.5,
+            "Range": 28.0,
+            "Color": [0.659, 0.333, 0.969]
+          }
+        },
+        {
+          "name": "LeavePrompt",
+          "className": "ProximityPrompt",
+          "properties": {
+            "ActionText": "Leave",
+            "ObjectText": "Return to Hub",
+            "HoldDuration": 0.4,
+            "MaxActivationDistance": 14.0,
+            "RequiresLineOfSight": false
+          }
+        }
+      ]
+    },
+    {
+      "name": "BoardBack",
+      "className": "Part",
+      "properties": {
+        "Anchored": true,
+        "CanCollide": false,
+        "Size": [28.0, 32.0, 1.0],
+        "Position": [90.0, 20.0, -152.0],
+        "Color": [0.09, 0.055, 0.16],
+        "Material": "SmoothPlastic"
+      }
+    },
+    {
+      "name": "BoardRailLeft",
+      "className": "Part",
+      "properties": {
+        "Anchored": true,
+        "CanCollide": false,
+        "Size": [1.0, 32.0, 2.5],
+        "Position": [76.5, 20.0, -150.5],
+        "Color": [0.659, 0.333, 0.969],
+        "Material": "Neon"
+      }
+    },
+    {
+      "name": "BoardRailRight",
+      "className": "Part",
+      "properties": {
+        "Anchored": true,
+        "CanCollide": false,
+        "Size": [1.0, 32.0, 2.5],
+        "Position": [103.5, 20.0, -150.5],
+        "Color": [0.659, 0.333, 0.969],
+        "Material": "Neon"
+      }
+    },
+    {
+      "name": "DropOrigin",
+      "className": "Part",
+      "properties": {
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "Transparency": 1,
+        "Size": [1.0, 1.0, 1.0],
+        "Position": [90.0, 34.0, -150.5]
+      }
+    },
+    {
+      "name": "CameraFocus",
+      "className": "Part",
+      "properties": {
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "Transparency": 1,
+        "Size": [1.0, 1.0, 1.0],
+        "Position": [90.0, 18.0, -150.0]
+      }
+    },
+    {
+      "name": "TitleSign",
+      "className": "Part",
+      "properties": {
+        "Anchored": true,
+        "CanCollide": false,
+        "Size": [16.0, 3.0, 0.5],
+        "Position": [90.0, 37.5, -151.5],
+        "Color": [0.12, 0.07, 0.22],
+        "Material": "SmoothPlastic"
+      }
+    },
+    {
+      "name": "Pegs",
+      "className": "Folder",
+      "children": []
+    },
+    {
+      "name": "Buckets",
+      "className": "Folder",
+      "children": [
+        {
+          "name": "Bucket_0",
+          "className": "Part",
+          "properties": {
+            "Anchored": true,
+            "CanCollide": false,
+            "Size": [2.6, 2.2, 2.2],
+            "Position": [79.6, 7.2, -150.5],
+            "Color": [0.659, 0.333, 0.969],
+            "Material": "Neon"
+          }
+        },
+        {
+          "name": "Bucket_1",
+          "className": "Part",
+          "properties": {
+            "Anchored": true,
+            "CanCollide": false,
+            "Size": [2.6, 2.2, 2.2],
+            "Position": [82.2, 7.2, -150.5],
+            "Color": [0.45, 0.22, 0.7],
+            "Material": "Neon"
+          }
+        },
+        {
+          "name": "Bucket_2",
+          "className": "Part",
+          "properties": {
+            "Anchored": true,
+            "CanCollide": false,
+            "Size": [2.6, 2.2, 2.2],
+            "Position": [84.8, 7.2, -150.5],
+            "Color": [0.35, 0.18, 0.55],
+            "Material": "SmoothPlastic"
+          }
+        },
+        {
+          "name": "Bucket_3",
+          "className": "Part",
+          "properties": {
+            "Anchored": true,
+            "CanCollide": false,
+            "Size": [2.6, 2.2, 2.2],
+            "Position": [87.4, 7.2, -150.5],
+            "Color": [0.28, 0.14, 0.42],
+            "Material": "SmoothPlastic"
+          }
+        },
+        {
+          "name": "Bucket_4",
+          "className": "Part",
+          "properties": {
+            "Anchored": true,
+            "CanCollide": false,
+            "Size": [2.6, 2.2, 2.2],
+            "Position": [90.0, 7.2, -150.5],
+            "Color": [0.22, 0.1, 0.32],
+            "Material": "SmoothPlastic"
+          }
+        },
+        {
+          "name": "Bucket_5",
+          "className": "Part",
+          "properties": {
+            "Anchored": true,
+            "CanCollide": false,
+            "Size": [2.6, 2.2, 2.2],
+            "Position": [92.6, 7.2, -150.5],
+            "Color": [0.28, 0.14, 0.42],
+            "Material": "SmoothPlastic"
+          }
+        },
+        {
+          "name": "Bucket_6",
+          "className": "Part",
+          "properties": {
+            "Anchored": true,
+            "CanCollide": false,
+            "Size": [2.6, 2.2, 2.2],
+            "Position": [95.2, 7.2, -150.5],
+            "Color": [0.35, 0.18, 0.55],
+            "Material": "SmoothPlastic"
+          }
+        },
+        {
+          "name": "Bucket_7",
+          "className": "Part",
+          "properties": {
+            "Anchored": true,
+            "CanCollide": false,
+            "Size": [2.6, 2.2, 2.2],
+            "Position": [97.8, 7.2, -150.5],
+            "Color": [0.45, 0.22, 0.7],
+            "Material": "Neon"
+          }
+        },
+        {
+          "name": "Bucket_8",
+          "className": "Part",
+          "properties": {
+            "Anchored": true,
+            "CanCollide": false,
+            "Size": [2.6, 2.2, 2.2],
+            "Position": [100.4, 7.2, -150.5],
+            "Color": [0.659, 0.333, 0.969],
+            "Material": "Neon"
+          }
+        }
+      ]
+    }
+  ]
+}

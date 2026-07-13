@@ -1,0 +1,277 @@
+{
+  "className": "Folder",
+  "children": [
+    {
+      "name": "Floor",
+      "className": "Part",
+      "properties": {
+        "Anchored": true,
+        "Size": [80.0, 1.0, 80.0],
+        "Position": [0.0, 0.0, 0.0],
+        "Color": [0.086, 0.055, 0.157],
+        "Material": "SmoothPlastic",
+        "TopSurface": "Smooth",
+        "BottomSurface": "Smooth"
+      }
+    },
+    {
+      "name": "HubSpawn",
+      "className": "SpawnLocation",
+      "properties": {
+        "Anchored": true,
+        "Duration": 0,
+        "Neutral": true,
+        "Size": [6.0, 1.0, 6.0],
+        "Position": [0.0, 3.0, 20.0],
+        "Color": [0.133, 0.827, 0.933],
+        "Material": "Neon",
+        "Transparency": 0.35
+      }
+    },
+    {
+      "name": "BrandSign",
+      "className": "Part",
+      "properties": {
+        "Anchored": true,
+        "Size": [28.0, 6.0, 1.0],
+        "Position": [0.0, 10.0, -36.0],
+        "Color": [0.071, 0.039, 0.125],
+        "Material": "SmoothPlastic"
+      },
+      "children": [
+        {
+          "name": "SignLight",
+          "className": "PointLight",
+          "properties": {
+            "Brightness": 1.6,
+            "Range": 32.0,
+            "Color": [0.133, 0.827, 0.933]
+          }
+        }
+      ]
+    },
+    {
+      "name": "FillLights",
+      "className": "Folder",
+      "children": [
+        {
+          "name": "Wash_Spawn",
+          "className": "Part",
+          "properties": {
+            "Anchored": true,
+            "CanCollide": false,
+            "Transparency": 1.0,
+            "Size": [1.0, 1.0, 1.0],
+            "Position": [0.0, 10.0, 18.0]
+          },
+          "children": [
+            {
+              "name": "Light",
+              "className": "PointLight",
+              "properties": {
+                "Brightness": 1.4,
+                "Range": 36.0,
+                "Color": [0.133, 0.827, 0.933],
+                "Shadows": false
+              }
+            }
+          ]
+        },
+        {
+          "name": "Wash_Center",
+          "className": "Part",
+          "properties": {
+            "Anchored": true,
+            "CanCollide": false,
+            "Transparency": 1.0,
+            "Size": [1.0, 1.0, 1.0],
+            "Position": [0.0, 14.0, 0.0]
+          },
+          "children": [
+            {
+              "name": "Light",
+              "className": "PointLight",
+              "properties": {
+                "Brightness": 1.2,
+                "Range": 50.0,
+                "Color": [0.55, 0.4, 0.85],
+                "Shadows": false
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Portals",
+      "className": "Folder",
+      "children": [
+        {
+          "name": "Portal_RocketRun",
+          "className": "Model",
+          "attributes": {
+            "GameId": "RocketRun"
+          },
+          "children": [
+            {
+              "name": "Frame",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [10.0, 12.0, 1.5],
+                "Position": [-24.0, 3.0, -28.0],
+                "Color": [0.118, 0.078, 0.196],
+                "Material": "SmoothPlastic"
+              }
+            },
+            {
+              "name": "Gate",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "CanCollide": false,
+                "Size": [7.0, 9.0, 0.4],
+                "Position": [-24.0, 3.5, -28.0],
+                "Color": [0.133, 0.827, 0.933],
+                "Material": "Neon",
+                "Transparency": 0.35
+              },
+              "children": [
+                {
+                  "name": "GateLight",
+                  "className": "PointLight",
+                  "properties": {
+                    "Brightness": 1.8,
+                    "Range": 24.0,
+                    "Color": [0.133, 0.827, 0.933]
+                  }
+                },
+                {
+                  "name": "EnterPrompt",
+                  "className": "ProximityPrompt",
+                  "properties": {
+                    "ActionText": "Enter",
+                    "ObjectText": "Rocket Run",
+                    "HoldDuration": 0.35,
+                    "MaxActivationDistance": 12.0,
+                    "RequiresLineOfSight": false
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Portal_PlinkoPoints",
+          "className": "Model",
+          "attributes": {
+            "GameId": "PlinkoPoints"
+          },
+          "children": [
+            {
+              "name": "Frame",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [10.0, 12.0, 1.5],
+                "Position": [0.0, 3.0, -28.0],
+                "Color": [0.118, 0.078, 0.196],
+                "Material": "SmoothPlastic"
+              }
+            },
+            {
+              "name": "Gate",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "CanCollide": false,
+                "Size": [7.0, 9.0, 0.4],
+                "Position": [0.0, 3.5, -28.0],
+                "Color": [0.659, 0.333, 0.969],
+                "Material": "Neon",
+                "Transparency": 0.35
+              },
+              "children": [
+                {
+                  "name": "GateLight",
+                  "className": "PointLight",
+                  "properties": {
+                    "Brightness": 1.8,
+                    "Range": 24.0,
+                    "Color": [0.659, 0.333, 0.969]
+                  }
+                },
+                {
+                  "name": "EnterPrompt",
+                  "className": "ProximityPrompt",
+                  "properties": {
+                    "ActionText": "Enter",
+                    "ObjectText": "Plinko Points",
+                    "HoldDuration": 0.35,
+                    "MaxActivationDistance": 12.0,
+                    "RequiresLineOfSight": false
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Portal_MineSweeper",
+          "className": "Model",
+          "attributes": {
+            "GameId": "MineSweeper"
+          },
+          "children": [
+            {
+              "name": "Frame",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [10.0, 12.0, 1.5],
+                "Position": [24.0, 3.0, -28.0],
+                "Color": [0.118, 0.078, 0.196],
+                "Material": "SmoothPlastic"
+              }
+            },
+            {
+              "name": "Gate",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "CanCollide": false,
+                "Size": [7.0, 9.0, 0.4],
+                "Position": [24.0, 3.5, -28.0],
+                "Color": [0.925, 0.282, 0.6],
+                "Material": "Neon",
+                "Transparency": 0.35
+              },
+              "children": [
+                {
+                  "name": "GateLight",
+                  "className": "PointLight",
+                  "properties": {
+                    "Brightness": 1.8,
+                    "Range": 24.0,
+                    "Color": [0.925, 0.282, 0.6]
+                  }
+                },
+                {
+                  "name": "EnterPrompt",
+                  "className": "ProximityPrompt",
+                  "properties": {
+                    "ActionText": "Enter",
+                    "ObjectText": "Mine Sweeper Arcade",
+                    "HoldDuration": 0.35,
+                    "MaxActivationDistance": 12.0,
+                    "RequiresLineOfSight": false
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

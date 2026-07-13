@@ -1,0 +1,7 @@
+[tools]
+rojo = "rojo-rbx/rojo@7.7.0"
+wally = "upliftgames/wally@0.3.2"
+selene = "Kampfkarren/selene@0.28.0"
+stylua = "JohnnyMorganz/StyLua@2.0.2"
+moonwave-extract = "evaera/moonwave@1.2.1"
+lune = "lune-org/lune@0.10.4"

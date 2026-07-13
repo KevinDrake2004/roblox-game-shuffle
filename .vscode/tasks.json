@@ -1,0 +1,48 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Rojo: Serve",
+      "type": "shell",
+      "command": "source ~/.rokit/env && rojo serve",
+      "isBackground": true,
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated"
+      }
+    },
+    {
+      "label": "Rojo: Sourcemap",
+      "type": "shell",
+      "command": "source ~/.rokit/env && rojo sourcemap default.project.json --output sourcemap.json",
+      "problemMatcher": []
+    },
+    {
+      "label": "Selene: Lint",
+      "type": "shell",
+      "command": "source ~/.rokit/env && selene src/",
+      "problemMatcher": []
+    },
+    {
+      "label": "Wally: Install",
+      "type": "shell",
+      "command": "source ~/.rokit/env && wally install",
+      "problemMatcher": []
+    },
+    {
+      "label": "Moonwave: Docs Dev",
+      "type": "shell",
+      "command": "./scripts/docs-dev.sh",
+      "isBackground": true,
+      "problemMatcher": []
+    },
+    {
+      "label": "Toolchain: Watch",
+      "type": "shell",
+      "command": "./scripts/watch-toolchain.sh",
+      "isBackground": true,
+      "problemMatcher": []
+    }
+  ]
+}

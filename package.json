@@ -1,0 +1,9 @@
+{
+	"scripts": {
+		"docs": "moonwave dev --code src",
+		"docs:build": "moonwave build --code src"
+	},
+	"devDependencies": {
+		"moonwave": "1.3.0"
+	}
+}

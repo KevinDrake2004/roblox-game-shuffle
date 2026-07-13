@@ -1,0 +1,32 @@
+---
+description: Global agent instructions for all projects
+alwaysApply: true
+---
+
+# Global Agent Instructions
+
+## Writing and commits
+
+- Never use the em dash. Use a plain dash `-` instead.
+- When writing commit messages, never auto-add your agent name as co-author.
+- Never manually modify CHANGELOG.md files or any files marked as auto-generated.
+
+## Technical decisions
+
+- Do not give much weight to development cost.
+- Prefer quality, simplicity, robustness, scalability, and long-term maintainability.
+
+## Bug fixes
+
+- Always start by reproducing the bug in an E2E setting as closely aligned with how an end user would experience it as possible.
+- Ensure the fix addresses the real problem, not just symptoms.
+
+## UI and quality bar
+
+- When end-to-end testing, be picky about UI and obsessed with pixel perfection.
+- If something clearly looks off, even if unrelated to the current task, try to get it fixed along the way.
+
+## Engineering excellence
+
+- Apply the same high standard to lint errors, test failures, and test flakiness.
+- If you see one, even if not caused by your current work, still get it fixed.

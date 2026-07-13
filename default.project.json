@@ -1,0 +1,92 @@
+{
+  "name": "shuffle",
+  "tree": {
+    "$className": "DataModel",
+    "ReplicatedStorage": {
+      "Shared": {
+        "$path": "src/shared"
+      },
+      "Packages": {
+        "$path": "Packages"
+      }
+    },
+    "ServerScriptService": {
+      "Server": {
+        "$path": "src/server"
+      }
+    },
+    "StarterPlayer": {
+      "StarterPlayerScripts": {
+        "Client": {
+          "$path": "src/client"
+        }
+      }
+    },
+    "Workspace": {
+      "$properties": {
+        "FilteringEnabled": true
+      },
+      "Lobby": {
+        "$path": "src/map/Lobby.model.json"
+      },
+      "RocketRunArena": {
+        "$path": "src/map/RocketRunArena.model.json"
+      },
+      "PlinkoArena": {
+        "$path": "src/map/PlinkoArena.model.json"
+      }
+    },
+    "Lighting": {
+      "$properties": {
+        "Ambient": [0.5, 0.46, 0.59],
+        "OutdoorAmbient": [0.41, 0.39, 0.49],
+        "Brightness": 3.0,
+        "ClockTime": 15.0,
+        "FogColor": [0.37, 0.35, 0.47],
+        "FogStart": 200.0,
+        "FogEnd": 600.0,
+        "EnvironmentDiffuseScale": 1.0,
+        "EnvironmentSpecularScale": 0.8,
+        "GlobalShadows": true,
+        "ExposureCompensation": 0.25
+      },
+      "ShuffleBloom": {
+        "$className": "BloomEffect",
+        "$properties": {
+          "Intensity": 0.35,
+          "Size": 12.0,
+          "Threshold": 0.9
+        }
+      },
+      "ShuffleColorCorrection": {
+        "$className": "ColorCorrectionEffect",
+        "$properties": {
+          "Brightness": 0.08,
+          "Contrast": 0.02,
+          "Saturation": 0.08,
+          "TintColor": [1.0, 0.98, 1.0]
+        }
+      },
+      "ShuffleAtmosphere": {
+        "$className": "Atmosphere",
+        "$properties": {
+          "Density": 0.04,
+          "Offset": 0.0,
+          "Color": [0.65, 0.61, 0.78],
+          "Decay": [0.45, 0.4, 0.55],
+          "Glare": 0.1,
+          "Haze": 0.15
+        }
+      },
+      "ShuffleSky": {
+        "$className": "Sky",
+        "$properties": {
+          "CelestialBodiesShown": true,
+          "StarCount": 2000,
+          "MoonAngularSize": 11.0,
+          "SunAngularSize": 12.0
+        }
+      }
+    }
+  }
+}

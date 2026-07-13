@@ -1,0 +1,7 @@
+/Packages/
+/sourcemap.json
+/node_modules/
+/.moonwave/
+/package-lock.json
+*.rbxl.lock
+.DS_Store

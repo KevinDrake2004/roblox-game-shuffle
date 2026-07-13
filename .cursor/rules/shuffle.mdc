@@ -1,0 +1,39 @@
+---
+description: Shuffle Arcade Roblox project conventions
+globs: **/*.{luau,lua,json,toml}
+alwaysApply: true
+---
+
+# Shuffle Arcade
+
+Roblox casino inspired by Shuffle.com. Real wager loops with chip currency - wins and losses both matter.
+
+## Economy
+
+- Players **wager chips** to play mini-games; losing rounds **deducts** chips (punishment in the short term).
+- No infinite free chip farming from participation alone.
+- **Return to player (RTP) > 100%** on every game (e.g. 102-110%). Long-term, players are **rewarded** for playing - the house does not win over volume.
+- Short-term variance still matters: busts, bad buckets, and mine hits can drain a session before the positive EV shows up.
+- Server computes all wagers, RNG, and payouts. Tune RTP per game in `Config` (player edge, not house edge).
+- Optional chip sinks (cosmetics, VIP) later to offset inflation from RTP > 100%.
+
+## Code Conventions
+
+- Use `.luau` extension for all scripts
+- Use `init.luau` for folder-as-module pattern
+- Edit scripts in Cursor only - Rojo syncs one-way to Studio
+- Server-authoritative wagers, RNG, and payouts; validate balance before every bet
+- Use Wally packages from `ReplicatedStorage.Packages`
+
+## Project Layout
+
+- `src/server/` → ServerScriptService.Server
+- `src/client/` → StarterPlayerScripts.Client
+- `src/shared/` → ReplicatedStorage.Shared
+- `Packages/` → ReplicatedStorage.Packages (gitignored)
+
+## Toolchain
+
+- `source ~/.rokit/env` before CLI tools
+- `rojo serve` / `rojo sourcemap` / `selene src/` / `stylua src/` / `wally install`
+- `./scripts/check.sh` before commit

@@ -1,0 +1,11 @@
+{
+  "workspace": {
+    "library": {
+      "sourcemap": {
+        "enabled": true,
+        "sourcemapFile": "sourcemap.json",
+        "autogenerate": false
+      }
+    }
+  }
+}

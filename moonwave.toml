@@ -1,0 +1,16 @@
+title = "Shuffle Arcade"
+gitSourceBranch = "main"
+changelog = false
+
+[docusaurus]
+tagline = "Shuffle-inspired arcade hub for Roblox"
+favicon = "favicon.png"
+
+[classOrder]
+Config = 1
+Types = 2
+Remotes = 3
+CurrencyService = 4
+RocketRun = 5
+RocketRunController = 6
+RocketRunHud = 7
