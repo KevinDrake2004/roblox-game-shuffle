@@ -5,7 +5,7 @@
 
 	Rocket Run payloads describe wager settlement: stake deducted on eligibility;
 	cash-out credits `payout`; crash leaves the stake lost (`netDelta = -wager`).
-	Plinko Points deducts per drop and credits `floor(wager * bucketMultiplier * factor)`.
+	Plinko Points deducts per drop and credits `floor(wager * bucketMultiplier)`.
 ]=]
 local Types = {}
 
