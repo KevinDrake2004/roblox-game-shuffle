@@ -15,7 +15,7 @@ Roblox arcade hub inspired by [Shuffle.com](https://shuffle.com). Soft currency 
 | Shuffle Original | Roblox Name | Status / notes |
 |------------------|-------------|----------------|
 | Crash | **Rocket Run** | **Shipped (wager + RTP).** Shared server rocket; wager deduct on eligibility; cash-out / crash settle. See `docs/ROCKET_RUN.md`. |
-| Plinko | **Plinko Points** | **Shipped (wager + RTP).** Per-drop stake; weighted buckets; see `docs/PLINKO.md`. |
+| Plinko | **Plinko Points** | **MVP complete.** Risk tiers, multi-ball, settle, local physics; see `docs/PLINKO.md`. |
 | Mines | **Mine Sweeper Arcade** | Portal stub / coming soon |
 | Dice | **Dice Duel** | Unbuilt |
 | Wheel | **Prize Wheel** | Unbuilt |
