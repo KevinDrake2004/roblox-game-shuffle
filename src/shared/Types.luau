@@ -171,7 +171,7 @@ export type PlinkoPointsDropStarted = {
 	Per-drop settlement after the ball lands in a bucket.
 
 	- Landing bucket comes from the client gravity sim (not pre-rolled)
-	- `payout = floor(wager * multiplier * PlayerReturnFactor)` (0 for bust bucket)
+	- `payout = floor(wager * multiplier)` (0 for bust bucket)
 	- Stake already deducted; `netDelta = payout - wager`
 	- `outcome`: `win` if netDelta > 0, `bust` if payout == 0, else `loss` / `push`
 

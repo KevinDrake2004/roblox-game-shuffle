@@ -119,18 +119,16 @@ Config.ROCKET_RUN = {
 
 	- `DefaultWager` / `MinWager` / `MaxWager` - stake clamps per ball drop
 	- `BucketMultipliers` - payout multipliers left→right (edges high, center bust)
-	- `BucketWeights` - relative land probabilities (binomial-style center bias)
-	- `TargetRTP` - design expected return per chip wagered (> 1.0)
-	- `PlayerReturnFactor` - scales payout: floor(wager * multiplier * factor)
+	- `BucketWeights` - documented binomial land curve for RTP math (not rolled)
+	- `TargetRTP` - design aim only (~1.05); achieved by tuning multipliers vs the land curve
 	- `DropCooldownSeconds` - minimum delay between drops per player
 	- `BallRadius` / `BallGravity` / `BallBounce` - client gravity sim feel
 	- `BallMaxSimSeconds` / `BallPegHitCooldown` / `BallHorizontalDrag` / `BallStartSpeedX` - Galton sim feel
 	- `PegRows` / `PegSpacingX` / `PegSpacingY` / `PegLayoutVersion` - Galton board layout
 	- Arena / camera fields drive world presentation only (east of Rocket Run)
 
-	Bucket land is decided by free client physics on a Galton peg board (center-biased).
-	`BucketWeights` document the intended binomial spread; multipliers are tuned so
-	`E[multiplier] ≈ 1` under those weights, and `PlayerReturnFactor` targets ~105% RTP.
+	Payout is `floor(wager * BucketMultipliers[landed])` with no extra scale factor.
+	Tune multipliers so `E[multiplier]` under `BucketWeights` equals `TargetRTP`.
 
 	@prop PLINKO table
 	@within Config
@@ -139,15 +137,12 @@ Config.PLINKO = {
 	DefaultWager = 10,
 	MinWager = 1,
 	MaxWager = 50,
-	-- Target expected return per wagered chip (> 1.0 = player edge over volume).
+	-- Design aim: E[BucketMultipliers] under BucketWeights ≈ TargetRTP (no extra factor).
 	TargetRTP = 1.05,
-	-- Applied on settle: payout = floor(wager * bucketMultiplier * PlayerReturnFactor).
-	PlayerReturnFactor = 1.05,
 	DropCooldownSeconds = 0.75,
 	-- Symmetric board: rare edge jackpots, common center bust.
-	-- With binomial C(8,k) land weights, E[multiplier] ≈ 0.997 before factor;
-	-- PlayerReturnFactor 1.05 → design RTP ≈ 1.05 (105%).
-	BucketMultipliers = { 20, 4, 1.5, 0.6, 0, 0.6, 1.5, 4, 20 },
+	-- Under binomial C(8,k) weights: E[multiplier] = 268.8/256 = 1.05 exactly.
+	BucketMultipliers = { 24, 4, 1.5, 0.65, 0, 0.65, 1.5, 4, 24 },
 	BucketWeights = { 1, 8, 28, 56, 70, 56, 28, 8, 1 },
 	-- World / camera (east of Rocket Run at 0, 5, -140 — ~90 studs apart)
 	ArenaOrigin = Vector3.new(90, 5, -140),

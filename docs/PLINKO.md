@@ -26,7 +26,7 @@ idle → deduct wager → DropStarted → free client physics → Landed(bucket)
 | DropStarted | Server fires `PlinkoPointsDropStarted` (`dropId`, wager, chips). **No bucket is chosen yet.** |
 | Physics | Client runs local gravity + peg bounce. Landing is **not** steered or pre-rolled. |
 | Landed | Client fires `PlinkoPointsLanded(dropId, bucketIndex)` for the slot the ball entered. |
-| Settle | `payout = floor(wager * BucketMultipliers[bucket] * PlayerReturnFactor)`; credit when payout `>` 0. |
+| Settle | `payout = floor(wager * BucketMultipliers[bucket])`; credit when payout `>` 0. |
 | Timeout | If no land report within `LandReportTimeoutSeconds`, server settles as center bust. |
 | Leave mid-drop | Pending wager is refunded. |
 
@@ -36,14 +36,14 @@ Ball visuals are client-only (`CurrentCamera.PlinkoLocalFx`). Other players neve
 
 | Outcome | Formula | Balance effect |
 |---------|---------|----------------|
-| Any land | `payout = floor(wager * multiplier * PlayerReturnFactor)` | Wager already deducted; credit `payout` (0 on bust). `netDelta = payout - wager`. |
+| Any land | `payout = floor(wager * multiplier)` | Wager already deducted; credit `payout` (0 on bust). `netDelta = payout - wager`. |
 | Center `0x` bust | multiplier `0` | Stake lost; `payout = 0`, `netDelta = -wager`. |
 
 ### RTP
 
 - Landing distribution comes from **Galton-board physics** (center-biased ≈ normal / binomial).
 - `BucketWeights` document the intended `C(8,k)` spread for RTP math; they are not rolled as RNG.
-- Multipliers are tuned so `E[multiplier] ≈ 1.0` under those weights; `PlayerReturnFactor = 1.05` → **TargetRTP ≈ 105%**.
+- **RTP is just `E[BucketMultipliers]` under that curve.** Tune the multipliers until that equals `TargetRTP` (1.05). There is no separate player-return factor on Plinko.
 - Short-term busts (center `0x`) still drain sessions; edge jackpots are rare.
 
 ### Daily earn cap
@@ -56,17 +56,17 @@ Left → right (9 buckets). Design land curve ≈ binomial `C(8, k)` (center-hea
 
 | Index | Multiplier | Weight `C(8,k)` | Approx P |
 |-------|------------|-----------------|----------|
-| 0 | 20x | 1 | 0.4% |
+| 0 | 24x | 1 | 0.4% |
 | 1 | 4x | 8 | 3.1% |
 | 2 | 1.5x | 28 | 10.9% |
-| 3 | 0.6x | 56 | 21.9% |
+| 3 | 0.65x | 56 | 21.9% |
 | 4 | 0x (bust) | 70 | 27.3% |
-| 5 | 0.6x | 56 | 21.9% |
+| 5 | 0.65x | 56 | 21.9% |
 | 6 | 1.5x | 28 | 10.9% |
 | 7 | 4x | 8 | 3.1% |
-| 8 | 20x | 1 | 0.4% |
+| 8 | 24x | 1 | 0.4% |
 
-`E[multiplier] = 255.2 / 256 ≈ 0.997`. With `PlayerReturnFactor = 1.05` → design **RTP ≈ 104.7% (~105%)**.
+`E[multiplier] = 268.8 / 256 = 1.05` exactly → design **RTP = 105%** when lands match this curve.
 
 The Galton peg board (row `r` has `r+1` pegs) is what creates that center bias in the free physics sim. Multipliers pay the rare edges; common center lands are busts / low returns.
 
@@ -87,9 +87,8 @@ All Plinko geometry lives under `Workspace.PlinkoArena` only.
 | Key | Role |
 |-----|------|
 | `DefaultWager` / `MinWager` / `MaxWager` | Stake clamps |
-| `TargetRTP` | Design expected return per wager (> 1.0) |
-| `PlayerReturnFactor` | Payout scale factor |
-| `BucketMultipliers` | Payout per landed bucket |
+| `TargetRTP` | Design aim only (1.05); match by tuning multipliers vs land curve |
+| `BucketMultipliers` | Payout per landed bucket (`payout = floor(wager * mult)`) |
 | `BucketWeights` | Tuning reference for physical land spread (not rolled) |
 | `DropCooldownSeconds` | Per-player drop throttle |
 | `LandReportTimeoutSeconds` | Max wait for client land report |

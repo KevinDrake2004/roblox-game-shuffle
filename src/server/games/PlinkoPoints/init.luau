@@ -10,17 +10,17 @@
 	3. `PlinkoPointsDrop` deducts the wager and fires `PlinkoPointsDropStarted`.
 	4. Client runs a **free** local gravity/peg sim (landing is not pre-rolled).
 	5. Client reports `PlinkoPointsLanded` with the bucket the ball entered.
-	6. Server credits `floor(wager * multiplier * PlayerReturnFactor)` for that bucket.
+	6. Server credits `floor(wager * multiplier)` for that bucket.
 	7. Leave returns the player to `Config.LOBBY.SpawnPosition`.
 
 	## Economy
 
 	- Wager deducted with `CurrencyService.deductChips` before the drop starts.
 	- Insufficient balance → drop rejected.
-	- Landing bucket comes from client physics; multipliers still come from Config.
+	- Landing bucket comes from client physics; multipliers come from Config.
 	- Zero-multiplier (center) buckets are busts: stake gone, `payout = 0`.
-	- Target RTP > 100% via `PlayerReturnFactor` and board multipliers; physical
-	  land distribution should roughly track `BucketWeights` for tuning notes.
+	- Design RTP ≈ 105% by tuning `BucketMultipliers` against the Galton / binomial
+	  land curve (`TargetRTP` is the aim, not an extra payout multiply).
 	- Unreported lands time out as a center bust (anti-hang). Leave mid-drop refunds.
 
 	Arena geometry lives only under `Workspace.PlinkoArena` (east of Rocket Run).
@@ -249,7 +249,7 @@ local function settlePending(player: Player, bucketIndex0: number)
 	local bucketIndex0Clamped = math.clamp(math.floor(bucketIndex0), 0, maxIndex)
 	local multiplier = multipliers[bucketIndex0Clamped + 1] or 0
 	local wager = pending.wager
-	local payout = math.floor(wager * multiplier * Config.PLINKO.PlayerReturnFactor)
+	local payout = math.floor(wager * multiplier)
 	if payout > 0 then
 		CurrencyService.creditPayout(player, payout, wager, "PlinkoPoints:payout")
 	end
