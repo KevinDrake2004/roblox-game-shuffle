@@ -53,8 +53,9 @@ local function applyRiskSelection(riskId: string)
 	end
 	if noteLabel then
 		noteLabel.Text = string.format(
-			"%s risk · max %dx · RTP ~%d%%\nBall cap %d.",
+			"%s · %d rows · max %dx\nRTP ~%d%% · ball cap %d",
 			risk.displayName,
+			risk.pegRows,
 			risk.maxMultiplier,
 			math.floor(risk.targetRTP * 100 + 0.5),
 			risk.maxBallCount

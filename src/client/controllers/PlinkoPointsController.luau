@@ -101,11 +101,7 @@ end
 
 local function clearLocalMultiplierLabels()
 	labelJanitor:Cleanup()
-	local arena = Workspace:FindFirstChild("PlinkoArena")
-	if not arena then
-		return
-	end
-	local buckets = arena:FindFirstChild("Buckets")
+	local buckets = PlinkoBallPhysics.getLocalBucketsFolder()
 	if not buckets then
 		return
 	end
@@ -115,26 +111,19 @@ local function clearLocalMultiplierLabels()
 			if gui then
 				gui:Destroy()
 			end
-			local legacy = child:FindFirstChild("MultiplierGui")
-			if legacy and legacy:IsA("BillboardGui") then
-				legacy.Enabled = false
-			end
 		end
 	end
 end
 
 local function showLocalMultiplierLabels()
 	clearLocalMultiplierLabels()
-	local arena = Workspace:FindFirstChild("PlinkoArena")
-	if not arena then
-		return
-	end
-	local buckets = arena:FindFirstChild("Buckets")
+	local buckets = PlinkoBallPhysics.getLocalBucketsFolder()
 	if not buckets then
 		return
 	end
 
-	local multipliers = Config.getPlinkoRisk(currentRiskId).bucketMultipliers
+	local risk = Config.getPlinkoRisk(currentRiskId)
+	local multipliers = risk.bucketMultipliers
 	for index, multiplier in multipliers do
 		local bucket = buckets:FindFirstChild(`Bucket_{index - 1}`)
 		if not (bucket and bucket:IsA("BasePart")) then
@@ -184,7 +173,7 @@ local function showLocalMultiplierLabels()
 		label.Text = formatMultiplierLabel(multiplier)
 		if multiplier < 1 then
 			label.TextColor3 = Config.COLORS.NeonMagenta
-		elseif multiplier >= 5 then
+		elseif multiplier >= risk.maxMultiplier * 0.5 then
 			label.TextColor3 = Config.COLORS.NeonLime
 		else
 			label.TextColor3 = Config.COLORS.Text
@@ -193,11 +182,16 @@ local function showLocalMultiplierLabels()
 
 		local sizeConstraint = Instance.new("UITextSizeConstraint")
 		sizeConstraint.MaxTextSize = 42
-		sizeConstraint.MinTextSize = 10
+		sizeConstraint.MinTextSize = 8
 		sizeConstraint.Parent = label
 	end
 end
 
+local function rebuildRiskBoard(riskId: string)
+	PlinkoBallPhysics.cancel()
+	PlinkoBallPhysics.rebuildBoard(riskId)
+	showLocalMultiplierLabels()
+end
 local function startBoardCamera()
 	local camera = Workspace.CurrentCamera
 	if not camera then
@@ -317,15 +311,18 @@ local function applyLoadout(wager: number, ballCount: number, riskId: string)
 	PlinkoPointsHud.setDropLabel(dropButtonLabel(clampedBalls))
 	PlinkoPointsHud.setStatus(
 		string.format(
-			"%s · wager %d × %d = %d · max %dx",
+			"%s · %d rows · wager %d × %d = %d · max %dx",
 			risk.displayName,
+			risk.pegRows,
 			clampedWager,
 			clampedBalls,
 			clampedWager * clampedBalls,
 			risk.maxMultiplier
 		)
 	)
-	showLocalMultiplierLabels()
+	if active then
+		rebuildRiskBoard(risk.id)
+	end
 end
 
 local function startFreeDrop(payload: PlinkoPointsDropStarted)
@@ -371,6 +368,7 @@ function PlinkoPointsController.stopSession()
 	sessionNet = 0
 	PlinkoBallPhysics.cancel()
 	clearLocalMultiplierLabels()
+	PlinkoBallPhysics.clearBoard()
 	cameraJanitor:Cleanup()
 	PlinkoPointsHud.setVisible(false)
 	PlinkoPointsHud.setDropEnabled(true)
@@ -401,7 +399,13 @@ function PlinkoPointsController.startSession(payload: PlinkoPointsJoined)
 	PlinkoPointsHud.setResult("Drop a ball", Config.COLORS.NeonPurple)
 	local risk = Config.getPlinkoRisk(payload.riskId)
 	PlinkoPointsHud.setStatus(
-		string.format("Risk %s · max %dx · ball cap %d", risk.displayName, risk.maxMultiplier, payload.maxBallCount)
+		string.format(
+			"Risk %s · %d rows · max %dx · ball cap %d",
+			risk.displayName,
+			risk.pegRows,
+			risk.maxMultiplier,
+			payload.maxBallCount
+		)
 	)
 	PlinkoPointsHud.setScoreLine(
 		string.format(
@@ -413,7 +417,7 @@ function PlinkoPointsController.startSession(payload: PlinkoPointsJoined)
 		)
 	)
 	refreshSessionLine()
-	showLocalMultiplierLabels()
+	rebuildRiskBoard(payload.riskId)
 	startBoardCamera()
 end
 

@@ -47,35 +47,35 @@ Ball visuals are client-only (`CurrentCamera.PlinkoLocalFx`). Other players neve
 - Default is **Medium** (current ~139% / 26x max / 100 ball cap).
 - Multipliers are **integers** so `floor(wager * mult)` does not wipe sub-1x buckets at wager `1`.
 
-| Risk | Max mult | Design RTP | Ball cap | Multipliers L→R |
-|------|----------|------------|----------|-----------------|
-| Low | 10x | ~148% | 200 | `10, 4, 2, 1, 1, 1, 2, 4, 10` |
-| Medium | 26x | ~139% | 100 | `26, 5, 2, 1, 0, 1, 2, 5, 26` |
-| High | 60x | 100% | 25 | `60, 5, 1, 0, 0, 0, 1, 5, 60` |
+| Risk | Rows | Buckets | Max mult | Design RTP | Ball cap | Multipliers (edges…center…) |
+|------|------|---------|----------|------------|----------|------------------------------|
+| Low | 8 | 9 | 10x | ~148% | 200 | `10, 4, 2, 1, 1, 1, 2, 4, 10` |
+| Medium | 12 | 13 | 50x | ~137% | 100 | `50, 15, 6, 2, 1, 1, 1, 1, 1, 2, 6, 15, 50` |
+| High | 16 | 17 | 100x | ~100% | 25 | `100, 38, 14, 5, 2, 1, 1, 1, 0, …` |
+
+Each player rebuilds a **local** peg/bucket board for their risk (shared arena decor hides while playing).
 
 ### Daily earn cap
 
 Same as Rocket Run: `Config.DAILY_EARN_CAP` applies to earn-only `awardChips`. Wager payouts use `creditPayout` and are **not** clipped by the cap.
 
-## Buckets (medium / default)
+## Buckets (medium / default, 12 rows)
 
-Left → right (9 buckets). Design land curve ≈ binomial `C(8, k)` (center-heavy / normal-like).
+Left → right (13 buckets). Design land curve ≈ binomial `C(12, k)`.
 
-| Index | Multiplier | Weight `C(8,k)` | Approx P |
-|-------|------------|-----------------|----------|
-| 0 | 26x | 1 | 0.4% |
-| 1 | 5x | 8 | 3.1% |
-| 2 | 2x | 28 | 10.9% |
-| 3 | 1x | 56 | 21.9% |
-| 4 | 0x (bust) | 70 | 27.3% |
-| 5 | 1x | 56 | 21.9% |
-| 6 | 2x | 28 | 10.9% |
-| 7 | 5x | 8 | 3.1% |
-| 8 | 26x | 1 | 0.4% |
+| Index | Multiplier | Weight `C(12,k)` |
+|-------|------------|------------------|
+| 0 / 12 | 50x | 1 |
+| 1 / 11 | 15x | 12 |
+| 2 / 10 | 6x | 66 |
+| 3 / 9 | 2x | 220 |
+| 4 / 8 | 1x | 495 |
+| 5 / 7 | 1x | 792 |
+| 6 | 1x | 924 |
 
-`E[multiplier] = 356 / 256 = 1.390625` → design **RTP ≈ 139%** on Medium when lands match this curve.
+`E[multiplier] ≈ 1.375` on Medium when lands match `C(12,k)`.
 
-The Galton peg board (row `r` has `r+1` pegs) is what creates that center bias in the free physics sim.
+The Galton peg board (row `r` has `r+1` pegs) creates that center bias; row count follows risk.
 
 ## Arena coordinates
 

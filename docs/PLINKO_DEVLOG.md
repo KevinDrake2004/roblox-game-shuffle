@@ -2,24 +2,24 @@
 
 Session notes for `feature/plinko-dev`. Flaws and successes as we iterate.
 
-## 2026-07-13 - Risk scale (Low / Medium / High)
+## 2026-07-13 - Risk changes the board (rows / buckets) per player
 
 ### Goal
 
-Let players pick a risk profile that sets max jackpot, design RTP, and ball cap.
+Risk is not only payout tables - Low/Medium/High rebuild a **local** Galton board
+with fewer or more peg rows + buckets (8 / 12 / 16). Other players keep their own board.
 
 ### Design
 
-| Risk | Max mult | Design RTP | Ball cap |
-|------|----------|------------|----------|
-| Low | 10x | ~148% | 200 |
-| Medium (default) | 26x | ~139% | 100 |
-| High | 60x | 100% | 25 |
+| Risk | Rows | Buckets | Max | RTP | Ball cap |
+|------|------|---------|-----|-----|----------|
+| Low | 8 | 9 | 10x | ~148% | 200 |
+| Medium | 12 | 13 | 50x | ~137% | 100 |
+| High | 16 | 17 | 100x | ~100% | 25 |
 
-Higher risk → RTP approaches 100% with bigger edges; lower risk → smaller jackpots,
-gentler curve, higher RTP, higher ball cap. Bucket labels refresh when risk is Applied.
+Shared arena pegs/buckets hide while in session; physics + labels use the local board.
 
-## 2026-07-13 - Wager=1 floor was killing RTP (not ball speed)
+## 2026-07-13 - Risk scale (Low / Medium / High)
 
 ### Flaw
 

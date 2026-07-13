@@ -18,8 +18,9 @@
 	- Total stake `wager * ballCount` deducted before the volley starts.
 	- Insufficient balance → drop rejected.
 	- Landing bucket comes from client physics; multipliers come from the selected risk tier.
-	- Risk scale: Low (small jackpots, higher RTP, high ball cap) → Medium (default) →
-	  High (large max mult, RTP → 100%, tight ball cap).
+	- Risk scale: Low (8 rows, small jackpots, higher RTP) → Medium (12 rows) →
+	  High (16 rows, large max mult, RTP → 100%, tight ball cap).
+	- Each player gets a local board for their risk; shared arena pegs are decor only while playing.
 	- Unreported lands time out as a center land (anti-hang). Leave mid-drop refunds.
 
 	Arena geometry lives only under `Workspace.PlinkoArena` (east of Rocket Run).
@@ -353,12 +354,13 @@ local function refundSession(player: Player, source: string)
 end
 
 local function settleTimedOutBalls(player: Player, session: PendingSession)
-	local center = math.floor((#Config.PLINKO.BucketMultipliers - 1) / 2)
 	local remaining: { PendingBall } = {}
 	for _, ball in session.balls do
 		table.insert(remaining, ball)
 	end
 	for _, ball in remaining do
+		local risk = Config.getPlinkoRisk(ball.riskId)
+		local center = math.floor(risk.pegRows / 2)
 		session.balls[ball.dropId] = nil
 		session.settled += 1
 		settleBall(player, ball, center)

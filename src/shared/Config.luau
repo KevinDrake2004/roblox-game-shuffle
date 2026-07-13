@@ -119,7 +119,7 @@ Config.ROCKET_RUN = {
 
 	- `DefaultWager` / `MinWager` / `MaxWager` - stake clamps per ball drop
 	- `DefaultBallCount` / `MinBallCount` / `BallDropStaggerSeconds` / `BallDropMaxReleaseSeconds` - multi-ball release timing
-	- `RiskLevels` / `DefaultRiskId` - risk scale (max jackpot ↑ as risk ↑; design RTP → 100%)
+	- `RiskLevels` / `DefaultRiskId` - risk scale (peg rows + max jackpot ↑ as risk ↑; design RTP → 100%)
 	- `BucketWeights` - documented binomial land curve for RTP math (not rolled)
 	- `BucketMultipliers` - mirrors the default (medium) risk tier for convenience
 	- `DropCooldownSeconds` - minimum delay between drops per player
@@ -142,10 +142,9 @@ Config.PLINKO = {
 	BallDropStaggerSeconds = 0.05,
 	BallDropMaxReleaseSeconds = 1.5,
 	DefaultRiskId = "medium",
-	-- Risk scale: lower risk = smaller jackpots + higher RTP + higher ball cap.
-	-- Higher risk = larger max multiplier, design RTP approaches 100%, tighter ball cap.
-	-- E[mult] under BucketWeights C(8,k) / 256:
-	--   low ≈ 1.477, medium ≈ 1.391, high = 1.000.
+	-- Risk scale: board size (pegRows) grows with risk; RTP approaches 100% at High.
+	-- Buckets = pegRows + 1. E[mult] under binomial C(pegRows, k):
+	--   low 8 rows ≈ 1.477, medium 12 rows ≈ 1.375, high 16 rows ≈ 0.996.
 	RiskLevels = {
 		{
 			id = "low",
@@ -153,38 +152,42 @@ Config.PLINKO = {
 			targetRTP = 1.48,
 			maxBallCount = 200,
 			maxMultiplier = 10,
+			pegRows = 8,
 			bucketMultipliers = { 10, 4, 2, 1, 1, 1, 2, 4, 10 },
 		},
 		{
 			id = "medium",
 			displayName = "Medium",
-			targetRTP = 1.39,
+			targetRTP = 1.37,
 			maxBallCount = 100,
-			maxMultiplier = 26,
-			bucketMultipliers = { 26, 5, 2, 1, 0, 1, 2, 5, 26 },
+			maxMultiplier = 50,
+			pegRows = 12,
+			bucketMultipliers = { 50, 15, 6, 2, 1, 1, 1, 1, 1, 2, 6, 15, 50 },
 		},
 		{
 			id = "high",
 			displayName = "High",
 			targetRTP = 1.0,
 			maxBallCount = 25,
-			maxMultiplier = 60,
-			bucketMultipliers = { 60, 5, 1, 0, 0, 0, 1, 5, 60 },
+			maxMultiplier = 100,
+			pegRows = 16,
+			bucketMultipliers = { 100, 38, 14, 5, 2, 1, 1, 1, 0, 1, 1, 1, 2, 5, 14, 38, 100 },
 		},
 	},
-	-- Convenience mirror of medium tier (physics bucket count / fallbacks).
-	TargetRTP = 1.39,
-	BucketMultipliers = { 26, 5, 2, 1, 0, 1, 2, 5, 26 },
+	-- Convenience mirror of medium tier (fallbacks / docs).
+	TargetRTP = 1.37,
+	BucketMultipliers = { 50, 15, 6, 2, 1, 1, 1, 1, 1, 2, 6, 15, 50 },
 	DropCooldownSeconds = 0.75,
-	BucketWeights = { 1, 8, 28, 56, 70, 56, 28, 8, 1 },
+	-- Reference weights for the default medium row count (C(12,k)); per-risk uses C(pegRows,k).
+	BucketWeights = { 1, 12, 66, 220, 495, 792, 924, 792, 495, 220, 66, 12, 1 },
 	-- World / camera (east of Rocket Run at 0, 5, -140 — ~90 studs apart)
 	ArenaOrigin = Vector3.new(90, 5, -140),
 	CameraOffset = Vector3.new(0, 4, 28),
-	-- Galton board: PegRows decision rows → PegRows+1 buckets (keep 8 → 9).
-	PegRows = 8,
-	PegSpacingX = 2.6,
-	PegSpacingY = 2.35,
-	PegLayoutVersion = 2,
+	-- Default Galton spacing; local boards may scale X/Y to fit the rails.
+	PegRows = 12,
+	PegSpacingX = 2.0,
+	PegSpacingY = 1.85,
+	PegLayoutVersion = 3,
 	-- Client gravity sim (free path; Galton pegs create center-biased lands).
 	-- Each peg hit: hit-offset L/R + characteristic leave velocity (not over-damped pure fall).
 	BallRadius = 0.5,
@@ -214,6 +217,7 @@ type PlinkoRiskLevel = {
 	targetRTP: number,
 	maxBallCount: number,
 	maxMultiplier: number,
+	pegRows: number,
 	bucketMultipliers: { number },
 }
 

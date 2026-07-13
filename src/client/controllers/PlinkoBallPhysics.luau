@@ -140,13 +140,39 @@ local function getLocalFxFolder(): Folder
 	return folder
 end
 
-local function collectPegs(arena: Folder): { PegState }
-	local pegs: { PegState } = {}
-	local folder = arena:FindFirstChild("Pegs")
-	if not folder then
-		return pegs
+local function getOrCreateSubfolder(name: string): Folder
+	local fx = getLocalFxFolder()
+	local existing = fx:FindFirstChild(name)
+	if existing and existing:IsA("Folder") then
+		return existing
 	end
-	for _, child in folder:GetChildren() do
+	local folder = Instance.new("Folder")
+	folder.Name = name
+	folder.Parent = fx
+	return folder
+end
+
+local function setSharedDecorVisible(visible: boolean)
+	local arena = getArena()
+	if not arena then
+		return
+	end
+	local transparency = if visible then 0 else 1
+	for _, folderName in { "Pegs", "Buckets" } do
+		local folder = arena:FindFirstChild(folderName)
+		if folder then
+			for _, child in folder:GetChildren() do
+				if child:IsA("BasePart") then
+					child.LocalTransparencyModifier = transparency
+				end
+			end
+		end
+	end
+end
+
+local function collectPegs(pegsFolder: Instance): { PegState }
+	local pegs: { PegState } = {}
+	for _, child in pegsFolder:GetChildren() do
 		if child:IsA("BasePart") then
 			table.insert(pegs, {
 				part = child,
@@ -158,17 +184,12 @@ local function collectPegs(arena: Folder): { PegState }
 	return pegs
 end
 
-local function collectBuckets(arena: Folder): { BucketInfo }
+local function collectBuckets(bucketsFolder: Instance): { BucketInfo }
 	local list: { BucketInfo } = {}
-	local folder = arena:FindFirstChild("Buckets")
-	if not folder then
-		return list
-	end
-	for _, child in folder:GetChildren() do
+	for _, child in bucketsFolder:GetChildren() do
 		if child:IsA("BasePart") then
 			local index = tonumber(string.match(child.Name, "^Bucket_(%d+)$"))
 			if index ~= nil then
-				-- Capture home pose once; pin so land FX / multi-hits never drift the box.
 				local home = getBucketHome(child)
 				pinBucket(child, home.cframe, home.size)
 				local half = home.size.X * 0.5
@@ -204,6 +225,137 @@ local function railBounds(arena: Folder): (number, number)
 	return leftX, rightX
 end
 
+--[=[
+	Build a local-only Galton board for the selected risk (pegs + buckets).
+	Hides the shared arena decor so each player sees their own row count.
+]=]
+function PlinkoBallPhysics.rebuildBoard(riskId: string): boolean
+	local arena = getArena()
+	if not arena then
+		return false
+	end
+	local origin = arena:FindFirstChild("DropOrigin")
+	if not (origin and origin:IsA("BasePart")) then
+		return false
+	end
+
+	local risk = Config.getPlinkoRisk(riskId)
+	local rows = risk.pegRows
+	local bucketCount = rows + 1
+	local multipliers = risk.bucketMultipliers
+	if #multipliers ~= bucketCount then
+		warn("[PlinkoBallPhysics] Risk multipliers length mismatch for", risk.id)
+		return false
+	end
+
+	table.clear(bucketHomes)
+	local board = getOrCreateSubfolder("Board")
+	board:ClearAllChildren()
+	local pegsFolder = Instance.new("Folder")
+	pegsFolder.Name = "Pegs"
+	pegsFolder.Parent = board
+	local bucketsFolder = Instance.new("Folder")
+	bucketsFolder.Name = "Buckets"
+	bucketsFolder.Parent = board
+
+	local leftX, rightX = railBounds(arena)
+	local usableWidth = math.max(4, (rightX - leftX) - 0.8)
+	local spacingX = usableWidth / rows
+	local topY = origin.Position.Y - 1.5
+	local bottomY = Config.PLINKO.ArenaOrigin.Y + 2.4
+	local spacingY = math.max(1.1, (topY - bottomY) / rows)
+	local boardZ = origin.Position.Z - 0.15
+	local originX = Config.PLINKO.ArenaOrigin.X
+	-- Leave speed scales with peg spacing so denser boards still Galton-step.
+	local leaveSpeed = math.clamp(spacingX * 2.15, 3.8, 7.5)
+	board:SetAttribute("RiskId", risk.id)
+	board:SetAttribute("PegRows", rows)
+	board:SetAttribute("LeaveSpeed", leaveSpeed)
+	board:SetAttribute("SpacingX", spacingX)
+
+	local pegSize = math.clamp(spacingX * 0.28, 0.4, 0.7)
+	for row = 0, rows - 1 do
+		local pegsInRow = row + 1
+		local rowWidth = (pegsInRow - 1) * spacingX
+		local startX = originX - rowWidth / 2
+		local y = topY - row * spacingY
+		for col = 0, pegsInRow - 1 do
+			local peg = Instance.new("Part")
+			peg.Name = `Peg_{row}_{col}`
+			peg.Shape = Enum.PartType.Ball
+			peg.Anchored = true
+			peg.CanCollide = false
+			peg.CanQuery = false
+			peg.CanTouch = false
+			peg.CastShadow = false
+			peg.Size = Vector3.new(pegSize, pegSize, pegSize)
+			peg.Position = Vector3.new(startX + col * spacingX, y, boardZ)
+			peg.Color = Config.COLORS.NeonPurple
+			peg.Material = Enum.Material.Neon
+			peg.Parent = pegsFolder
+		end
+	end
+
+	local bucketWidth = spacingX * 0.92
+	local bucketHeight = 2.0
+	local bucketDepth = 2.0
+	local bucketY = bottomY - 0.35
+	local firstCenter = originX - (bucketCount - 1) * spacingX * 0.5
+	for index = 0, bucketCount - 1 do
+		local bucket = Instance.new("Part")
+		bucket.Name = `Bucket_{index}`
+		bucket.Anchored = true
+		bucket.CanCollide = false
+		bucket.CanQuery = false
+		bucket.CanTouch = false
+		bucket.CastShadow = false
+		bucket.Size = Vector3.new(bucketWidth, bucketHeight, bucketDepth)
+		bucket.Position = Vector3.new(firstCenter + index * spacingX, bucketY, boardZ)
+		local mult = multipliers[index + 1] or 0
+		if mult <= 0 then
+			bucket.Color = Config.COLORS.NeonMagenta
+		elseif mult >= risk.maxMultiplier * 0.5 then
+			bucket.Color = Config.COLORS.NeonLime
+		else
+			bucket.Color = Config.COLORS.NeonPurple
+		end
+		bucket.Material = Enum.Material.Neon
+		bucket.Parent = bucketsFolder
+	end
+
+	setSharedDecorVisible(false)
+	return true
+end
+
+--[=[
+	Destroy the local risk board and show shared arena decor again.
+]=]
+function PlinkoBallPhysics.clearBoard()
+	local fx = getLocalFxFolder()
+	local board = fx:FindFirstChild("Board")
+	if board then
+		board:Destroy()
+	end
+	table.clear(bucketHomes)
+	setSharedDecorVisible(true)
+end
+
+--[=[
+	Folder of local bucket parts for the active risk board (if any).
+]=]
+function PlinkoBallPhysics.getLocalBucketsFolder(): Folder?
+	local fx = getLocalFxFolder()
+	local board = fx:FindFirstChild("Board")
+	if not board then
+		return nil
+	end
+	local buckets = board:FindFirstChild("Buckets")
+	if buckets and buckets:IsA("Folder") then
+		return buckets
+	end
+	return nil
+end
+
 local function resolveBucketAtX(buckets: { BucketInfo }, x: number): BucketInfo?
 	if #buckets == 0 then
 		return nil
@@ -235,7 +387,7 @@ local function clampSpeed(vel: Vector3, maxSpeed: number): Vector3
 end
 
 --[=[
-	Cancel every in-flight local ball simulation.
+	Cancel every in-flight local ball simulation (keeps the local risk board).
 ]=]
 function PlinkoBallPhysics.cancel()
 	local snapshot: { () -> () } = {}
@@ -246,11 +398,8 @@ function PlinkoBallPhysics.cancel()
 		cancelFn()
 	end
 	table.clear(activeCancels)
-	local camera = Workspace.CurrentCamera
-	local folder = if camera then camera:FindFirstChild("PlinkoLocalFx") else nil
-	if folder then
-		folder:ClearAllChildren()
-	end
+	local ballsFolder = getOrCreateSubfolder("Balls")
+	ballsFolder:ClearAllChildren()
 end
 
 --[=[
@@ -282,7 +431,11 @@ function PlinkoBallPhysics.drop(onLanded: (bucketIndex: number) -> ()): SimHandl
 		if cancelled then
 			return
 		end
-		local fallback = math.floor((#Config.PLINKO.BucketMultipliers - 1) / 2)
+		local board = getLocalFxFolder():FindFirstChild("Board")
+		local rows = if board then board:GetAttribute("PegRows") else nil
+		local fallback = if typeof(rows) == "number"
+			then math.floor(rows / 2)
+			else math.floor((#Config.PLINKO.BucketMultipliers - 1) / 2)
 		cleanup()
 		onLanded(fallback)
 	end
@@ -298,7 +451,15 @@ function PlinkoBallPhysics.drop(onLanded: (bucketIndex: number) -> ()): SimHandl
 		return { cancel = cleanup }
 	end
 
-	local buckets = collectBuckets(arena)
+	local board = getLocalFxFolder():FindFirstChild("Board")
+	local pegsFolder = if board then board:FindFirstChild("Pegs") else nil
+	local bucketsFolder = if board then board:FindFirstChild("Buckets") else nil
+	if not (pegsFolder and bucketsFolder) then
+		failLand()
+		return { cancel = cleanup }
+	end
+
+	local buckets = collectBuckets(bucketsFolder)
 	if #buckets == 0 then
 		failLand()
 		return { cancel = cleanup }
@@ -306,20 +467,23 @@ function PlinkoBallPhysics.drop(onLanded: (bucketIndex: number) -> ()): SimHandl
 
 	local cfg = Config.PLINKO
 	local radius = cfg.BallRadius
-	local pegs = collectPegs(arena)
+	local pegs = collectPegs(pegsFolder)
 	local leftX, rightX = railBounds(arena)
-	local boardZ = origin.Position.Z
+	local boardZ = origin.Position.Z - 0.15
+	local leaveSpeedAttr = if board then board:GetAttribute("LeaveSpeed") else nil
+	local leaveSpeed = if typeof(leaveSpeedAttr) == "number" then leaveSpeedAttr else cfg.BallPegLeaveSpeed
 	local landY = buckets[1].landY
 	for _, bucket in buckets do
 		landY = math.min(landY, bucket.landY)
 	end
+	local centerBucketIndex = math.floor((#buckets - 1) / 2)
 
 	local rng = Random.new()
 	local startSpread = math.max(0.15, cfg.BallStartSpeedX * 0.15)
 	local pos = Vector3.new(origin.Position.X + rng:NextNumber(-startSpread, startSpread), origin.Position.Y, boardZ)
 	local vel = Vector3.new(rng:NextNumber(-cfg.BallStartSpeedX, cfg.BallStartSpeedX), rng:NextNumber(-2, 0), 0)
 
-	local fx = getLocalFxFolder()
+	local ballsFolder = getOrCreateSubfolder("Balls")
 	local ball = Instance.new("Part")
 	ball.Name = "LocalPlinkoBall"
 	ball.Shape = Enum.PartType.Ball
@@ -332,7 +496,7 @@ function PlinkoBallPhysics.drop(onLanded: (bucketIndex: number) -> ()): SimHandl
 	ball.Color = Config.COLORS.NeonPurple
 	ball.Material = Enum.Material.Neon
 	ball.Position = pos
-	ball.Parent = fx
+	ball.Parent = ballsFolder
 
 	local trailA0 = Instance.new("Attachment")
 	trailA0.Position = Vector3.new(-radius * 0.2, 0, 0)
@@ -361,7 +525,9 @@ function PlinkoBallPhysics.drop(onLanded: (bucketIndex: number) -> ()): SimHandl
 		-- Keep the natural X; only settle Y into the cup.
 		pos = Vector3.new(pos.X, bucket.landY, boardZ)
 		ball.Position = pos
-		local glowColor = if bucket.index == 4 then Config.COLORS.NeonMagenta else Config.COLORS.NeonLime
+		local glowColor = if bucket.index == centerBucketIndex
+			then Config.COLORS.NeonMagenta
+			else Config.COLORS.NeonLime
 		glowBucket(bucket.part, glowColor, bucket.homeCFrame, bucket.homeSize)
 		if connection then
 			connection:Disconnect()
@@ -391,7 +557,6 @@ function PlinkoBallPhysics.drop(onLanded: (bucketIndex: number) -> ()): SimHandl
 	end
 
 	local function collidePegs(stepPos: Vector3, stepVel: Vector3, now: number): (Vector3, Vector3)
-		local leaveSpeed = cfg.BallPegLeaveSpeed
 		local leaveDeg = cfg.BallPegLeaveAngleDeg
 		local apexNx = cfg.BallPegApexNormalX
 		local reflectBlend = math.clamp(cfg.BallPegReflectBlend, 0, 1)
