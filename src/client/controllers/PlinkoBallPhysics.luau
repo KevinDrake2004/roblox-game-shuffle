@@ -3,10 +3,9 @@
 	@class PlinkoBallPhysics
 	Local-only gravity + peg bounce simulation for Plinko Points.
 
-	The path is **not** predetermined. A Galton (bean-machine) peg layout plus
-	gravity/peg collisions produce a center-biased land curve. The callback
-	receives the landed 0-based bucket index. Parts live under CurrentCamera so
-	other players never see your ball.
+	The path is **not** predetermined. A Galton peg layout plus gravity and
+	elastic-ish peg collisions decide the land. No soft bias toward a bucket.
+	Parts live under CurrentCamera so other players never see your ball.
 ]=]
 local Debris = game:GetService("Debris")
 local RunService = game:GetService("RunService")
@@ -64,7 +63,7 @@ end
 local function flashPeg(part: BasePart)
 	local original = part.Color
 	part.Color = Color3.fromRGB(255, 240, 255)
-	task.delay(0.07, function()
+	task.delay(0.08, function()
 		if part.Parent then
 			part.Color = original
 		end
@@ -166,7 +165,6 @@ local function resolveBucketAtX(buckets: { BucketInfo }, x: number): BucketInfo?
 			return bucket
 		end
 	end
-	-- Past the outer edge of a slot: nearest bucket by center X.
 	local best = buckets[1]
 	local bestDist = math.abs(x - best.centerX)
 	for index = 2, #buckets do
@@ -178,6 +176,14 @@ local function resolveBucketAtX(buckets: { BucketInfo }, x: number): BucketInfo?
 		end
 	end
 	return best
+end
+
+local function clampSpeed(vel: Vector3, maxSpeed: number): Vector3
+	local speed = vel.Magnitude
+	if speed <= maxSpeed or speed < 1e-6 then
+		return vel
+	end
+	return vel.Unit * maxSpeed
 end
 
 --[=[
@@ -224,7 +230,6 @@ function PlinkoBallPhysics.drop(onLanded: (bucketIndex: number) -> ()): SimHandl
 		if cancelled then
 			return
 		end
-		-- Center bust if the board is missing; caller still needs a bucket.
 		local fallback = math.floor((#Config.PLINKO.BucketMultipliers - 1) / 2)
 		cleanup()
 		onLanded(fallback)
@@ -258,9 +263,9 @@ function PlinkoBallPhysics.drop(onLanded: (bucketIndex: number) -> ()): SimHandl
 	end
 
 	local rng = Random.new()
-	local startSpread = cfg.BallStartSpeedX * 0.2
+	local startSpread = math.max(0.15, cfg.BallStartSpeedX * 0.15)
 	local pos = Vector3.new(origin.Position.X + rng:NextNumber(-startSpread, startSpread), origin.Position.Y, boardZ)
-	local vel = Vector3.new(rng:NextNumber(-cfg.BallStartSpeedX, cfg.BallStartSpeedX), rng:NextNumber(-1, 0), 0)
+	local vel = Vector3.new(rng:NextNumber(-cfg.BallStartSpeedX, cfg.BallStartSpeedX), rng:NextNumber(-2, 0), 0)
 
 	local fx = getLocalFxFolder()
 	local ball = Instance.new("Part")
@@ -287,9 +292,9 @@ function PlinkoBallPhysics.drop(onLanded: (bucketIndex: number) -> ()): SimHandl
 	trail.Attachment0 = trailA0
 	trail.Attachment1 = trailA1
 	trail.Color = ColorSequence.new(Config.COLORS.NeonPurple, Color3.fromRGB(255, 200, 255))
-	trail.Transparency = NumberSequence.new(0.25, 1)
-	trail.Lifetime = 0.35
-	trail.LightEmission = 0.8
+	trail.Transparency = NumberSequence.new(0.2, 1)
+	trail.Lifetime = 0.4
+	trail.LightEmission = 0.85
 	trail.WidthScale = NumberSequence.new(1, 0)
 	trail.Parent = ball
 
@@ -301,7 +306,8 @@ function PlinkoBallPhysics.drop(onLanded: (bucketIndex: number) -> ()): SimHandl
 			return
 		end
 		finished = true
-		pos = Vector3.new(math.clamp(pos.X, bucket.minX + radius, bucket.maxX - radius), bucket.landY, boardZ)
+		-- Keep the natural X; only settle Y into the cup.
+		pos = Vector3.new(pos.X, bucket.landY, boardZ)
 		ball.Position = pos
 		local glowColor = if bucket.index == 4 then Config.COLORS.NeonMagenta else Config.COLORS.NeonLime
 		glowBucket(bucket.part, glowColor)
@@ -309,7 +315,7 @@ function PlinkoBallPhysics.drop(onLanded: (bucketIndex: number) -> ()): SimHandl
 			connection:Disconnect()
 			connection = nil
 		end
-		Debris:AddItem(ball, 0.45)
+		Debris:AddItem(ball, 0.5)
 		local landedIndex = bucket.index
 		task.defer(function()
 			if not cancelled then
@@ -321,11 +327,62 @@ function PlinkoBallPhysics.drop(onLanded: (bucketIndex: number) -> ()): SimHandl
 		end)
 	end
 
+	local function collideRails(stepPos: Vector3, stepVel: Vector3): (Vector3, Vector3)
+		local minX = leftX + radius
+		local maxX = rightX - radius
+		if stepPos.X < minX then
+			stepPos = Vector3.new(minX, stepPos.Y, boardZ)
+			stepVel = Vector3.new(math.abs(stepVel.X) * cfg.BallBounce, stepVel.Y * 0.95, 0)
+		elseif stepPos.X > maxX then
+			stepPos = Vector3.new(maxX, stepPos.Y, boardZ)
+			stepVel = Vector3.new(-(math.abs(stepVel.X) * cfg.BallBounce), stepVel.Y * 0.95, 0)
+		end
+		return stepPos, stepVel
+	end
+
+	local function collidePegs(stepPos: Vector3, stepVel: Vector3, now: number): (Vector3, Vector3)
+		for _, peg in pegs do
+			local delta = Vector3.new(stepPos.X - peg.part.Position.X, stepPos.Y - peg.part.Position.Y, 0)
+			local dist = delta.Magnitude
+			local minDist = radius + peg.radius
+			if dist < 1e-5 then
+				-- Exact center overlap: nudge sideways so reflection has a normal.
+				delta = Vector3.new(if rng:NextNumber() < 0.5 then -1 else 1, 0.2, 0)
+				dist = delta.Magnitude
+			end
+			if dist < minDist and (now - peg.lastHit) >= cfg.BallPegHitCooldown then
+				local normal = delta.Unit
+				-- Separate so the ball sits on the peg surface.
+				stepPos = Vector3.new(
+					peg.part.Position.X + normal.X * minDist,
+					peg.part.Position.Y + normal.Y * minDist,
+					boardZ
+				)
+
+				local approaching = stepVel:Dot(normal)
+				if approaching < 0 then
+					-- Reflect the approach component; keep tangential slide.
+					local reflected = stepVel - normal * ((1 + cfg.BallBounce) * approaching)
+					-- Tiny tangential noise only - impact direction still dominates.
+					local tangent = Vector3.new(-normal.Y, normal.X, 0)
+					local jitter = tangent * rng:NextNumber(-0.8, 0.8)
+					stepVel = reflected + jitter
+					peg.lastHit = now
+					flashPeg(peg.part)
+				elseif dist < minDist * 0.98 then
+					-- Still overlapping while moving away: push out without rewriting velocity.
+					peg.lastHit = now
+				end
+			end
+		end
+		return stepPos, stepVel
+	end
+
 	connection = RunService.Heartbeat:Connect(function(dt)
 		if cancelled or finished then
 			return
 		end
-		dt = math.clamp(dt, 0, 1 / 30)
+		dt = math.clamp(dt, 0, 1 / 20)
 		elapsed += dt
 		if elapsed >= cfg.BallMaxSimSeconds then
 			local bucket = resolveBucketAtX(buckets, pos.X)
@@ -337,47 +394,18 @@ function PlinkoBallPhysics.drop(onLanded: (bucketIndex: number) -> ()): SimHandl
 			return
 		end
 
-		-- Gravity + light horizontal drag so sideways speed does not runaway to the rails.
-		local drag = math.clamp(1 - cfg.BallHorizontalDrag * dt, 0.7, 1)
-		vel = Vector3.new(vel.X * drag, vel.Y - cfg.BallGravity * dt, 0)
-		pos = Vector3.new(pos.X + vel.X * dt, pos.Y + vel.Y * dt, boardZ)
+		local substeps = math.max(1, math.floor(cfg.BallSubsteps))
+		local stepDt = dt / substeps
+		for _ = 1, substeps do
+			-- Gravity + light air drag (does not erase impact sideways motion).
+			local drag = math.clamp(1 - cfg.BallHorizontalDrag * stepDt, 0.92, 1)
+			vel = Vector3.new(vel.X * drag, vel.Y - cfg.BallGravity * stepDt, 0)
+			vel = clampSpeed(vel, cfg.BallMaxSpeed)
+			pos = Vector3.new(pos.X + vel.X * stepDt, pos.Y + vel.Y * stepDt, boardZ)
 
-		-- Rails: soft rebound back onto the board (should be rare with a Galton layout).
-		local minX = leftX + radius
-		local maxX = rightX - radius
-		if pos.X < minX then
-			pos = Vector3.new(minX, pos.Y, boardZ)
-			vel = Vector3.new(math.abs(vel.X) * cfg.BallBounce + 0.5, vel.Y, 0)
-		elseif pos.X > maxX then
-			pos = Vector3.new(maxX, pos.Y, boardZ)
-			vel = Vector3.new(-(math.abs(vel.X) * cfg.BallBounce + 0.5), vel.Y, 0)
-		end
-
-		for _, peg in pegs do
-			local delta = Vector3.new(pos.X - peg.part.Position.X, pos.Y - peg.part.Position.Y, 0)
-			local dist = delta.Magnitude
-			local minDist = radius + peg.radius
-			if dist > 1e-4 and dist < minDist and (elapsed - peg.lastHit) >= cfg.BallPegHitCooldown then
-				peg.lastHit = elapsed
-				local normal = delta.Unit
-				pos = Vector3.new(
-					peg.part.Position.X + normal.X * minDist,
-					peg.part.Position.Y + normal.Y * minDist,
-					boardZ
-				)
-				-- Near-elastic bounce with tiny noise (~50/50 deflect), not a big random fling.
-				local reflect = vel - normal * (2 * vel:Dot(normal))
-				local kick = Vector3.new(rng:NextNumber(-1.1, 1.1), rng:NextNumber(0, 1.5), 0)
-				vel = reflect * cfg.BallBounce + kick
-				-- Prefer continuing downward through the board.
-				if vel.Y > 4 then
-					vel = Vector3.new(vel.X, 4, 0)
-				end
-				if vel.Y > -2 then
-					vel = Vector3.new(vel.X, math.min(vel.Y, -2), 0)
-				end
-				flashPeg(peg.part)
-			end
+			pos, vel = collideRails(pos, vel)
+			pos, vel = collidePegs(pos, vel, elapsed)
+			vel = clampSpeed(vel, cfg.BallMaxSpeed)
 		end
 
 		ball.Position = pos

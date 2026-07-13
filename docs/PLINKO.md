@@ -104,7 +104,7 @@ Full table lives in `src/shared/Config.luau`.
 
 | Piece | Behavior |
 |-------|----------|
-| Ball | Free gravity + peg bounce; **no** soft bias toward a target bucket |
+| Ball | Free gravity + elastic peg bounce (substeps); **no** soft bias toward a target bucket |
 | Peg hits | Brief color flash on contact |
 | Bucket land | Local light + size pulse on the slot physics entered |
 | Multiplier labels | Created on join, destroyed on leave |
