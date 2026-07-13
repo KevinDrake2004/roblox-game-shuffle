@@ -1,6 +1,6 @@
 # Plinko Points
 
-Arcade plinko inspired by Shuffle Plinko. Each **ball drop** stakes a **wager**; the server picks a multiplier bucket and settles chips.
+Arcade plinko inspired by Shuffle Plinko. Each **ball drop** stakes a **wager**; a **free gravity/peg simulation** decides the bucket, then the server pays that multiplier.
 
 This document describes **current** behavior for playtesting and economy tuning.
 
@@ -9,22 +9,28 @@ This document describes **current** behavior for playtesting and economy tuning.
 1. Enter the **Plinko Points** portal from the lobby (existing hub portal at `(0, 3.5, -28)`).
 2. You teleport to **PlinkoArena** (east of Rocket Run). Purple neon board + pegs + buckets.
 3. Set **wager** (chips bet per drop) and press **Drop Ball**.
-4. Watch the ball fall into a multiplier bucket. WIN / BUST / LOSS feedback updates chips and session P/L.
-5. Leave via the Leave button or the spawn-pad proximity prompt.
+4. Watch the ball fall with gravity and bounce off pegs. It lands wherever physics takes it.
+5. WIN / BUST / LOSS feedback updates chips and session P/L.
+6. Leave via the Leave button or the spawn-pad proximity prompt.
 
 ## Drop flow
 
 ```
-idle → deduct wager → roll weighted bucket → credit payout (if any) → result HUD
+idle → deduct wager → DropStarted → free client physics → Landed(bucket) → credit payout → Result HUD
 ```
 
 | Step | What happens |
 |------|----------------|
 | Request drop | Client fires `PlinkoPointsDrop`. Server rejects if not in arena, on cooldown, already dropping, or balance `<` wager. |
 | Deduct | `CurrencyService.deductChips(wager, "PlinkoPoints:wager")`. |
-| Roll | Weighted pick from `BucketWeights` → `BucketMultipliers[index]`. |
-| Settle | `payout = floor(wager * multiplier * PlayerReturnFactor)`; credit via `creditPayout` when payout `>` 0. |
-| Result | Client animates ball to the chosen bucket (cosmetic only), then shows outcome. |
+| DropStarted | Server fires `PlinkoPointsDropStarted` (`dropId`, wager, chips). **No bucket is chosen yet.** |
+| Physics | Client runs local gravity + peg bounce. Landing is **not** steered or pre-rolled. |
+| Landed | Client fires `PlinkoPointsLanded(dropId, bucketIndex)` for the slot the ball entered. |
+| Settle | `payout = floor(wager * BucketMultipliers[bucket] * PlayerReturnFactor)`; credit when payout `>` 0. |
+| Timeout | If no land report within `LandReportTimeoutSeconds`, server settles as center bust. |
+| Leave mid-drop | Pending wager is refunded. |
+
+Ball visuals are client-only (`CurrentCamera.PlinkoLocalFx`). Other players never see your ball. Multiplier labels are local and only spawn while you are in the Plinko arena.
 
 ## Economy
 
@@ -35,10 +41,10 @@ idle → deduct wager → roll weighted bucket → credit payout (if any) → re
 
 ### RTP
 
-- `TargetRTP` (e.g. `1.05`) is the design expected return per chip wagered over many drops.
-- Bucket multipliers × binomial-style weights yield **E[multiplier] ≈ 1.0**.
-- `PlayerReturnFactor` (e.g. `1.05`) scales payouts so realized EV ≈ TargetRTP.
-- Long-term volume is rewarding (RTP > 100%). Short-term busts (center `0x`, low buckets) still drain sessions.
+- Landing distribution comes from **Galton-board physics** (center-biased ≈ normal / binomial).
+- `BucketWeights` document the intended `C(8,k)` spread for RTP math; they are not rolled as RNG.
+- Multipliers are tuned so `E[multiplier] ≈ 1.0` under those weights; `PlayerReturnFactor = 1.05` → **TargetRTP ≈ 105%**.
+- Short-term busts (center `0x`) still drain sessions; edge jackpots are rare.
 
 ### Daily earn cap
 
@@ -46,21 +52,23 @@ Same as Rocket Run: `Config.DAILY_EARN_CAP` applies to earn-only `awardChips`. W
 
 ## Buckets (default)
 
-Left → right (9 buckets). Weights are binomial `C(8, k)`.
+Left → right (9 buckets). Design land curve ≈ binomial `C(8, k)` (center-heavy / normal-like).
 
-| Index | Multiplier | Weight |
-|-------|------------|--------|
-| 0 | 10x | 1 |
-| 1 | 4x | 8 |
-| 2 | 1.5x | 28 |
-| 3 | 0.8x | 56 |
-| 4 | 0x (bust) | 70 |
-| 5 | 0.8x | 56 |
-| 6 | 1.5x | 28 |
-| 7 | 4x | 8 |
-| 8 | 10x | 1 |
+| Index | Multiplier | Weight `C(8,k)` | Approx P |
+|-------|------------|-----------------|----------|
+| 0 | 20x | 1 | 0.4% |
+| 1 | 4x | 8 | 3.1% |
+| 2 | 1.5x | 28 | 10.9% |
+| 3 | 0.6x | 56 | 21.9% |
+| 4 | 0x (bust) | 70 | 27.3% |
+| 5 | 0.6x | 56 | 21.9% |
+| 6 | 1.5x | 28 | 10.9% |
+| 7 | 4x | 8 | 3.1% |
+| 8 | 20x | 1 | 0.4% |
 
-Tune in `Config.PLINKO.BucketMultipliers` / `BucketWeights`. Keep `#multipliers == #weights`.
+`E[multiplier] = 255.2 / 256 ≈ 0.997`. With `PlayerReturnFactor = 1.05` → design **RTP ≈ 104.7% (~105%)**.
+
+The Galton peg board (row `r` has `r+1` pegs) is what creates that center bias in the free physics sim. Multipliers pay the rare edges; common center lands are busts / low returns.
 
 ## Arena coordinates
 
@@ -81,31 +89,50 @@ All Plinko geometry lives under `Workspace.PlinkoArena` only.
 | `DefaultWager` / `MinWager` / `MaxWager` | Stake clamps |
 | `TargetRTP` | Design expected return per wager (> 1.0) |
 | `PlayerReturnFactor` | Payout scale factor |
-| `BucketMultipliers` / `BucketWeights` | Board payout distribution |
+| `BucketMultipliers` | Payout per landed bucket |
+| `BucketWeights` | Tuning reference for physical land spread (not rolled) |
 | `DropCooldownSeconds` | Per-player drop throttle |
+| `LandReportTimeoutSeconds` | Max wait for client land report |
 | `ArenaOrigin` | World center of PlinkoArena |
 | `CameraOffset` | Client board-cam offset from `CameraFocus` |
-| `PegRows` / `BallDropDuration` | Visual pegs + client ball tween |
+| `PegRows` | Visual peg grid rows |
+| `BallRadius` / `BallGravity` / `BallBounce` | Client gravity sim feel |
+| `BallMaxSimSeconds` / `BallPegHitCooldown` | Sim limits |
 
 Full table lives in `src/shared/Config.luau`.
+
+## Client visuals (local only)
+
+| Piece | Behavior |
+|-------|----------|
+| Ball | Free gravity + peg bounce; **no** soft bias toward a target bucket |
+| Peg hits | Brief color flash on contact |
+| Bucket land | Local light + size pulse on the slot physics entered |
+| Multiplier labels | Created on join, destroyed on leave |
+| Other players | Never see your ball or your labels |
 
 ## File map
 
 | Path | Role |
 |------|------|
-| `src/server/games/PlinkoPoints/init.luau` | Join/leave, wager deduct, bucket RNG, settlement |
-| `src/client/controllers/PlinkoPointsController.luau` | Remotes, board camera, ball tween, session P/L |
+| `src/server/games/PlinkoPoints/init.luau` | Join/leave, wager deduct, land settle |
+| `src/client/controllers/PlinkoPointsController.luau` | Remotes, board camera, local labels, session P/L |
+| `src/client/controllers/PlinkoBallPhysics.luau` | Free local gravity + peg bounce sim |
 | `src/client/ui/PlinkoPointsHud.luau` | Wager UI, drop / leave, WIN/BUST feedback |
 | `src/map/PlinkoArena.model.json` | Floor, spawn, board, buckets (pegs spawned on server) |
 | `src/shared/Config.luau` | `PLINKO` tuning |
-| `src/shared/Types.luau` | Joined / result payloads |
+| `src/shared/Types.luau` | Joined / drop started / result payloads |
 | `src/shared/Remotes.luau` | Plinko event names |
 
 ## Verify (manual)
 
 - Lobby → Plinko portal → arena at x≈90; Rocket Run at `(0, 5, -140)` unchanged
-- Wager 10, land 1.5x, `PlayerReturnFactor = 1.05` → `payout = floor(10 * 1.5 * 1.05) = 15`, `netDelta = +5`
-- Wager 10, center 0x → lose 10 chips (`netDelta = -10`)
+- Multiplier labels visible in Plinko only; gone in lobby / Rocket Run
+- Ball bounces off pegs with gravity; path does **not** curve toward a pre-chosen slot
+- Repeated drops cluster toward center (normal / Galton curve); edge 20x is rare
+- Other clients do not see your ball
+- Over many drops, average return trends near ~105% RTP (variance still hurts short sessions)
 - Balance `<` wager → drop rejected, no deduct
-- Leave → hub spawn `(0, 3, 20)`
+- Leave mid-drop → wager refunded
+- Leave after settle → hub spawn `(0, 3, 20)`
 - Rocket Run still playable; no shared arena parts

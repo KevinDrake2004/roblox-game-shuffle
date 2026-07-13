@@ -123,10 +123,14 @@ Config.ROCKET_RUN = {
 	- `TargetRTP` - design expected return per chip wagered (> 1.0)
 	- `PlayerReturnFactor` - scales payout: floor(wager * multiplier * factor)
 	- `DropCooldownSeconds` - minimum delay between drops per player
+	- `BallRadius` / `BallGravity` / `BallBounce` - client gravity sim feel
+	- `BallMaxSimSeconds` / `BallPegHitCooldown` / `BallHorizontalDrag` / `BallStartSpeedX` - Galton sim feel
+	- `PegRows` / `PegSpacingX` / `PegSpacingY` / `PegLayoutVersion` - Galton board layout
 	- Arena / camera fields drive world presentation only (east of Rocket Run)
 
-	Expected raw multiplier ≈ 1.0 from weights × multipliers; with
-	`PlayerReturnFactor = 1.05`, realized EV ≈ TargetRTP over many drops.
+	Bucket land is decided by free client physics on a Galton peg board (center-biased).
+	`BucketWeights` document the intended binomial spread; multipliers are tuned so
+	`E[multiplier] ≈ 1` under those weights, and `PlayerReturnFactor` targets ~105% RTP.
 
 	@prop PLINKO table
 	@within Config
@@ -140,15 +144,28 @@ Config.PLINKO = {
 	-- Applied on settle: payout = floor(wager * bucketMultiplier * PlayerReturnFactor).
 	PlayerReturnFactor = 1.05,
 	DropCooldownSeconds = 0.75,
-	-- Symmetric Shuffle-style board: edge jackpots, center 0x bust.
-	-- Weights are binomial C(8, k); E[multiplier] ≈ 1.006 before PlayerReturnFactor.
-	BucketMultipliers = { 10, 4, 1.5, 0.8, 0, 0.8, 1.5, 4, 10 },
+	-- Symmetric board: rare edge jackpots, common center bust.
+	-- With binomial C(8,k) land weights, E[multiplier] ≈ 0.997 before factor;
+	-- PlayerReturnFactor 1.05 → design RTP ≈ 1.05 (105%).
+	BucketMultipliers = { 20, 4, 1.5, 0.6, 0, 0.6, 1.5, 4, 20 },
 	BucketWeights = { 1, 8, 28, 56, 70, 56, 28, 8, 1 },
 	-- World / camera (east of Rocket Run at 0, 5, -140 — ~90 studs apart)
 	ArenaOrigin = Vector3.new(90, 5, -140),
 	CameraOffset = Vector3.new(0, 4, 28),
+	-- Galton board: PegRows decision rows → PegRows+1 buckets (keep 8 → 9).
 	PegRows = 8,
-	BallDropDuration = 1.15,
+	PegSpacingX = 2.6,
+	PegSpacingY = 2.35,
+	PegLayoutVersion = 2,
+	-- Client gravity sim (free path; Galton pegs create center-biased lands)
+	BallRadius = 0.5,
+	BallGravity = 52,
+	BallBounce = 0.55,
+	BallMaxSimSeconds = 7,
+	BallPegHitCooldown = 0.1,
+	BallHorizontalDrag = 1.4,
+	BallStartSpeedX = 1.2,
+	LandReportTimeoutSeconds = 8,
 }
 
 Config.JOB = {

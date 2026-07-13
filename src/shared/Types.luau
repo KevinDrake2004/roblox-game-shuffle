@@ -155,8 +155,22 @@ export type PlinkoPointsJoined = {
 }
 
 --[=[
+	Fired after the server accepts a drop (wager deducted). Client runs free
+	physics; landing bucket is not chosen yet.
+
+	@type PlinkoPointsDropStarted {dropId: number, wager: number, chips: number}
+	@within Types
+]=]
+export type PlinkoPointsDropStarted = {
+	dropId: number,
+	wager: number,
+	chips: number,
+}
+
+--[=[
 	Per-drop settlement after the ball lands in a bucket.
 
+	- Landing bucket comes from the client gravity sim (not pre-rolled)
 	- `payout = floor(wager * multiplier * PlayerReturnFactor)` (0 for bust bucket)
 	- Stake already deducted; `netDelta = payout - wager`
 	- `outcome`: `win` if netDelta > 0, `bust` if payout == 0, else `loss` / `push`

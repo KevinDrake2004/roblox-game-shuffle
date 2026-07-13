@@ -3,17 +3,15 @@
 	@class PlinkoPointsController
 	Client controller for Plinko Points UI, board camera, and remote handling.
 
-	- Forwards wager / drop / leave requests; server remains authoritative on settle.
-	- Optional ball tween toward the server-chosen bucket for show only.
+	- Forwards wager / drop / leave requests.
+	- After DropStarted, runs a free local gravity sim; reports the landed bucket.
+	- Multiplier labels and balls exist only for the local player while in-arena.
 	- Tracks session net P/L locally from result payloads.
-	- Board camera only while in the Plinko arena; restores Custom on leave.
 ]=]
 local RunService = game:GetService("RunService")
-local TweenService = game:GetService("TweenService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Workspace = game:GetService("Workspace")
 local Players = game:GetService("Players")
-local Debris = game:GetService("Debris")
 
 local Packages = ReplicatedStorage.Packages
 local Shared = ReplicatedStorage.Shared
@@ -24,10 +22,12 @@ local Remotes = require(Shared.Remotes)
 local Config = require(Shared.Config)
 local Types = require(Shared.Types)
 
+local PlinkoBallPhysics = require(script.Parent.PlinkoBallPhysics)
 local PlinkoPointsHud = require(script.Parent.Parent.ui.PlinkoPointsHud)
 local HubHud = require(script.Parent.Parent.ui.HubHud)
 
 type PlinkoPointsJoined = Types.PlinkoPointsJoined
+type PlinkoPointsDropStarted = Types.PlinkoPointsDropStarted
 type PlinkoPointsResultPayload = Types.PlinkoPointsResultPayload
 
 local PlinkoPointsController = {}
@@ -35,8 +35,10 @@ local PlinkoPointsController = {}
 local started = false
 local active = false
 local cameraJanitor = Janitor.new()
+local labelJanitor = Janitor.new()
 local sessionNet = 0
 local dropBusy = false
+local activeDropId: number? = nil
 local savedCameraType: Enum.CameraType? = nil
 local cameraActive = false
 
@@ -45,6 +47,16 @@ local function formatNetDelta(netDelta: number): string
 		return string.format("+%d", netDelta)
 	end
 	return tostring(netDelta)
+end
+
+local function formatMultiplierLabel(multiplier: number): string
+	if multiplier == 0 then
+		return "0x"
+	end
+	if multiplier == math.floor(multiplier) then
+		return string.format("%dx", multiplier)
+	end
+	return string.format("%.1fx", multiplier)
 end
 
 local function sessionColor(): Color3
@@ -72,32 +84,79 @@ local function getCameraFocus(): BasePart?
 	return nil
 end
 
-local function getBucketPart(bucketIndex: number): BasePart?
+local function clearLocalMultiplierLabels()
+	labelJanitor:Cleanup()
 	local arena = Workspace:FindFirstChild("PlinkoArena")
 	if not arena then
-		return nil
+		return
 	end
 	local buckets = arena:FindFirstChild("Buckets")
 	if not buckets then
-		return nil
+		return
 	end
-	local bucket = buckets:FindFirstChild(`Bucket_{bucketIndex}`)
-	if bucket and bucket:IsA("BasePart") then
-		return bucket
+	for _, child in buckets:GetChildren() do
+		if child:IsA("BasePart") then
+			local gui = child:FindFirstChild("LocalMultiplierGui")
+			if gui then
+				gui:Destroy()
+			end
+			local legacy = child:FindFirstChild("MultiplierGui")
+			if legacy and legacy:IsA("BillboardGui") then
+				legacy.Enabled = false
+			end
+		end
 	end
-	return nil
 end
 
-local function getDropOrigin(): BasePart?
+local function showLocalMultiplierLabels()
+	clearLocalMultiplierLabels()
 	local arena = Workspace:FindFirstChild("PlinkoArena")
 	if not arena then
-		return nil
+		return
 	end
-	local origin = arena:FindFirstChild("DropOrigin")
-	if origin and origin:IsA("BasePart") then
-		return origin
+	local buckets = arena:FindFirstChild("Buckets")
+	if not buckets then
+		return
 	end
-	return nil
+
+	local multipliers = Config.PLINKO.BucketMultipliers
+	for index, multiplier in multipliers do
+		local bucket = buckets:FindFirstChild(`Bucket_{index - 1}`)
+		if not (bucket and bucket:IsA("BasePart")) then
+			continue
+		end
+
+		local gui = Instance.new("BillboardGui")
+		gui.Name = "LocalMultiplierGui"
+		gui.Size = UDim2.fromOffset(72, 36)
+		gui.StudsOffset = Vector3.new(0, 1.6, 0)
+		gui.AlwaysOnTop = true
+		gui.MaxDistance = 80
+		gui.Parent = bucket
+		labelJanitor:Add(gui)
+
+		local label = Instance.new("TextLabel")
+		label.Name = "Label"
+		label.BackgroundTransparency = 1
+		label.Size = UDim2.fromScale(1, 1)
+		label.Font = Enum.Font.GothamBlack
+		label.TextScaled = true
+		label.TextStrokeTransparency = 0.35
+		label.Text = formatMultiplierLabel(multiplier)
+		if multiplier <= 0 then
+			label.TextColor3 = Config.COLORS.NeonMagenta
+		elseif multiplier >= 4 then
+			label.TextColor3 = Config.COLORS.NeonLime
+		else
+			label.TextColor3 = Config.COLORS.Text
+		end
+		label.Parent = gui
+
+		local stroke = Instance.new("UIStroke")
+		stroke.Color = Config.COLORS.NeonPurple
+		stroke.Thickness = 1.5
+		stroke.Parent = label
+	end
 end
 
 local function startBoardCamera()
@@ -147,50 +206,38 @@ local function stopBoardCamera()
 	savedCameraType = nil
 end
 
-local function animateBallToBucket(bucketIndex: number)
-	local origin = getDropOrigin()
-	local bucket = getBucketPart(bucketIndex)
-	if not origin or not bucket then
-		return
-	end
+local function applyResultHud(payload: PlinkoPointsResultPayload)
+	sessionNet += payload.netDelta
+	HubHud.setChips(payload.chips)
+	PlinkoPointsHud.flashOutcome(payload.outcome)
 
-	local ball = Instance.new("Part")
-	ball.Name = "PlinkoBall"
-	ball.Shape = Enum.PartType.Ball
-	ball.Anchored = true
-	ball.CanCollide = false
-	ball.CanQuery = false
-	ball.Size = Vector3.new(1.1, 1.1, 1.1)
-	ball.Color = Config.COLORS.NeonPurple
-	ball.Material = Enum.Material.Neon
-	ball.Position = origin.Position
-	ball.Parent = Workspace
+	local outcomeColor = if payload.outcome == "win"
+		then Config.COLORS.NeonLime
+		elseif payload.outcome == "bust" or payload.outcome == "loss" then Config.COLORS.NeonMagenta
+		else Config.COLORS.NeonPurple
 
-	local mid = Vector3.new(
-		(origin.Position.X + bucket.Position.X) / 2 + (math.random() - 0.5) * 2,
-		(origin.Position.Y + bucket.Position.Y) / 2,
-		origin.Position.Z
-	)
-	local duration = Config.PLINKO.BallDropDuration
-	local half = duration * 0.55
+	local headline = if payload.outcome == "win"
+		then string.format("WIN  %s  %.2fx", formatNetDelta(payload.netDelta), payload.multiplier)
+		elseif payload.outcome == "bust" then string.format("BUST  %s", formatNetDelta(payload.netDelta))
+		elseif payload.outcome == "push" then string.format("PUSH  %.2fx", payload.multiplier)
+		else string.format("LOSS  %s  %.2fx", formatNetDelta(payload.netDelta), payload.multiplier)
 
-	local tweenA = TweenService:Create(
-		ball,
-		TweenInfo.new(half, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut),
-		{ Position = mid }
+	PlinkoPointsHud.setResult(headline, outcomeColor)
+	PlinkoPointsHud.setStatus(
+		string.format(
+			"Payout %d (%s)  ·  bucket %d",
+			payload.payout,
+			formatNetDelta(payload.netDelta),
+			payload.bucketIndex + 1
+		)
 	)
-	local tweenB = TweenService:Create(
-		ball,
-		TweenInfo.new(duration - half, Enum.EasingStyle.Quad, Enum.EasingDirection.In),
-		{ Position = bucket.Position + Vector3.new(0, 0.8, 0) }
+	PlinkoPointsHud.setScoreLine(
+		string.format("Wager %d  |  Balance %d  |  High score: %d", payload.wager, payload.chips, payload.highScore)
 	)
-	tweenA:Play()
-	tweenA.Completed:Connect(function()
-		if ball.Parent then
-			tweenB:Play()
-		end
-	end)
-	Debris:AddItem(ball, duration + 0.35)
+	refreshSessionLine()
+	dropBusy = false
+	activeDropId = nil
+	PlinkoPointsHud.setDropEnabled(true)
 end
 
 local function requestDrop()
@@ -214,13 +261,31 @@ local function applyWager(wager: number)
 	PlinkoPointsHud.setStatus(string.format("Wager set to %d chips", clamped))
 end
 
+local function startFreeDrop(payload: PlinkoPointsDropStarted)
+	activeDropId = payload.dropId
+	HubHud.setChips(payload.chips)
+	PlinkoPointsHud.setStatus("Ball in play…")
+	PlinkoPointsHud.setScoreLine(string.format("Wager %d  |  Balance %d", payload.wager, payload.chips))
+
+	PlinkoBallPhysics.drop(function(bucketIndex: number)
+		if not active or activeDropId ~= payload.dropId then
+			return
+		end
+		Remotes.getEvent("PlinkoPointsLanded"):FireServer(payload.dropId, bucketIndex)
+		PlinkoPointsHud.setStatus("Settling…")
+	end)
+end
+
 --[=[
 	Hide Plinko HUD and restore default hub camera / title after leaving.
 ]=]
 function PlinkoPointsController.stopSession()
 	active = false
 	dropBusy = false
+	activeDropId = nil
 	sessionNet = 0
+	PlinkoBallPhysics.cancel()
+	clearLocalMultiplierLabels()
 	cameraJanitor:Cleanup()
 	PlinkoPointsHud.setVisible(false)
 	PlinkoPointsHud.setDropEnabled(true)
@@ -235,6 +300,7 @@ end
 function PlinkoPointsController.startSession(payload: PlinkoPointsJoined)
 	active = true
 	dropBusy = false
+	activeDropId = nil
 	sessionNet = 0
 
 	HubHud.setTitle("Plinko Points")
@@ -249,6 +315,7 @@ function PlinkoPointsController.startSession(payload: PlinkoPointsJoined)
 		string.format("Wager %d  |  Balance %d  |  High score: %d", payload.wager, payload.chips, payload.highScore)
 	)
 	refreshSessionLine()
+	showLocalMultiplierLabels()
 	startBoardCamera()
 end
 
@@ -261,6 +328,8 @@ function PlinkoPointsController.start()
 	end
 	started = true
 
+	clearLocalMultiplierLabels()
+
 	PlinkoPointsHud.start(requestDrop, requestLeave, applyWager)
 	applyWager(Config.PLINKO.DefaultWager)
 
@@ -268,57 +337,24 @@ function PlinkoPointsController.start()
 		PlinkoPointsController.startSession(payload)
 	end)
 
+	Remotes.getEvent("PlinkoPointsDropStarted").OnClientEvent:Connect(function(payload: PlinkoPointsDropStarted)
+		if not active then
+			return
+		end
+		startFreeDrop(payload)
+	end)
+
 	Remotes.getEvent("PlinkoPointsResult").OnClientEvent:Connect(function(payload: PlinkoPointsResultPayload)
 		if not active then
 			return
 		end
-
-		animateBallToBucket(payload.bucketIndex)
-		task.delay(Config.PLINKO.BallDropDuration * 0.85, function()
-			if not active then
-				return
-			end
-
-			sessionNet += payload.netDelta
-			HubHud.setChips(payload.chips)
-			PlinkoPointsHud.flashOutcome(payload.outcome)
-
-			local outcomeColor = if payload.outcome == "win"
-				then Config.COLORS.NeonLime
-				elseif payload.outcome == "bust" or payload.outcome == "loss" then Config.COLORS.NeonMagenta
-				else Config.COLORS.NeonPurple
-
-			local headline = if payload.outcome == "win"
-				then string.format("WIN  %.2fx", payload.multiplier)
-				elseif payload.outcome == "bust" then "BUST  0x"
-				elseif payload.outcome == "push" then string.format("PUSH  %.2fx", payload.multiplier)
-				else string.format("LOSS  %.2fx", payload.multiplier)
-
-			PlinkoPointsHud.setResult(headline, outcomeColor)
-			PlinkoPointsHud.setStatus(
-				string.format(
-					"Payout %d (%s)  ·  landed bucket %d",
-					payload.payout,
-					formatNetDelta(payload.netDelta),
-					payload.bucketIndex + 1
-				)
-			)
-			PlinkoPointsHud.setScoreLine(
-				string.format(
-					"Wager %d  |  Balance %d  |  High score: %d",
-					payload.wager,
-					payload.chips,
-					payload.highScore
-				)
-			)
-			refreshSessionLine()
-			dropBusy = false
-			PlinkoPointsHud.setDropEnabled(true)
-		end)
+		applyResultHud(payload)
 	end)
 
 	Remotes.getEvent("PlinkoPointsDropRejected").OnClientEvent:Connect(function(payload: { reason: string })
 		dropBusy = false
+		activeDropId = nil
+		PlinkoBallPhysics.cancel()
 		PlinkoPointsHud.setDropEnabled(true)
 		PlinkoPointsHud.setStatus(payload.reason or "Drop rejected")
 		PlinkoPointsHud.setResult("Blocked", Config.COLORS.NeonMagenta)

@@ -1,23 +1,27 @@
 --!strict
 --[=[
 	@class PlinkoPoints
-	Server-authoritative Plinko Points: wager per ball drop, weighted bucket settle.
+	Server-authoritative Plinko Points: wager per ball drop, physics-land settle.
 
 	## Flow
 
 	1. Lobby portal → `PlinkoPoints.join` teleports into `Workspace.PlinkoArena`.
 	2. Client sets wager via `PlinkoPointsSetWager` (clamped to Config).
-	3. `PlinkoPointsDrop` deducts the wager, rolls a weighted bucket, credits payout.
-	4. Leave returns the player to `Config.LOBBY.SpawnPosition`.
+	3. `PlinkoPointsDrop` deducts the wager and fires `PlinkoPointsDropStarted`.
+	4. Client runs a **free** local gravity/peg sim (landing is not pre-rolled).
+	5. Client reports `PlinkoPointsLanded` with the bucket the ball entered.
+	6. Server credits `floor(wager * multiplier * PlayerReturnFactor)` for that bucket.
+	7. Leave returns the player to `Config.LOBBY.SpawnPosition`.
 
 	## Economy
 
-	- Wager deducted with `CurrencyService.deductChips` before the roll.
-	- Insufficient balance → drop rejected (no roll).
-	- `payout = floor(wager * bucketMultiplier * PlayerReturnFactor)` via `creditPayout`.
+	- Wager deducted with `CurrencyService.deductChips` before the drop starts.
+	- Insufficient balance → drop rejected.
+	- Landing bucket comes from client physics; multipliers still come from Config.
 	- Zero-multiplier (center) buckets are busts: stake gone, `payout = 0`.
-	- Target RTP > 100% via `Config.PLINKO.TargetRTP` / `PlayerReturnFactor` and
-	  tuned `BucketMultipliers` × `BucketWeights` (E[multiplier] ≈ 1.0 before factor).
+	- Target RTP > 100% via `PlayerReturnFactor` and board multipliers; physical
+	  land distribution should roughly track `BucketWeights` for tuning notes.
+	- Unreported lands time out as a center bust (anti-hang). Leave mid-drop refunds.
 
 	Arena geometry lives only under `Workspace.PlinkoArena` (east of Rocket Run).
 ]=]
@@ -39,19 +43,25 @@ local DataService = require(script.Parent.Parent.services.DataService)
 
 type PlinkoPointsLoadout = Types.PlinkoPointsLoadout
 type PlinkoPointsJoined = Types.PlinkoPointsJoined
+type PlinkoPointsDropStarted = Types.PlinkoPointsDropStarted
 type PlinkoPointsResultPayload = Types.PlinkoPointsResultPayload
+
+type PendingDrop = {
+	dropId: number,
+	wager: number,
+	startedAt: number,
+}
 
 local PlinkoPoints = {}
 
 local ARENA_NAME = "PlinkoArena"
-local rng = Random.new()
 local started = false
 local nextDropId = 1
 
 local playersInArena: { [Player]: boolean } = {}
 local loadouts: { [Player]: PlinkoPointsLoadout } = {}
 local lastDropAt: { [Player]: number } = {}
-local dropping: { [Player]: boolean } = {}
+local pendingDrops: { [Player]: PendingDrop } = {}
 local playerJanitors: { [Player]: any } = {}
 
 local spawnPart: BasePart? = nil
@@ -59,15 +69,6 @@ local dropOrigin: BasePart? = nil
 local bucketsFolder: Folder? = nil
 local pegsFolder: Folder? = nil
 local titleSign: BasePart? = nil
-
-local weightTotal = 0
-
-local function refreshWeightTotal()
-	weightTotal = 0
-	for _, weight in Config.PLINKO.BucketWeights do
-		weightTotal += weight
-	end
-end
 
 local function clampWager(rawWager: unknown): number
 	local cfg = Config.PLINKO
@@ -90,20 +91,6 @@ local function teleportTo(player: Player, position: Vector3)
 	end
 end
 
-local function rollBucketIndex(): number
-	local roll = rng:NextNumber(0, weightTotal)
-	local cumulative = 0
-	local multipliers = Config.PLINKO.BucketMultipliers
-	local weights = Config.PLINKO.BucketWeights
-	for index = 1, #weights do
-		cumulative += weights[index]
-		if roll <= cumulative then
-			return index
-		end
-	end
-	return #multipliers
-end
-
 local function settleOutcome(payout: number, netDelta: number): "win" | "bust" | "loss" | "push"
 	if payout <= 0 then
 		return "bust"
@@ -117,66 +104,8 @@ local function settleOutcome(payout: number, netDelta: number): "win" | "bust" |
 	return "push"
 end
 
-local function formatMultiplierLabel(multiplier: number): string
-	if multiplier == 0 then
-		return "0x"
-	end
-	if multiplier == math.floor(multiplier) then
-		return string.format("%dx", multiplier)
-	end
-	return string.format("%.1fx", multiplier)
-end
-
-local function ensureBucketLabels()
-	if not bucketsFolder then
-		return
-	end
-
-	local multipliers = Config.PLINKO.BucketMultipliers
-	for index, multiplier in multipliers do
-		local bucket = bucketsFolder:FindFirstChild(`Bucket_{index - 1}`)
-		if not (bucket and bucket:IsA("BasePart")) then
-			continue
-		end
-
-		local gui = bucket:FindFirstChild("MultiplierGui")
-		if not (gui and gui:IsA("BillboardGui")) then
-			gui = Instance.new("BillboardGui")
-			gui.Name = "MultiplierGui"
-			gui.Size = UDim2.fromOffset(72, 36)
-			gui.StudsOffset = Vector3.new(0, 1.6, 0)
-			gui.AlwaysOnTop = true
-			gui.Parent = bucket
-
-			local label = Instance.new("TextLabel")
-			label.Name = "Label"
-			label.BackgroundTransparency = 1
-			label.Size = UDim2.fromScale(1, 1)
-			label.Font = Enum.Font.GothamBlack
-			label.TextScaled = true
-			label.TextColor3 = Config.COLORS.Text
-			label.TextStrokeTransparency = 0.35
-			label.Parent = gui
-
-			local stroke = Instance.new("UIStroke")
-			stroke.Color = Config.COLORS.NeonPurple
-			stroke.Thickness = 1.5
-			stroke.Parent = label
-		end
-
-		local label = gui:FindFirstChild("Label")
-		if label and label:IsA("TextLabel") then
-			label.Text = formatMultiplierLabel(multiplier)
-			if multiplier <= 0 then
-				label.TextColor3 = Config.COLORS.NeonMagenta
-			elseif multiplier >= 4 then
-				label.TextColor3 = Config.COLORS.NeonLime
-			else
-				label.TextColor3 = Config.COLORS.Text
-			end
-		end
-	end
-end
+-- Bucket multiplier billboards are created client-side only while the local
+-- player is in Plinko, so lobby / other games never see AlwaysOnTop labels.
 
 local function ensureTitleSign()
 	if not titleSign then
@@ -212,18 +141,26 @@ local function ensurePegs()
 	if not pegsFolder or not dropOrigin then
 		return
 	end
-	if pegsFolder:FindFirstChild("Peg_0_0") then
+
+	local layoutVersion = Config.PLINKO.PegLayoutVersion
+	if pegsFolder:GetAttribute("LayoutVersion") == layoutVersion and pegsFolder:FindFirstChild("Peg_0_0") then
 		return
 	end
 
+	for _, child in pegsFolder:GetChildren() do
+		child:Destroy()
+	end
+
+	-- Galton / bean-machine board: row r has (r+1) pegs, centered on ArenaOrigin.
+	-- With PegRows = 8, the bottom row has 8 pegs → 9 slots matching the buckets.
 	local origin = Config.PLINKO.ArenaOrigin
 	local rows = Config.PLINKO.PegRows
 	local boardZ = dropOrigin.Position.Z
 	local topY = dropOrigin.Position.Y - 2
-	local spacingX = 2.6
-	local spacingY = 2.4
+	local spacingX = Config.PLINKO.PegSpacingX
+	local spacingY = Config.PLINKO.PegSpacingY
 	for row = 0, rows - 1 do
-		local pegsInRow = 5 + (row % 2)
+		local pegsInRow = row + 1
 		local rowWidth = (pegsInRow - 1) * spacingX
 		local startX = origin.X - rowWidth / 2
 		local y = topY - row * spacingY
@@ -234,17 +171,20 @@ local function ensurePegs()
 			peg.Anchored = true
 			peg.CanCollide = false
 			peg.CanQuery = false
-			peg.Size = Vector3.new(0.7, 0.7, 0.7)
+			peg.Size = Vector3.new(0.65, 0.65, 0.65)
 			peg.Position = Vector3.new(startX + col * spacingX, y, boardZ)
 			peg.Color = Config.COLORS.NeonPurple
 			peg.Material = Enum.Material.Neon
 			peg.Parent = pegsFolder
 		end
 	end
+
+	pegsFolder:SetAttribute("LayoutVersion", layoutVersion)
 end
 
 local function resolveArena(): boolean
 	if spawnPart and dropOrigin and bucketsFolder then
+		ensurePegs()
 		return true
 	end
 
@@ -280,7 +220,6 @@ local function resolveArena(): boolean
 	titleSign = if sign and sign:IsA("BasePart") then sign else nil
 
 	ensurePegs()
-	ensureBucketLabels()
 	ensureTitleSign()
 	return true
 end
@@ -298,11 +237,55 @@ local function rejectDrop(player: Player, reason: string)
 	Remotes.getEvent("PlinkoPointsDropRejected"):FireClient(player, { reason = reason })
 end
 
-local function processDrop(player: Player)
+local function settlePending(player: Player, bucketIndex0: number)
+	local pending = pendingDrops[player]
+	if not pending then
+		return
+	end
+	pendingDrops[player] = nil
+
+	local multipliers = Config.PLINKO.BucketMultipliers
+	local maxIndex = #multipliers - 1
+	local bucketIndex0Clamped = math.clamp(math.floor(bucketIndex0), 0, maxIndex)
+	local multiplier = multipliers[bucketIndex0Clamped + 1] or 0
+	local wager = pending.wager
+	local payout = math.floor(wager * multiplier * Config.PLINKO.PlayerReturnFactor)
+	if payout > 0 then
+		CurrencyService.creditPayout(player, payout, wager, "PlinkoPoints:payout")
+	end
+
+	local netDelta = payout - wager
+	local outcome = settleOutcome(payout, netDelta)
+	local highScore = DataService.setHighScore(player, "PlinkoPoints", payout)
+
+	local payload: PlinkoPointsResultPayload = {
+		dropId = pending.dropId,
+		bucketIndex = bucketIndex0Clamped,
+		multiplier = multiplier,
+		wager = wager,
+		payout = payout,
+		netDelta = netDelta,
+		highScore = highScore,
+		chips = CurrencyService.getChips(player),
+		outcome = outcome,
+	}
+	Remotes.getEvent("PlinkoPointsResult"):FireClient(player, payload)
+end
+
+local function refundPending(player: Player, source: string)
+	local pending = pendingDrops[player]
+	if not pending then
+		return
+	end
+	pendingDrops[player] = nil
+	CurrencyService.creditPayout(player, pending.wager, pending.wager, source)
+end
+
+local function beginDrop(player: Player)
 	if not playersInArena[player] then
 		return
 	end
-	if dropping[player] then
+	if pendingDrops[player] then
 		rejectDrop(player, "Drop already in progress")
 		return
 	end
@@ -321,42 +304,54 @@ local function processDrop(player: Player)
 		return
 	end
 
-	dropping[player] = true
-	lastDropAt[player] = now
-
 	local deducted = CurrencyService.deductChips(player, wager, "PlinkoPoints:wager")
 	if not deducted then
-		dropping[player] = nil
 		rejectDrop(player, "Insufficient chips for this wager")
 		return
 	end
 
-	local bucketIndex = rollBucketIndex()
-	local multiplier = Config.PLINKO.BucketMultipliers[bucketIndex] or 0
-	local payout = math.floor(wager * multiplier * Config.PLINKO.PlayerReturnFactor)
-	if payout > 0 then
-		CurrencyService.creditPayout(player, payout, wager, "PlinkoPoints:payout")
-	end
-
-	local netDelta = payout - wager
-	local outcome = settleOutcome(payout, netDelta)
-	local highScore = DataService.setHighScore(player, "PlinkoPoints", payout)
+	lastDropAt[player] = now
 	local dropId = nextDropId
 	nextDropId += 1
-
-	local payload: PlinkoPointsResultPayload = {
+	pendingDrops[player] = {
 		dropId = dropId,
-		bucketIndex = bucketIndex - 1, -- 0-based for client bucket parts
-		multiplier = multiplier,
 		wager = wager,
-		payout = payout,
-		netDelta = netDelta,
-		highScore = highScore,
-		chips = CurrencyService.getChips(player),
-		outcome = outcome,
+		startedAt = now,
 	}
-	Remotes.getEvent("PlinkoPointsResult"):FireClient(player, payload)
-	dropping[player] = nil
+
+	local startedPayload: PlinkoPointsDropStarted = {
+		dropId = dropId,
+		wager = wager,
+		chips = CurrencyService.getChips(player),
+	}
+	Remotes.getEvent("PlinkoPointsDropStarted"):FireClient(player, startedPayload)
+
+	task.delay(Config.PLINKO.LandReportTimeoutSeconds, function()
+		local pending = pendingDrops[player]
+		if not pending or pending.dropId ~= dropId then
+			return
+		end
+		-- Timed out without a land report: treat as center bust.
+		local center = math.floor((#Config.PLINKO.BucketMultipliers - 1) / 2)
+		settlePending(player, center)
+	end)
+end
+
+local function handleLanded(player: Player, dropId: unknown, bucketIndex: unknown)
+	local pending = pendingDrops[player]
+	if not pending then
+		return
+	end
+	if typeof(dropId) ~= "number" or dropId ~= pending.dropId then
+		return
+	end
+	if typeof(bucketIndex) ~= "number" then
+		return
+	end
+	if not playersInArena[player] then
+		return
+	end
+	settlePending(player, bucketIndex)
 end
 
 --[=[
@@ -400,7 +395,7 @@ function PlinkoPoints.leave(player: Player)
 		return
 	end
 	playersInArena[player] = nil
-	dropping[player] = nil
+	refundPending(player, "PlinkoPoints:leave_refund")
 
 	local janitor = playerJanitors[player]
 	if janitor then
@@ -422,14 +417,13 @@ function PlinkoPoints.isPlaying(player: Player): boolean
 end
 
 --[=[
-	Resolve the arena, bind remotes, and prepare pegs / bucket labels.
+	Resolve the arena, bind remotes, and prepare pegs.
 ]=]
 function PlinkoPoints.start()
 	if started then
 		return
 	end
 	started = true
-	refreshWeightTotal()
 
 	if not resolveArena() then
 		return
@@ -449,8 +443,13 @@ function PlinkoPoints.start()
 	end)
 
 	Remotes.getEvent("PlinkoPointsDrop").OnServerEvent:Connect(function(player: Player)
-		processDrop(player)
+		beginDrop(player)
 	end)
+
+	Remotes.getEvent("PlinkoPointsLanded").OnServerEvent
+		:Connect(function(player: Player, dropId: unknown, bucketIndex: unknown)
+			handleLanded(player, dropId, bucketIndex)
+		end)
 
 	Remotes.getEvent("PlinkoPointsLeave").OnServerEvent:Connect(function(player: Player)
 		PlinkoPoints.leave(player)
@@ -460,7 +459,8 @@ function PlinkoPoints.start()
 		playersInArena[player] = nil
 		loadouts[player] = nil
 		lastDropAt[player] = nil
-		dropping[player] = nil
+		-- Disconnect mid-drop: stake already taken; do not refund.
+		pendingDrops[player] = nil
 		local janitor = playerJanitors[player]
 		if janitor then
 			janitor:Destroy()

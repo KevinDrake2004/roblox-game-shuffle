@@ -26,6 +26,8 @@
 	| `PlinkoPointsSetWager` | C→S | Set chips wagered per ball drop |
 	| `PlinkoPointsJoined` | S→C | Arena enter snapshot (`PlinkoPointsJoined`) |
 	| `PlinkoPointsDrop` | C→S | Request a ball drop at the current wager |
+	| `PlinkoPointsDropStarted` | S→C | Wager accepted; client starts free physics (`PlinkoPointsDropStarted`) |
+	| `PlinkoPointsLanded` | C→S | Report which bucket the local sim landed in |
 	| `PlinkoPointsResult` | S→C | Per-drop settle (`PlinkoPointsResultPayload`) |
 	| `PlinkoPointsDropRejected` | S→C | Drop blocked (`{ reason: string }`) |
 	| `PlinkoPointsLeave` | C→S | Leave arena |
@@ -54,6 +56,8 @@ export type EventName =
 	| "PlinkoPointsSetWager"
 	| "PlinkoPointsJoined"
 	| "PlinkoPointsDrop"
+	| "PlinkoPointsDropStarted"
+	| "PlinkoPointsLanded"
 	| "PlinkoPointsResult"
 	| "PlinkoPointsDropRejected"
 	| "PlinkoPointsLeave"
@@ -80,6 +84,8 @@ local EVENT_NAMES: { EventName } = {
 	"PlinkoPointsSetWager",
 	"PlinkoPointsJoined",
 	"PlinkoPointsDrop",
+	"PlinkoPointsDropStarted",
+	"PlinkoPointsLanded",
 	"PlinkoPointsResult",
 	"PlinkoPointsDropRejected",
 	"PlinkoPointsLeave",
