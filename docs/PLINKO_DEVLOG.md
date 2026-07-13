@@ -11,7 +11,7 @@ Session notes for `feature/plinko-dev`. Flaws and successes as we iterate.
 - Multiplier labels and balls are local-only (not visible from lobby / to other players).
 - Peg board rebuilt as a Galton layout (row `r` has `r+1` pegs → 9 slots).
 - Multipliers retuned so `E[mult]` under binomial weights is **exactly 105%**; removed Plinko `PlayerReturnFactor` (RTP is the curve × multipliers only).
-- Bounce feel: removed forced-down clamp and heavy drag; elastic peg reflection + substeps so hits change direction naturally.
+- Bounce feel: soft peg deflects (low restitution + side/up damp) so hits read, but the ball keeps falling instead of pinballing to the rails.
 
 ### Flaws / follow-ups
 

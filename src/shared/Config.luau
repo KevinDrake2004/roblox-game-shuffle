@@ -123,6 +123,7 @@ Config.ROCKET_RUN = {
 	- `TargetRTP` - design aim only (~1.05); achieved by tuning multipliers vs the land curve
 	- `DropCooldownSeconds` - minimum delay between drops per player
 	- `BallRadius` / `BallGravity` / `BallBounce` - client gravity sim feel
+	- `BallPegSideDamp` / `BallPegUpDamp` - after peg hit, tame sideways fling / upward pop
 	- `BallMaxSimSeconds` / `BallPegHitCooldown` / `BallHorizontalDrag` / `BallStartSpeedX` / `BallMaxSpeed` / `BallSubsteps` - Galton sim feel
 	- `PegRows` / `PegSpacingX` / `PegSpacingY` / `PegLayoutVersion` - Galton board layout
 	- Arena / camera fields drive world presentation only (east of Rocket Run)
@@ -153,15 +154,18 @@ Config.PLINKO = {
 	PegSpacingY = 2.35,
 	PegLayoutVersion = 2,
 	-- Client gravity sim (free path; Galton pegs create center-biased lands)
+	-- Bounce is intentionally low: soft L/R deflects, mostly continues falling (not pinball).
 	BallRadius = 0.5,
-	BallGravity = 48,
-	BallBounce = 0.72,
+	BallGravity = 52,
+	BallBounce = 0.38,
 	BallMaxSimSeconds = 8,
-	BallPegHitCooldown = 0.05,
-	BallHorizontalDrag = 0.35,
-	BallStartSpeedX = 1.5,
-	BallMaxSpeed = 42,
+	BallPegHitCooldown = 0.06,
+	BallHorizontalDrag = 0.85,
+	BallStartSpeedX = 1.0,
+	BallMaxSpeed = 36,
 	BallSubsteps = 3,
+	BallPegSideDamp = 0.55,
+	BallPegUpDamp = 0.2,
 	LandReportTimeoutSeconds = 9,
 }
 

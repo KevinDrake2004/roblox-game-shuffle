@@ -361,16 +361,25 @@ function PlinkoBallPhysics.drop(onLanded: (bucketIndex: number) -> ()): SimHandl
 
 				local approaching = stepVel:Dot(normal)
 				if approaching < 0 then
-					-- Reflect the approach component; keep tangential slide.
+					-- Soft reflect: keep impact direction, but Plinko should fall through, not pinball.
 					local reflected = stepVel - normal * ((1 + cfg.BallBounce) * approaching)
-					-- Tiny tangential noise only - impact direction still dominates.
 					local tangent = Vector3.new(-normal.Y, normal.X, 0)
-					local jitter = tangent * rng:NextNumber(-0.8, 0.8)
-					stepVel = reflected + jitter
+					local jitter = tangent * rng:NextNumber(-0.35, 0.35)
+					reflected = reflected + jitter
+					-- Kill most upward pop so the first hit does not fling to a rail.
+					if reflected.Y > 0 then
+						reflected = Vector3.new(reflected.X, reflected.Y * cfg.BallPegUpDamp, 0)
+					end
+					-- Tame sideways speed from the bounce itself.
+					reflected = Vector3.new(reflected.X * cfg.BallPegSideDamp, reflected.Y, 0)
+					-- Always keep a bit of downward progress after contact.
+					if reflected.Y > -3 then
+						reflected = Vector3.new(reflected.X, math.min(reflected.Y, -3), 0)
+					end
+					stepVel = reflected
 					peg.lastHit = now
 					flashPeg(peg.part)
 				elseif dist < minDist * 0.98 then
-					-- Still overlapping while moving away: push out without rewriting velocity.
 					peg.lastHit = now
 				end
 			end
