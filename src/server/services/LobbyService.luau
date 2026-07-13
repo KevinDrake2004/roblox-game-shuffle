@@ -20,6 +20,7 @@ local Janitor = require(Packages.Janitor)
 local Config = require(Shared.Config)
 local Remotes = require(Shared.Remotes)
 local Types = require(Shared.Types)
+local CasinoChairs = require(script.Parent.CasinoChairs)
 
 type GameId = Types.GameId
 type PortalResultPayload = Types.PortalResultPayload
@@ -176,34 +177,55 @@ local function dressFeltLayout(layout: BasePart)
 	gui.Name = "FeltGui"
 	gui.Face = Enum.NormalId.Top
 	gui.SizingMode = Enum.SurfaceGuiSizingMode.PixelsPerStud
-	gui.PixelsPerStud = 40
+	gui.PixelsPerStud = 48
 	gui.Parent = layout
 
-	local grid = Instance.new("Frame")
-	grid.Name = "Grid"
-	grid.BackgroundTransparency = 1
-	grid.Size = UDim2.fromScale(1, 1)
-	grid.Parent = gui
+	local root = Instance.new("Frame")
+	root.Name = "Grid"
+	root.BackgroundColor3 = Color3.fromRGB(12, 90, 48)
+	root.BackgroundTransparency = 0.35
+	root.BorderSizePixel = 0
+	root.Size = UDim2.fromScale(1, 1)
+	root.Parent = gui
+
+	local pad = Instance.new("UIPadding")
+	pad.PaddingTop = UDim.new(0.04, 0)
+	pad.PaddingBottom = UDim.new(0.04, 0)
+	pad.PaddingLeft = UDim.new(0.04, 0)
+	pad.PaddingRight = UDim.new(0.04, 0)
+	pad.Parent = root
 
 	local layoutGrid = Instance.new("UIGridLayout")
-	layoutGrid.CellPadding = UDim2.fromOffset(2, 2)
-	layoutGrid.CellSize = UDim2.fromScale(0.32, 0.08)
+	layoutGrid.CellPadding = UDim2.fromOffset(3, 3)
+	layoutGrid.CellSize = UDim2.fromScale(0.3, 0.1)
 	layoutGrid.FillDirectionMaxCells = 3
 	layoutGrid.SortOrder = Enum.SortOrder.LayoutOrder
-	layoutGrid.Parent = grid
+	layoutGrid.Parent = root
 
-	local red = Color3.fromRGB(180, 30, 40)
-	local black = Color3.fromRGB(20, 20, 24)
-	for n = 1, 24 do
+	local red = Color3.fromRGB(190, 28, 38)
+	local black = Color3.fromRGB(18, 18, 22)
+	local greenZero = Color3.fromRGB(20, 140, 70)
+	for n = 0, 23 do
 		local cell = Instance.new("TextLabel")
-		cell.BackgroundColor3 = if n % 2 == 0 then black else red
-		cell.BackgroundTransparency = 0.15
+		if n == 0 then
+			cell.BackgroundColor3 = greenZero
+			cell.Text = "0"
+		else
+			cell.BackgroundColor3 = if n % 2 == 0 then black else red
+			cell.Text = tostring(n)
+		end
+		cell.BackgroundTransparency = 0.05
 		cell.BorderSizePixel = 0
 		cell.Font = Enum.Font.GothamBold
-		cell.Text = tostring(n)
 		cell.TextColor3 = Config.COLORS.Text
 		cell.TextScaled = true
-		cell.Parent = grid
+		cell.Parent = root
+
+		local stroke = Instance.new("UIStroke")
+		stroke.Color = Color3.fromRGB(235, 200, 90)
+		stroke.Thickness = 1
+		stroke.Transparency = 0.35
+		stroke.Parent = cell
 	end
 end
 
@@ -215,17 +237,88 @@ local function dressBetSpot(spot: BasePart, index: number)
 	gui.Name = "BetGui"
 	gui.Face = Enum.NormalId.Top
 	gui.SizingMode = Enum.SurfaceGuiSizingMode.PixelsPerStud
-	gui.PixelsPerStud = 50
+	gui.PixelsPerStud = 55
 	gui.Parent = spot
+
+	local label = Instance.new("TextLabel")
+	label.BackgroundColor3 = Color3.fromRGB(10, 70, 40)
+	label.BackgroundTransparency = 0.25
+	label.BorderSizePixel = 0
+	label.Size = UDim2.fromScale(1, 1)
+	label.Font = Enum.Font.GothamBold
+	label.Text = tostring(index)
+	label.TextColor3 = Config.COLORS.NeonGold
+	label.TextScaled = true
+	label.TextStrokeTransparency = 0.4
+	label.Parent = gui
+
+	local stroke = Instance.new("UIStroke")
+	stroke.Color = Config.COLORS.NeonGold
+	stroke.Thickness = 2
+	stroke.Transparency = 0.2
+	stroke.Parent = label
+end
+
+local function dressPokerFelt(felt: BasePart)
+	if felt:FindFirstChild("PokerGui") then
+		return
+	end
+	local gui = Instance.new("SurfaceGui")
+	gui.Name = "PokerGui"
+	gui.Face = Enum.NormalId.Top
+	gui.SizingMode = Enum.SurfaceGuiSizingMode.PixelsPerStud
+	gui.PixelsPerStud = 40
+	gui.Parent = felt
+
+	local oval = Instance.new("Frame")
+	oval.AnchorPoint = Vector2.new(0.5, 0.5)
+	oval.Position = UDim2.fromScale(0.5, 0.5)
+	oval.Size = UDim2.fromScale(0.72, 0.55)
+	oval.BackgroundColor3 = Color3.fromRGB(8, 70, 40)
+	oval.BackgroundTransparency = 0.2
+	oval.BorderSizePixel = 0
+	oval.Parent = gui
+
+	local corner = Instance.new("UICorner")
+	corner.CornerRadius = UDim.new(0.5, 0)
+	corner.Parent = oval
+
+	local stroke = Instance.new("UIStroke")
+	stroke.Color = Color3.fromRGB(235, 200, 90)
+	stroke.Thickness = 3
+	stroke.Transparency = 0.25
+	stroke.Parent = oval
+
+	local pot = Instance.new("TextLabel")
+	pot.BackgroundTransparency = 1
+	pot.Size = UDim2.fromScale(1, 1)
+	pot.Font = Enum.Font.GothamBold
+	pot.Text = "POT"
+	pot.TextColor3 = Config.COLORS.NeonGold
+	pot.TextScaled = true
+	pot.TextStrokeTransparency = 0.5
+	pot.Parent = oval
+end
+
+local function dressDealerPad(pad: BasePart)
+	if pad:FindFirstChild("DealerGui") then
+		return
+	end
+	local gui = Instance.new("SurfaceGui")
+	gui.Name = "DealerGui"
+	gui.Face = Enum.NormalId.Top
+	gui.SizingMode = Enum.SurfaceGuiSizingMode.PixelsPerStud
+	gui.PixelsPerStud = 40
+	gui.Parent = pad
 
 	local label = Instance.new("TextLabel")
 	label.BackgroundTransparency = 1
 	label.Size = UDim2.fromScale(1, 1)
 	label.Font = Enum.Font.GothamBold
-	label.Text = `BET {index}`
+	label.Text = "DEALER"
 	label.TextColor3 = Config.COLORS.NeonGold
 	label.TextScaled = true
-	label.TextStrokeTransparency = 0.5
+	label.TextStrokeTransparency = 0.45
 	label.Parent = gui
 end
 
@@ -247,14 +340,23 @@ local function dressCasinoTables()
 		if not tableFolder:IsA("Folder") then
 			continue
 		end
+		local tableType = tableFolder:GetAttribute("TableType")
 		local layout = tableFolder:FindFirstChild("FeltLayout")
 		if layout and layout:IsA("BasePart") then
 			dressFeltLayout(layout)
 		end
+		local felt = tableFolder:FindFirstChild("Felt")
+		if felt and felt:IsA("BasePart") and tableType == "Poker" then
+			dressPokerFelt(felt)
+		end
+		local dealerPad = tableFolder:FindFirstChild("DealerPad")
+		if dealerPad and dealerPad:IsA("BasePart") then
+			dressDealerPad(dealerPad)
+		end
 		for _, child in tableFolder:GetChildren() do
 			if child:IsA("BasePart") and string.sub(child.Name, 1, 8) == "BetSpot_" then
 				local index = tonumber(string.sub(child.Name, 9)) or 1
-				dressBetSpot(child, index)
+				dressBetSpot(child, index + 1)
 			end
 		end
 	end
@@ -376,6 +478,12 @@ function LobbyService.start()
 	applyLighting()
 	ensurePortalLabels()
 	dressCasinoTables()
+
+	local lobby = Workspace:FindFirstChild(LOBBY_NAME)
+	if lobby then
+		CasinoChairs.place(lobby)
+	end
+
 	bindPortalPrompts()
 
 	janitor:Add(Players.PlayerAdded:Connect(bindPlayerMovement), "Disconnect")
