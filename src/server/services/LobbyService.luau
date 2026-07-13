@@ -35,7 +35,7 @@ local function applyLighting()
 	Lighting.Ambient = lobby.Ambient
 	Lighting.OutdoorAmbient = lobby.OutdoorAmbient
 	Lighting.FogColor = lobby.FogColor
-	Lighting.FogStart = 200
+	Lighting.FogStart = 120
 	Lighting.FogEnd = lobby.FogEnd
 	Lighting.GlobalShadows = true
 	Lighting.EnvironmentDiffuseScale = 1
@@ -44,14 +44,26 @@ local function applyLighting()
 
 	local atmosphere = Lighting:FindFirstChild("ShuffleAtmosphere")
 	if atmosphere and atmosphere:IsA("Atmosphere") then
-		atmosphere.Density = 0.04
-		atmosphere.Haze = 0.15
+		atmosphere.Density = 0.08
+		atmosphere.Haze = 0.35
+		atmosphere.Color = Color3.fromRGB(90, 70, 140)
+		atmosphere.Decay = Color3.fromRGB(55, 35, 90)
+		atmosphere.Glare = 0.18
 	end
 
 	local colorCorrection = Lighting:FindFirstChild("ShuffleColorCorrection")
 	if colorCorrection and colorCorrection:IsA("ColorCorrectionEffect") then
-		colorCorrection.Brightness = 0.08
-		colorCorrection.Contrast = 0.02
+		colorCorrection.Brightness = 0.02
+		colorCorrection.Contrast = 0.08
+		colorCorrection.Saturation = 0.12
+		colorCorrection.TintColor = Color3.fromRGB(245, 235, 255)
+	end
+
+	local bloom = Lighting:FindFirstChild("ShuffleBloom")
+	if bloom and bloom:IsA("BloomEffect") then
+		bloom.Intensity = 0.55
+		bloom.Size = 18
+		bloom.Threshold = 0.75
 	end
 end
 

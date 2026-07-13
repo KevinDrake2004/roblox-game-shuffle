@@ -41,51 +41,51 @@
     },
     "Lighting": {
       "$properties": {
-        "Ambient": [0.5, 0.46, 0.59],
-        "OutdoorAmbient": [0.41, 0.39, 0.49],
-        "Brightness": 3.0,
-        "ClockTime": 15.0,
-        "FogColor": [0.37, 0.35, 0.47],
-        "FogStart": 200.0,
-        "FogEnd": 600.0,
+        "Ambient": [0.28, 0.23, 0.43],
+        "OutdoorAmbient": [0.19, 0.16, 0.31],
+        "Brightness": 1.6,
+        "ClockTime": 22.0,
+        "FogColor": [0.165, 0.11, 0.282],
+        "FogStart": 120.0,
+        "FogEnd": 420.0,
         "EnvironmentDiffuseScale": 1.0,
-        "EnvironmentSpecularScale": 0.8,
+        "EnvironmentSpecularScale": 0.85,
         "GlobalShadows": true,
-        "ExposureCompensation": 0.25
+        "ExposureCompensation": 0.15
       },
       "ShuffleBloom": {
         "$className": "BloomEffect",
         "$properties": {
-          "Intensity": 0.35,
-          "Size": 12.0,
-          "Threshold": 0.9
+          "Intensity": 0.55,
+          "Size": 18.0,
+          "Threshold": 0.75
         }
       },
       "ShuffleColorCorrection": {
         "$className": "ColorCorrectionEffect",
         "$properties": {
-          "Brightness": 0.08,
-          "Contrast": 0.02,
-          "Saturation": 0.08,
-          "TintColor": [1.0, 0.98, 1.0]
+          "Brightness": 0.02,
+          "Contrast": 0.08,
+          "Saturation": 0.12,
+          "TintColor": [0.96, 0.92, 1.0]
         }
       },
       "ShuffleAtmosphere": {
         "$className": "Atmosphere",
         "$properties": {
-          "Density": 0.04,
-          "Offset": 0.0,
-          "Color": [0.65, 0.61, 0.78],
-          "Decay": [0.45, 0.4, 0.55],
-          "Glare": 0.1,
-          "Haze": 0.15
+          "Density": 0.08,
+          "Offset": 0.05,
+          "Color": [0.35, 0.27, 0.55],
+          "Decay": [0.22, 0.14, 0.35],
+          "Glare": 0.18,
+          "Haze": 0.35
         }
       },
       "ShuffleSky": {
         "$className": "Sky",
         "$properties": {
           "CelestialBodiesShown": true,
-          "StarCount": 2000,
+          "StarCount": 3000,
           "MoonAngularSize": 11.0,
           "SunAngularSize": 12.0
         }

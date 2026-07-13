@@ -5,8 +5,8 @@ Roblox arcade hub inspired by [Shuffle.com](https://shuffle.com). Soft currency 
 ## Economy (current)
 
 - Players **wager chips** to play; losing rounds deduct the stake. Wins credit a payout (stake already removed).
-- **RTP > 100%** per game (e.g. Rocket Run `TargetRTP = 1.05`) so long-term play is rewarding; short-term busts still hurt.
-- Server validates balance, RNG, and settlement. See [`docs/ROCKET_RUN.md`](docs/ROCKET_RUN.md).
+- **RTP > 100%** per game (e.g. Rocket Run / Mines `TargetRTP = 1.05`, Plinko risk tiers) so long-term play is rewarding; short-term busts still hurt.
+- Server validates balance, RNG, and settlement. See [`docs/ROCKET_RUN.md`](docs/ROCKET_RUN.md), [`docs/PLINKO.md`](docs/PLINKO.md), [`docs/MINES.md`](docs/MINES.md).
 - Daily earn cap: `Config.DAILY_EARN_CAP` applies to earn-only `awardChips` (jobs). Wager payouts are not clipped by the cap.
 - Timing job (`JobService`) remains an earn-only chip source.
 
@@ -15,8 +15,8 @@ Roblox arcade hub inspired by [Shuffle.com](https://shuffle.com). Soft currency 
 | Shuffle Original | Roblox Name | Status / notes |
 |------------------|-------------|----------------|
 | Crash | **Rocket Run** | **Shipped (wager + RTP).** Shared server rocket; wager deduct on eligibility; cash-out / crash settle. See `docs/ROCKET_RUN.md`. |
-| Plinko | **Plinko Points** | **MVP complete.** Risk tiers, multi-ball, settle, local physics; see `docs/PLINKO.md`. |
-| Mines | **Mine Sweeper Arcade** | Portal stub / coming soon |
+| Plinko | **Plinko Points** | **Shipped (MVP).** Risk tiers, multi-ball, settle, local physics; see `docs/PLINKO.md`. |
+| Mines | **Mine Sweeper Arcade** | **Shipped (MVP).** 5×5 grid, wager + cash-out, RTP > 100%; see `docs/MINES.md`. |
 | Dice | **Dice Duel** | Unbuilt |
 | Wheel | **Prize Wheel** | Unbuilt |
 | Limbo | **Limbo Jump** | Unbuilt |
@@ -26,15 +26,20 @@ Roblox arcade hub inspired by [Shuffle.com](https://shuffle.com). Soft currency 
 
 ### Done
 
-- Dev environment, lobby, services, Rocket Run (shared rounds, wager loadout, telemetry, camera views)
-- Plinko Points (isolated arena, per-drop wager, weighted buckets, RTP > 100%)
+- Dev environment, lobby services, currency deduct / credit payout APIs
+- Rocket Run (shared rounds, wager loadout, telemetry, camera views)
+- Plinko Points (isolated arena, per-drop wager, risk tiers, RTP)
+- Mine Sweeper Arcade (isolated arena, reveal / cash-out, RTP)
 - Skill timing job for chip earn
-- Currency deduct / credit payout APIs for wager games
+
+### In progress
+
+- **Casino shell** - unified hub visuals, portal polish, lighting (`feature/casino-shell`). See [`docs/CASINO.md`](docs/CASINO.md). Arenas stay at current world positions; portals remain server-wired via `LobbyService`.
 
 ### Next
 
-- Mines (wager + RTP patterns)
-- Leaderboards / hub polish
+- Casino shell phase 2 (optional corridors / arena relocation)
+- Leaderboards / further hub polish
 - Optional chip sinks (cosmetics, VIP) to offset RTP inflation
 
 ### Later
@@ -43,10 +48,12 @@ Roblox arcade hub inspired by [Shuffle.com](https://shuffle.com). Soft currency 
 
 ## Architecture
 
-Each live game validates client requests on the server. Rocket Run settlement:
+Each live game validates client requests on the server. Typical wager settlement:
 
-`eligible` (wager deducted) → cash-out → `creditPayout(floor(wager * multiplier * PlayerReturnFactor))`  
-or crash → `netDelta = -wager` (no refund).
+`eligible` / stake deducted → cash-out → `creditPayout(...)`  
+or bust / crash / mine → stake kept by the round (`netDelta` negative).
+
+Hub entry: spawn in `Workspace.Lobby` → portal ProximityPrompt → game `join`. Leave returns to `Config.LOBBY.SpawnPosition`.
 
 ## Monetization
 

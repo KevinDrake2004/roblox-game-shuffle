@@ -36,15 +36,15 @@ Config.COLORS = {
 }
 
 Config.LOBBY = {
-	FloorSize = Vector3.new(80, 1, 80),
+	FloorSize = Vector3.new(96, 1, 96),
 	SpawnPosition = Vector3.new(0, 3, 20),
-	Ambient = Color3.fromRGB(128, 118, 150),
-	OutdoorAmbient = Color3.fromRGB(105, 100, 125),
-	FogColor = Color3.fromRGB(95, 90, 120),
-	FogEnd = 600,
-	ClockTime = 15,
-	Brightness = 3,
-	ExposureCompensation = 0.25,
+	Ambient = Color3.fromRGB(72, 58, 110),
+	OutdoorAmbient = Color3.fromRGB(48, 40, 78),
+	FogColor = Color3.fromRGB(42, 28, 72),
+	FogEnd = 420,
+	ClockTime = 22,
+	Brightness = 1.6,
+	ExposureCompensation = 0.15,
 }
 
 local portals: { PortalConfig } = {
