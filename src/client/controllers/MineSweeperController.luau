@@ -293,13 +293,20 @@ local function requestReveal(tileIndex: number)
 	Remotes.getEvent("MineSweeperReveal"):FireServer(currentRoundId, tileIndex)
 end
 
-local function raycastTileIndex(screenPos: Vector2): number?
+local function getMouseViewportPoint(): Vector2
+	-- GetMouseLocation is screen space (includes top-bar inset).
+	-- ViewportPointToRay expects viewport pixels (inset removed).
+	local mouse = UserInputService:GetMouseLocation()
+	local inset = GuiService:GetGuiInset()
+	return Vector2.new(mouse.X - inset.X, mouse.Y - inset.Y)
+end
+
+local function raycastTileIndex(viewportPos: Vector2): number?
 	local camera = Workspace.CurrentCamera
 	if not camera then
 		return nil
 	end
-	-- ScreenPointToRay matches GetMouseLocation (includes Gui inset).
-	local ray = camera:ScreenPointToRay(screenPos.X, screenPos.Y)
+	local ray = camera:ViewportPointToRay(viewportPos.X, viewportPos.Y)
 	local params = RaycastParams.new()
 	params.FilterType = Enum.RaycastFilterType.Include
 	local tiles = getTilesFolder()
@@ -322,13 +329,13 @@ local function raycastTileIndex(screenPos: Vector2): number?
 	return nil
 end
 
-local function mouseOverInteractiveGui(screenPos: Vector2): boolean
-	local inset = GuiService:GetGuiInset()
+local function mouseOverInteractiveGui(viewportPos: Vector2): boolean
 	local playerGui = Players.LocalPlayer:FindFirstChildOfClass("PlayerGui")
 	if not playerGui then
 		return false
 	end
-	local objects = playerGui:GetGuiObjectsAtPosition(screenPos.X - inset.X, screenPos.Y - inset.Y)
+	-- GetGuiObjectsAtPosition uses the same viewport space as ViewportPointToRay.
+	local objects = playerGui:GetGuiObjectsAtPosition(viewportPos.X, viewportPos.Y)
 	for _, obj in objects do
 		if obj:IsA("GuiButton") or obj:IsA("TextBox") then
 			return true
@@ -345,11 +352,12 @@ local function bindTileInput()
 			setHoveredTile(nil)
 			return
 		end
-		if mouseOverInteractiveGui(UserInputService:GetMouseLocation()) then
+		local viewport = getMouseViewportPoint()
+		if mouseOverInteractiveGui(viewport) then
 			setHoveredTile(nil)
 			return
 		end
-		local tileIndex = raycastTileIndex(UserInputService:GetMouseLocation())
+		local tileIndex = raycastTileIndex(viewport)
 		if tileIndex ~= nil and revealedTiles[tileIndex] then
 			setHoveredTile(nil)
 			return
@@ -368,11 +376,11 @@ local function bindTileInput()
 		then
 			return
 		end
-		local mouse = UserInputService:GetMouseLocation()
-		if mouseOverInteractiveGui(mouse) then
+		local viewport = getMouseViewportPoint()
+		if mouseOverInteractiveGui(viewport) then
 			return
 		end
-		local tileIndex = raycastTileIndex(mouse)
+		local tileIndex = raycastTileIndex(viewport)
 		if tileIndex ~= nil and not revealedTiles[tileIndex] then
 			requestReveal(tileIndex)
 		end
