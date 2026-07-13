@@ -36,9 +36,11 @@ def find(node: dict, name: str):
 
 
 def rot(cx: float, cz: float, lx: float, lz: float, yaw_deg: float):
+    # Match Roblox Orientation (0, yaw, 0): local +X -> (cos, 0, -sin),
+    # local +Z -> (sin, 0, cos). Must agree with CFrame math used for chairs.
     t = math.radians(yaw_deg)
     c, s = math.cos(t), math.sin(t)
-    return (cx + lx * c - lz * s, cz + lx * s + lz * c)
+    return (cx + lx * c + lz * s, cz - lx * s + lz * c)
 
 
 def part(name, size, pos, color, *, material="SmoothPlastic", orientation=None, shape=None, can_collide=True):

@@ -144,13 +144,16 @@ end
 
 local function placeRoulette(chairsFolder: Folder, tableFolder: Instance)
 	-- Rectangular table: long axis = local X, wheel at -X end, betting layout on +X.
-	-- Players sit along the two long sides over the layout; dealer at the wheel end.
+	-- Players line both long sides over the layout, one at the open (+X) end, and
+	-- the croupier at the wheel (-X) end. Seats tuck close so the table fills out.
 	local _, tableCF, size = tableCenter(tableFolder)
-	local seatLocalZ = size.Z / 2 + TABLE_CLEAR + SEAT_HALF
+	local seatLocalZ = size.Z / 2 + 1.05
+	local seatLocalX = size.X / 2 + 1.05
 	local inward = tableCF.LookVector -- local -Z
 	local right = tableCF.RightVector -- local +X
 
-	local seatXs = { 0.0, 2.7, 5.4 }
+	-- Spread three seats per side across the betting layout (+X half).
+	local seatXs = { 0.4, 3.2, 6.0 }
 	for i, ox in seatXs do
 		local nWorld = (tableCF * CFrame.new(ox, 0, seatLocalZ)).Position
 		buildChair(
@@ -168,7 +171,16 @@ local function placeRoulette(chairsFolder: Folder, tableFolder: Instance)
 		)
 	end
 
-	local seatLocalX = size.X / 2 + TABLE_CLEAR + SEAT_HALF
+	-- Seat at the open end (opposite the wheel), facing the layout.
+	local endWorld = (tableCF * CFrame.new(seatLocalX, 0, 0)).Position
+	buildChair(
+		chairsFolder,
+		`Roulette_{tableFolder.Name}_End`,
+		seatCFrameDirection(Vector3.new(endWorld.X, SEAT_Y, endWorld.Z), -right),
+		false
+	)
+
+	-- Croupier at the wheel end.
 	local dealerWorld = (tableCF * CFrame.new(-seatLocalX, 0, 0)).Position
 	buildChair(
 		chairsFolder,
