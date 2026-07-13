@@ -169,6 +169,54 @@ local function ensurePortalLabels()
 	end
 end
 
+local ROULETTE_RED: { [number]: boolean } = {}
+for _, n in { 1, 3, 5, 7, 9, 12, 14, 16, 18, 19, 21, 23, 25, 27, 30, 32, 34, 36 } do
+	ROULETTE_RED[n] = true
+end
+
+local FELT_GREEN = Color3.fromRGB(12, 90, 48)
+local NUMBER_RED = Color3.fromRGB(190, 28, 38)
+local NUMBER_BLACK = Color3.fromRGB(18, 18, 22)
+local ZERO_GREEN = Color3.fromRGB(20, 140, 70)
+local GOLD_LINE = Color3.fromRGB(235, 200, 90)
+
+local function styleCell(cell: GuiObject, thickness: number)
+	cell.BorderSizePixel = 0
+	local stroke = Instance.new("UIStroke")
+	stroke.Color = GOLD_LINE
+	stroke.Thickness = thickness
+	stroke.Transparency = 0.3
+	stroke.Parent = cell
+end
+
+local function numberCell(n: number, order: number): TextLabel
+	local cell = Instance.new("TextLabel")
+	cell.LayoutOrder = order
+	cell.BackgroundColor3 = if ROULETTE_RED[n] then NUMBER_RED else NUMBER_BLACK
+	cell.BackgroundTransparency = 0.05
+	cell.Font = Enum.Font.GothamBold
+	cell.Text = tostring(n)
+	cell.TextColor3 = Config.COLORS.Text
+	cell.TextScaled = true
+	styleCell(cell, 1)
+	return cell
+end
+
+local function outsideCell(text: string, order: number, color: Color3?): TextLabel
+	local cell = Instance.new("TextLabel")
+	cell.LayoutOrder = order
+	cell.BackgroundColor3 = color or FELT_GREEN
+	cell.BackgroundTransparency = if color then 0.05 else 0.3
+	cell.Font = Enum.Font.GothamBold
+	cell.Text = text
+	cell.TextColor3 = Config.COLORS.Text
+	cell.TextScaled = true
+	styleCell(cell, 1)
+	return cell
+end
+
+-- Real European single-zero betting layout: green 0 at the wheel end, a 3x12
+-- number grid across the felt, and outside bets (dozens + colours) below.
 local function dressFeltLayout(layout: BasePart)
 	if layout:FindFirstChild("FeltGui") then
 		return
@@ -177,56 +225,109 @@ local function dressFeltLayout(layout: BasePart)
 	gui.Name = "FeltGui"
 	gui.Face = Enum.NormalId.Top
 	gui.SizingMode = Enum.SurfaceGuiSizingMode.PixelsPerStud
-	gui.PixelsPerStud = 48
+	gui.PixelsPerStud = 64
 	gui.Parent = layout
 
 	local root = Instance.new("Frame")
-	root.Name = "Grid"
-	root.BackgroundColor3 = Color3.fromRGB(12, 90, 48)
-	root.BackgroundTransparency = 0.35
+	root.Name = "Layout"
+	root.BackgroundColor3 = FELT_GREEN
+	root.BackgroundTransparency = 0.25
 	root.BorderSizePixel = 0
 	root.Size = UDim2.fromScale(1, 1)
 	root.Parent = gui
 
 	local pad = Instance.new("UIPadding")
-	pad.PaddingTop = UDim.new(0.04, 0)
-	pad.PaddingBottom = UDim.new(0.04, 0)
-	pad.PaddingLeft = UDim.new(0.04, 0)
-	pad.PaddingRight = UDim.new(0.04, 0)
+	pad.PaddingTop = UDim.new(0.03, 0)
+	pad.PaddingBottom = UDim.new(0.03, 0)
+	pad.PaddingLeft = UDim.new(0.02, 0)
+	pad.PaddingRight = UDim.new(0.02, 0)
 	pad.Parent = root
 
-	local layoutGrid = Instance.new("UIGridLayout")
-	layoutGrid.CellPadding = UDim2.fromOffset(3, 3)
-	layoutGrid.CellSize = UDim2.fromScale(0.3, 0.1)
-	layoutGrid.FillDirectionMaxCells = 3
-	layoutGrid.SortOrder = Enum.SortOrder.LayoutOrder
-	layoutGrid.Parent = root
+	-- Top: zero + number grid. Bottom: outside bets.
+	local topRow = Instance.new("Frame")
+	topRow.Name = "Numbers"
+	topRow.BackgroundTransparency = 1
+	topRow.Size = UDim2.fromScale(1, 0.7)
+	topRow.Parent = root
 
-	local red = Color3.fromRGB(190, 28, 38)
-	local black = Color3.fromRGB(18, 18, 22)
-	local greenZero = Color3.fromRGB(20, 140, 70)
-	for n = 0, 23 do
-		local cell = Instance.new("TextLabel")
-		if n == 0 then
-			cell.BackgroundColor3 = greenZero
-			cell.Text = "0"
-		else
-			cell.BackgroundColor3 = if n % 2 == 0 then black else red
-			cell.Text = tostring(n)
+	local zero = Instance.new("TextLabel")
+	zero.BackgroundColor3 = ZERO_GREEN
+	zero.BackgroundTransparency = 0.05
+	zero.Font = Enum.Font.GothamBold
+	zero.Text = "0"
+	zero.TextColor3 = Config.COLORS.Text
+	zero.TextScaled = true
+	zero.Size = UDim2.new(0.075, -2, 1, 0)
+	zero.Position = UDim2.fromScale(0, 0)
+	styleCell(zero, 1.5)
+	zero.Parent = topRow
+
+	local grid = Instance.new("Frame")
+	grid.Name = "Grid"
+	grid.BackgroundTransparency = 1
+	grid.Size = UDim2.new(0.925, 0, 1, 0)
+	grid.Position = UDim2.fromScale(0.075, 0)
+	grid.Parent = topRow
+
+	local gridLayout = Instance.new("UIGridLayout")
+	gridLayout.CellPadding = UDim2.fromOffset(2, 2)
+	gridLayout.CellSize = UDim2.fromScale(1 / 12, 1 / 3)
+	gridLayout.FillDirectionMaxCells = 12
+	gridLayout.SortOrder = Enum.SortOrder.LayoutOrder
+	gridLayout.Parent = grid
+
+	local order = 0
+	for _, base in { 3, 2, 1 } do
+		for col = 0, 11 do
+			order += 1
+			numberCell(base + col * 3, order).Parent = grid
 		end
-		cell.BackgroundTransparency = 0.05
-		cell.BorderSizePixel = 0
-		cell.Font = Enum.Font.GothamBold
-		cell.TextColor3 = Config.COLORS.Text
-		cell.TextScaled = true
-		cell.Parent = root
-
-		local stroke = Instance.new("UIStroke")
-		stroke.Color = Color3.fromRGB(235, 200, 90)
-		stroke.Thickness = 1
-		stroke.Transparency = 0.35
-		stroke.Parent = cell
 	end
+
+	local bottom = Instance.new("Frame")
+	bottom.Name = "Outside"
+	bottom.BackgroundTransparency = 1
+	bottom.Size = UDim2.new(0.925, 0, 0.28, 0)
+	bottom.Position = UDim2.fromScale(0.075, 0.72)
+	bottom.Parent = root
+
+	local bottomList = Instance.new("UIListLayout")
+	bottomList.FillDirection = Enum.FillDirection.Vertical
+	bottomList.Padding = UDim.new(0, 2)
+	bottomList.Parent = bottom
+
+	local dozens = Instance.new("Frame")
+	dozens.BackgroundTransparency = 1
+	dozens.Size = UDim2.fromScale(1, 0.5)
+	dozens.LayoutOrder = 1
+	dozens.Parent = bottom
+	local dozenGrid = Instance.new("UIGridLayout")
+	dozenGrid.CellPadding = UDim2.fromOffset(2, 0)
+	dozenGrid.CellSize = UDim2.fromScale(1 / 3, 1)
+	dozenGrid.FillDirectionMaxCells = 3
+	dozenGrid.SortOrder = Enum.SortOrder.LayoutOrder
+	dozenGrid.Parent = dozens
+	outsideCell("1st 12", 1).Parent = dozens
+	outsideCell("2nd 12", 2).Parent = dozens
+	outsideCell("3rd 12", 3).Parent = dozens
+
+	local evens = Instance.new("Frame")
+	evens.BackgroundTransparency = 1
+	evens.Size = UDim2.fromScale(1, 0.5)
+	evens.LayoutOrder = 2
+	evens.Parent = bottom
+	local evenGrid = Instance.new("UIGridLayout")
+	evenGrid.CellPadding = UDim2.fromOffset(2, 0)
+	evenGrid.CellSize = UDim2.fromScale(1 / 6, 1)
+	evenGrid.FillDirectionMaxCells = 6
+	evenGrid.SortOrder = Enum.SortOrder.LayoutOrder
+	evenGrid.Parent = evens
+	outsideCell("1-18", 1).Parent = evens
+	outsideCell("EVEN", 2).Parent = evens
+	outsideCell("RED", 3, NUMBER_RED).Parent = evens
+	outsideCell("BLACK", 4, NUMBER_BLACK).Parent = evens
+	outsideCell("ODD", 5).Parent = evens
+	outsideCell("19-36", 6).Parent = evens
 end
 
 local function dressBetSpot(spot: BasePart, index: number)
@@ -319,6 +420,33 @@ local function dressDealerPad(pad: BasePart)
 	label.TextColor3 = Config.COLORS.NeonGold
 	label.TextScaled = true
 	label.TextStrokeTransparency = 0.45
+	label.Parent = gui
+end
+
+local function dressLoungeBar()
+	local lobby = Workspace:FindFirstChild(LOBBY_NAME)
+	local atmosphere = lobby and lobby:FindFirstChild("Atmosphere")
+	local bar = atmosphere and atmosphere:FindFirstChild("LoungeBar")
+	local sign = bar and bar:FindFirstChild("BarSign")
+	if not (sign and sign:IsA("BasePart")) or sign:FindFirstChild("BarSignGui") then
+		return
+	end
+	local gui = Instance.new("SurfaceGui")
+	gui.Name = "BarSignGui"
+	gui.Face = Enum.NormalId.Right
+	gui.SizingMode = Enum.SurfaceGuiSizingMode.PixelsPerStud
+	gui.PixelsPerStud = 60
+	gui.Parent = sign
+
+	local label = Instance.new("TextLabel")
+	label.BackgroundTransparency = 1
+	label.Size = UDim2.fromScale(1, 1)
+	label.Font = Enum.Font.Cartoon
+	label.Text = "BAR"
+	label.TextColor3 = Config.COLORS.NeonMagenta
+	label.TextScaled = true
+	label.TextStrokeColor3 = Config.COLORS.NeonGold
+	label.TextStrokeTransparency = 0.3
 	label.Parent = gui
 end
 
@@ -478,6 +606,7 @@ function LobbyService.start()
 	applyLighting()
 	ensurePortalLabels()
 	dressCasinoTables()
+	dressLoungeBar()
 
 	local lobby = Workspace:FindFirstChild(LOBBY_NAME)
 	if lobby then

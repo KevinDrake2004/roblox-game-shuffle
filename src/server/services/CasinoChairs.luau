@@ -143,18 +143,39 @@ local function tableCenter(tableFolder: Instance): (Vector3, CFrame, Vector3)
 end
 
 local function placeRoulette(chairsFolder: Folder, tableFolder: Instance)
-	local center, tableCF, size = tableCenter(tableFolder)
-	local radius = math.max(size.X, size.Z) / 2 + TABLE_CLEAR + SEAT_HALF
-	-- Five player seats + one dealer (dealer at local +Z / ang = 0).
-	for i = 1, 5 do
-		local ang = i * (math.pi * 2 / 6)
-		local worldPos = (tableCF * CFrame.new(math.sin(ang) * radius, 0, math.cos(ang) * radius)).Position
-		local seatPos = Vector3.new(worldPos.X, SEAT_Y, worldPos.Z)
-		buildChair(chairsFolder, `Roulette_{tableFolder.Name}_{i}`, seatCFrameFacing(seatPos, center), false)
+	-- Rectangular table: long axis = local X, wheel at -X end, betting layout on +X.
+	-- Players sit along the two long sides over the layout; dealer at the wheel end.
+	local _, tableCF, size = tableCenter(tableFolder)
+	local seatLocalZ = size.Z / 2 + TABLE_CLEAR + SEAT_HALF
+	local inward = tableCF.LookVector -- local -Z
+	local right = tableCF.RightVector -- local +X
+
+	local seatXs = { 0.0, 2.7, 5.4 }
+	for i, ox in seatXs do
+		local nWorld = (tableCF * CFrame.new(ox, 0, seatLocalZ)).Position
+		buildChair(
+			chairsFolder,
+			`Roulette_{tableFolder.Name}_N{i}`,
+			seatCFrameDirection(Vector3.new(nWorld.X, SEAT_Y, nWorld.Z), inward),
+			false
+		)
+		local sWorld = (tableCF * CFrame.new(ox, 0, -seatLocalZ)).Position
+		buildChair(
+			chairsFolder,
+			`Roulette_{tableFolder.Name}_S{i}`,
+			seatCFrameDirection(Vector3.new(sWorld.X, SEAT_Y, sWorld.Z), -inward),
+			false
+		)
 	end
-	local dealerWorld = (tableCF * CFrame.new(0, 0, radius)).Position
-	local dealerPos = Vector3.new(dealerWorld.X, SEAT_Y, dealerWorld.Z)
-	buildChair(chairsFolder, `Roulette_{tableFolder.Name}_Dealer`, seatCFrameFacing(dealerPos, center), true)
+
+	local seatLocalX = size.X / 2 + TABLE_CLEAR + SEAT_HALF
+	local dealerWorld = (tableCF * CFrame.new(-seatLocalX, 0, 0)).Position
+	buildChair(
+		chairsFolder,
+		`Roulette_{tableFolder.Name}_Dealer`,
+		seatCFrameDirection(Vector3.new(dealerWorld.X, SEAT_Y, dealerWorld.Z), right),
+		true
+	)
 end
 
 local function placeBlackjack(chairsFolder: Folder, tableFolder: Instance)
@@ -206,14 +227,19 @@ local function placePoker(chairsFolder: Folder, tableFolder: Instance)
 end
 
 local function placeBarStools(chairsFolder: Folder, bar: Instance)
-	local top = bar:FindFirstChild("BarTop")
+	local top = bar:FindFirstChild("CounterTop")
 	if not (top and top:IsA("BasePart")) then
 		return
 	end
+	-- Patrons sit on the +X (room) side of the counter, facing -X toward the bar.
 	local face = Vector3.new(-1, 0, 0)
-	for i = 0, 4 do
-		local seatPos = Vector3.new(-67.5, SEAT_Y, -4.0 + i * CHAIR_PITCH)
-		buildChair(chairsFolder, `BarStool_{i}`, seatCFrameDirection(seatPos, face), false)
+	local stoolX = top.Position.X + top.Size.X / 2 + 1.3
+	local length = top.Size.Z
+	local count = math.max(2, math.floor(length / 4.2))
+	local usable = length - 4.0
+	for i = 0, count - 1 do
+		local z = top.Position.Z - usable / 2 + (usable / math.max(1, count - 1)) * i
+		buildChair(chairsFolder, `BarStool_{i}`, seatCFrameDirection(Vector3.new(stoolX, SEAT_Y, z), face), false)
 	end
 end
 
