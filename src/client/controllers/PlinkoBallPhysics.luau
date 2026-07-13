@@ -4,7 +4,9 @@
 	Local-only gravity + peg bounce simulation for Plinko Points.
 
 	The path is **not** predetermined. A Galton peg layout plus gravity and
-	elastic-ish peg collisions decide the land. No soft bias toward a bucket.
+	peg collisions decide the land. Each hit uses contact normal + restitution
+	blended with a characteristic L/R leave velocity from hit offset (bean-machine
+	±1 step per row). No soft bias toward a bucket.
 	Parts live under CurrentCamera so other players never see your ball.
 ]=]
 local Debris = game:GetService("Debris")
@@ -343,13 +345,20 @@ function PlinkoBallPhysics.drop(onLanded: (bucketIndex: number) -> ()): SimHandl
 	end
 
 	local function collidePegs(stepPos: Vector3, stepVel: Vector3, now: number): (Vector3, Vector3)
+		local leaveSpeed = cfg.BallPegLeaveSpeed
+		local leaveDeg = cfg.BallPegLeaveAngleDeg
+		local apexNx = cfg.BallPegApexNormalX
+		local reflectBlend = math.clamp(cfg.BallPegReflectBlend, 0, 1)
+		local maxUp = cfg.BallPegMaxUpSpeed
+		local restitution = cfg.BallBounce
+
 		for _, peg in pegs do
 			local delta = Vector3.new(stepPos.X - peg.part.Position.X, stepPos.Y - peg.part.Position.Y, 0)
 			local dist = delta.Magnitude
 			local minDist = radius + peg.radius
 			if dist < 1e-5 then
-				-- Exact center overlap: nudge sideways so reflection has a normal.
-				delta = Vector3.new(if rng:NextNumber() < 0.5 then -1 else 1, 0.2, 0)
+				-- Exact center overlap: invent a side so the normal is defined.
+				delta = Vector3.new(if rng:NextNumber() < 0.5 then -1 else 1, 0.25, 0)
 				dist = delta.Magnitude
 			end
 			if dist < minDist and (now - peg.lastHit) >= cfg.BallPegHitCooldown then
@@ -363,22 +372,33 @@ function PlinkoBallPhysics.drop(onLanded: (bucketIndex: number) -> ()): SimHandl
 
 				local approaching = stepVel:Dot(normal)
 				if approaching < 0 then
-					-- Soft reflect: keep impact direction, but Plinko should fall through, not pinball.
-					local reflected = stepVel - normal * ((1 + cfg.BallBounce) * approaching)
-					local tangent = Vector3.new(-normal.Y, normal.X, 0)
-					local jitter = tangent * rng:NextNumber(-0.35, 0.35)
-					reflected = reflected + jitter
-					-- Kill most upward pop so the first hit does not fling to a rail.
-					if reflected.Y > 0 then
-						reflected = Vector3.new(reflected.X, reflected.Y * cfg.BallPegUpDamp, 0)
+					-- Galton L/R from hit offset. Dead-center is unstable → coin-flip.
+					local side: number
+					if math.abs(normal.X) < apexNx then
+						side = if rng:NextNumber() < 0.5 then -1 else 1
+					else
+						side = if normal.X > 0 then 1 else -1
 					end
-					-- Tame sideways speed from the bounce itself.
-					reflected = Vector3.new(reflected.X * cfg.BallPegSideDamp, reflected.Y, 0)
-					-- Always keep a bit of downward progress after contact.
-					if reflected.Y > -3 then
-						reflected = Vector3.new(reflected.X, math.min(reflected.Y, -3), 0)
+
+					-- Characteristic roll-off leave velocity (angle from vertical).
+					-- Tuned so each row ≈ one ± half-spacing step → binomial lands.
+					local ang = math.rad(rng:NextNumber(leaveDeg * 0.8, leaveDeg * 1.2))
+					local impact = math.abs(approaching)
+					local speed = leaveSpeed + 0.06 * math.max(0, impact - 12)
+					local leave = Vector3.new(side * speed * math.sin(ang), -speed * math.cos(ang), 0)
+
+					-- Elastic reflect along contact normal (visual bounce), blended with leave.
+					local reflected = stepVel - normal * ((1 + restitution) * approaching)
+					local out = reflected * reflectBlend + leave * (1 - reflectBlend)
+
+					if out.Y > maxUp then
+						out = Vector3.new(out.X, maxUp, 0)
 					end
-					stepVel = reflected
+					-- Keep falling through the board (no pinball hang).
+					if out.Y > -2.5 then
+						out = Vector3.new(out.X, -2.5, 0)
+					end
+					stepVel = out
 					peg.lastHit = now
 					flashPeg(peg.part)
 				elseif dist < minDist * 0.98 then

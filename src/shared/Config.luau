@@ -124,7 +124,7 @@ Config.ROCKET_RUN = {
 	- `TargetRTP` - design aim only (~1.05); achieved by tuning multipliers vs the land curve
 	- `DropCooldownSeconds` - minimum delay between drops per player
 	- `BallRadius` / `BallGravity` / `BallBounce` - client gravity sim feel
-	- `BallPegSideDamp` / `BallPegUpDamp` - after peg hit, tame sideways fling / upward pop
+	- `BallPegLeaveSpeed` / `BallPegLeaveAngleDeg` / `BallPegApexNormalX` / `BallPegReflectBlend` / `BallPegMaxUpSpeed` - peg collision leave response (Galton L/R)
 	- `BallMaxSimSeconds` / `BallPegHitCooldown` / `BallHorizontalDrag` / `BallStartSpeedX` / `BallMaxSpeed` / `BallSubsteps` - Galton sim feel
 	- `PegRows` / `PegSpacingX` / `PegSpacingY` / `PegLayoutVersion` - Galton board layout
 	- Arena / camera fields drive world presentation only (east of Rocket Run)
@@ -159,19 +159,26 @@ Config.PLINKO = {
 	PegSpacingX = 2.6,
 	PegSpacingY = 2.35,
 	PegLayoutVersion = 2,
-	-- Client gravity sim (free path; Galton pegs create center-biased lands)
-	-- Bounce is intentionally low: soft L/R deflects, mostly continues falling (not pinball).
+	-- Client gravity sim (free path; Galton pegs create center-biased lands).
+	-- Each peg hit: hit-offset L/R + characteristic leave velocity (not over-damped pure fall).
 	BallRadius = 0.5,
-	BallGravity = 52,
-	BallBounce = 0.38,
+	BallGravity = 55,
+	BallBounce = 0.42,
 	BallMaxSimSeconds = 8,
-	BallPegHitCooldown = 0.06,
-	BallHorizontalDrag = 0.85,
+	BallPegHitCooldown = 0.05,
+	-- Light air drag so leave speed carries to the next row without rail flings.
+	BallHorizontalDrag = 1.15,
 	BallStartSpeedX = 1.0,
-	BallMaxSpeed = 36,
+	BallMaxSpeed = 40,
 	BallSubsteps = 3,
-	BallPegSideDamp = 0.55,
-	BallPegUpDamp = 0.2,
+	-- Post-contact leave: ~half peg spacing / fall time between rows → Galton ±1 step.
+	BallPegLeaveSpeed = 5.6,
+	BallPegLeaveAngleDeg = 33,
+	-- |normal.X| below this → unstable apex; coin-flip L/R.
+	BallPegApexNormalX = 0.12,
+	-- Blend of elastic reflect (visual) vs roll-off leave velocity (distribution).
+	BallPegReflectBlend = 0.25,
+	BallPegMaxUpSpeed = 5,
 	LandReportTimeoutSeconds = 9,
 }
 
