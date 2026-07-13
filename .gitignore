@@ -5,3 +5,4 @@
 /package-lock.json
 *.rbxl.lock
 .DS_Store
+.cursor/ACTIVE_BRANCH

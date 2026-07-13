@@ -1,0 +1,66 @@
+---
+description: Commit and push to GitHub after each implementation prompt on the specified branch
+alwaysApply: true
+---
+
+# Git workflow (every implementation prompt)
+
+Remote: `https://github.com/KevinDrake2004/roblox-game-shuffle`
+
+## Branch requirement
+
+Every implementation prompt should name a branch, e.g.:
+
+```
+Branch: feature/plinko-dev
+
+<task description>
+```
+
+Accepted forms: `Branch:`, `branch:`, or `Work on branch feature/plinko-dev`.
+
+If the user does **not** specify a branch:
+
+1. Check `.cursor/ACTIVE_BRANCH` (local, gitignored) for a default branch name.
+2. If that file is missing or empty, do **not** commit or push yet.
+3. Report the current branch (`git branch --show-current`).
+4. Ask whether to:
+   - create a new branch (suggest a name like `feature/<game>-<topic>`),
+   - continue on the current branch, or
+   - stay on `main`.
+5. Wait for an answer before committing.
+
+When the user picks a branch, update `.cursor/ACTIVE_BRANCH` so later prompts inherit it.
+
+Question-only prompts (no file changes) do not need a commit.
+
+## At task start
+
+1. `git fetch origin` when network is available.
+2. If the named branch exists locally: `git checkout <branch>` and `git pull --rebase origin <branch>` when tracking is set.
+3. If it exists only on remote: `git checkout -b <branch> origin/<branch>`.
+4. If it does not exist: `git checkout main && git pull origin main`, then `git checkout -b <branch>`.
+
+Never commit directly to `main` for feature work unless the user explicitly says so.
+
+## At task end (when there are changes)
+
+1. Run `./scripts/check.sh`.
+2. Stage only files related to the task.
+3. Commit with a focused message (one logical change per prompt). Prefix examples: `plinko:`, `rocket-run:`, `lobby:`, `chore:`.
+4. Push: `git push -u origin HEAD` (first push on branch) or `git push`.
+5. Tell the user: branch name, commit hash, and push result.
+
+Do not batch multiple prompts into one commit. Each implementation prompt gets its own commit when it produces changes.
+
+## Commit rules
+
+- Never add `Co-authored-by: Cursor` or other agent attribution.
+- Do not modify `CHANGELOG.md` or auto-generated files unless the task requires it.
+- Do not force-push `main` or rewrite shared history without explicit user approval.
+
+## Branch naming
+
+- `feature/<game>-<topic>` - game development (e.g. `feature/plinko-dev`)
+- `fix/<topic>` - bug fixes
+- `chore/<topic>` - tooling, docs-only, repo maintenance
