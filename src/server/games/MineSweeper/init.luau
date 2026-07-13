@@ -106,6 +106,16 @@ local function teleportTo(player: Player, position: Vector3)
 	end
 end
 
+-- Rooms are inside the casino: only snap to the pad if the player is still outside the room.
+local function teleportIntoRoom(player: Player, position: Vector3)
+	local character = player.Character
+	local root = character and character:FindFirstChild("HumanoidRootPart")
+	if root and root:IsA("BasePart") and (root.Position - position).Magnitude < 45 then
+		return
+	end
+	teleportTo(player, position)
+end
+
 local function reject(player: Player, reason: string)
 	Remotes.getEvent("MineSweeperRejected"):FireClient(player, { reason = reason })
 end
@@ -416,7 +426,7 @@ function MineSweeper.join(player: Player)
 	end
 
 	playersInArena[player] = true
-	teleportTo(player, spawnPart.Position)
+	teleportIntoRoom(player, spawnPart.Position)
 
 	local oldJanitor = playerJanitors[player]
 	if oldJanitor then
@@ -428,7 +438,7 @@ function MineSweeper.join(player: Player)
 		player.CharacterAdded:Connect(function()
 			task.defer(function()
 				if playersInArena[player] and spawnPart then
-					teleportTo(player, spawnPart.Position)
+					teleportIntoRoom(player, spawnPart.Position)
 				end
 			end)
 		end),
@@ -439,7 +449,7 @@ function MineSweeper.join(player: Player)
 end
 
 --[=[
-	Remove the player from the arena and return them to the lobby spawn.
+	Remove the player from the arena and return them to the casino corridor.
 	Active round stake is forfeited (already deducted; no refund).
 	@param player Player
 ]=]
@@ -456,7 +466,7 @@ function MineSweeper.leave(player: Player)
 		playerJanitors[player] = nil
 	end
 
-	teleportTo(player, Config.LOBBY.SpawnPosition)
+	teleportTo(player, Config.MINE_SWEEPER.LeavePosition)
 	Remotes.getEvent("MineSweeperLeft"):FireClient(player)
 end
 

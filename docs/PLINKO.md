@@ -20,7 +20,7 @@ Playable chip-wager Galton board with Low / Medium / High risk, multi-ball drops
 ## 2. How to play
 
 1. Enter the **Plinko Points** lobby portal (hub portals at z ≈ -28).
-2. Teleport to **PlinkoArena** at `(90, 5, -140)` (east of Rocket Run). Purple neon board, pegs, buckets.
+2. Walk into the **Plinko room** in the casino (east wing, origin `(55, 0, -110)`). Purple neon board, pegs, buckets.
 3. In the HUD, set **wager**, **ball count**, and **risk** (Low / Medium / High), then Apply.
 4. Press **Drop**. Server deducts `wager × ballCount` if balance allows.
 5. Balls release in short bursts (large volleys finish within ~1.5s). Each ball falls with gravity and bounces off pegs - path is **not** pre-chosen.
@@ -228,8 +228,8 @@ Further Plinko work (integrity, closer binomial match) is optional polish, not M
 | Area | Position | Notes |
 |------|----------|-------|
 | Lobby portals | z ≈ -28 | Unchanged |
-| Rocket Run arena | `(0, 5, -140)` | Cyan; do not modify for Plinko |
-| **Plinko arena origin** | `(90, 5, -140)` | Purple; ~90 studs east of Rocket Run |
+| Rocket Run arena | `(0, 0, -110)` | Cyan; center game room |
+| **Plinko arena origin** | `(55, 0, -110)` | Purple; east game room |
 | Plinko spawn pad | `(90, 6, -126)` | Leave prompt attached |
 | Plinko board / buckets | z ≈ -150.5 | Rails ~40 studs wide |
 

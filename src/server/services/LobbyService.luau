@@ -3,8 +3,9 @@
 	@class LobbyService
 	Wires the Rojo-synced Lobby map (visible in Studio edit mode).
 
-	Does not rebuild the hub at runtime — find portals under Workspace.Lobby and
-	bind prompts / lighting polish only.
+	Does not rebuild the hub at runtime — find doorways under Workspace.Lobby.Portals
+	and bind prompts / lighting polish only. Game arenas live in adjacent rooms
+	inside the same building (see docs/CASINO.md).
 ]=]
 local Lighting = game:GetService("Lighting")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")

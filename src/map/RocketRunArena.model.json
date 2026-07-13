@@ -6,9 +6,21 @@
       "className": "Part",
       "properties": {
         "Anchored": true,
-        "Size": [48.0, 1.0, 48.0],
-        "Position": [0.0, 5.0, -140.0],
-        "Color": [0.071, 0.047, 0.125],
+        "Size": [
+          48.0,
+          1.0,
+          48.0
+        ],
+        "Position": [
+          0.0,
+          0.0,
+          -110.0
+        ],
+        "Color": [
+          0.071,
+          0.047,
+          0.125
+        ],
         "Material": "SmoothPlastic"
       }
     },
@@ -17,9 +29,21 @@
       "className": "Part",
       "properties": {
         "Anchored": true,
-        "Size": [10.0, 1.0, 10.0],
-        "Position": [0.0, 6.0, -128.0],
-        "Color": [0.133, 0.827, 0.933],
+        "Size": [
+          10.0,
+          1.0,
+          10.0
+        ],
+        "Position": [
+          0.0,
+          1.0,
+          -98.0
+        ],
+        "Color": [
+          0.133,
+          0.827,
+          0.933
+        ],
         "Material": "Neon",
         "Transparency": 0.35
       },
@@ -30,7 +54,11 @@
           "properties": {
             "Brightness": 1.5,
             "Range": 28.0,
-            "Color": [0.133, 0.827, 0.933]
+            "Color": [
+              0.133,
+              0.827,
+              0.933
+            ]
           }
         },
         {
@@ -38,7 +66,7 @@
           "className": "ProximityPrompt",
           "properties": {
             "ActionText": "Leave",
-            "ObjectText": "Return to Hub",
+            "ObjectText": "Exit to casino floor",
             "HoldDuration": 0.4,
             "MaxActivationDistance": 14.0,
             "RequiresLineOfSight": false
@@ -52,9 +80,21 @@
       "properties": {
         "Anchored": true,
         "CanCollide": false,
-        "Size": [6.0, 0.5, 6.0],
-        "Position": [0.0, 5.6, -148.0],
-        "Color": [0.15, 0.1, 0.25],
+        "Size": [
+          6.0,
+          0.5,
+          6.0
+        ],
+        "Position": [
+          0.0,
+          0.5999999999999996,
+          -118.0
+        ],
+        "Color": [
+          0.15,
+          0.1,
+          0.25
+        ],
         "Material": "SmoothPlastic"
       }
     },
@@ -68,11 +108,27 @@
           "properties": {
             "Anchored": true,
             "CanCollide": false,
-            "Size": [10.0, 4.6, 4.6],
-            "Position": [0.0, 12.0, -148.0],
-            "Orientation": [0.0, 0.0, 90.0],
+            "Size": [
+              10.0,
+              4.6,
+              4.6
+            ],
+            "Position": [
+              0.0,
+              7.0,
+              -118.0
+            ],
+            "Orientation": [
+              0.0,
+              0.0,
+              90.0
+            ],
             "Shape": "Cylinder",
-            "Color": [0.78, 0.82, 0.9],
+            "Color": [
+              0.78,
+              0.82,
+              0.9
+            ],
             "Material": "Metal"
           },
           "children": [
@@ -82,7 +138,11 @@
               "properties": {
                 "Brightness": 1.5,
                 "Range": 34.0,
-                "Color": [0.133, 0.827, 0.933]
+                "Color": [
+                  0.133,
+                  0.827,
+                  0.933
+                ]
               }
             }
           ]
@@ -93,11 +153,27 @@
           "properties": {
             "Anchored": true,
             "CanCollide": false,
-            "Size": [2.6, 4.2, 4.2],
-            "Position": [0.0, 18.3, -148.0],
-            "Orientation": [0.0, 0.0, 90.0],
+            "Size": [
+              2.6,
+              4.2,
+              4.2
+            ],
+            "Position": [
+              0.0,
+              13.3,
+              -118.0
+            ],
+            "Orientation": [
+              0.0,
+              0.0,
+              90.0
+            ],
             "Shape": "Cylinder",
-            "Color": [0.68, 0.73, 0.82],
+            "Color": [
+              0.68,
+              0.73,
+              0.82
+            ],
             "Material": "Metal"
           }
         },
@@ -107,11 +183,27 @@
           "properties": {
             "Anchored": true,
             "CanCollide": false,
-            "Size": [1.5, 3.8, 3.8],
-            "Position": [0.0, 20.3, -148.0],
-            "Orientation": [0.0, 0.0, 90.0],
+            "Size": [
+              1.5,
+              3.8,
+              3.8
+            ],
+            "Position": [
+              0.0,
+              15.3,
+              -118.0
+            ],
+            "Orientation": [
+              0.0,
+              0.0,
+              90.0
+            ],
             "Shape": "Cylinder",
-            "Color": [0.925, 0.282, 0.6],
+            "Color": [
+              0.925,
+              0.282,
+              0.6
+            ],
             "Material": "SmoothPlastic"
           }
         },
@@ -121,11 +213,27 @@
           "properties": {
             "Anchored": true,
             "CanCollide": false,
-            "Size": [1.35, 2.9, 2.9],
-            "Position": [0.0, 21.7, -148.0],
-            "Orientation": [0.0, 0.0, 90.0],
+            "Size": [
+              1.35,
+              2.9,
+              2.9
+            ],
+            "Position": [
+              0.0,
+              16.7,
+              -118.0
+            ],
+            "Orientation": [
+              0.0,
+              0.0,
+              90.0
+            ],
             "Shape": "Cylinder",
-            "Color": [0.925, 0.282, 0.6],
+            "Color": [
+              0.925,
+              0.282,
+              0.6
+            ],
             "Material": "SmoothPlastic"
           }
         },
@@ -135,10 +243,22 @@
           "properties": {
             "Anchored": true,
             "CanCollide": false,
-            "Size": [1.8, 1.8, 1.8],
-            "Position": [0.0, 23.0, -148.0],
+            "Size": [
+              1.8,
+              1.8,
+              1.8
+            ],
+            "Position": [
+              0.0,
+              18.0,
+              -118.0
+            ],
             "Shape": "Ball",
-            "Color": [0.925, 0.282, 0.6],
+            "Color": [
+              0.925,
+              0.282,
+              0.6
+            ],
             "Material": "Neon"
           }
         },
@@ -148,11 +268,27 @@
           "properties": {
             "Anchored": true,
             "CanCollide": false,
-            "Size": [0.45, 4.85, 4.85],
-            "Position": [0.0, 8.0, -148.0],
-            "Orientation": [0.0, 0.0, 90.0],
+            "Size": [
+              0.45,
+              4.85,
+              4.85
+            ],
+            "Position": [
+              0.0,
+              3.0,
+              -118.0
+            ],
+            "Orientation": [
+              0.0,
+              0.0,
+              90.0
+            ],
             "Shape": "Cylinder",
-            "Color": [0.133, 0.827, 0.933],
+            "Color": [
+              0.133,
+              0.827,
+              0.933
+            ],
             "Material": "Neon"
           }
         },
@@ -162,11 +298,27 @@
           "properties": {
             "Anchored": true,
             "CanCollide": false,
-            "Size": [0.45, 4.85, 4.85],
-            "Position": [0.0, 16.0, -148.0],
-            "Orientation": [0.0, 0.0, 90.0],
+            "Size": [
+              0.45,
+              4.85,
+              4.85
+            ],
+            "Position": [
+              0.0,
+              11.0,
+              -118.0
+            ],
+            "Orientation": [
+              0.0,
+              0.0,
+              90.0
+            ],
             "Shape": "Cylinder",
-            "Color": [0.133, 0.827, 0.933],
+            "Color": [
+              0.133,
+              0.827,
+              0.933
+            ],
             "Material": "Neon"
           }
         },
@@ -176,10 +328,22 @@
           "properties": {
             "Anchored": true,
             "CanCollide": false,
-            "Size": [1.65, 1.65, 0.65],
-            "Position": [0.0, 14.2, -145.8],
+            "Size": [
+              1.65,
+              1.65,
+              0.65
+            ],
+            "Position": [
+              0.0,
+              9.2,
+              -115.80000000000001
+            ],
             "Shape": "Ball",
-            "Color": [0.15, 0.65, 0.9],
+            "Color": [
+              0.15,
+              0.65,
+              0.9
+            ],
             "Material": "Glass",
             "Transparency": 0.12
           },
@@ -190,7 +354,11 @@
               "properties": {
                 "Brightness": 0.8,
                 "Range": 10.0,
-                "Color": [0.133, 0.827, 0.933]
+                "Color": [
+                  0.133,
+                  0.827,
+                  0.933
+                ]
               }
             }
           ]
@@ -201,11 +369,27 @@
           "properties": {
             "Anchored": true,
             "CanCollide": false,
-            "Size": [1.8, 3.4, 3.4],
-            "Position": [0.0, 6.1, -148.0],
-            "Orientation": [0.0, 0.0, 90.0],
+            "Size": [
+              1.8,
+              3.4,
+              3.4
+            ],
+            "Position": [
+              0.0,
+              1.0999999999999996,
+              -118.0
+            ],
+            "Orientation": [
+              0.0,
+              0.0,
+              90.0
+            ],
             "Shape": "Cylinder",
-            "Color": [0.12, 0.13, 0.18],
+            "Color": [
+              0.12,
+              0.13,
+              0.18
+            ],
             "Material": "Metal"
           }
         },
@@ -215,10 +399,26 @@
           "properties": {
             "Anchored": true,
             "CanCollide": false,
-            "Size": [2.2, 4.5, 0.7],
-            "Position": [-3.0, 7.5, -148.0],
-            "Orientation": [0.0, 90.0, 0.0],
-            "Color": [0.925, 0.282, 0.6],
+            "Size": [
+              2.2,
+              4.5,
+              0.7
+            ],
+            "Position": [
+              -3.0,
+              2.5,
+              -118.0
+            ],
+            "Orientation": [
+              0.0,
+              90.0,
+              0.0
+            ],
+            "Color": [
+              0.925,
+              0.282,
+              0.6
+            ],
             "Material": "Metal"
           }
         },
@@ -228,10 +428,26 @@
           "properties": {
             "Anchored": true,
             "CanCollide": false,
-            "Size": [2.2, 4.5, 0.7],
-            "Position": [3.0, 7.5, -148.0],
-            "Orientation": [0.0, -90.0, 0.0],
-            "Color": [0.925, 0.282, 0.6],
+            "Size": [
+              2.2,
+              4.5,
+              0.7
+            ],
+            "Position": [
+              3.0,
+              2.5,
+              -118.0
+            ],
+            "Orientation": [
+              0.0,
+              -90.0,
+              0.0
+            ],
+            "Color": [
+              0.925,
+              0.282,
+              0.6
+            ],
             "Material": "Metal"
           }
         },
@@ -241,10 +457,26 @@
           "properties": {
             "Anchored": true,
             "CanCollide": false,
-            "Size": [2.2, 4.5, 0.7],
-            "Position": [0.0, 7.5, -151.0],
-            "Orientation": [0.0, 180.0, 0.0],
-            "Color": [0.925, 0.282, 0.6],
+            "Size": [
+              2.2,
+              4.5,
+              0.7
+            ],
+            "Position": [
+              0.0,
+              2.5,
+              -121.0
+            ],
+            "Orientation": [
+              0.0,
+              180.0,
+              0.0
+            ],
+            "Color": [
+              0.925,
+              0.282,
+              0.6
+            ],
             "Material": "Metal"
           }
         },
@@ -254,10 +486,26 @@
           "properties": {
             "Anchored": true,
             "CanCollide": false,
-            "Size": [2.2, 4.5, 0.7],
-            "Position": [0.0, 7.5, -145.0],
-            "Orientation": [0.0, 0.0, 0.0],
-            "Color": [0.925, 0.282, 0.6],
+            "Size": [
+              2.2,
+              4.5,
+              0.7
+            ],
+            "Position": [
+              0.0,
+              2.5,
+              -115.0
+            ],
+            "Orientation": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "Color": [
+              0.925,
+              0.282,
+              0.6
+            ],
             "Material": "Metal"
           }
         },
@@ -267,9 +515,21 @@
           "properties": {
             "Anchored": true,
             "CanCollide": false,
-            "Size": [1.8, 3.2, 1.8],
-            "Position": [0.0, 3.8, -148.0],
-            "Color": [0.133, 0.827, 0.933],
+            "Size": [
+              1.8,
+              3.2,
+              1.8
+            ],
+            "Position": [
+              0.0,
+              -1.2000000000000002,
+              -118.0
+            ],
+            "Color": [
+              0.133,
+              0.827,
+              0.933
+            ],
             "Material": "Neon",
             "Transparency": 0.45
           }
@@ -283,8 +543,16 @@
         "Anchored": true,
         "CanCollide": false,
         "Transparency": 1.0,
-        "Size": [1.0, 1.0, 1.0],
-        "Position": [0.0, 11.0, -148.0]
+        "Size": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "Position": [
+          0.0,
+          6.0,
+          -118.0
+        ]
       }
     },
     {
@@ -293,10 +561,26 @@
       "properties": {
         "Anchored": true,
         "CanCollide": true,
-        "Size": [1.0, 18.0, 42.0],
-        "Position": [-24.5, 15.0, -140.0],
-        "Orientation": [0.0, 0.0, 0.0],
-        "Color": [0.05, 0.04, 0.1],
+        "Size": [
+          1.0,
+          18.0,
+          42.0
+        ],
+        "Position": [
+          -24.5,
+          10.0,
+          -110.0
+        ],
+        "Orientation": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "Color": [
+          0.05,
+          0.04,
+          0.1
+        ],
         "Material": "SmoothPlastic"
       },
       "children": [
@@ -306,7 +590,11 @@
           "properties": {
             "Brightness": 1.2,
             "Range": 28.0,
-            "Color": [0.133, 0.827, 0.933]
+            "Color": [
+              0.133,
+              0.827,
+              0.933
+            ]
           }
         }
       ]
@@ -316,9 +604,21 @@
       "className": "Part",
       "properties": {
         "Anchored": true,
-        "Size": [20.0, 4.0, 1.0],
-        "Position": [0.0, 17.0, -160.0],
-        "Color": [0.063, 0.039, 0.11],
+        "Size": [
+          20.0,
+          4.0,
+          1.0
+        ],
+        "Position": [
+          0.0,
+          12.0,
+          -130.0
+        ],
+        "Color": [
+          0.063,
+          0.039,
+          0.11
+        ],
         "Material": "SmoothPlastic"
       }
     },
@@ -329,8 +629,16 @@
         "Anchored": true,
         "CanCollide": false,
         "Transparency": 1.0,
-        "Size": [1.0, 1.0, 1.0],
-        "Position": [0.0, 22.0, -140.0]
+        "Size": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "Position": [
+          0.0,
+          17.0,
+          -110.0
+        ]
       },
       "children": [
         {
@@ -339,7 +647,11 @@
           "properties": {
             "Brightness": 1.6,
             "Range": 60.0,
-            "Color": [0.45, 0.35, 0.75],
+            "Color": [
+              0.45,
+              0.35,
+              0.75
+            ],
             "Shadows": false
           }
         }

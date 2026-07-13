@@ -11,7 +11,7 @@
 	4. Client releases balls in short bursts; each runs an independent free physics sim
 	   (balls never collide with each other, only pegs).
 	5. Client reports `PlinkoPointsLanded` per ball; server settles with the risk tier's multipliers.
-	6. Leave returns the player to `Config.LOBBY.SpawnPosition` (refunds unsettled balls).
+	6. Leave returns the player to `Config.PLINKO.LeavePosition` (refunds unsettled balls).
 
 	## Economy
 
@@ -129,6 +129,16 @@ local function teleportTo(player: Player, position: Vector3)
 	if root and root:IsA("BasePart") then
 		root.CFrame = CFrame.new(position + Vector3.new(0, 3, 0))
 	end
+end
+
+-- Rooms are inside the casino: only snap to the pad if the player is still outside the room.
+local function teleportIntoRoom(player: Player, position: Vector3)
+	local character = player.Character
+	local root = character and character:FindFirstChild("HumanoidRootPart")
+	if root and root:IsA("BasePart") and (root.Position - position).Magnitude < 45 then
+		return
+	end
+	teleportTo(player, position)
 end
 
 local function settleOutcome(payout: number, netDelta: number): "win" | "bust" | "loss" | "push"
@@ -478,7 +488,7 @@ function PlinkoPoints.join(player: Player)
 	end
 
 	playersInArena[player] = true
-	teleportTo(player, spawnPart.Position)
+	teleportIntoRoom(player, spawnPart.Position)
 
 	local oldJanitor = playerJanitors[player]
 	if oldJanitor then
@@ -490,7 +500,7 @@ function PlinkoPoints.join(player: Player)
 		player.CharacterAdded:Connect(function()
 			task.defer(function()
 				if playersInArena[player] and spawnPart then
-					teleportTo(player, spawnPart.Position)
+					teleportIntoRoom(player, spawnPart.Position)
 				end
 			end)
 		end),
@@ -501,7 +511,7 @@ function PlinkoPoints.join(player: Player)
 end
 
 --[=[
-	Remove the player from the arena and return them to the lobby spawn.
+	Remove the player from the arena and return them to the casino corridor.
 	@param player Player
 ]=]
 function PlinkoPoints.leave(player: Player)
@@ -517,7 +527,7 @@ function PlinkoPoints.leave(player: Player)
 		playerJanitors[player] = nil
 	end
 
-	teleportTo(player, Config.LOBBY.SpawnPosition)
+	teleportTo(player, Config.PLINKO.LeavePosition)
 	Remotes.getEvent("PlinkoPointsLeft"):FireClient(player)
 end
 

@@ -36,8 +36,8 @@ Config.COLORS = {
 }
 
 Config.LOBBY = {
-	-- Enclosed Hard Rock-style casino footprint (see docs/CASINO.md).
-	FloorSize = Vector3.new(140, 1, 120),
+	-- Enclosed casino + north game rooms (see docs/CASINO.md).
+	FloorSize = Vector3.new(180, 1, 200),
 	SpawnPosition = Vector3.new(0, 3, 48),
 	Ambient = Color3.fromRGB(72, 58, 110),
 	OutdoorAmbient = Color3.fromRGB(48, 40, 78),
@@ -48,24 +48,25 @@ Config.LOBBY = {
 	ExposureCompensation = 0.15,
 }
 
--- Enter gates live in the indoor Arcade wing (north wall). Soft TP still uses remote ArenaOrigin.
+-- Doorway prompts into physical game rooms (arenas live inside the building).
+-- Play starts a session; join skips far teleports when the player is already in-room.
 local portals: { PortalConfig } = {
 	{
 		id = "RocketRun",
 		displayName = "Rocket Run",
-		position = Vector3.new(0, 3, -48),
+		position = Vector3.new(0, 3, -78),
 		accentColor = Config.COLORS.NeonCyan,
 	},
 	{
 		id = "PlinkoPoints",
 		displayName = "Plinko Points",
-		position = Vector3.new(28, 3, -48),
+		position = Vector3.new(55, 3, -78),
 		accentColor = Config.COLORS.NeonPurple,
 	},
 	{
 		id = "MineSweeper",
 		displayName = "Mine Sweeper Arcade",
-		position = Vector3.new(-28, 3, -48),
+		position = Vector3.new(-55, 3, -78),
 		accentColor = Config.COLORS.NeonMagenta,
 	},
 }
@@ -106,9 +107,9 @@ Config.ROCKET_RUN = {
 	-- Applied on cash-out: payout = floor(wager * multiplier * PlayerReturnFactor).
 	-- Primary lever toward TargetRTP; crash distribution also affects realized EV.
 	PlayerReturnFactor = 1.05,
-	-- World / camera
-	ArenaOrigin = Vector3.new(0, 5, -140),
-	RocketHomePosition = Vector3.new(0, 12, -148),
+	-- World / camera (Rocket Run room inside casino - see docs/CASINO.md)
+	ArenaOrigin = Vector3.new(0, 0, -110),
+	RocketHomePosition = Vector3.new(0, 7, -118),
 	RocketLaunchSpeed = 22,
 	RocketVerticalAcceleration = 3.5,
 	RocketHeightPerLog = 52,
@@ -117,6 +118,8 @@ Config.ROCKET_RUN = {
 	RocketSway = 3,
 	RocketSwayFrequency = 0.4,
 	CameraOffset = Vector3.new(28, 12, 22),
+	-- Corridor just south of the Rocket room doorway
+	LeavePosition = Vector3.new(0, 3, -78),
 }
 
 --[=[
@@ -233,11 +236,12 @@ Config.PLINKO = {
 	DropCooldownSeconds = 0.75,
 	-- Reference weights for the default medium row count (C(12,k)); per-risk uses C(pegRows,k).
 	BucketWeights = { 1, 12, 66, 220, 495, 792, 924, 792, 495, 220, 66, 12, 1 },
-	-- World / camera (east of Rocket Run at 0, 5, -140 — ~90 studs apart)
-	-- Larger playfield + closer camera so pegs/balls stay easy to track on all risk tiers.
-	ArenaOrigin = Vector3.new(90, 5, -140),
-	-- Head-on board cam: offset is along +Z (toward spawn), no downward pitch.
+	-- World / camera (Plinko room inside casino - east wing)
+	-- Board faces -Z; doorway/spawn approach from +Z.
+	ArenaOrigin = Vector3.new(55, 0, -110),
 	CameraOffset = Vector3.new(0, 0, 36),
+	-- Corridor just south of the Plinko room doorway
+	LeavePosition = Vector3.new(55, 3, -78),
 	-- Default Galton spacing; local boards may scale X/Y to fit the rails.
 	PegRows = 12,
 	PegSpacingX = 2.8,
@@ -340,12 +344,14 @@ Config.MINE_SWEEPER = {
 	TargetRTP = 1.05,
 	-- Applied on cash-out: payout = floor(wager * multiplier * PlayerReturnFactor).
 	PlayerReturnFactor = 1.05,
-	-- World / camera (west of Rocket Run at 0, 5, -140 - ~90 studs apart)
-	ArenaOrigin = Vector3.new(-90, 5, -140),
+	-- World / camera (Mines room inside casino - west wing)
+	ArenaOrigin = Vector3.new(-55, 0, -110),
 	-- Straight top-down so cursor raycasts hit the hovered tile (height only).
 	-- ~18 stud board; keep cam low enough to fill the frame with a small margin.
 	CameraOffset = Vector3.new(0, 18, 0),
 	CameraFov = 55,
+	-- Corridor just south of the Mines room doorway
+	LeavePosition = Vector3.new(-55, 3, -78),
 }
 
 --[=[

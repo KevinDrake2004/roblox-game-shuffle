@@ -317,7 +317,8 @@ local function ensureTelemetryBoard(arena: Folder)
 	-- Force board geometry flush to the west perimeter even if an older
 	-- rotated instance was already synced into the place.
 	board.Size = Vector3.new(1, 18, 42)
-	board.CFrame = CFrame.new(-24.5, 15, -140)
+	local origin = Config.ROCKET_RUN.ArenaOrigin
+	board.CFrame = CFrame.new(origin + Vector3.new(-24.5, 10, 0))
 	board.Orientation = Vector3.zero
 
 	boardMultiplier = gui:FindFirstChild("Multiplier") :: TextLabel?
@@ -434,6 +435,16 @@ local function teleportTo(player: Player, position: Vector3)
 	if root and root:IsA("BasePart") then
 		root.CFrame = CFrame.new(position + Vector3.new(0, 3, 0))
 	end
+end
+
+-- Rooms are inside the casino: only snap to the pad if the player is still outside the room.
+local function teleportIntoRoom(player: Player, position: Vector3)
+	local character = player.Character
+	local root = character and character:FindFirstChild("HumanoidRootPart")
+	if root and root:IsA("BasePart") and (root.Position - position).Magnitude < 45 then
+		return
+	end
+	teleportTo(player, position)
 end
 
 local debrisFolder: Folder? = nil
@@ -923,7 +934,7 @@ function RocketRun.join(player: Player)
 	end
 
 	playersInArena[player] = true
-	teleportTo(player, spawnPart.Position)
+	teleportIntoRoom(player, spawnPart.Position)
 
 	local oldJanitor = playerJanitors[player]
 	if oldJanitor then
@@ -935,7 +946,7 @@ function RocketRun.join(player: Player)
 		player.CharacterAdded:Connect(function()
 			task.defer(function()
 				if playersInArena[player] and spawnPart then
-					teleportTo(player, spawnPart.Position)
+					teleportIntoRoom(player, spawnPart.Position)
 				end
 			end)
 		end),
@@ -957,7 +968,7 @@ function RocketRun.join(player: Player)
 end
 
 --[=[
-	Remove the player from the arena, clear participation, and return them to the lobby spawn.
+	Remove the player from the arena, clear participation, and return them to the casino corridor.
 	@param player Player
 ]=]
 function RocketRun.leave(player: Player)
@@ -973,7 +984,7 @@ function RocketRun.leave(player: Player)
 		playerJanitors[player] = nil
 	end
 
-	teleportTo(player, Config.LOBBY.SpawnPosition)
+	teleportTo(player, Config.ROCKET_RUN.LeavePosition)
 	Remotes.getEvent("RocketRunLeft"):FireClient(player)
 end
 

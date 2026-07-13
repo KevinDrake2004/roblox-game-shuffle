@@ -22,7 +22,7 @@ Playable chip-wager casino Mines on a 5×5 board: player-chosen mine count, priv
 ## 2. How to play
 
 1. Enter the **Mine Sweeper Arcade** lobby portal (hub portals at z ≈ -28).
-2. Teleport to **MineSweeperArena** at `(-90, 5, -140)` (west of Rocket Run). Magenta 5×5 board, top-down cam.
+2. Walk into the **Mine Sweeper room** in the casino (west wing, origin `(-55, 0, -110)`). Magenta 5×5 board, top-down cam.
 3. Set **wager** and **mines** (1-24). HUD shows an approximate 1-gem multiplier preview for the selected mine count.
 4. Press **Start Round**. Server deducts the wager and places your private mines (never sent to the client).
 5. Hover / click tiles. Gem (lime) → multiplier rises. Mine (magenta) → round over, stake lost.
@@ -161,9 +161,9 @@ Resolver: `Config.mineSweeperMultiplier(revealedCount, mineCount)`.
 | Area | Position | Notes |
 |------|----------|-------|
 | Lobby portals | z ≈ -28 | Unchanged; `Portal_MineSweeper` already existed |
-| Rocket Run arena | `(0, 5, -140)` | Cyan; do not modify for Mines |
-| Plinko arena | `(90, 5, -140)` | Purple; do not modify for Mines |
-| **Mine Sweeper origin** | `(-90, 5, -140)` | Magenta; ~90 studs west of Rocket Run |
+| Rocket Run arena | `(0, 0, -110)` | Cyan; center game room |
+| Plinko arena | `(55, 0, -110)` | Purple; east game room |
+| **Mine Sweeper origin** | `(-55, 0, -110)` | Magenta; west game room |
 | Spawn pad | `(-90, 6, -126)` | Leave prompt attached |
 | Board / tiles | z ≈ -148 | `Tiles/Tile_0` … `Tile_24` with `TileIndex` |
 
