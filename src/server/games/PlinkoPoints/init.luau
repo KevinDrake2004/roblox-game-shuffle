@@ -18,8 +18,8 @@
 	- Total stake `wager * ballCount` deducted before the volley starts.
 	- Insufficient balance → drop rejected.
 	- Landing bucket comes from client physics; multipliers come from Config.
-	- Soft-center lands still hurt (0.2x); edge jackpots pay big.
-	- Design RTP ≈ 134% by tuning `BucketMultipliers` against the Galton / binomial
+	- Soft-center / near-center use integer mults (`0` / `1` / `2`) so wager=1 still pays correctly.
+	- Design RTP ≈ 139% by tuning `BucketMultipliers` against the Galton / binomial
 	  land curve (`TargetRTP` is the aim, not an extra payout multiply).
 	- Unreported lands time out as a center land (anti-hang). Leave mid-drop refunds.
 
@@ -302,6 +302,8 @@ local function settleBall(player: Player, ball: PendingBall, bucketIndex0: numbe
 	local bucketIndex0Clamped = math.clamp(math.floor(bucketIndex0), 0, maxIndex)
 	local multiplier = multipliers[bucketIndex0Clamped + 1] or 0
 	local wager = ball.wager
+	-- Integer chips: floor(wager * mult). Multipliers must stay integer-friendly or
+	-- low wagers (especially 1) silently pay 0 on sub-1x buckets and destroy RTP.
 	local payout = math.floor(wager * multiplier)
 	if payout > 0 then
 		CurrencyService.creditPayout(player, payout, wager, "PlinkoPoints:payout")

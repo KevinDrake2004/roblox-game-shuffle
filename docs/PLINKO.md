@@ -35,14 +35,15 @@ Ball visuals are client-only (`CurrentCamera.PlinkoLocalFx`). Other players neve
 | Outcome | Formula | Balance effect |
 |---------|---------|----------------|
 | Any land | `payout = floor(wager * multiplier)` | Wager already deducted; credit `payout` (0 on bust). `netDelta = payout - wager`. |
-| Center soft land | multiplier `0.2` | Most of stake lost; `payout = floor(wager * 0.2)`. |
+| Center soft land | multiplier `0` | Stake lost; `payout = 0`. Near-center is `1x` (push). |
 
 ### RTP
 
 - Landing distribution comes from **Galton-board physics** (center-biased ≈ normal / binomial).
 - `BucketWeights` document the intended `C(8,k)` spread for RTP math; they are not rolled as RNG.
-- **RTP is just `E[BucketMultipliers]` under that curve.** Tune the multipliers until that equals `TargetRTP` (~1.34). There is no separate player-return factor on Plinko.
-- Short-term soft-center lands still drain sessions; edge jackpots are rare.
+- **RTP is just `E[BucketMultipliers]` under that curve.** Tune the multipliers until that equals `TargetRTP` (~1.39). There is no separate player-return factor on Plinko.
+- Multipliers are **integers** so `floor(wager * mult)` does not wipe sub-1x buckets at wager `1`.
+- Short-term center busts still drain sessions; edge jackpots are rare.
 
 ### Daily earn cap
 
@@ -56,17 +57,17 @@ Left → right (9 buckets). Design land curve ≈ binomial `C(8, k)` (center-hea
 |-------|------------|-----------------|----------|
 | 0 | 26x | 1 | 0.4% |
 | 1 | 5x | 8 | 3.1% |
-| 2 | 1.8x | 28 | 10.9% |
-| 3 | 0.85x | 56 | 21.9% |
-| 4 | 0.2x (soft) | 70 | 27.3% |
-| 5 | 0.85x | 56 | 21.9% |
-| 6 | 1.8x | 28 | 10.9% |
+| 2 | 2x | 28 | 10.9% |
+| 3 | 1x | 56 | 21.9% |
+| 4 | 0x (bust) | 70 | 27.3% |
+| 5 | 1x | 56 | 21.9% |
+| 6 | 2x | 28 | 10.9% |
 | 7 | 5x | 8 | 3.1% |
 | 8 | 26x | 1 | 0.4% |
 
-`E[multiplier] = 342 / 256 ≈ 1.336` → design **RTP ≈ 134%** when lands match this curve.
+`E[multiplier] = 356 / 256 = 1.390625` → design **RTP ≈ 139%** when lands match this curve.
 
-The Galton peg board (row `r` has `r+1` pegs) is what creates that center bias in the free physics sim. Multipliers pay the rare edges; common center lands are soft returns (not a total wipe).
+The Galton peg board (row `r` has `r+1` pegs) is what creates that center bias in the free physics sim. Multipliers pay the rare edges; common center is a bust, near-center is a push (`1x`).
 
 ## Arena coordinates
 
@@ -85,7 +86,7 @@ All Plinko geometry lives under `Workspace.PlinkoArena` only.
 | Key | Role |
 |-----|------|
 | `DefaultWager` / `MinWager` / `MaxWager` | Stake clamps |
-| `TargetRTP` | Design aim only (~1.34); match by tuning multipliers vs land curve |
+| `TargetRTP` | Design aim only (~1.39); match by tuning multipliers vs land curve |
 | `BucketMultipliers` | Payout per landed bucket (`payout = floor(wager * mult)`) |
 | `BucketWeights` | Tuning reference for physical land spread (not rolled) |
 | `DropCooldownSeconds` | Per-player drop throttle |
@@ -129,7 +130,7 @@ Full table lives in `src/shared/Config.luau`.
 - Ball bounces off pegs with gravity; path does **not** curve toward a pre-chosen slot
 - Repeated drops cluster toward center (normal / Galton curve); edge 26x is rare
 - Other clients do not see your ball
-- Over many drops, average return trends near ~134% RTP (variance still hurts short sessions)
+- Over many drops, average return trends near ~139% RTP (variance still hurts short sessions)
 - Balance `<` wager → drop rejected, no deduct
 - Leave mid-drop → wager refunded
 - Leave after settle → hub spawn `(0, 3, 20)`

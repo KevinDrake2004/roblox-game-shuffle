@@ -121,7 +121,7 @@ Config.ROCKET_RUN = {
 	- `DefaultBallCount` / `MinBallCount` / `BallDropStaggerSeconds` / `BallDropMaxReleaseSeconds` - multi-ball drops (no hard max; balance gates total stake; large volleys burst within a short release window)
 	- `BucketMultipliers` - payout multipliers left→right (edges high, soft center)
 	- `BucketWeights` - documented binomial land curve for RTP math (not rolled)
-	- `TargetRTP` - design aim only (~1.34); achieved by tuning multipliers vs the land curve
+	- `TargetRTP` - design aim only (~1.39); achieved by tuning multipliers vs the land curve
 	- `DropCooldownSeconds` - minimum delay between drops per player
 	- `BallRadius` / `BallGravity` / `BallBounce` - client gravity sim feel
 	- `BallPegLeaveSpeed` / `BallPegLeaveAngleDeg` / `BallPegApexNormalX` / `BallPegReflectBlend` / `BallPegMaxUpSpeed` - peg collision leave response (Galton L/R)
@@ -130,7 +130,7 @@ Config.ROCKET_RUN = {
 	- Arena / camera fields drive world presentation only (east of Rocket Run)
 
 	Payout is `floor(wager * BucketMultipliers[landed])` with no extra scale factor.
-	Tune multipliers so `E[multiplier]` under `BucketWeights` equals `TargetRTP`.
+	Keep multipliers integer (or ≥1 when fractional) so low wagers do not silently zero out RTP.
 
 	@prop PLINKO table
 	@within Config
@@ -146,12 +146,13 @@ Config.PLINKO = {
 	BallDropStaggerSeconds = 0.05,
 	BallDropMaxReleaseSeconds = 1.5,
 	-- Design aim: E[BucketMultipliers] under BucketWeights ≈ TargetRTP (no extra factor).
-	-- Raised above ~105% so short sessions feel less punishing (center is a soft return, not a wipe).
-	TargetRTP = 1.34,
+	-- Integer multipliers only: payout is floor(wager * mult), so fractional mults at
+	-- wager=1 were paying 0 and crashed live RTP to ~73% (felt like "always bankrupt").
+	TargetRTP = 1.39,
 	DropCooldownSeconds = 0.75,
-	-- Symmetric board: rare edge jackpots, common soft-center lands.
-	-- Under binomial C(8,k) weights: E[multiplier] = 342/256 ≈ 1.336.
-	BucketMultipliers = { 26, 5, 1.8, 0.85, 0.2, 0.85, 1.8, 5, 26 },
+	-- Symmetric board: rare edge jackpots, common center bust / near-push.
+	-- Under binomial C(8,k) weights: E[multiplier] = 356/256 = 1.390625.
+	BucketMultipliers = { 26, 5, 2, 1, 0, 1, 2, 5, 26 },
 	BucketWeights = { 1, 8, 28, 56, 70, 56, 28, 8, 1 },
 	-- World / camera (east of Rocket Run at 0, 5, -140 — ~90 studs apart)
 	ArenaOrigin = Vector3.new(90, 5, -140),

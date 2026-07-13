@@ -2,6 +2,23 @@
 
 Session notes for `feature/plinko-dev`. Flaws and successes as we iterate.
 
+## 2026-07-13 - Wager=1 floor was killing RTP (not ball speed)
+
+### Flaw
+
+Burst release only changed stagger / balls-per-wave - **not** fall physics. But
+`0.2x` / `0.85x` / `1.8x` with `floor(wager * mult)` at wager `1` paid `0` / `0` / `1`,
+so effective RTP ≈ **73%**. Three bankrupt 100-ball runs at 1 chip each matched that.
+
+### Fix
+
+Integer multipliers `{ 26, 5, 2, 1, 0, 1, 2, 5, 26 }` → `E[mult] = 356/256 ≈ 139%`
+even at wager 1. Release timing stays burst/stagger only (no sim velocity changes).
+
+### Successes
+
+- Low-wager multi-ball no longer secretly house-edged by integer truncation.
+
 ## 2026-07-13 - Fast burst release for large multi-ball
 
 ### Flaw
