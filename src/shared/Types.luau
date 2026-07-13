@@ -158,9 +158,10 @@ export type PlinkoPointsJoined = {
 
 --[=[
 	Fired after the server accepts a drop (total stake deducted). Client releases
-	`dropIds` in order with stagger; each ball is an independent free physics sim.
+	`dropIds` in waves of `burstSize` with `staggerSeconds` between waves.
+	Each ball is an independent free physics sim.
 
-	@type PlinkoPointsDropStarted {dropIds: {number}, wager: number, ballCount: number, staggerSeconds: number, chips: number}
+	@type PlinkoPointsDropStarted {dropIds: {number}, wager: number, ballCount: number, staggerSeconds: number, burstSize: number, chips: number}
 	@within Types
 ]=]
 export type PlinkoPointsDropStarted = {
@@ -168,6 +169,7 @@ export type PlinkoPointsDropStarted = {
 	wager: number,
 	ballCount: number,
 	staggerSeconds: number,
+	burstSize: number,
 	chips: number,
 }
 

@@ -2,6 +2,23 @@
 
 Session notes for `feature/plinko-dev`. Flaws and successes as we iterate.
 
+## 2026-07-13 - Fast burst release for large multi-ball
+
+### Flaw
+
+Fixed `0.3s` per-ball stagger made big volleys feel awful (e.g. 131 balls ≈ 40s
+just to finish releasing).
+
+### Fix
+
+Release timing scales with count: preferred `0.05s` between waves, but burst size
+grows so the whole volley starts within `BallDropMaxReleaseSeconds` (1.5s).
+Example: ~131 balls → ~5 per wave across ~27 waves ≈ 1.3s of release.
+
+### Successes
+
+- Small counts still cascade; huge counts dump a satisfying stream quickly.
+
 ## 2026-07-13 - UI: bucket labels, title contrast, uncapped balls
 
 ### Flaw

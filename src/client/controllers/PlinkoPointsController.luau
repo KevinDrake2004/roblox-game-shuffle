@@ -326,9 +326,11 @@ local function startFreeDrop(payload: PlinkoPointsDropStarted)
 		string.format("Wager %d × %d  |  Balance %d", payload.wager, payload.ballCount, payload.chips)
 	)
 
+	local burstSize = math.max(1, math.floor(payload.burstSize or 1))
 	for index, dropId in payload.dropIds do
 		activeDropIds[dropId] = true
-		local delaySeconds = (index - 1) * payload.staggerSeconds
+		local wave = math.floor((index - 1) / burstSize)
+		local delaySeconds = wave * payload.staggerSeconds
 		task.delay(delaySeconds, function()
 			if not active or not activeDropIds[dropId] then
 				return

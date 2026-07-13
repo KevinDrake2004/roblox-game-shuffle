@@ -241,7 +241,7 @@ ensureGui = function()
 	note.Font = Enum.Font.Gotham
 	note.TextColor3 = Color3.fromRGB(170, 160, 200)
 	note.TextScaled = true
-	note.Text = "Wager is per ball.\nBalls: as many as you can afford."
+	note.Text = "Wager is per ball.\nBig volleys burst out fast."
 	note.Parent = panel
 
 	local drop = Instance.new("TextButton")

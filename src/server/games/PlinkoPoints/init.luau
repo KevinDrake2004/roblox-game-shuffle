@@ -8,7 +8,7 @@
 	1. Lobby portal → `PlinkoPoints.join` teleports into `Workspace.PlinkoArena`.
 	2. Client sets wager via `PlinkoPointsSetWager` (clamped to Config).
 	3. `PlinkoPointsDrop` deducts `wager * ballCount` and fires `PlinkoPointsDropStarted`.
-	4. Client releases balls on a stagger; each runs an independent free physics sim
+	4. Client releases balls in short bursts; each runs an independent free physics sim
 	   (balls never collide with each other, only pegs).
 	5. Client reports `PlinkoPointsLanded` per ball; server settles each bucket.
 	6. Leave returns the player to `Config.LOBBY.SpawnPosition` (refunds unsettled balls).
@@ -90,6 +90,20 @@ local function clampBallCount(rawCount: unknown): number
 	end
 	-- No hard max: affordability is enforced at drop time (wager * balls ≤ balance).
 	return count
+end
+
+-- Large volleys release several balls per wave so total release stays under MaxReleaseSeconds.
+local function computeReleaseTiming(ballCount: number): (number, number)
+	if ballCount <= 1 then
+		return 0, 1
+	end
+	local preferred = Config.PLINKO.BallDropStaggerSeconds
+	local maxWindow = Config.PLINKO.BallDropMaxReleaseSeconds
+	local maxWaves = math.max(1, math.floor(maxWindow / preferred + 1e-9))
+	local burstSize = math.max(1, math.ceil(ballCount / maxWaves))
+	local waves = math.ceil(ballCount / burstSize)
+	local stagger = if waves <= 1 then 0 else math.min(preferred, maxWindow / (waves - 1))
+	return stagger, burstSize
 end
 
 local function getLoadout(player: Player): PlinkoPointsLoadout
@@ -393,16 +407,19 @@ local function beginDrop(player: Player)
 		startedAt = now,
 	}
 
+	local staggerSeconds, burstSize = computeReleaseTiming(ballCount)
 	local startedPayload: PlinkoPointsDropStarted = {
 		dropIds = dropIds,
 		wager = wager,
 		ballCount = ballCount,
-		staggerSeconds = Config.PLINKO.BallDropStaggerSeconds,
+		staggerSeconds = staggerSeconds,
+		burstSize = burstSize,
 		chips = CurrencyService.getChips(player),
 	}
 	Remotes.getEvent("PlinkoPointsDropStarted"):FireClient(player, startedPayload)
 
-	local timeout = Config.PLINKO.LandReportTimeoutSeconds + (ballCount - 1) * Config.PLINKO.BallDropStaggerSeconds + 2
+	local waves = math.ceil(ballCount / burstSize)
+	local timeout = Config.PLINKO.LandReportTimeoutSeconds + math.max(0, waves - 1) * staggerSeconds + 2
 	task.delay(timeout, function()
 		local session = pendingSessions[player]
 		if not session or session.startedAt ~= now then

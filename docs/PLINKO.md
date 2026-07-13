@@ -103,7 +103,7 @@ Full table lives in `src/shared/Config.luau`.
 | Piece | Behavior |
 |-------|----------|
 | Ball | Free gravity + soft peg bounce; multi-ball overlap allowed; **no ball-ball collision** |
-| Multi-drop | Choose any ball count you can afford; stake = wager×count; balls release on a short stagger |
+| Multi-drop | Choose any ball count you can afford; stake = wager×count; large volleys burst within ~1.5s |
 | Peg hits | Brief color flash on contact |
 | Bucket land | Local light + color flash on the slot physics entered (size stays fixed) |
 | Multiplier labels | SurfaceGui on each bucket face (local only); destroyed on leave |
