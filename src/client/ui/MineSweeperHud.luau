@@ -111,9 +111,16 @@ ensureGui = function()
 	flash.BackgroundColor3 = Config.COLORS.NeonLime
 	flash.BackgroundTransparency = 1
 	flash.BorderSizePixel = 0
+	flash.Active = false
+	flash.Selectable = false
 	flash.ZIndex = 1
 	flash.Parent = screen
 	feedbackFlash = flash
+
+	local function makePassThroughLabel(label: TextLabel)
+		label.Active = false
+		label.Selectable = false
+	end
 
 	local result = Instance.new("TextLabel")
 	result.Name = "Result"
@@ -127,6 +134,7 @@ ensureGui = function()
 	result.Text = "Pick gems · cash out anytime"
 	result.ZIndex = 3
 	result.Parent = screen
+	makePassThroughLabel(result)
 	resultLabel = result
 
 	local mult = Instance.new("TextLabel")
@@ -141,6 +149,7 @@ ensureGui = function()
 	mult.Text = "1.00x"
 	mult.ZIndex = 3
 	mult.Parent = screen
+	makePassThroughLabel(mult)
 	multiplierLabel = mult
 
 	local status = Instance.new("TextLabel")
@@ -155,6 +164,7 @@ ensureGui = function()
 	status.Text = "Set wager + mines, then start"
 	status.ZIndex = 3
 	status.Parent = screen
+	makePassThroughLabel(status)
 	statusLabel = status
 
 	local score = Instance.new("TextLabel")
@@ -169,6 +179,7 @@ ensureGui = function()
 	score.Text = ""
 	score.ZIndex = 3
 	score.Parent = screen
+	makePassThroughLabel(score)
 	scoreLabel = score
 
 	local session = Instance.new("TextLabel")
@@ -183,6 +194,7 @@ ensureGui = function()
 	session.Text = "Session: 0"
 	session.ZIndex = 3
 	session.Parent = screen
+	makePassThroughLabel(session)
 	sessionLabel = session
 
 	local panel = Instance.new("Frame")

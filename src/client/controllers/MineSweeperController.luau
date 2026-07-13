@@ -8,8 +8,10 @@
 ]=]
 local RunService = game:GetService("RunService")
 local UserInputService = game:GetService("UserInputService")
+local GuiService = game:GetService("GuiService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Workspace = game:GetService("Workspace")
+local Players = game:GetService("Players")
 
 local Packages = ReplicatedStorage.Packages
 local Shared = ReplicatedStorage.Shared
@@ -45,9 +47,12 @@ local cameraActive = false
 
 local tileIdleColors: { [BasePart]: Color3 } = {}
 local tileIdleMaterials: { [BasePart]: Enum.Material } = {}
+local revealedTiles: { [number]: boolean } = {}
+local hoveredTileIndex: number? = nil
 
 local GEM_COLOR = Config.COLORS.NeonLime
 local MINE_COLOR = Config.COLORS.NeonMagenta
+local HOVER_COLOR = Color3.fromRGB(255, 150, 210)
 local IDLE_A = Color3.fromRGB(89, 20, 56)
 local IDLE_B = Color3.fromRGB(140, 31, 89)
 
@@ -119,6 +124,8 @@ local function cacheIdleTileLooks()
 end
 
 local function resetBoardVisuals()
+	table.clear(revealedTiles)
+	hoveredTileIndex = nil
 	local tiles = getTilesFolder()
 	if not tiles then
 		return
@@ -136,16 +143,63 @@ local function resetBoardVisuals()
 	end
 end
 
-local function paintTile(tileIndex: number, color: Color3, neon: boolean?)
+local function getTilePart(tileIndex: number): BasePart?
 	local tiles = getTilesFolder()
 	if not tiles then
-		return
+		return nil
 	end
 	local part = tiles:FindFirstChild(`Tile_{tileIndex}`)
 	if part and part:IsA("BasePart") then
+		return part
+	end
+	return nil
+end
+
+local function idleColorFor(tileIndex: number, part: BasePart): Color3
+	local row = math.floor(tileIndex / Config.MINE_SWEEPER.GridSize)
+	local col = tileIndex % Config.MINE_SWEEPER.GridSize
+	return tileIdleColors[part] or (if (row + col) % 2 == 0 then IDLE_A else IDLE_B)
+end
+
+local function paintTile(tileIndex: number, color: Color3, neon: boolean?)
+	local part = getTilePart(tileIndex)
+	if part then
 		part.Color = color
 		part.Material = if neon then Enum.Material.Neon else Enum.Material.SmoothPlastic
 	end
+end
+
+local function restoreUnrevealedTile(tileIndex: number)
+	if revealedTiles[tileIndex] then
+		return
+	end
+	local part = getTilePart(tileIndex)
+	if not part then
+		return
+	end
+	part.Color = idleColorFor(tileIndex, part)
+	part.Material = tileIdleMaterials[part] or Enum.Material.SmoothPlastic
+end
+
+local function setHoveredTile(tileIndex: number?)
+	if hoveredTileIndex == tileIndex then
+		return
+	end
+	if hoveredTileIndex ~= nil then
+		restoreUnrevealedTile(hoveredTileIndex)
+	end
+	hoveredTileIndex = tileIndex
+	if tileIndex ~= nil and not revealedTiles[tileIndex] then
+		paintTile(tileIndex, HOVER_COLOR, false)
+	end
+end
+
+local function markRevealed(tileIndex: number, color: Color3)
+	if hoveredTileIndex == tileIndex then
+		hoveredTileIndex = nil
+	end
+	revealedTiles[tileIndex] = true
+	paintTile(tileIndex, color, true)
 end
 
 local function stopBoardCamera()
@@ -268,10 +322,44 @@ local function raycastTileIndex(screenPos: Vector2): number?
 	return nil
 end
 
+local function mouseOverInteractiveGui(screenPos: Vector2): boolean
+	local inset = GuiService:GetGuiInset()
+	local playerGui = Players.LocalPlayer:FindFirstChildOfClass("PlayerGui")
+	if not playerGui then
+		return false
+	end
+	local objects = playerGui:GetGuiObjectsAtPosition(screenPos.X - inset.X, screenPos.Y - inset.Y)
+	for _, obj in objects do
+		if obj:IsA("GuiButton") or obj:IsA("TextBox") then
+			return true
+		end
+	end
+	return false
+end
+
 local function bindTileInput()
 	inputJanitor:Cleanup()
-	inputJanitor:Add(UserInputService.InputBegan:Connect(function(input, gameProcessed)
-		if gameProcessed or not active or not roundActive then
+
+	inputJanitor:Add(RunService.RenderStepped:Connect(function()
+		if not active then
+			setHoveredTile(nil)
+			return
+		end
+		if mouseOverInteractiveGui(UserInputService:GetMouseLocation()) then
+			setHoveredTile(nil)
+			return
+		end
+		local tileIndex = raycastTileIndex(UserInputService:GetMouseLocation())
+		if tileIndex ~= nil and revealedTiles[tileIndex] then
+			setHoveredTile(nil)
+			return
+		end
+		-- Hover highlight while in arena (idle preview + live round).
+		setHoveredTile(tileIndex)
+	end))
+
+	inputJanitor:Add(UserInputService.InputBegan:Connect(function(input, _gameProcessed)
+		if not active or not roundActive then
 			return
 		end
 		if
@@ -281,8 +369,11 @@ local function bindTileInput()
 			return
 		end
 		local mouse = UserInputService:GetMouseLocation()
+		if mouseOverInteractiveGui(mouse) then
+			return
+		end
 		local tileIndex = raycastTileIndex(mouse)
-		if tileIndex ~= nil then
+		if tileIndex ~= nil and not revealedTiles[tileIndex] then
 			requestReveal(tileIndex)
 		end
 	end))
@@ -298,7 +389,7 @@ local function onRoundStarted(payload: MineSweeperRoundState)
 	currentMineCount = payload.mineCount
 	resetBoardVisuals()
 	for _, tileIndex in payload.revealedTiles do
-		paintTile(tileIndex, GEM_COLOR, true)
+		markRevealed(tileIndex, GEM_COLOR)
 	end
 	MineSweeperHud.setLoadoutEnabled(false)
 	MineSweeperHud.setStartEnabled(false)
@@ -317,7 +408,7 @@ local function onTileRevealed(payload: MineSweeperRevealPayload)
 		return
 	end
 	if payload.safe then
-		paintTile(payload.tileIndex, GEM_COLOR, true)
+		markRevealed(payload.tileIndex, GEM_COLOR)
 		MineSweeperHud.setMultiplier(payload.multiplier)
 		MineSweeperHud.setCashOutEnabled(true)
 		MineSweeperHud.setResult(string.format("Gem! %.2fx", payload.multiplier), Config.COLORS.NeonLime)
@@ -339,7 +430,7 @@ local function onResult(payload: MineSweeperResultPayload)
 	end
 
 	if payload.outcome == "mine_hit" and payload.hitTile ~= nil then
-		paintTile(payload.hitTile, MINE_COLOR, true)
+		markRevealed(payload.hitTile, MINE_COLOR)
 	end
 
 	sessionNet += payload.netDelta
