@@ -32,6 +32,22 @@
 	| `PlinkoPointsDropRejected` | S→C | Drop blocked (`{ reason: string }`) |
 	| `PlinkoPointsLeave` | C→S | Leave arena |
 	| `PlinkoPointsLeft` | S→C | Confirm leave / tear down client HUD |
+
+	## Mine Sweeper Arcade events
+
+	| Name | Direction | Purpose |
+	|------|-----------|---------|
+	| `MineSweeperSetLoadout` | C→S | Set wager + mine count |
+	| `MineSweeperJoined` | S→C | Arena enter snapshot (`MineSweeperJoined`) |
+	| `MineSweeperStartRound` | C→S | Deduct wager and place mines |
+	| `MineSweeperRoundStarted` | S→C | Round live (`MineSweeperRoundState`) |
+	| `MineSweeperReveal` | C→S | Reveal tile by index (0-24) |
+	| `MineSweeperTileRevealed` | S→C | Safe gem reveal (`MineSweeperRevealPayload`) |
+	| `MineSweeperCashOut` | C→S | Bank current multiplier (after ≥1 safe reveal) |
+	| `MineSweeperResult` | S→C | Cash-out or mine-hit settle (`MineSweeperResultPayload`) |
+	| `MineSweeperRejected` | S→C | Action blocked (`{ reason: string }`) |
+	| `MineSweeperLeave` | C→S | Leave arena |
+	| `MineSweeperLeft` | S→C | Confirm leave / tear down client HUD |
 ]=]
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local RunService = game:GetService("RunService")
@@ -62,6 +78,17 @@ export type EventName =
 	| "PlinkoPointsDropRejected"
 	| "PlinkoPointsLeave"
 	| "PlinkoPointsLeft"
+	| "MineSweeperSetLoadout"
+	| "MineSweeperJoined"
+	| "MineSweeperStartRound"
+	| "MineSweeperRoundStarted"
+	| "MineSweeperReveal"
+	| "MineSweeperTileRevealed"
+	| "MineSweeperCashOut"
+	| "MineSweeperResult"
+	| "MineSweeperRejected"
+	| "MineSweeperLeave"
+	| "MineSweeperLeft"
 	| "JobAction"
 	| "JobPrompt"
 	| "JobResult"
@@ -90,6 +117,17 @@ local EVENT_NAMES: { EventName } = {
 	"PlinkoPointsDropRejected",
 	"PlinkoPointsLeave",
 	"PlinkoPointsLeft",
+	"MineSweeperSetLoadout",
+	"MineSweeperJoined",
+	"MineSweeperStartRound",
+	"MineSweeperRoundStarted",
+	"MineSweeperReveal",
+	"MineSweeperTileRevealed",
+	"MineSweeperCashOut",
+	"MineSweeperResult",
+	"MineSweeperRejected",
+	"MineSweeperLeave",
+	"MineSweeperLeft",
 	"JobAction",
 	"JobPrompt",
 	"JobResult",

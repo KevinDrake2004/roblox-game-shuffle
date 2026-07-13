@@ -3,10 +3,11 @@
 	@class Config
 	Shared game configuration constants for Shuffle Arcade.
 
-	Soft currency supports earn grants and wager loops. Rocket Run and Plinko Points
-	stake chips and settle with RTP > 100% (see `Config.ROCKET_RUN` /
-	`Config.PLINKO`, `docs/ROCKET_RUN.md`, `docs/PLINKO.md`). `DAILY_EARN_CAP`
-	applies to earn-only `awardChips` paths, not wager payout credits.
+	Soft currency supports earn grants and wager loops. Rocket Run, Plinko Points,
+	and Mine Sweeper stake chips and settle with RTP > 100% (see `Config.ROCKET_RUN` /
+	`Config.PLINKO` / `Config.MINE_SWEEPER`, `docs/ROCKET_RUN.md`, `docs/PLINKO.md`,
+	`docs/MINES.md`). `DAILY_EARN_CAP` applies to earn-only `awardChips` paths, not
+	wager payout credits.
 ]=]
 local Types = require(script.Parent.Types)
 
@@ -71,7 +72,7 @@ Config.PORTALS = portals
 local playableGames: { [GameId]: boolean } = {
 	RocketRun = true,
 	PlinkoPoints = true,
-	MineSweeper = false,
+	MineSweeper = true,
 }
 Config.PLAYABLE_GAMES = playableGames
 
@@ -309,6 +310,39 @@ function Config.getPlinkoRisk(riskId: unknown): PlinkoRiskLevel
 	end
 	return levels[1]
 end
+
+--[=[
+	Mine Sweeper Arcade tuning: 5x5 grid, mine count, wager clamps, RTP.
+
+	- `GridSize` - side length (tiles = GridSize^2)
+	- `MinMines` / `MaxMines` / `DefaultMines` - mines placed per round
+	- `DefaultWager` / `MinWager` / `MaxWager` - stake clamps
+	- `TargetRTP` - design expected return per chip wagered (> 1.0)
+	- `PlayerReturnFactor` - scales cash-out: floor(wager * multiplier * factor)
+	- Multiplier after r safe reveals with m mines on n tiles:
+	  `∏_{i=0}^{r-1} (n - i) / (n - m - i)` (conditional survival odds), then × factor
+	- Arena / camera fields drive world presentation only
+
+	@prop MINE_SWEEPER table
+	@within Config
+]=]
+Config.MINE_SWEEPER = {
+	GridSize = 5,
+	MinMines = 1,
+	MaxMines = 24,
+	DefaultMines = 3,
+	DefaultWager = 10,
+	MinWager = 1,
+	MaxWager = 50,
+	-- Target expected return per wagered chip (> 1.0 = player edge over volume).
+	TargetRTP = 1.05,
+	-- Applied on cash-out: payout = floor(wager * multiplier * PlayerReturnFactor).
+	PlayerReturnFactor = 1.05,
+	-- World / camera (west of Rocket Run at 0, 5, -140 - ~90 studs apart)
+	ArenaOrigin = Vector3.new(-90, 5, -140),
+	-- Elevated board cam: look down from spawn side toward the grid.
+	CameraOffset = Vector3.new(0, 22, 28),
+}
 
 Config.JOB = {
 	Reward = 15,

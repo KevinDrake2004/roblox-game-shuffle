@@ -34,6 +34,9 @@
       },
       "PlinkoArena": {
         "$path": "src/map/PlinkoArena.model.json"
+      },
+      "MineSweeperArena": {
+        "$path": "src/map/MineSweeperArena.model.json"
       }
     },
     "Lighting": {

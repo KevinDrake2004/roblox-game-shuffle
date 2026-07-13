@@ -6,6 +6,8 @@
 	Rocket Run payloads describe wager settlement: stake deducted on eligibility;
 	cash-out credits `payout`; crash leaves the stake lost (`netDelta = -wager`).
 	Plinko Points deducts per drop and credits `floor(wager * bucketMultiplier)`.
+	Mine Sweeper deducts on round start; cash-out credits
+	`floor(wager * multiplier * PlayerReturnFactor)`; mine hit loses the stake.
 ]=]
 local Types = {}
 
@@ -198,6 +200,84 @@ export type PlinkoPointsResultPayload = {
 	highScore: number,
 	chips: number,
 	outcome: "win" | "bust" | "loss" | "push",
+}
+
+--[=[
+	Per-player Mine Sweeper loadout. Wager and mine count clamped on the server.
+
+	@type MineSweeperLoadout {wager: number, mineCount: number}
+	@within Types
+]=]
+export type MineSweeperLoadout = {
+	wager: number,
+	mineCount: number,
+}
+
+--[=[
+	Fired when the player enters the Mine Sweeper arena (HUD bootstrap).
+
+	@type MineSweeperJoined {wager: number, mineCount: number, chips: number, highScore: number}
+	@within Types
+]=]
+export type MineSweeperJoined = {
+	wager: number,
+	mineCount: number,
+	chips: number,
+	highScore: number,
+}
+
+--[=[
+	Live round snapshot after start or a successful gem reveal.
+
+	@type MineSweeperRoundState {roundId: number, phase: string, wager: number, mineCount: number, revealedCount: number, multiplier: number, revealedTiles: {number}, chips: number}
+	@within Types
+]=]
+export type MineSweeperRoundState = {
+	roundId: number,
+	phase: "idle" | "playing" | "settled",
+	wager: number,
+	mineCount: number,
+	revealedCount: number,
+	multiplier: number,
+	revealedTiles: { number },
+	chips: number,
+}
+
+--[=[
+	Client reveal request result for a single tile (gem path only; mine hits settle via Result).
+
+	@type MineSweeperRevealPayload {roundId: number, tileIndex: number, safe: boolean, revealedCount: number, multiplier: number}
+	@within Types
+]=]
+export type MineSweeperRevealPayload = {
+	roundId: number,
+	tileIndex: number,
+	safe: boolean,
+	revealedCount: number,
+	multiplier: number,
+}
+
+--[=[
+	Per-round settlement after cash-out or mine hit.
+
+	- Cash-out: `payout = floor(wager * multiplier * PlayerReturnFactor)`, `netDelta = payout - wager`
+	- Mine hit: `payout = 0`, `netDelta = -wager` (stake already deducted)
+
+	@type MineSweeperResultPayload {roundId: number, outcome: string, wager: number, mineCount: number, revealedCount: number, multiplier: number, payout: number, netDelta: number, highScore: number, chips: number, hitTile: number?}
+	@within Types
+]=]
+export type MineSweeperResultPayload = {
+	roundId: number,
+	outcome: "cashed_out" | "mine_hit",
+	wager: number,
+	mineCount: number,
+	revealedCount: number,
+	multiplier: number,
+	payout: number,
+	netDelta: number,
+	highScore: number,
+	chips: number,
+	hitTile: number?,
 }
 
 return Types

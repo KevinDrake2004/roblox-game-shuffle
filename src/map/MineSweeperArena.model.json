@@ -1,0 +1,851 @@
+{
+  "className": "Folder",
+  "children": [
+    {
+      "name": "Floor",
+      "className": "Part",
+      "properties": {
+        "Anchored": true,
+        "Size": [
+          48.0,
+          1.0,
+          48.0
+        ],
+        "Position": [
+          -90.0,
+          5.0,
+          -140.0
+        ],
+        "Color": [
+          0.086,
+          0.047,
+          0.094
+        ],
+        "Material": "SmoothPlastic"
+      }
+    },
+    {
+      "name": "SpawnPad",
+      "className": "Part",
+      "properties": {
+        "Anchored": true,
+        "Size": [
+          10.0,
+          1.0,
+          10.0
+        ],
+        "Position": [
+          -90.0,
+          6.0,
+          -126.0
+        ],
+        "Color": [
+          0.925,
+          0.282,
+          0.6
+        ],
+        "Material": "Neon",
+        "Transparency": 0.35
+      },
+      "children": [
+        {
+          "name": "PadLight",
+          "className": "PointLight",
+          "properties": {
+            "Brightness": 1.5,
+            "Range": 28.0,
+            "Color": [
+              0.925,
+              0.282,
+              0.6
+            ]
+          }
+        },
+        {
+          "name": "LeavePrompt",
+          "className": "ProximityPrompt",
+          "properties": {
+            "ActionText": "Leave",
+            "ObjectText": "Return to Hub",
+            "HoldDuration": 0.4,
+            "MaxActivationDistance": 14.0,
+            "RequiresLineOfSight": false
+          }
+        }
+      ]
+    },
+    {
+      "name": "BoardPlatform",
+      "className": "Part",
+      "properties": {
+        "Anchored": true,
+        "Size": [
+          20.0,
+          1.0,
+          20.0
+        ],
+        "Position": [
+          -90.0,
+          6.2,
+          -148.0
+        ],
+        "Color": [
+          0.086,
+          0.031,
+          0.094
+        ],
+        "Material": "SmoothPlastic"
+      }
+    },
+    {
+      "name": "BoardRail",
+      "className": "Part",
+      "properties": {
+        "Anchored": true,
+        "CanCollide": false,
+        "Size": [
+          21.0,
+          0.4,
+          21.0
+        ],
+        "Position": [
+          -90.0,
+          6.9,
+          -148.0
+        ],
+        "Color": [
+          0.925,
+          0.282,
+          0.6
+        ],
+        "Material": "Neon",
+        "Transparency": 0.55
+      }
+    },
+    {
+      "name": "Tiles",
+      "className": "Folder",
+      "children": [
+        {
+          "name": "Tile_0",
+          "className": "Part",
+          "properties": {
+            "Anchored": true,
+            "CanCollide": false,
+            "Size": [
+              3.2,
+              0.6,
+              3.2
+            ],
+            "Position": [
+              -97.2,
+              7.0,
+              -155.2
+            ],
+            "Color": [
+              0.35,
+              0.08,
+              0.22
+            ],
+            "Material": "SmoothPlastic"
+          },
+          "attributes": {
+            "TileIndex": 0
+          }
+        },
+        {
+          "name": "Tile_1",
+          "className": "Part",
+          "properties": {
+            "Anchored": true,
+            "CanCollide": false,
+            "Size": [
+              3.2,
+              0.6,
+              3.2
+            ],
+            "Position": [
+              -93.6,
+              7.0,
+              -155.2
+            ],
+            "Color": [
+              0.55,
+              0.12,
+              0.35
+            ],
+            "Material": "SmoothPlastic"
+          },
+          "attributes": {
+            "TileIndex": 1
+          }
+        },
+        {
+          "name": "Tile_2",
+          "className": "Part",
+          "properties": {
+            "Anchored": true,
+            "CanCollide": false,
+            "Size": [
+              3.2,
+              0.6,
+              3.2
+            ],
+            "Position": [
+              -90.0,
+              7.0,
+              -155.2
+            ],
+            "Color": [
+              0.35,
+              0.08,
+              0.22
+            ],
+            "Material": "SmoothPlastic"
+          },
+          "attributes": {
+            "TileIndex": 2
+          }
+        },
+        {
+          "name": "Tile_3",
+          "className": "Part",
+          "properties": {
+            "Anchored": true,
+            "CanCollide": false,
+            "Size": [
+              3.2,
+              0.6,
+              3.2
+            ],
+            "Position": [
+              -86.4,
+              7.0,
+              -155.2
+            ],
+            "Color": [
+              0.55,
+              0.12,
+              0.35
+            ],
+            "Material": "SmoothPlastic"
+          },
+          "attributes": {
+            "TileIndex": 3
+          }
+        },
+        {
+          "name": "Tile_4",
+          "className": "Part",
+          "properties": {
+            "Anchored": true,
+            "CanCollide": false,
+            "Size": [
+              3.2,
+              0.6,
+              3.2
+            ],
+            "Position": [
+              -82.8,
+              7.0,
+              -155.2
+            ],
+            "Color": [
+              0.35,
+              0.08,
+              0.22
+            ],
+            "Material": "SmoothPlastic"
+          },
+          "attributes": {
+            "TileIndex": 4
+          }
+        },
+        {
+          "name": "Tile_5",
+          "className": "Part",
+          "properties": {
+            "Anchored": true,
+            "CanCollide": false,
+            "Size": [
+              3.2,
+              0.6,
+              3.2
+            ],
+            "Position": [
+              -97.2,
+              7.0,
+              -151.6
+            ],
+            "Color": [
+              0.55,
+              0.12,
+              0.35
+            ],
+            "Material": "SmoothPlastic"
+          },
+          "attributes": {
+            "TileIndex": 5
+          }
+        },
+        {
+          "name": "Tile_6",
+          "className": "Part",
+          "properties": {
+            "Anchored": true,
+            "CanCollide": false,
+            "Size": [
+              3.2,
+              0.6,
+              3.2
+            ],
+            "Position": [
+              -93.6,
+              7.0,
+              -151.6
+            ],
+            "Color": [
+              0.35,
+              0.08,
+              0.22
+            ],
+            "Material": "SmoothPlastic"
+          },
+          "attributes": {
+            "TileIndex": 6
+          }
+        },
+        {
+          "name": "Tile_7",
+          "className": "Part",
+          "properties": {
+            "Anchored": true,
+            "CanCollide": false,
+            "Size": [
+              3.2,
+              0.6,
+              3.2
+            ],
+            "Position": [
+              -90.0,
+              7.0,
+              -151.6
+            ],
+            "Color": [
+              0.55,
+              0.12,
+              0.35
+            ],
+            "Material": "SmoothPlastic"
+          },
+          "attributes": {
+            "TileIndex": 7
+          }
+        },
+        {
+          "name": "Tile_8",
+          "className": "Part",
+          "properties": {
+            "Anchored": true,
+            "CanCollide": false,
+            "Size": [
+              3.2,
+              0.6,
+              3.2
+            ],
+            "Position": [
+              -86.4,
+              7.0,
+              -151.6
+            ],
+            "Color": [
+              0.35,
+              0.08,
+              0.22
+            ],
+            "Material": "SmoothPlastic"
+          },
+          "attributes": {
+            "TileIndex": 8
+          }
+        },
+        {
+          "name": "Tile_9",
+          "className": "Part",
+          "properties": {
+            "Anchored": true,
+            "CanCollide": false,
+            "Size": [
+              3.2,
+              0.6,
+              3.2
+            ],
+            "Position": [
+              -82.8,
+              7.0,
+              -151.6
+            ],
+            "Color": [
+              0.55,
+              0.12,
+              0.35
+            ],
+            "Material": "SmoothPlastic"
+          },
+          "attributes": {
+            "TileIndex": 9
+          }
+        },
+        {
+          "name": "Tile_10",
+          "className": "Part",
+          "properties": {
+            "Anchored": true,
+            "CanCollide": false,
+            "Size": [
+              3.2,
+              0.6,
+              3.2
+            ],
+            "Position": [
+              -97.2,
+              7.0,
+              -148.0
+            ],
+            "Color": [
+              0.35,
+              0.08,
+              0.22
+            ],
+            "Material": "SmoothPlastic"
+          },
+          "attributes": {
+            "TileIndex": 10
+          }
+        },
+        {
+          "name": "Tile_11",
+          "className": "Part",
+          "properties": {
+            "Anchored": true,
+            "CanCollide": false,
+            "Size": [
+              3.2,
+              0.6,
+              3.2
+            ],
+            "Position": [
+              -93.6,
+              7.0,
+              -148.0
+            ],
+            "Color": [
+              0.55,
+              0.12,
+              0.35
+            ],
+            "Material": "SmoothPlastic"
+          },
+          "attributes": {
+            "TileIndex": 11
+          }
+        },
+        {
+          "name": "Tile_12",
+          "className": "Part",
+          "properties": {
+            "Anchored": true,
+            "CanCollide": false,
+            "Size": [
+              3.2,
+              0.6,
+              3.2
+            ],
+            "Position": [
+              -90.0,
+              7.0,
+              -148.0
+            ],
+            "Color": [
+              0.35,
+              0.08,
+              0.22
+            ],
+            "Material": "SmoothPlastic"
+          },
+          "attributes": {
+            "TileIndex": 12
+          }
+        },
+        {
+          "name": "Tile_13",
+          "className": "Part",
+          "properties": {
+            "Anchored": true,
+            "CanCollide": false,
+            "Size": [
+              3.2,
+              0.6,
+              3.2
+            ],
+            "Position": [
+              -86.4,
+              7.0,
+              -148.0
+            ],
+            "Color": [
+              0.55,
+              0.12,
+              0.35
+            ],
+            "Material": "SmoothPlastic"
+          },
+          "attributes": {
+            "TileIndex": 13
+          }
+        },
+        {
+          "name": "Tile_14",
+          "className": "Part",
+          "properties": {
+            "Anchored": true,
+            "CanCollide": false,
+            "Size": [
+              3.2,
+              0.6,
+              3.2
+            ],
+            "Position": [
+              -82.8,
+              7.0,
+              -148.0
+            ],
+            "Color": [
+              0.35,
+              0.08,
+              0.22
+            ],
+            "Material": "SmoothPlastic"
+          },
+          "attributes": {
+            "TileIndex": 14
+          }
+        },
+        {
+          "name": "Tile_15",
+          "className": "Part",
+          "properties": {
+            "Anchored": true,
+            "CanCollide": false,
+            "Size": [
+              3.2,
+              0.6,
+              3.2
+            ],
+            "Position": [
+              -97.2,
+              7.0,
+              -144.4
+            ],
+            "Color": [
+              0.55,
+              0.12,
+              0.35
+            ],
+            "Material": "SmoothPlastic"
+          },
+          "attributes": {
+            "TileIndex": 15
+          }
+        },
+        {
+          "name": "Tile_16",
+          "className": "Part",
+          "properties": {
+            "Anchored": true,
+            "CanCollide": false,
+            "Size": [
+              3.2,
+              0.6,
+              3.2
+            ],
+            "Position": [
+              -93.6,
+              7.0,
+              -144.4
+            ],
+            "Color": [
+              0.35,
+              0.08,
+              0.22
+            ],
+            "Material": "SmoothPlastic"
+          },
+          "attributes": {
+            "TileIndex": 16
+          }
+        },
+        {
+          "name": "Tile_17",
+          "className": "Part",
+          "properties": {
+            "Anchored": true,
+            "CanCollide": false,
+            "Size": [
+              3.2,
+              0.6,
+              3.2
+            ],
+            "Position": [
+              -90.0,
+              7.0,
+              -144.4
+            ],
+            "Color": [
+              0.55,
+              0.12,
+              0.35
+            ],
+            "Material": "SmoothPlastic"
+          },
+          "attributes": {
+            "TileIndex": 17
+          }
+        },
+        {
+          "name": "Tile_18",
+          "className": "Part",
+          "properties": {
+            "Anchored": true,
+            "CanCollide": false,
+            "Size": [
+              3.2,
+              0.6,
+              3.2
+            ],
+            "Position": [
+              -86.4,
+              7.0,
+              -144.4
+            ],
+            "Color": [
+              0.35,
+              0.08,
+              0.22
+            ],
+            "Material": "SmoothPlastic"
+          },
+          "attributes": {
+            "TileIndex": 18
+          }
+        },
+        {
+          "name": "Tile_19",
+          "className": "Part",
+          "properties": {
+            "Anchored": true,
+            "CanCollide": false,
+            "Size": [
+              3.2,
+              0.6,
+              3.2
+            ],
+            "Position": [
+              -82.8,
+              7.0,
+              -144.4
+            ],
+            "Color": [
+              0.55,
+              0.12,
+              0.35
+            ],
+            "Material": "SmoothPlastic"
+          },
+          "attributes": {
+            "TileIndex": 19
+          }
+        },
+        {
+          "name": "Tile_20",
+          "className": "Part",
+          "properties": {
+            "Anchored": true,
+            "CanCollide": false,
+            "Size": [
+              3.2,
+              0.6,
+              3.2
+            ],
+            "Position": [
+              -97.2,
+              7.0,
+              -140.8
+            ],
+            "Color": [
+              0.35,
+              0.08,
+              0.22
+            ],
+            "Material": "SmoothPlastic"
+          },
+          "attributes": {
+            "TileIndex": 20
+          }
+        },
+        {
+          "name": "Tile_21",
+          "className": "Part",
+          "properties": {
+            "Anchored": true,
+            "CanCollide": false,
+            "Size": [
+              3.2,
+              0.6,
+              3.2
+            ],
+            "Position": [
+              -93.6,
+              7.0,
+              -140.8
+            ],
+            "Color": [
+              0.55,
+              0.12,
+              0.35
+            ],
+            "Material": "SmoothPlastic"
+          },
+          "attributes": {
+            "TileIndex": 21
+          }
+        },
+        {
+          "name": "Tile_22",
+          "className": "Part",
+          "properties": {
+            "Anchored": true,
+            "CanCollide": false,
+            "Size": [
+              3.2,
+              0.6,
+              3.2
+            ],
+            "Position": [
+              -90.0,
+              7.0,
+              -140.8
+            ],
+            "Color": [
+              0.35,
+              0.08,
+              0.22
+            ],
+            "Material": "SmoothPlastic"
+          },
+          "attributes": {
+            "TileIndex": 22
+          }
+        },
+        {
+          "name": "Tile_23",
+          "className": "Part",
+          "properties": {
+            "Anchored": true,
+            "CanCollide": false,
+            "Size": [
+              3.2,
+              0.6,
+              3.2
+            ],
+            "Position": [
+              -86.4,
+              7.0,
+              -140.8
+            ],
+            "Color": [
+              0.55,
+              0.12,
+              0.35
+            ],
+            "Material": "SmoothPlastic"
+          },
+          "attributes": {
+            "TileIndex": 23
+          }
+        },
+        {
+          "name": "Tile_24",
+          "className": "Part",
+          "properties": {
+            "Anchored": true,
+            "CanCollide": false,
+            "Size": [
+              3.2,
+              0.6,
+              3.2
+            ],
+            "Position": [
+              -82.8,
+              7.0,
+              -140.8
+            ],
+            "Color": [
+              0.35,
+              0.08,
+              0.22
+            ],
+            "Material": "SmoothPlastic"
+          },
+          "attributes": {
+            "TileIndex": 24
+          }
+        }
+      ]
+    },
+    {
+      "name": "CameraFocus",
+      "className": "Part",
+      "properties": {
+        "Anchored": true,
+        "CanCollide": false,
+        "CanQuery": false,
+        "Transparency": 1,
+        "Size": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "Position": [
+          -90.0,
+          10.0,
+          -148.0
+        ]
+      }
+    },
+    {
+      "name": "TitleSign",
+      "className": "Part",
+      "properties": {
+        "Anchored": true,
+        "CanCollide": false,
+        "Size": [
+          22.0,
+          4.0,
+          0.5
+        ],
+        "Position": [
+          -90.0,
+          16.0,
+          -158.0
+        ],
+        "Color": [
+          0.14,
+          0.05,
+          0.12
+        ],
+        "Material": "SmoothPlastic"
+      }
+    }
+  ]
+}

@@ -154,6 +154,9 @@ local function handlePortalRequest(player: Player, gameId: GameId)
 		elseif gameId == "PlinkoPoints" then
 			local PlinkoPoints = require(script.Parent.Parent.games.PlinkoPoints)
 			PlinkoPoints.join(player)
+		elseif gameId == "MineSweeper" then
+			local MineSweeper = require(script.Parent.Parent.games.MineSweeper)
+			MineSweeper.join(player)
 		end
 	else
 		local payload: PortalResultPayload = {
