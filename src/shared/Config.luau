@@ -183,7 +183,8 @@ Config.PLINKO = {
 	-- World / camera (east of Rocket Run at 0, 5, -140 — ~90 studs apart)
 	-- Larger playfield + closer camera so pegs/balls stay easy to track on all risk tiers.
 	ArenaOrigin = Vector3.new(90, 5, -140),
-	CameraOffset = Vector3.new(0, 6, 20),
+	-- Head-on board cam: offset is along +Z (toward spawn), no downward pitch.
+	CameraOffset = Vector3.new(0, 0, 36),
 	-- Default Galton spacing; local boards may scale X/Y to fit the rails.
 	PegRows = 12,
 	PegSpacingX = 2.8,

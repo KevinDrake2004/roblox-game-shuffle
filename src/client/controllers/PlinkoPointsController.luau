@@ -216,7 +216,9 @@ local function startBoardCamera()
 			end
 			local offset = Config.PLINKO.CameraOffset
 			local target = focus.Position
-			cam.CFrame = CFrame.lookAt(target + offset, target)
+			-- Look straight at the board face (world up) so the full peg field stays framed.
+			cam.FieldOfView = 70
+			cam.CFrame = CFrame.lookAt(target + offset, target, Vector3.yAxis)
 		end),
 		"Disconnect"
 	)
