@@ -22,11 +22,12 @@ Session notes for `feature/plinko-dev`. Flaws and successes as we iterate.
 - `floor(wager * mult)` slightly lowers live RTP on small wagers.
 - Still a custom 2D sim (not Roblox Workspace physics); close visually, not a full rigid-body solver.
 - Old Studio sessions may keep stale pegs until `PegLayoutVersion` rebuild runs (restart server / rejoin after sync).
-- Auto-drop / multi-ball / risk tiers still not started.
+- Auto-drop and risk tiers still not started (multi-ball is in).
 - No automated Monte Carlo yet to confirm live RTP vs design 105%.
 
 ### Playtest focus
 
-1. ~30 drops: lands should cluster near center; 20x edges rare.
+1. ~30 single drops: lands should cluster near center; 24x edges rare.
 2. No mid-air curve into a chosen slot.
 3. Labels only inside Plinko; other players do not see your ball.
+4. Multi-ball (e.g. 5): stagger release, no ball-ball bounce, stake = wager×count, leave mid-volley refunds unsettled.
