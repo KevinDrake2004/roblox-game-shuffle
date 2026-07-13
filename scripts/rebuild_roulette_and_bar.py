@@ -61,18 +61,30 @@ def part(name, size, pos, color, *, material="SmoothPlastic", orientation=None, 
 
 def build_roulette(name: str, cx: float, cz: float, yaw: float) -> dict:
     """Rectangular roulette table. Long axis = local X. Wheel at -X end,
-    betting layout across the +X portion (rendered by SurfaceGui on FeltLayout)."""
-    top_y = 2.05
+    betting layout across the +X portion (rendered by SurfaceGui on FeltLayout).
+
+    Every stacked part gets a UNIQUE top-Y (and a distinct footprint / radius when
+    coaxial) so no two visible faces are coplanar -> no z-fighting."""
     children = []
 
-    # Table body + rails
-    children.append(part("Base", (13.0, 1.5, 6.0), rot3(cx, cz, 0, top_y - 1.05, 0, yaw), WOOD, material="Wood", orientation=(0, yaw, 0)))
-    children.append(part("Skirt", (13.4, 0.7, 6.4), rot3(cx, cz, 0, top_y - 0.55, 0, yaw), [0.12, 0.06, 0.03], material="Wood", orientation=(0, yaw, 0)))
-    children.append(part("Rim", (13.6, 0.6, 6.6), rot3(cx, cz, 0, top_y - 0.05, 0, yaw), WOOD_RAIL, material="Wood", orientation=(0, yaw, 0)))
-    children.append(part("RimGold", (13.7, 0.14, 6.7), rot3(cx, cz, 0, top_y + 0.18, 0, yaw), GOLD, material="Metal", orientation=(0, yaw, 0)))
-    children.append(part("Felt", (13.0, 0.2, 6.0), rot3(cx, cz, 0, top_y + 0.2, 0, yaw), FELT, material="Fabric", orientation=(0, yaw, 0)))
+    # --- Table body + felt (clean ladder, no coplanar tops) ---
+    # Base is smaller than felt so its top is fully hidden under the felt slab.
+    children.append(part("Base", (12.4, 1.9, 5.4), rot3(cx, cz, 0, 0.95, 0, yaw), WOOD, material="Wood", orientation=(0, yaw, 0)))
+    # Felt: full table top, play surface at y=2.2.
+    children.append(part("Felt", (13.0, 0.3, 6.0), rot3(cx, cz, 0, 2.05, 0, yaw), FELT, material="Fabric", orientation=(0, yaw, 0)))
 
-    # Betting layout felt (SurfaceGui target). Sits on +X portion, inset.
+    # Raised wood bumper border (perimeter bars only; they abut, never overlap).
+    children.append(part("BorderN", (13.6, 0.5, 0.6), rot3(cx, cz, 0, 2.15, 3.3, yaw), WOOD_RAIL, material="Wood", orientation=(0, yaw, 0)))
+    children.append(part("BorderS", (13.6, 0.5, 0.6), rot3(cx, cz, 0, 2.15, -3.3, yaw), WOOD_RAIL, material="Wood", orientation=(0, yaw, 0)))
+    children.append(part("BorderE", (0.6, 0.5, 6.0), rot3(cx, cz, 6.8, 2.15, 0, yaw), WOOD_RAIL, material="Wood", orientation=(0, yaw, 0)))
+    children.append(part("BorderW", (0.6, 0.5, 6.0), rot3(cx, cz, -6.8, 2.15, 0, yaw), WOOD_RAIL, material="Wood", orientation=(0, yaw, 0)))
+    # Gold caps sit on top of the wood border (cover it fully -> wood top hidden).
+    children.append(part("GoldN", (13.6, 0.08, 0.6), rot3(cx, cz, 0, 2.44, 3.3, yaw), GOLD, material="Metal", orientation=(0, yaw, 0)))
+    children.append(part("GoldS", (13.6, 0.08, 0.6), rot3(cx, cz, 0, 2.44, -3.3, yaw), GOLD, material="Metal", orientation=(0, yaw, 0)))
+    children.append(part("GoldE", (0.6, 0.08, 6.0), rot3(cx, cz, 6.8, 2.44, 0, yaw), GOLD, material="Metal", orientation=(0, yaw, 0)))
+    children.append(part("GoldW", (0.6, 0.08, 6.0), rot3(cx, cz, -6.8, 2.44, 0, yaw), GOLD, material="Metal", orientation=(0, yaw, 0)))
+
+    # Betting layout felt (SurfaceGui target). Floats just above the felt top.
     layout_cx, layout_cz = rot(cx, cz, 2.7, 0.0, yaw)
     children.append(
         {
@@ -80,8 +92,8 @@ def build_roulette(name: str, cx: float, cz: float, yaw: float) -> dict:
             "className": "Part",
             "properties": {
                 "Anchored": True,
-                "Size": [7.3, 0.14, 4.9],
-                "Position": [layout_cx, top_y + 0.31, layout_cz],
+                "Size": [7.3, 0.1, 4.9],
+                "Position": [layout_cx, 2.28, layout_cz],
                 "Color": FELT_DARK,
                 "Material": "Fabric",
                 "Orientation": [0.0, yaw, 0.0],
@@ -92,20 +104,27 @@ def build_roulette(name: str, cx: float, cz: float, yaw: float) -> dict:
         }
     )
 
-    # Wheel at -X end.
+    # --- Wheel at -X end. Coaxial cylinders, each a UNIQUE top-Y + radius. ---
     wheel_lx = -4.1
     wcx, wcz = rot(cx, cz, wheel_lx, 0.0, yaw)
-    children.append(part("WheelWell", (0.55, 4.6, 4.6), (wcx, top_y + 0.28, wcz), [0.1, 0.05, 0.03], material="Wood", orientation=(0, 0, 90), shape="Cylinder"))
-    children.append(part("WheelWellGold", (0.5, 5.0, 5.0), (wcx, top_y + 0.22, wcz), GOLD, material="Metal", orientation=(0, 0, 90), shape="Cylinder"))
-    children.append(part("WheelBowl", (0.5, 3.9, 3.9), (wcx, top_y + 0.42, wcz), [0.08, 0.04, 0.03], material="Wood", orientation=(0, 0, 90), shape="Cylinder"))
-    children.append(part("WheelDisk", (0.32, 3.3, 3.3), (wcx, top_y + 0.6, wcz), DARK, material="Metal", orientation=(0, 0, 90), shape="Cylinder"))
+    # (name, diameter, top_y, color, material)
+    disks = [
+        ("WheelHousing", 5.2, 2.42, GOLD, "Metal"),
+        ("WheelWell", 4.6, 2.50, [0.1, 0.05, 0.03], "Wood"),
+        ("WheelBowl", 3.9, 2.58, [0.08, 0.04, 0.03], "Wood"),
+        ("WheelDisk", 3.3, 2.66, DARK, "Metal"),
+    ]
+    for nm, dia, top, col, mat in disks:
+        thick = 0.5
+        children.append(
+            part(nm, (thick, dia, dia), (wcx, top - thick / 2, wcz), col, material=mat, orientation=(0, 0, 90), shape="Cylinder")
+        )
 
-    # Pocket ring.
-    pocket_r = 1.32
+    # Pocket ring on the disk (boxes; separated radially -> no coplanar overlap).
+    pocket_r = 1.35
     count = 18
     for i in range(count):
         a = i * (360.0 / count)
-        # radial offset in wheel-local frame, then rotate whole table by yaw
         rad = math.radians(a)
         plx = wheel_lx + pocket_r * math.sin(rad)
         plz = 0.0 + pocket_r * math.cos(rad)
@@ -119,18 +138,18 @@ def build_roulette(name: str, cx: float, cz: float, yaw: float) -> dict:
         children.append(
             part(
                 f"Pocket_{i}",
-                (0.4, 0.2, 0.72),
-                (pwx, top_y + 0.66, pwz),
+                (0.42, 0.16, 0.7),
+                (pwx, 2.66, pwz),  # top 2.74, embedded in disk (top 2.66) -> bottom hidden
                 col,
                 material="SmoothPlastic",
                 orientation=(0, yaw + a, 0),
             )
         )
 
-    children.append(part("WheelHubRing", (0.34, 1.5, 1.5), (wcx, top_y + 0.66, wcz), GOLD, material="Metal", orientation=(0, 0, 90), shape="Cylinder"))
-    children.append(part("WheelHub", (0.5, 0.7, 0.7), (wcx, top_y + 0.78, wcz), GOLD, material="Metal", orientation=(0, 0, 90), shape="Cylinder"))
-    children.append(part("Spindle", (0.9, 0.22, 0.22), (wcx, top_y + 1.1, wcz), GOLD, material="Neon", orientation=(0, yaw, 40)))
-    children.append(part("SpindleCross", (0.9, 0.22, 0.22), (wcx, top_y + 1.1, wcz), GOLD, material="Neon", orientation=(0, yaw + 90, 40)))
+    children.append(part("WheelHubRing", (0.3, 1.4, 1.4), (wcx, 2.65, wcz), GOLD, material="Metal", orientation=(0, 0, 90), shape="Cylinder"))
+    children.append(part("WheelHub", (0.5, 0.8, 0.8), (wcx, 2.70, wcz), GOLD, material="Metal", orientation=(0, 0, 90), shape="Cylinder"))
+    children.append(part("Spindle", (1.0, 0.2, 0.2), (wcx, 3.05, wcz), GOLD, material="Neon", orientation=(0, yaw, 40)))
+    children.append(part("SpindleCross", (1.0, 0.2, 0.2), (wcx, 3.12, wcz), GOLD, material="Neon", orientation=(0, yaw + 90, 40)))
 
     return {
         "name": name,

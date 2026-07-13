@@ -36,175 +36,45 @@
               }
             },
             {
-              "name": "CasinoField_W",
+              "name": "GreenPit",
               "className": "Part",
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  78.0,
+                  176.0,
                   0.12,
-                  112.0
-                ],
-                "Position": [
-                  -49.0,
-                  0.52,
-                  2.0
-                ],
-                "Color": [
-                  0.05,
-                  0.26,
-                  0.15
-                ],
-                "Material": "Fabric",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false
-              }
-            },
-            {
-              "name": "CasinoField_E",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  78.0,
-                  0.12,
-                  112.0
-                ],
-                "Position": [
-                  49.0,
-                  0.52,
-                  2.0
-                ],
-                "Color": [
-                  0.05,
-                  0.26,
-                  0.15
-                ],
-                "Material": "Fabric",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false
-              }
-            },
-            {
-              "name": "CasinoField_EntryW",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  34.0,
-                  0.12,
-                  28.0
-                ],
-                "Position": [
-                  -49.0,
-                  0.52,
-                  48.0
-                ],
-                "Color": [
-                  0.05,
-                  0.26,
-                  0.15
-                ],
-                "Material": "Fabric",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false
-              }
-            },
-            {
-              "name": "CasinoField_EntryE",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  34.0,
-                  0.12,
-                  28.0
-                ],
-                "Position": [
-                  49.0,
-                  0.52,
-                  48.0
-                ],
-                "Color": [
-                  0.05,
-                  0.26,
-                  0.15
-                ],
-                "Material": "Fabric",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false
-              }
-            },
-            {
-              "name": "CasinoField_HallW",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  78.0,
-                  0.12,
-                  28.0
-                ],
-                "Position": [
-                  -49.0,
-                  0.52,
-                  -68.0
-                ],
-                "Color": [
-                  0.04,
-                  0.2,
-                  0.12
-                ],
-                "Material": "Fabric",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false
-              }
-            },
-            {
-              "name": "CasinoField_HallE",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  78.0,
-                  0.12,
-                  28.0
-                ],
-                "Position": [
-                  49.0,
-                  0.52,
-                  -68.0
-                ],
-                "Color": [
-                  0.04,
-                  0.2,
-                  0.12
-                ],
-                "Material": "Fabric",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false
-              }
-            },
-            {
-              "name": "CasinoField_Rooms",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  178.0,
-                  0.12,
-                  54.0
+                  144.0
                 ],
                 "Position": [
                   0.0,
-                  0.52,
-                  -111.0
+                  0.49000000000000005,
+                  -8.0
+                ],
+                "Color": [
+                  0.05,
+                  0.26,
+                  0.15
+                ],
+                "Material": "Fabric",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": false
+              }
+            },
+            {
+              "name": "GreenRooms",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  176.0,
+                  0.12,
+                  60.0
+                ],
+                "Position": [
+                  0.0,
+                  0.49000000000000005,
+                  -110.0
                 ],
                 "Color": [
                   0.04,
@@ -218,18 +88,18 @@
               }
             },
             {
-              "name": "FieldAccent_W1",
+              "name": "FieldAccent_0",
               "className": "Part",
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  16.0,
+                  15.0,
                   0.08,
-                  16.0
+                  15.0
                 ],
                 "Position": [
                   -52.0,
-                  0.58,
+                  0.5599999999999999,
                   24.0
                 ],
                 "Color": [
@@ -249,18 +119,18 @@
               }
             },
             {
-              "name": "FieldAccent_W2",
+              "name": "FieldAccent_1",
               "className": "Part",
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  16.0,
+                  15.0,
                   0.08,
-                  16.0
+                  15.0
                 ],
                 "Position": [
                   -52.0,
-                  0.58,
+                  0.5599999999999999,
                   -16.0
                 ],
                 "Color": [
@@ -280,18 +150,18 @@
               }
             },
             {
-              "name": "FieldAccent_E1",
+              "name": "FieldAccent_2",
               "className": "Part",
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  16.0,
+                  15.0,
                   0.08,
-                  16.0
+                  15.0
                 ],
                 "Position": [
                   52.0,
-                  0.58,
+                  0.5599999999999999,
                   24.0
                 ],
                 "Color": [
@@ -311,19 +181,112 @@
               }
             },
             {
-              "name": "FieldAccent_E2",
+              "name": "FieldAccent_3",
               "className": "Part",
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  16.0,
+                  15.0,
                   0.08,
-                  16.0
+                  15.0
                 ],
                 "Position": [
                   52.0,
-                  0.58,
+                  0.5599999999999999,
                   -16.0
+                ],
+                "Color": [
+                  0.07,
+                  0.32,
+                  0.18
+                ],
+                "Material": "Fabric",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": false,
+                "Orientation": [
+                  0.0,
+                  45.0,
+                  0.0
+                ]
+              }
+            },
+            {
+              "name": "FieldAccent_4",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  15.0,
+                  0.08,
+                  15.0
+                ],
+                "Position": [
+                  0.0,
+                  0.5599999999999999,
+                  40.0
+                ],
+                "Color": [
+                  0.07,
+                  0.32,
+                  0.18
+                ],
+                "Material": "Fabric",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": false,
+                "Orientation": [
+                  0.0,
+                  45.0,
+                  0.0
+                ]
+              }
+            },
+            {
+              "name": "FieldAccent_5",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  15.0,
+                  0.08,
+                  15.0
+                ],
+                "Position": [
+                  -30.0,
+                  0.5599999999999999,
+                  -46.0
+                ],
+                "Color": [
+                  0.07,
+                  0.32,
+                  0.18
+                ],
+                "Material": "Fabric",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": false,
+                "Orientation": [
+                  0.0,
+                  45.0,
+                  0.0
+                ]
+              }
+            },
+            {
+              "name": "FieldAccent_6",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  15.0,
+                  0.08,
+                  15.0
+                ],
+                "Position": [
+                  30.0,
+                  0.5599999999999999,
+                  -46.0
                 ],
                 "Color": [
                   0.07,
@@ -348,84 +311,6 @@
           "className": "Folder",
           "children": [
             {
-              "name": "Carpet_Entry",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  14.0,
-                  0.14,
-                  30.0
-                ],
-                "Position": [
-                  0.0,
-                  0.64,
-                  42.0
-                ],
-                "Color": [
-                  0.55,
-                  0.04,
-                  0.1
-                ],
-                "Material": "Fabric",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false
-              }
-            },
-            {
-              "name": "CarpetEdge_Entry_L",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  0.4,
-                  0.16,
-                  30.0
-                ],
-                "Position": [
-                  -7.15,
-                  0.7,
-                  42.0
-                ],
-                "Color": [
-                  0.92,
-                  0.75,
-                  0.32
-                ],
-                "Material": "Neon",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false
-              }
-            },
-            {
-              "name": "CarpetEdge_Entry_R",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  0.4,
-                  0.16,
-                  30.0
-                ],
-                "Position": [
-                  7.15,
-                  0.7,
-                  42.0
-                ],
-                "Color": [
-                  0.92,
-                  0.75,
-                  0.32
-                ],
-                "Material": "Neon",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false
-              }
-            },
-            {
               "name": "Carpet_Main",
               "className": "Part",
               "properties": {
@@ -433,12 +318,12 @@
                 "Size": [
                   14.0,
                   0.14,
-                  96.0
+                  120.0
                 ],
                 "Position": [
                   0.0,
-                  0.64,
-                  -10.0
+                  0.5900000000000001,
+                  -3.0
                 ],
                 "Color": [
                   0.55,
@@ -452,70 +337,18 @@
               }
             },
             {
-              "name": "CarpetEdge_Main_L",
+              "name": "Carpet_CrossN_W",
               "className": "Part",
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  0.4,
-                  0.16,
-                  96.0
-                ],
-                "Position": [
-                  -7.15,
-                  0.7,
-                  -10.0
-                ],
-                "Color": [
-                  0.92,
-                  0.75,
-                  0.32
-                ],
-                "Material": "Neon",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false
-              }
-            },
-            {
-              "name": "CarpetEdge_Main_R",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  0.4,
-                  0.16,
-                  96.0
-                ],
-                "Position": [
-                  7.15,
-                  0.7,
-                  -10.0
-                ],
-                "Color": [
-                  0.92,
-                  0.75,
-                  0.32
-                ],
-                "Material": "Neon",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false
-              }
-            },
-            {
-              "name": "Carpet_Cross_N",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  22.0,
+                  40.0,
                   0.14,
-                  10.0
+                  14.0
                 ],
                 "Position": [
-                  0.0,
-                  0.64,
+                  -27.0,
+                  0.5900000000000001,
                   12.0
                 ],
                 "Color": [
@@ -530,18 +363,70 @@
               }
             },
             {
-              "name": "Carpet_Cross_S",
+              "name": "Carpet_CrossN_E",
               "className": "Part",
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  22.0,
+                  40.0,
                   0.14,
-                  10.0
+                  14.0
                 ],
                 "Position": [
-                  0.0,
-                  0.64,
+                  27.0,
+                  0.5900000000000001,
+                  12.0
+                ],
+                "Color": [
+                  0.55,
+                  0.04,
+                  0.1
+                ],
+                "Material": "Fabric",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": false
+              }
+            },
+            {
+              "name": "Carpet_CrossS_W",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  40.0,
+                  0.14,
+                  14.0
+                ],
+                "Position": [
+                  -27.0,
+                  0.5900000000000001,
+                  -26.0
+                ],
+                "Color": [
+                  0.55,
+                  0.04,
+                  0.1
+                ],
+                "Material": "Fabric",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": false
+              }
+            },
+            {
+              "name": "Carpet_CrossS_E",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  40.0,
+                  0.14,
+                  14.0
+                ],
+                "Position": [
+                  27.0,
+                  0.5900000000000001,
                   -26.0
                 ],
                 "Color": [
@@ -567,7 +452,7 @@
                 ],
                 "Position": [
                   0.0,
-                  0.64,
+                  0.5900000000000001,
                   -70.0
                 ],
                 "Color": [
@@ -576,58 +461,6 @@
                   0.1
                 ],
                 "Material": "Fabric",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false
-              }
-            },
-            {
-              "name": "CarpetEdge_GameHall_N",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  160.0,
-                  0.16,
-                  0.4
-                ],
-                "Position": [
-                  0.0,
-                  0.7,
-                  -77.0
-                ],
-                "Color": [
-                  0.92,
-                  0.75,
-                  0.32
-                ],
-                "Material": "Neon",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false
-              }
-            },
-            {
-              "name": "CarpetEdge_GameHall_S",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  160.0,
-                  0.16,
-                  0.4
-                ],
-                "Position": [
-                  0.0,
-                  0.7,
-                  -63.0
-                ],
-                "Color": [
-                  0.92,
-                  0.75,
-                  0.32
-                ],
-                "Material": "Neon",
                 "TopSurface": "Smooth",
                 "BottomSurface": "Smooth",
                 "CanCollide": false
@@ -645,8 +478,8 @@
                 ],
                 "Position": [
                   -55.0,
-                  0.64,
-                  -82.0
+                  0.5900000000000001,
+                  -83.0
                 ],
                 "Color": [
                   0.55,
@@ -671,8 +504,8 @@
                 ],
                 "Position": [
                   0.0,
-                  0.64,
-                  -82.0
+                  0.5900000000000001,
+                  -83.0
                 ],
                 "Color": [
                   0.55,
@@ -697,8 +530,8 @@
                 ],
                 "Position": [
                   55.0,
-                  0.64,
-                  -82.0
+                  0.5900000000000001,
+                  -83.0
                 ],
                 "Color": [
                   0.55,
@@ -706,6 +539,58 @@
                   0.1
                 ],
                 "Material": "Fabric",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": false
+              }
+            },
+            {
+              "name": "Carpet_Entry",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  24.0,
+                  0.14,
+                  10.0
+                ],
+                "Position": [
+                  0.0,
+                  0.5900000000000001,
+                  62.0
+                ],
+                "Color": [
+                  0.55,
+                  0.04,
+                  0.1
+                ],
+                "Material": "Fabric",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": false
+              }
+            },
+            {
+              "name": "MedallionRing",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  11.0,
+                  0.1,
+                  11.0
+                ],
+                "Position": [
+                  0.0,
+                  0.6499999999999999,
+                  12.0
+                ],
+                "Color": [
+                  0.92,
+                  0.75,
+                  0.32
+                ],
+                "Material": "Neon",
                 "TopSurface": "Smooth",
                 "BottomSurface": "Smooth",
                 "CanCollide": false
@@ -723,7 +608,7 @@
                 ],
                 "Position": [
                   0.0,
-                  0.68,
+                  0.7,
                   12.0
                 ],
                 "Color": [
@@ -738,19 +623,97 @@
               }
             },
             {
-              "name": "MedallionRing",
+              "name": "Edge_Main_L",
               "className": "Part",
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  8.5,
-                  0.08,
-                  8.5
+                  0.5,
+                  0.16,
+                  120.0
+                ],
+                "Position": [
+                  -7.3,
+                  0.66,
+                  -3.0
+                ],
+                "Color": [
+                  0.92,
+                  0.75,
+                  0.32
+                ],
+                "Material": "Neon",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": false
+              }
+            },
+            {
+              "name": "Edge_Main_R",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  0.5,
+                  0.16,
+                  120.0
+                ],
+                "Position": [
+                  7.3,
+                  0.66,
+                  -3.0
+                ],
+                "Color": [
+                  0.92,
+                  0.75,
+                  0.32
+                ],
+                "Material": "Neon",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": false
+              }
+            },
+            {
+              "name": "Edge_Hall_N",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  160.0,
+                  0.16,
+                  0.5
                 ],
                 "Position": [
                   0.0,
-                  0.74,
-                  12.0
+                  0.7000000000000001,
+                  -62.7
+                ],
+                "Color": [
+                  0.92,
+                  0.75,
+                  0.32
+                ],
+                "Material": "Neon",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": false
+              }
+            },
+            {
+              "name": "Edge_Hall_S",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  160.0,
+                  0.16,
+                  0.5
+                ],
+                "Position": [
+                  0.0,
+                  0.7000000000000001,
+                  -77.3
                 ],
                 "Color": [
                   0.92,
@@ -775,7 +738,7 @@
                 ],
                 "Position": [
                   -60.0,
-                  0.72,
+                  0.76,
                   30.0
                 ],
                 "Color": [
@@ -796,12 +759,12 @@
                 "Anchored": true,
                 "Size": [
                   1.55,
-                  0.04,
+                  0.06,
                   1.55
                 ],
                 "Position": [
                   -60.0,
-                  0.76,
+                  0.8099999999999999,
                   30.0
                 ],
                 "Color": [
@@ -822,12 +785,12 @@
                 "Anchored": true,
                 "Size": [
                   0.45,
-                  0.03,
+                  0.04,
                   0.45
                 ],
                 "Position": [
                   -60.0,
-                  0.78,
+                  0.85,
                   30.0
                 ],
                 "Color": [
@@ -853,7 +816,7 @@
                 ],
                 "Position": [
                   -48.0,
-                  0.72,
+                  0.76,
                   12.0
                 ],
                 "Color": [
@@ -874,12 +837,12 @@
                 "Anchored": true,
                 "Size": [
                   1.55,
-                  0.04,
+                  0.06,
                   1.55
                 ],
                 "Position": [
                   -48.0,
-                  0.76,
+                  0.8099999999999999,
                   12.0
                 ],
                 "Color": [
@@ -900,12 +863,12 @@
                 "Anchored": true,
                 "Size": [
                   0.45,
-                  0.03,
+                  0.04,
                   0.45
                 ],
                 "Position": [
                   -48.0,
-                  0.78,
+                  0.85,
                   12.0
                 ],
                 "Color": [
@@ -931,7 +894,7 @@
                 ],
                 "Position": [
                   -52.0,
-                  0.72,
+                  0.76,
                   -8.0
                 ],
                 "Color": [
@@ -952,12 +915,12 @@
                 "Anchored": true,
                 "Size": [
                   1.55,
-                  0.04,
+                  0.06,
                   1.55
                 ],
                 "Position": [
                   -52.0,
-                  0.76,
+                  0.8099999999999999,
                   -8.0
                 ],
                 "Color": [
@@ -978,12 +941,12 @@
                 "Anchored": true,
                 "Size": [
                   0.45,
-                  0.03,
+                  0.04,
                   0.45
                 ],
                 "Position": [
                   -52.0,
-                  0.78,
+                  0.85,
                   -8.0
                 ],
                 "Color": [
@@ -1009,7 +972,7 @@
                 ],
                 "Position": [
                   -38.0,
-                  0.72,
+                  0.76,
                   -48.0
                 ],
                 "Color": [
@@ -1030,12 +993,12 @@
                 "Anchored": true,
                 "Size": [
                   1.55,
-                  0.04,
+                  0.06,
                   1.55
                 ],
                 "Position": [
                   -38.0,
-                  0.76,
+                  0.8099999999999999,
                   -48.0
                 ],
                 "Color": [
@@ -1056,12 +1019,12 @@
                 "Anchored": true,
                 "Size": [
                   0.45,
-                  0.03,
+                  0.04,
                   0.45
                 ],
                 "Position": [
                   -38.0,
-                  0.78,
+                  0.85,
                   -48.0
                 ],
                 "Color": [
@@ -1087,7 +1050,7 @@
                 ],
                 "Position": [
                   -65.0,
-                  0.72,
+                  0.76,
                   -30.0
                 ],
                 "Color": [
@@ -1108,12 +1071,12 @@
                 "Anchored": true,
                 "Size": [
                   1.55,
-                  0.04,
+                  0.06,
                   1.55
                 ],
                 "Position": [
                   -65.0,
-                  0.76,
+                  0.8099999999999999,
                   -30.0
                 ],
                 "Color": [
@@ -1134,12 +1097,12 @@
                 "Anchored": true,
                 "Size": [
                   0.45,
-                  0.03,
+                  0.04,
                   0.45
                 ],
                 "Position": [
                   -65.0,
-                  0.78,
+                  0.85,
                   -30.0
                 ],
                 "Color": [
@@ -1165,7 +1128,7 @@
                 ],
                 "Position": [
                   -45.0,
-                  0.72,
+                  0.76,
                   -18.0
                 ],
                 "Color": [
@@ -1186,12 +1149,12 @@
                 "Anchored": true,
                 "Size": [
                   1.55,
-                  0.04,
+                  0.06,
                   1.55
                 ],
                 "Position": [
                   -45.0,
-                  0.76,
+                  0.8099999999999999,
                   -18.0
                 ],
                 "Color": [
@@ -1212,12 +1175,12 @@
                 "Anchored": true,
                 "Size": [
                   0.45,
-                  0.03,
+                  0.04,
                   0.45
                 ],
                 "Position": [
                   -45.0,
-                  0.78,
+                  0.85,
                   -18.0
                 ],
                 "Color": [
@@ -1243,7 +1206,7 @@
                 ],
                 "Position": [
                   60.0,
-                  0.72,
+                  0.76,
                   30.0
                 ],
                 "Color": [
@@ -1264,12 +1227,12 @@
                 "Anchored": true,
                 "Size": [
                   1.55,
-                  0.04,
+                  0.06,
                   1.55
                 ],
                 "Position": [
                   60.0,
-                  0.76,
+                  0.8099999999999999,
                   30.0
                 ],
                 "Color": [
@@ -1290,12 +1253,12 @@
                 "Anchored": true,
                 "Size": [
                   0.45,
-                  0.03,
+                  0.04,
                   0.45
                 ],
                 "Position": [
                   60.0,
-                  0.78,
+                  0.85,
                   30.0
                 ],
                 "Color": [
@@ -1321,7 +1284,7 @@
                 ],
                 "Position": [
                   48.0,
-                  0.72,
+                  0.76,
                   12.0
                 ],
                 "Color": [
@@ -1342,12 +1305,12 @@
                 "Anchored": true,
                 "Size": [
                   1.55,
-                  0.04,
+                  0.06,
                   1.55
                 ],
                 "Position": [
                   48.0,
-                  0.76,
+                  0.8099999999999999,
                   12.0
                 ],
                 "Color": [
@@ -1368,12 +1331,12 @@
                 "Anchored": true,
                 "Size": [
                   0.45,
-                  0.03,
+                  0.04,
                   0.45
                 ],
                 "Position": [
                   48.0,
-                  0.78,
+                  0.85,
                   12.0
                 ],
                 "Color": [
@@ -1399,7 +1362,7 @@
                 ],
                 "Position": [
                   52.0,
-                  0.72,
+                  0.76,
                   -8.0
                 ],
                 "Color": [
@@ -1420,12 +1383,12 @@
                 "Anchored": true,
                 "Size": [
                   1.55,
-                  0.04,
+                  0.06,
                   1.55
                 ],
                 "Position": [
                   52.0,
-                  0.76,
+                  0.8099999999999999,
                   -8.0
                 ],
                 "Color": [
@@ -1446,12 +1409,12 @@
                 "Anchored": true,
                 "Size": [
                   0.45,
-                  0.03,
+                  0.04,
                   0.45
                 ],
                 "Position": [
                   52.0,
-                  0.78,
+                  0.85,
                   -8.0
                 ],
                 "Color": [
@@ -1477,7 +1440,7 @@
                 ],
                 "Position": [
                   38.0,
-                  0.72,
+                  0.76,
                   -48.0
                 ],
                 "Color": [
@@ -1498,12 +1461,12 @@
                 "Anchored": true,
                 "Size": [
                   1.55,
-                  0.04,
+                  0.06,
                   1.55
                 ],
                 "Position": [
                   38.0,
-                  0.76,
+                  0.8099999999999999,
                   -48.0
                 ],
                 "Color": [
@@ -1524,12 +1487,12 @@
                 "Anchored": true,
                 "Size": [
                   0.45,
-                  0.03,
+                  0.04,
                   0.45
                 ],
                 "Position": [
                   38.0,
-                  0.78,
+                  0.85,
                   -48.0
                 ],
                 "Color": [
@@ -1555,7 +1518,7 @@
                 ],
                 "Position": [
                   65.0,
-                  0.72,
+                  0.76,
                   -30.0
                 ],
                 "Color": [
@@ -1576,12 +1539,12 @@
                 "Anchored": true,
                 "Size": [
                   1.55,
-                  0.04,
+                  0.06,
                   1.55
                 ],
                 "Position": [
                   65.0,
-                  0.76,
+                  0.8099999999999999,
                   -30.0
                 ],
                 "Color": [
@@ -1602,12 +1565,12 @@
                 "Anchored": true,
                 "Size": [
                   0.45,
-                  0.03,
+                  0.04,
                   0.45
                 ],
                 "Position": [
                   65.0,
-                  0.78,
+                  0.85,
                   -30.0
                 ],
                 "Color": [
@@ -1633,7 +1596,7 @@
                 ],
                 "Position": [
                   45.0,
-                  0.72,
+                  0.76,
                   -18.0
                 ],
                 "Color": [
@@ -1654,12 +1617,12 @@
                 "Anchored": true,
                 "Size": [
                   1.55,
-                  0.04,
+                  0.06,
                   1.55
                 ],
                 "Position": [
                   45.0,
-                  0.76,
+                  0.8099999999999999,
                   -18.0
                 ],
                 "Color": [
@@ -1680,12 +1643,12 @@
                 "Anchored": true,
                 "Size": [
                   0.45,
-                  0.03,
+                  0.04,
                   0.45
                 ],
                 "Position": [
                   45.0,
-                  0.78,
+                  0.85,
                   -18.0
                 ],
                 "Color": [
@@ -1711,8 +1674,8 @@
                 ],
                 "Position": [
                   -55.0,
-                  0.72,
-                  40.0
+                  0.76,
+                  44.0
                 ],
                 "Color": [
                   0.85,
@@ -1732,13 +1695,13 @@
                 "Anchored": true,
                 "Size": [
                   1.55,
-                  0.04,
+                  0.06,
                   1.55
                 ],
                 "Position": [
                   -55.0,
-                  0.76,
-                  40.0
+                  0.8099999999999999,
+                  44.0
                 ],
                 "Color": [
                   0.92,
@@ -1758,13 +1721,13 @@
                 "Anchored": true,
                 "Size": [
                   0.45,
-                  0.03,
+                  0.04,
                   0.45
                 ],
                 "Position": [
                   -55.0,
-                  0.78,
-                  40.0
+                  0.85,
+                  44.0
                 ],
                 "Color": [
                   0.95,
@@ -1789,8 +1752,8 @@
                 ],
                 "Position": [
                   55.0,
-                  0.72,
-                  40.0
+                  0.76,
+                  44.0
                 ],
                 "Color": [
                   0.15,
@@ -1810,13 +1773,13 @@
                 "Anchored": true,
                 "Size": [
                   1.55,
-                  0.04,
+                  0.06,
                   1.55
                 ],
                 "Position": [
                   55.0,
-                  0.76,
-                  40.0
+                  0.8099999999999999,
+                  44.0
                 ],
                 "Color": [
                   0.92,
@@ -1836,13 +1799,13 @@
                 "Anchored": true,
                 "Size": [
                   0.45,
-                  0.03,
+                  0.04,
                   0.45
                 ],
                 "Position": [
                   55.0,
-                  0.78,
-                  40.0
+                  0.85,
+                  44.0
                 ],
                 "Color": [
                   0.95,
@@ -1866,8 +1829,8 @@
                   1.35
                 ],
                 "Position": [
-                  -70.0,
-                  0.72,
+                  -72.0,
+                  0.76,
                   8.0
                 ],
                 "Color": [
@@ -1888,12 +1851,12 @@
                 "Anchored": true,
                 "Size": [
                   1.55,
-                  0.04,
+                  0.06,
                   1.55
                 ],
                 "Position": [
-                  -70.0,
-                  0.76,
+                  -72.0,
+                  0.8099999999999999,
                   8.0
                 ],
                 "Color": [
@@ -1914,12 +1877,12 @@
                 "Anchored": true,
                 "Size": [
                   0.45,
-                  0.03,
+                  0.04,
                   0.45
                 ],
                 "Position": [
-                  -70.0,
-                  0.78,
+                  -72.0,
+                  0.85,
                   8.0
                 ],
                 "Color": [
@@ -1944,8 +1907,8 @@
                   1.35
                 ],
                 "Position": [
-                  70.0,
-                  0.72,
+                  72.0,
+                  0.76,
                   8.0
                 ],
                 "Color": [
@@ -1966,12 +1929,12 @@
                 "Anchored": true,
                 "Size": [
                   1.55,
-                  0.04,
+                  0.06,
                   1.55
                 ],
                 "Position": [
-                  70.0,
-                  0.76,
+                  72.0,
+                  0.8099999999999999,
                   8.0
                 ],
                 "Color": [
@@ -1992,12 +1955,12 @@
                 "Anchored": true,
                 "Size": [
                   0.45,
-                  0.03,
+                  0.04,
                   0.45
                 ],
                 "Position": [
-                  70.0,
-                  0.78,
+                  72.0,
+                  0.85,
                   8.0
                 ],
                 "Color": [
@@ -2023,7 +1986,7 @@
                 ],
                 "Position": [
                   -42.0,
-                  0.72,
+                  0.76,
                   -58.0
                 ],
                 "Color": [
@@ -2044,12 +2007,12 @@
                 "Anchored": true,
                 "Size": [
                   1.55,
-                  0.04,
+                  0.06,
                   1.55
                 ],
                 "Position": [
                   -42.0,
-                  0.76,
+                  0.8099999999999999,
                   -58.0
                 ],
                 "Color": [
@@ -2070,12 +2033,12 @@
                 "Anchored": true,
                 "Size": [
                   0.45,
-                  0.03,
+                  0.04,
                   0.45
                 ],
                 "Position": [
                   -42.0,
-                  0.78,
+                  0.85,
                   -58.0
                 ],
                 "Color": [
@@ -2101,7 +2064,7 @@
                 ],
                 "Position": [
                   42.0,
-                  0.72,
+                  0.76,
                   -58.0
                 ],
                 "Color": [
@@ -2122,12 +2085,12 @@
                 "Anchored": true,
                 "Size": [
                   1.55,
-                  0.04,
+                  0.06,
                   1.55
                 ],
                 "Position": [
                   42.0,
-                  0.76,
+                  0.8099999999999999,
                   -58.0
                 ],
                 "Color": [
@@ -2148,12 +2111,12 @@
                 "Anchored": true,
                 "Size": [
                   0.45,
-                  0.03,
+                  0.04,
                   0.45
                 ],
                 "Position": [
                   42.0,
-                  0.78,
+                  0.85,
                   -58.0
                 ],
                 "Color": [
@@ -2179,7 +2142,7 @@
                 ],
                 "Position": [
                   -30.0,
-                  0.72,
+                  0.76,
                   -40.0
                 ],
                 "Color": [
@@ -2200,12 +2163,12 @@
                 "Anchored": true,
                 "Size": [
                   1.55,
-                  0.04,
+                  0.06,
                   1.55
                 ],
                 "Position": [
                   -30.0,
-                  0.76,
+                  0.8099999999999999,
                   -40.0
                 ],
                 "Color": [
@@ -2226,12 +2189,12 @@
                 "Anchored": true,
                 "Size": [
                   0.45,
-                  0.03,
+                  0.04,
                   0.45
                 ],
                 "Position": [
                   -30.0,
-                  0.78,
+                  0.85,
                   -40.0
                 ],
                 "Color": [
@@ -2257,7 +2220,7 @@
                 ],
                 "Position": [
                   30.0,
-                  0.72,
+                  0.76,
                   -40.0
                 ],
                 "Color": [
@@ -2278,12 +2241,12 @@
                 "Anchored": true,
                 "Size": [
                   1.55,
-                  0.04,
+                  0.06,
                   1.55
                 ],
                 "Position": [
                   30.0,
-                  0.76,
+                  0.8099999999999999,
                   -40.0
                 ],
                 "Color": [
@@ -2304,12 +2267,12 @@
                 "Anchored": true,
                 "Size": [
                   0.45,
-                  0.03,
+                  0.04,
                   0.45
                 ],
                 "Position": [
                   30.0,
-                  0.78,
+                  0.85,
                   -40.0
                 ],
                 "Color": [
@@ -2386,12 +2349,12 @@
                 "Anchored": true,
                 "Size": [
                   24.0,
-                  4.0,
+                  3.4,
                   2.5
                 ],
                 "Position": [
                   0.0,
-                  20.0,
+                  19.7,
                   66.0
                 ],
                 "Color": [
@@ -2436,12 +2399,12 @@
                 "Anchored": true,
                 "Size": [
                   3.5,
-                  22.0,
+                  24.0,
                   3.5
                 ],
                 "Position": [
                   -13.0,
-                  11.0,
+                  12.0,
                   64.5
                 ],
                 "Color": [
@@ -2461,12 +2424,12 @@
                 "Anchored": true,
                 "Size": [
                   3.5,
-                  22.0,
+                  24.0,
                   3.5
                 ],
                 "Position": [
                   13.0,
-                  11.0,
+                  12.0,
                   64.5
                 ],
                 "Color": [
@@ -2486,12 +2449,12 @@
                 "Anchored": true,
                 "Size": [
                   0.45,
-                  20.0,
+                  22.0,
                   0.45
                 ],
                 "Position": [
                   -13.0,
-                  11.0,
+                  12.0,
                   66.3
                 ],
                 "Color": [
@@ -2511,12 +2474,12 @@
                 "Anchored": true,
                 "Size": [
                   0.45,
-                  20.0,
+                  22.0,
                   0.45
                 ],
                 "Position": [
                   13.0,
-                  11.0,
+                  12.0,
                   66.3
                 ],
                 "Color": [
@@ -2586,12 +2549,12 @@
                 "Anchored": true,
                 "Size": [
                   186.5,
-                  54.0,
+                  53.4,
                   2.5
                 ],
                 "Position": [
                   0.0,
-                  27.0,
+                  26.7,
                   -140.0
                 ],
                 "Color": [
@@ -2661,12 +2624,12 @@
                 "Anchored": true,
                 "Size": [
                   30.0,
-                  3.0,
+                  2.4,
                   1.5
                 ],
                 "Position": [
                   0.0,
-                  20.5,
+                  20.2,
                   -55.0
                 ],
                 "Color": [
@@ -2711,12 +2674,12 @@
                 "Anchored": true,
                 "Size": [
                   26.0,
-                  54.0,
+                  53.4,
                   1.5
                 ],
                 "Position": [
                   -79.0,
-                  27.0,
+                  26.7,
                   -82.0
                 ],
                 "Color": [
@@ -2736,12 +2699,12 @@
                 "Anchored": true,
                 "Size": [
                   19.0,
-                  54.0,
+                  53.4,
                   1.5
                 ],
                 "Position": [
                   -39.5,
-                  27.0,
+                  26.7,
                   -82.0
                 ],
                 "Color": [
@@ -2761,12 +2724,12 @@
                 "Anchored": true,
                 "Size": [
                   12.0,
-                  4.0,
+                  3.4,
                   1.5
                 ],
                 "Position": [
                   -55.0,
-                  52.0,
+                  51.699999999999996,
                   -82.0
                 ],
                 "Color": [
@@ -2861,12 +2824,12 @@
                 "Anchored": true,
                 "Size": [
                   18.0,
-                  54.0,
+                  53.4,
                   1.5
                 ],
                 "Position": [
                   -15.0,
-                  27.0,
+                  26.7,
                   -82.0
                 ],
                 "Color": [
@@ -2886,12 +2849,12 @@
                 "Anchored": true,
                 "Size": [
                   18.0,
-                  54.0,
+                  53.4,
                   1.5
                 ],
                 "Position": [
                   15.0,
-                  27.0,
+                  26.7,
                   -82.0
                 ],
                 "Color": [
@@ -2911,12 +2874,12 @@
                 "Anchored": true,
                 "Size": [
                   12.0,
-                  4.0,
+                  3.4,
                   1.5
                 ],
                 "Position": [
                   0.0,
-                  52.0,
+                  51.699999999999996,
                   -82.0
                 ],
                 "Color": [
@@ -3011,12 +2974,12 @@
                 "Anchored": true,
                 "Size": [
                   22.0,
-                  54.0,
+                  53.4,
                   1.5
                 ],
                 "Position": [
                   38.0,
-                  27.0,
+                  26.7,
                   -82.0
                 ],
                 "Color": [
@@ -3036,12 +2999,12 @@
                 "Anchored": true,
                 "Size": [
                   26.0,
-                  54.0,
+                  53.4,
                   1.5
                 ],
                 "Position": [
                   79.0,
-                  27.0,
+                  26.7,
                   -82.0
                 ],
                 "Color": [
@@ -3061,12 +3024,12 @@
                 "Anchored": true,
                 "Size": [
                   12.0,
-                  4.0,
+                  3.4,
                   1.5
                 ],
                 "Position": [
                   55.0,
-                  52.0,
+                  51.699999999999996,
                   -82.0
                 ],
                 "Color": [
@@ -3511,12 +3474,12 @@
                 "Anchored": true,
                 "Size": [
                   3.0,
-                  22.0,
+                  21.0,
                   3.0
                 ],
                 "Position": [
                   -91.0,
-                  11.0,
+                  10.5,
                   65.0
                 ],
                 "Color": [
@@ -3537,12 +3500,12 @@
                 "Anchored": true,
                 "Size": [
                   3.0,
-                  22.0,
+                  21.0,
                   3.0
                 ],
                 "Position": [
                   91.0,
-                  11.0,
+                  10.5,
                   65.0
                 ],
                 "Color": [
@@ -3563,12 +3526,12 @@
                 "Anchored": true,
                 "Size": [
                   3.0,
-                  54.0,
+                  53.0,
                   3.0
                 ],
                 "Position": [
                   -91.0,
-                  27.0,
+                  26.5,
                   -139.0
                 ],
                 "Color": [
@@ -3589,12 +3552,12 @@
                 "Anchored": true,
                 "Size": [
                   3.0,
-                  54.0,
+                  53.0,
                   3.0
                 ],
                 "Position": [
                   91.0,
-                  27.0,
+                  26.5,
                   -139.0
                 ],
                 "Color": [
@@ -17580,13 +17543,13 @@
                   "properties": {
                     "Anchored": true,
                     "Size": [
-                      13.0,
-                      1.5,
-                      6.0
+                      12.4,
+                      1.9,
+                      5.4
                     ],
                     "Position": [
                       -34.0,
-                      0.9999999999999998,
+                      0.95,
                       30.0
                     ],
                     "Color": [
@@ -17606,111 +17569,18 @@
                   }
                 },
                 {
-                  "name": "Skirt",
-                  "className": "Part",
-                  "properties": {
-                    "Anchored": true,
-                    "Size": [
-                      13.4,
-                      0.7,
-                      6.4
-                    ],
-                    "Position": [
-                      -34.0,
-                      1.4999999999999998,
-                      30.0
-                    ],
-                    "Color": [
-                      0.12,
-                      0.06,
-                      0.03
-                    ],
-                    "Material": "Wood",
-                    "TopSurface": "Smooth",
-                    "BottomSurface": "Smooth",
-                    "CanCollide": true,
-                    "Orientation": [
-                      0.0,
-                      10.0,
-                      0.0
-                    ]
-                  }
-                },
-                {
-                  "name": "Rim",
-                  "className": "Part",
-                  "properties": {
-                    "Anchored": true,
-                    "Size": [
-                      13.6,
-                      0.6,
-                      6.6
-                    ],
-                    "Position": [
-                      -34.0,
-                      1.9999999999999998,
-                      30.0
-                    ],
-                    "Color": [
-                      0.3,
-                      0.14,
-                      0.07
-                    ],
-                    "Material": "Wood",
-                    "TopSurface": "Smooth",
-                    "BottomSurface": "Smooth",
-                    "CanCollide": true,
-                    "Orientation": [
-                      0.0,
-                      10.0,
-                      0.0
-                    ]
-                  }
-                },
-                {
-                  "name": "RimGold",
-                  "className": "Part",
-                  "properties": {
-                    "Anchored": true,
-                    "Size": [
-                      13.7,
-                      0.14,
-                      6.7
-                    ],
-                    "Position": [
-                      -34.0,
-                      2.23,
-                      30.0
-                    ],
-                    "Color": [
-                      0.92,
-                      0.75,
-                      0.32
-                    ],
-                    "Material": "Metal",
-                    "TopSurface": "Smooth",
-                    "BottomSurface": "Smooth",
-                    "CanCollide": true,
-                    "Orientation": [
-                      0.0,
-                      10.0,
-                      0.0
-                    ]
-                  }
-                },
-                {
                   "name": "Felt",
                   "className": "Part",
                   "properties": {
                     "Anchored": true,
                     "Size": [
                       13.0,
-                      0.2,
+                      0.3,
                       6.0
                     ],
                     "Position": [
                       -34.0,
-                      2.25,
+                      2.05,
                       30.0
                     ],
                     "Color": [
@@ -17730,18 +17600,266 @@
                   }
                 },
                 {
+                  "name": "BorderN",
+                  "className": "Part",
+                  "properties": {
+                    "Anchored": true,
+                    "Size": [
+                      13.6,
+                      0.5,
+                      0.6
+                    ],
+                    "Position": [
+                      -34.57303898630087,
+                      2.15,
+                      33.24986558494029
+                    ],
+                    "Color": [
+                      0.3,
+                      0.14,
+                      0.07
+                    ],
+                    "Material": "Wood",
+                    "TopSurface": "Smooth",
+                    "BottomSurface": "Smooth",
+                    "CanCollide": true,
+                    "Orientation": [
+                      0.0,
+                      10.0,
+                      0.0
+                    ]
+                  }
+                },
+                {
+                  "name": "BorderS",
+                  "className": "Part",
+                  "properties": {
+                    "Anchored": true,
+                    "Size": [
+                      13.6,
+                      0.5,
+                      0.6
+                    ],
+                    "Position": [
+                      -33.42696101369913,
+                      2.15,
+                      26.750134415059712
+                    ],
+                    "Color": [
+                      0.3,
+                      0.14,
+                      0.07
+                    ],
+                    "Material": "Wood",
+                    "TopSurface": "Smooth",
+                    "BottomSurface": "Smooth",
+                    "CanCollide": true,
+                    "Orientation": [
+                      0.0,
+                      10.0,
+                      0.0
+                    ]
+                  }
+                },
+                {
+                  "name": "BorderE",
+                  "className": "Part",
+                  "properties": {
+                    "Anchored": true,
+                    "Size": [
+                      0.6,
+                      0.5,
+                      6.0
+                    ],
+                    "Position": [
+                      -27.303307279516986,
+                      2.15,
+                      31.180807608135126
+                    ],
+                    "Color": [
+                      0.3,
+                      0.14,
+                      0.07
+                    ],
+                    "Material": "Wood",
+                    "TopSurface": "Smooth",
+                    "BottomSurface": "Smooth",
+                    "CanCollide": true,
+                    "Orientation": [
+                      0.0,
+                      10.0,
+                      0.0
+                    ]
+                  }
+                },
+                {
+                  "name": "BorderW",
+                  "className": "Part",
+                  "properties": {
+                    "Anchored": true,
+                    "Size": [
+                      0.6,
+                      0.5,
+                      6.0
+                    ],
+                    "Position": [
+                      -40.696692720483014,
+                      2.15,
+                      28.819192391864874
+                    ],
+                    "Color": [
+                      0.3,
+                      0.14,
+                      0.07
+                    ],
+                    "Material": "Wood",
+                    "TopSurface": "Smooth",
+                    "BottomSurface": "Smooth",
+                    "CanCollide": true,
+                    "Orientation": [
+                      0.0,
+                      10.0,
+                      0.0
+                    ]
+                  }
+                },
+                {
+                  "name": "GoldN",
+                  "className": "Part",
+                  "properties": {
+                    "Anchored": true,
+                    "Size": [
+                      13.6,
+                      0.08,
+                      0.6
+                    ],
+                    "Position": [
+                      -34.57303898630087,
+                      2.44,
+                      33.24986558494029
+                    ],
+                    "Color": [
+                      0.92,
+                      0.75,
+                      0.32
+                    ],
+                    "Material": "Metal",
+                    "TopSurface": "Smooth",
+                    "BottomSurface": "Smooth",
+                    "CanCollide": true,
+                    "Orientation": [
+                      0.0,
+                      10.0,
+                      0.0
+                    ]
+                  }
+                },
+                {
+                  "name": "GoldS",
+                  "className": "Part",
+                  "properties": {
+                    "Anchored": true,
+                    "Size": [
+                      13.6,
+                      0.08,
+                      0.6
+                    ],
+                    "Position": [
+                      -33.42696101369913,
+                      2.44,
+                      26.750134415059712
+                    ],
+                    "Color": [
+                      0.92,
+                      0.75,
+                      0.32
+                    ],
+                    "Material": "Metal",
+                    "TopSurface": "Smooth",
+                    "BottomSurface": "Smooth",
+                    "CanCollide": true,
+                    "Orientation": [
+                      0.0,
+                      10.0,
+                      0.0
+                    ]
+                  }
+                },
+                {
+                  "name": "GoldE",
+                  "className": "Part",
+                  "properties": {
+                    "Anchored": true,
+                    "Size": [
+                      0.6,
+                      0.08,
+                      6.0
+                    ],
+                    "Position": [
+                      -27.303307279516986,
+                      2.44,
+                      31.180807608135126
+                    ],
+                    "Color": [
+                      0.92,
+                      0.75,
+                      0.32
+                    ],
+                    "Material": "Metal",
+                    "TopSurface": "Smooth",
+                    "BottomSurface": "Smooth",
+                    "CanCollide": true,
+                    "Orientation": [
+                      0.0,
+                      10.0,
+                      0.0
+                    ]
+                  }
+                },
+                {
+                  "name": "GoldW",
+                  "className": "Part",
+                  "properties": {
+                    "Anchored": true,
+                    "Size": [
+                      0.6,
+                      0.08,
+                      6.0
+                    ],
+                    "Position": [
+                      -40.696692720483014,
+                      2.44,
+                      28.819192391864874
+                    ],
+                    "Color": [
+                      0.92,
+                      0.75,
+                      0.32
+                    ],
+                    "Material": "Metal",
+                    "TopSurface": "Smooth",
+                    "BottomSurface": "Smooth",
+                    "CanCollide": true,
+                    "Orientation": [
+                      0.0,
+                      10.0,
+                      0.0
+                    ]
+                  }
+                },
+                {
                   "name": "FeltLayout",
                   "className": "Part",
                   "properties": {
                     "Anchored": true,
                     "Size": [
                       7.3,
-                      0.14,
+                      0.1,
                       4.9
                     ],
                     "Position": [
                       -31.341019066867037,
-                      2.36,
+                      2.28,
                       30.46885007970071
                     ],
                     "Color": [
@@ -17761,26 +17879,26 @@
                   }
                 },
                 {
-                  "name": "WheelWell",
+                  "name": "WheelHousing",
                   "className": "Part",
                   "properties": {
                     "Anchored": true,
                     "Size": [
-                      0.55,
-                      4.6,
-                      4.6
+                      0.5,
+                      5.2,
+                      5.2
                     ],
                     "Position": [
                       -38.037711787350055,
-                      2.33,
+                      2.17,
                       29.288042471565586
                     ],
                     "Color": [
-                      0.1,
-                      0.05,
-                      0.03
+                      0.92,
+                      0.75,
+                      0.32
                     ],
-                    "Material": "Wood",
+                    "Material": "Metal",
                     "TopSurface": "Smooth",
                     "BottomSurface": "Smooth",
                     "CanCollide": true,
@@ -17793,26 +17911,26 @@
                   }
                 },
                 {
-                  "name": "WheelWellGold",
+                  "name": "WheelWell",
                   "className": "Part",
                   "properties": {
                     "Anchored": true,
                     "Size": [
                       0.5,
-                      5.0,
-                      5.0
+                      4.6,
+                      4.6
                     ],
                     "Position": [
                       -38.037711787350055,
-                      2.27,
+                      2.25,
                       29.288042471565586
                     ],
                     "Color": [
-                      0.92,
-                      0.75,
-                      0.32
+                      0.1,
+                      0.05,
+                      0.03
                     ],
-                    "Material": "Metal",
+                    "Material": "Wood",
                     "TopSurface": "Smooth",
                     "BottomSurface": "Smooth",
                     "CanCollide": true,
@@ -17836,7 +17954,7 @@
                     ],
                     "Position": [
                       -38.037711787350055,
-                      2.4699999999999998,
+                      2.33,
                       29.288042471565586
                     ],
                     "Color": [
@@ -17862,13 +17980,13 @@
                   "properties": {
                     "Anchored": true,
                     "Size": [
-                      0.32,
+                      0.5,
                       3.3,
                       3.3
                     ],
                     "Position": [
                       -38.037711787350055,
-                      2.65,
+                      2.41,
                       29.288042471565586
                     ],
                     "Color": [
@@ -17894,14 +18012,14 @@
                   "properties": {
                     "Anchored": true,
                     "Size": [
-                      0.4,
-                      0.2,
-                      0.72
+                      0.42,
+                      0.16,
+                      0.7
                     ],
                     "Position": [
-                      -38.2669273818704,
-                      2.71,
-                      30.5879887055417
+                      -38.27213682720041,
+                      2.66,
+                      30.617532938132065
                     ],
                     "Color": [
                       0.1,
@@ -17925,14 +18043,14 @@
                   "properties": {
                     "Anchored": true,
                     "Size": [
-                      0.4,
-                      0.2,
-                      0.72
+                      0.42,
+                      0.16,
+                      0.7
                     ],
                     "Position": [
-                      -37.80849619282971,
-                      2.71,
-                      30.587988705541697
+                      -37.8032867474997,
+                      2.66,
+                      30.617532938132065
                     ],
                     "Color": [
                       0.78,
@@ -17956,14 +18074,14 @@
                   "properties": {
                     "Anchored": true,
                     "Size": [
-                      0.4,
-                      0.2,
-                      0.72
+                      0.42,
+                      0.16,
+                      0.7
                     ],
                     "Position": [
-                      -37.37771178735006,
-                      2.71,
-                      30.431196004561045
+                      -37.36271178735005,
+                      2.66,
+                      30.45717676667458
                     ],
                     "Color": [
                       0.05,
@@ -17987,14 +18105,14 @@
                   "properties": {
                     "Anchored": true,
                     "Size": [
-                      0.4,
-                      0.2,
-                      0.72
+                      0.42,
+                      0.16,
+                      0.7
                     ],
                     "Position": [
-                      -37.02653312243301,
-                      2.71,
-                      30.136522116351816
+                      -37.00355178913943,
+                      2.66,
+                      30.155805744642414
                     ],
                     "Color": [
                       0.78,
@@ -18018,14 +18136,14 @@
                   "properties": {
                     "Anchored": true,
                     "Size": [
-                      0.4,
-                      0.2,
-                      0.72
+                      0.42,
+                      0.16,
+                      0.7
                     ],
                     "Position": [
-                      -36.797317527912654,
-                      2.71,
-                      29.73950906075547
+                      -36.76912674928907,
+                      2.66,
+                      29.749769665055236
                     ],
                     "Color": [
                       0.05,
@@ -18049,13 +18167,13 @@
                   "properties": {
                     "Anchored": true,
                     "Size": [
-                      0.4,
-                      0.2,
-                      0.72
+                      0.42,
+                      0.16,
+                      0.7
                     ],
                     "Position": [
-                      -36.717711787350055,
-                      2.71,
+                      -36.687711787350054,
+                      2.66,
                       29.288042471565586
                     ],
                     "Color": [
@@ -18080,14 +18198,14 @@
                   "properties": {
                     "Anchored": true,
                     "Size": [
-                      0.4,
-                      0.2,
-                      0.72
+                      0.42,
+                      0.16,
+                      0.7
                     ],
                     "Position": [
-                      -36.797317527912654,
-                      2.71,
-                      28.8365758823757
+                      -36.76912674928908,
+                      2.66,
+                      28.82631527807593
                     ],
                     "Color": [
                       0.05,
@@ -18111,14 +18229,14 @@
                   "properties": {
                     "Anchored": true,
                     "Size": [
-                      0.4,
-                      0.2,
-                      0.72
+                      0.42,
+                      0.16,
+                      0.7
                     ],
                     "Position": [
-                      -37.026533122433,
-                      2.71,
-                      28.43956282677935
+                      -37.003551789139436,
+                      2.66,
+                      28.420279198488757
                     ],
                     "Color": [
                       0.78,
@@ -18142,14 +18260,14 @@
                   "properties": {
                     "Anchored": true,
                     "Size": [
-                      0.4,
-                      0.2,
-                      0.72
+                      0.42,
+                      0.16,
+                      0.7
                     ],
                     "Position": [
-                      -37.37771178735005,
-                      2.71,
-                      28.144888938570126
+                      -37.36271178735005,
+                      2.66,
+                      28.118908176456593
                     ],
                     "Color": [
                       0.05,
@@ -18173,14 +18291,14 @@
                   "properties": {
                     "Anchored": true,
                     "Size": [
-                      0.4,
-                      0.2,
-                      0.72
+                      0.42,
+                      0.16,
+                      0.7
                     ],
                     "Position": [
-                      -37.80849619282971,
-                      2.71,
-                      27.98809623758947
+                      -37.8032867474997,
+                      2.66,
+                      27.958552004999106
                     ],
                     "Color": [
                       0.78,
@@ -18204,14 +18322,14 @@
                   "properties": {
                     "Anchored": true,
                     "Size": [
-                      0.4,
-                      0.2,
-                      0.72
+                      0.42,
+                      0.16,
+                      0.7
                     ],
                     "Position": [
-                      -38.266927381870396,
-                      2.71,
-                      27.988096237589474
+                      -38.272136827200406,
+                      2.66,
+                      27.958552004999106
                     ],
                     "Color": [
                       0.05,
@@ -18235,14 +18353,14 @@
                   "properties": {
                     "Anchored": true,
                     "Size": [
-                      0.4,
-                      0.2,
-                      0.72
+                      0.42,
+                      0.16,
+                      0.7
                     ],
                     "Position": [
-                      -38.69771178735005,
-                      2.71,
-                      28.144888938570126
+                      -38.71271178735005,
+                      2.66,
+                      28.118908176456593
                     ],
                     "Color": [
                       0.78,
@@ -18266,14 +18384,14 @@
                   "properties": {
                     "Anchored": true,
                     "Size": [
-                      0.4,
-                      0.2,
-                      0.72
+                      0.42,
+                      0.16,
+                      0.7
                     ],
                     "Position": [
-                      -39.0488904522671,
-                      2.71,
-                      28.439562826779355
+                      -39.071871785560674,
+                      2.66,
+                      28.420279198488757
                     ],
                     "Color": [
                       0.05,
@@ -18297,14 +18415,14 @@
                   "properties": {
                     "Anchored": true,
                     "Size": [
-                      0.4,
-                      0.2,
-                      0.72
+                      0.42,
+                      0.16,
+                      0.7
                     ],
                     "Position": [
-                      -39.27810604678745,
-                      2.71,
-                      28.8365758823757
+                      -39.30629682541103,
+                      2.66,
+                      28.826315278075935
                     ],
                     "Color": [
                       0.78,
@@ -18328,13 +18446,13 @@
                   "properties": {
                     "Anchored": true,
                     "Size": [
-                      0.4,
-                      0.2,
-                      0.72
+                      0.42,
+                      0.16,
+                      0.7
                     ],
                     "Position": [
-                      -39.35771178735005,
-                      2.71,
+                      -39.38771178735005,
+                      2.66,
                       29.288042471565586
                     ],
                     "Color": [
@@ -18359,14 +18477,14 @@
                   "properties": {
                     "Anchored": true,
                     "Size": [
-                      0.4,
-                      0.2,
-                      0.72
+                      0.42,
+                      0.16,
+                      0.7
                     ],
                     "Position": [
-                      -39.27810604678746,
-                      2.71,
-                      29.73950906075547
+                      -39.306296825411025,
+                      2.66,
+                      29.74976966505524
                     ],
                     "Color": [
                       0.78,
@@ -18390,14 +18508,14 @@
                   "properties": {
                     "Anchored": true,
                     "Size": [
-                      0.4,
-                      0.2,
-                      0.72
+                      0.42,
+                      0.16,
+                      0.7
                     ],
                     "Position": [
-                      -39.04889045226711,
-                      2.71,
-                      30.13652211635182
+                      -39.07187178556067,
+                      2.66,
+                      30.155805744642414
                     ],
                     "Color": [
                       0.05,
@@ -18421,14 +18539,14 @@
                   "properties": {
                     "Anchored": true,
                     "Size": [
-                      0.4,
-                      0.2,
-                      0.72
+                      0.42,
+                      0.16,
+                      0.7
                     ],
                     "Position": [
-                      -38.69771178735005,
-                      2.71,
-                      30.431196004561045
+                      -38.71271178735005,
+                      2.66,
+                      30.45717676667458
                     ],
                     "Color": [
                       0.78,
@@ -18452,13 +18570,13 @@
                   "properties": {
                     "Anchored": true,
                     "Size": [
-                      0.34,
-                      1.5,
-                      1.5
+                      0.3,
+                      1.4,
+                      1.4
                     ],
                     "Position": [
                       -38.037711787350055,
-                      2.71,
+                      2.65,
                       29.288042471565586
                     ],
                     "Color": [
@@ -18485,12 +18603,12 @@
                     "Anchored": true,
                     "Size": [
                       0.5,
-                      0.7,
-                      0.7
+                      0.8,
+                      0.8
                     ],
                     "Position": [
                       -38.037711787350055,
-                      2.83,
+                      2.7,
                       29.288042471565586
                     ],
                     "Color": [
@@ -18516,13 +18634,13 @@
                   "properties": {
                     "Anchored": true,
                     "Size": [
-                      0.9,
-                      0.22,
-                      0.22
+                      1.0,
+                      0.2,
+                      0.2
                     ],
                     "Position": [
                       -38.037711787350055,
-                      3.15,
+                      3.05,
                       29.288042471565586
                     ],
                     "Color": [
@@ -18547,13 +18665,13 @@
                   "properties": {
                     "Anchored": true,
                     "Size": [
-                      0.9,
-                      0.22,
-                      0.22
+                      1.0,
+                      0.2,
+                      0.2
                     ],
                     "Position": [
                       -38.037711787350055,
-                      3.15,
+                      3.12,
                       29.288042471565586
                     ],
                     "Color": [
@@ -18588,13 +18706,13 @@
                   "properties": {
                     "Anchored": true,
                     "Size": [
-                      13.0,
-                      1.5,
-                      6.0
+                      12.4,
+                      1.9,
+                      5.4
                     ],
                     "Position": [
                       -56.0,
-                      0.9999999999999998,
+                      0.95,
                       6.0
                     ],
                     "Color": [
@@ -18614,111 +18732,18 @@
                   }
                 },
                 {
-                  "name": "Skirt",
-                  "className": "Part",
-                  "properties": {
-                    "Anchored": true,
-                    "Size": [
-                      13.4,
-                      0.7,
-                      6.4
-                    ],
-                    "Position": [
-                      -56.0,
-                      1.4999999999999998,
-                      6.0
-                    ],
-                    "Color": [
-                      0.12,
-                      0.06,
-                      0.03
-                    ],
-                    "Material": "Wood",
-                    "TopSurface": "Smooth",
-                    "BottomSurface": "Smooth",
-                    "CanCollide": true,
-                    "Orientation": [
-                      0.0,
-                      -20.0,
-                      0.0
-                    ]
-                  }
-                },
-                {
-                  "name": "Rim",
-                  "className": "Part",
-                  "properties": {
-                    "Anchored": true,
-                    "Size": [
-                      13.6,
-                      0.6,
-                      6.6
-                    ],
-                    "Position": [
-                      -56.0,
-                      1.9999999999999998,
-                      6.0
-                    ],
-                    "Color": [
-                      0.3,
-                      0.14,
-                      0.07
-                    ],
-                    "Material": "Wood",
-                    "TopSurface": "Smooth",
-                    "BottomSurface": "Smooth",
-                    "CanCollide": true,
-                    "Orientation": [
-                      0.0,
-                      -20.0,
-                      0.0
-                    ]
-                  }
-                },
-                {
-                  "name": "RimGold",
-                  "className": "Part",
-                  "properties": {
-                    "Anchored": true,
-                    "Size": [
-                      13.7,
-                      0.14,
-                      6.7
-                    ],
-                    "Position": [
-                      -56.0,
-                      2.23,
-                      6.0
-                    ],
-                    "Color": [
-                      0.92,
-                      0.75,
-                      0.32
-                    ],
-                    "Material": "Metal",
-                    "TopSurface": "Smooth",
-                    "BottomSurface": "Smooth",
-                    "CanCollide": true,
-                    "Orientation": [
-                      0.0,
-                      -20.0,
-                      0.0
-                    ]
-                  }
-                },
-                {
                   "name": "Felt",
                   "className": "Part",
                   "properties": {
                     "Anchored": true,
                     "Size": [
                       13.0,
-                      0.2,
+                      0.3,
                       6.0
                     ],
                     "Position": [
                       -56.0,
-                      2.25,
+                      2.05,
                       6.0
                     ],
                     "Color": [
@@ -18738,18 +18763,266 @@
                   }
                 },
                 {
+                  "name": "BorderN",
+                  "className": "Part",
+                  "properties": {
+                    "Anchored": true,
+                    "Size": [
+                      13.6,
+                      0.5,
+                      0.6
+                    ],
+                    "Position": [
+                      -54.87133352702529,
+                      2.15,
+                      9.100985648593497
+                    ],
+                    "Color": [
+                      0.3,
+                      0.14,
+                      0.07
+                    ],
+                    "Material": "Wood",
+                    "TopSurface": "Smooth",
+                    "BottomSurface": "Smooth",
+                    "CanCollide": true,
+                    "Orientation": [
+                      0.0,
+                      -20.0,
+                      0.0
+                    ]
+                  }
+                },
+                {
+                  "name": "BorderS",
+                  "className": "Part",
+                  "properties": {
+                    "Anchored": true,
+                    "Size": [
+                      13.6,
+                      0.5,
+                      0.6
+                    ],
+                    "Position": [
+                      -57.12866647297471,
+                      2.15,
+                      2.8990143514065023
+                    ],
+                    "Color": [
+                      0.3,
+                      0.14,
+                      0.07
+                    ],
+                    "Material": "Wood",
+                    "TopSurface": "Smooth",
+                    "BottomSurface": "Smooth",
+                    "CanCollide": true,
+                    "Orientation": [
+                      0.0,
+                      -20.0,
+                      0.0
+                    ]
+                  }
+                },
+                {
+                  "name": "BorderE",
+                  "className": "Part",
+                  "properties": {
+                    "Anchored": true,
+                    "Size": [
+                      0.6,
+                      0.5,
+                      6.0
+                    ],
+                    "Position": [
+                      -49.610090178655824,
+                      2.15,
+                      3.6742630253854527
+                    ],
+                    "Color": [
+                      0.3,
+                      0.14,
+                      0.07
+                    ],
+                    "Material": "Wood",
+                    "TopSurface": "Smooth",
+                    "BottomSurface": "Smooth",
+                    "CanCollide": true,
+                    "Orientation": [
+                      0.0,
+                      -20.0,
+                      0.0
+                    ]
+                  }
+                },
+                {
+                  "name": "BorderW",
+                  "className": "Part",
+                  "properties": {
+                    "Anchored": true,
+                    "Size": [
+                      0.6,
+                      0.5,
+                      6.0
+                    ],
+                    "Position": [
+                      -62.389909821344176,
+                      2.15,
+                      8.325736974614546
+                    ],
+                    "Color": [
+                      0.3,
+                      0.14,
+                      0.07
+                    ],
+                    "Material": "Wood",
+                    "TopSurface": "Smooth",
+                    "BottomSurface": "Smooth",
+                    "CanCollide": true,
+                    "Orientation": [
+                      0.0,
+                      -20.0,
+                      0.0
+                    ]
+                  }
+                },
+                {
+                  "name": "GoldN",
+                  "className": "Part",
+                  "properties": {
+                    "Anchored": true,
+                    "Size": [
+                      13.6,
+                      0.08,
+                      0.6
+                    ],
+                    "Position": [
+                      -54.87133352702529,
+                      2.44,
+                      9.100985648593497
+                    ],
+                    "Color": [
+                      0.92,
+                      0.75,
+                      0.32
+                    ],
+                    "Material": "Metal",
+                    "TopSurface": "Smooth",
+                    "BottomSurface": "Smooth",
+                    "CanCollide": true,
+                    "Orientation": [
+                      0.0,
+                      -20.0,
+                      0.0
+                    ]
+                  }
+                },
+                {
+                  "name": "GoldS",
+                  "className": "Part",
+                  "properties": {
+                    "Anchored": true,
+                    "Size": [
+                      13.6,
+                      0.08,
+                      0.6
+                    ],
+                    "Position": [
+                      -57.12866647297471,
+                      2.44,
+                      2.8990143514065023
+                    ],
+                    "Color": [
+                      0.92,
+                      0.75,
+                      0.32
+                    ],
+                    "Material": "Metal",
+                    "TopSurface": "Smooth",
+                    "BottomSurface": "Smooth",
+                    "CanCollide": true,
+                    "Orientation": [
+                      0.0,
+                      -20.0,
+                      0.0
+                    ]
+                  }
+                },
+                {
+                  "name": "GoldE",
+                  "className": "Part",
+                  "properties": {
+                    "Anchored": true,
+                    "Size": [
+                      0.6,
+                      0.08,
+                      6.0
+                    ],
+                    "Position": [
+                      -49.610090178655824,
+                      2.44,
+                      3.6742630253854527
+                    ],
+                    "Color": [
+                      0.92,
+                      0.75,
+                      0.32
+                    ],
+                    "Material": "Metal",
+                    "TopSurface": "Smooth",
+                    "BottomSurface": "Smooth",
+                    "CanCollide": true,
+                    "Orientation": [
+                      0.0,
+                      -20.0,
+                      0.0
+                    ]
+                  }
+                },
+                {
+                  "name": "GoldW",
+                  "className": "Part",
+                  "properties": {
+                    "Anchored": true,
+                    "Size": [
+                      0.6,
+                      0.08,
+                      6.0
+                    ],
+                    "Position": [
+                      -62.389909821344176,
+                      2.44,
+                      8.325736974614546
+                    ],
+                    "Color": [
+                      0.92,
+                      0.75,
+                      0.32
+                    ],
+                    "Material": "Metal",
+                    "TopSurface": "Smooth",
+                    "BottomSurface": "Smooth",
+                    "CanCollide": true,
+                    "Orientation": [
+                      0.0,
+                      -20.0,
+                      0.0
+                    ]
+                  }
+                },
+                {
                   "name": "FeltLayout",
                   "className": "Part",
                   "properties": {
                     "Anchored": true,
                     "Size": [
                       7.3,
-                      0.14,
+                      0.1,
                       4.9
                     ],
                     "Position": [
                       -53.46282992387805,
-                      2.36,
+                      2.28,
                       5.076545613020694
                     ],
                     "Color": [
@@ -18769,26 +19042,26 @@
                   }
                 },
                 {
-                  "name": "WheelWell",
+                  "name": "WheelHousing",
                   "className": "Part",
                   "properties": {
                     "Anchored": true,
                     "Size": [
-                      0.55,
-                      4.6,
-                      4.6
+                      0.5,
+                      5.2,
+                      5.2
                     ],
                     "Position": [
                       -59.85273974522222,
-                      2.33,
+                      2.17,
                       7.402282587635241
                     ],
                     "Color": [
-                      0.1,
-                      0.05,
-                      0.03
+                      0.92,
+                      0.75,
+                      0.32
                     ],
-                    "Material": "Wood",
+                    "Material": "Metal",
                     "TopSurface": "Smooth",
                     "BottomSurface": "Smooth",
                     "CanCollide": true,
@@ -18801,26 +19074,26 @@
                   }
                 },
                 {
-                  "name": "WheelWellGold",
+                  "name": "WheelWell",
                   "className": "Part",
                   "properties": {
                     "Anchored": true,
                     "Size": [
                       0.5,
-                      5.0,
-                      5.0
+                      4.6,
+                      4.6
                     ],
                     "Position": [
                       -59.85273974522222,
-                      2.27,
+                      2.25,
                       7.402282587635241
                     ],
                     "Color": [
-                      0.92,
-                      0.75,
-                      0.32
+                      0.1,
+                      0.05,
+                      0.03
                     ],
-                    "Material": "Metal",
+                    "Material": "Wood",
                     "TopSurface": "Smooth",
                     "BottomSurface": "Smooth",
                     "CanCollide": true,
@@ -18844,7 +19117,7 @@
                     ],
                     "Position": [
                       -59.85273974522222,
-                      2.4699999999999998,
+                      2.33,
                       7.402282587635241
                     ],
                     "Color": [
@@ -18870,13 +19143,13 @@
                   "properties": {
                     "Anchored": true,
                     "Size": [
-                      0.32,
+                      0.5,
                       3.3,
                       3.3
                     ],
                     "Position": [
                       -59.85273974522222,
-                      2.65,
+                      2.41,
                       7.402282587635241
                     ],
                     "Color": [
@@ -18902,14 +19175,14 @@
                   "properties": {
                     "Anchored": true,
                     "Size": [
-                      0.4,
-                      0.2,
-                      0.72
+                      0.42,
+                      0.16,
+                      0.7
                     ],
                     "Position": [
-                      -59.40127315603234,
-                      2.71,
-                      8.642676847072641
+                      -59.39101255173257,
+                      2.66,
+                      8.670867625696218
                     ],
                     "Color": [
                       0.1,
@@ -18933,14 +19206,14 @@
                   "properties": {
                     "Anchored": true,
                     "Size": [
-                      0.4,
-                      0.2,
-                      0.72
+                      0.42,
+                      0.16,
+                      0.7
                     ],
                     "Position": [
-                      -59.00426010043599,
-                      2.71,
-                      8.413461252552294
+                      -58.98497647214539,
+                      2.66,
+                      8.436442585845862
                     ],
                     "Color": [
                       0.78,
@@ -18964,14 +19237,14 @@
                   "properties": {
                     "Anchored": true,
                     "Size": [
-                      0.4,
-                      0.2,
-                      0.72
+                      0.42,
+                      0.16,
+                      0.7
                     ],
                     "Position": [
-                      -58.70958621222677,
-                      2.71,
-                      8.062282587635242
+                      -58.683605450113234,
+                      2.66,
+                      8.077282587635242
                     ],
                     "Color": [
                       0.05,
@@ -18995,14 +19268,14 @@
                   "properties": {
                     "Anchored": true,
                     "Size": [
-                      0.4,
-                      0.2,
-                      0.72
+                      0.42,
+                      0.16,
+                      0.7
                     ],
                     "Position": [
-                      -58.552793511246115,
-                      2.71,
-                      7.63149818215559
+                      -58.52324927865575,
+                      2.66,
+                      7.636707627485597
                     ],
                     "Color": [
                       0.78,
@@ -19026,14 +19299,14 @@
                   "properties": {
                     "Anchored": true,
                     "Size": [
-                      0.4,
-                      0.2,
-                      0.72
+                      0.42,
+                      0.16,
+                      0.7
                     ],
                     "Position": [
-                      -58.55279351124611,
-                      2.71,
-                      7.173066993114894
+                      -58.52324927865574,
+                      2.66,
+                      7.1678575477848865
                     ],
                     "Color": [
                       0.05,
@@ -19057,14 +19330,14 @@
                   "properties": {
                     "Anchored": true,
                     "Size": [
-                      0.4,
-                      0.2,
-                      0.72
+                      0.42,
+                      0.16,
+                      0.7
                     ],
                     "Position": [
-                      -58.70958621222677,
-                      2.71,
-                      6.742282587635241
+                      -58.683605450113234,
+                      2.66,
+                      6.7272825876352425
                     ],
                     "Color": [
                       0.78,
@@ -19088,14 +19361,14 @@
                   "properties": {
                     "Anchored": true,
                     "Size": [
-                      0.4,
-                      0.2,
-                      0.72
+                      0.42,
+                      0.16,
+                      0.7
                     ],
                     "Position": [
-                      -59.00426010043599,
-                      2.71,
-                      6.391103922718191
+                      -58.9849764721454,
+                      2.66,
+                      6.368122589424621
                     ],
                     "Color": [
                       0.05,
@@ -19119,14 +19392,14 @@
                   "properties": {
                     "Anchored": true,
                     "Size": [
-                      0.4,
-                      0.2,
-                      0.72
+                      0.42,
+                      0.16,
+                      0.7
                     ],
                     "Position": [
-                      -59.40127315603234,
-                      2.71,
-                      6.161888328197843
+                      -59.39101255173257,
+                      2.66,
+                      6.133697549574265
                     ],
                     "Color": [
                       0.78,
@@ -19150,14 +19423,14 @@
                   "properties": {
                     "Anchored": true,
                     "Size": [
-                      0.4,
-                      0.2,
-                      0.72
+                      0.42,
+                      0.16,
+                      0.7
                     ],
                     "Position": [
                       -59.85273974522222,
-                      2.71,
-                      6.082282587635241
+                      2.66,
+                      6.052282587635242
                     ],
                     "Color": [
                       0.05,
@@ -19181,14 +19454,14 @@
                   "properties": {
                     "Anchored": true,
                     "Size": [
-                      0.4,
-                      0.2,
-                      0.72
+                      0.42,
+                      0.16,
+                      0.7
                     ],
                     "Position": [
-                      -60.30420633441211,
-                      2.71,
-                      6.1618883281978425
+                      -60.314466938711874,
+                      2.66,
+                      6.133697549574265
                     ],
                     "Color": [
                       0.78,
@@ -19212,14 +19485,14 @@
                   "properties": {
                     "Anchored": true,
                     "Size": [
-                      0.4,
-                      0.2,
-                      0.72
+                      0.42,
+                      0.16,
+                      0.7
                     ],
                     "Position": [
-                      -60.70121939000846,
-                      2.71,
-                      6.391103922718191
+                      -60.720503018299055,
+                      2.66,
+                      6.368122589424621
                     ],
                     "Color": [
                       0.05,
@@ -19243,14 +19516,14 @@
                   "properties": {
                     "Anchored": true,
                     "Size": [
-                      0.4,
-                      0.2,
-                      0.72
+                      0.42,
+                      0.16,
+                      0.7
                     ],
                     "Position": [
-                      -60.995893278217686,
-                      2.71,
-                      6.742282587635241
+                      -61.02187404033121,
+                      2.66,
+                      6.727282587635241
                     ],
                     "Color": [
                       0.78,
@@ -19274,14 +19547,14 @@
                   "properties": {
                     "Anchored": true,
                     "Size": [
-                      0.4,
-                      0.2,
-                      0.72
+                      0.42,
+                      0.16,
+                      0.7
                     ],
                     "Position": [
-                      -61.15268597919834,
-                      2.71,
-                      7.173066993114893
+                      -61.182230211788706,
+                      2.66,
+                      7.167857547784885
                     ],
                     "Color": [
                       0.05,
@@ -19305,14 +19578,14 @@
                   "properties": {
                     "Anchored": true,
                     "Size": [
-                      0.4,
-                      0.2,
-                      0.72
+                      0.42,
+                      0.16,
+                      0.7
                     ],
                     "Position": [
-                      -61.15268597919834,
-                      2.71,
-                      7.63149818215559
+                      -61.182230211788706,
+                      2.66,
+                      7.636707627485597
                     ],
                     "Color": [
                       0.78,
@@ -19336,14 +19609,14 @@
                   "properties": {
                     "Anchored": true,
                     "Size": [
-                      0.4,
-                      0.2,
-                      0.72
+                      0.42,
+                      0.16,
+                      0.7
                     ],
                     "Position": [
-                      -60.99589327821768,
-                      2.71,
-                      8.062282587635242
+                      -61.02187404033121,
+                      2.66,
+                      8.077282587635242
                     ],
                     "Color": [
                       0.05,
@@ -19367,14 +19640,14 @@
                   "properties": {
                     "Anchored": true,
                     "Size": [
-                      0.4,
-                      0.2,
-                      0.72
+                      0.42,
+                      0.16,
+                      0.7
                     ],
                     "Position": [
-                      -60.70121939000846,
-                      2.71,
-                      8.413461252552292
+                      -60.720503018299055,
+                      2.66,
+                      8.436442585845862
                     ],
                     "Color": [
                       0.78,
@@ -19398,14 +19671,14 @@
                   "properties": {
                     "Anchored": true,
                     "Size": [
-                      0.4,
-                      0.2,
-                      0.72
+                      0.42,
+                      0.16,
+                      0.7
                     ],
                     "Position": [
-                      -60.30420633441211,
-                      2.71,
-                      8.642676847072641
+                      -60.31446693871188,
+                      2.66,
+                      8.670867625696218
                     ],
                     "Color": [
                       0.05,
@@ -19429,14 +19702,14 @@
                   "properties": {
                     "Anchored": true,
                     "Size": [
-                      0.4,
-                      0.2,
-                      0.72
+                      0.42,
+                      0.16,
+                      0.7
                     ],
                     "Position": [
                       -59.85273974522222,
-                      2.71,
-                      8.722282587635242
+                      2.66,
+                      8.752282587635241
                     ],
                     "Color": [
                       0.78,
@@ -19460,13 +19733,13 @@
                   "properties": {
                     "Anchored": true,
                     "Size": [
-                      0.34,
-                      1.5,
-                      1.5
+                      0.3,
+                      1.4,
+                      1.4
                     ],
                     "Position": [
                       -59.85273974522222,
-                      2.71,
+                      2.65,
                       7.402282587635241
                     ],
                     "Color": [
@@ -19493,12 +19766,12 @@
                     "Anchored": true,
                     "Size": [
                       0.5,
-                      0.7,
-                      0.7
+                      0.8,
+                      0.8
                     ],
                     "Position": [
                       -59.85273974522222,
-                      2.83,
+                      2.7,
                       7.402282587635241
                     ],
                     "Color": [
@@ -19524,13 +19797,13 @@
                   "properties": {
                     "Anchored": true,
                     "Size": [
-                      0.9,
-                      0.22,
-                      0.22
+                      1.0,
+                      0.2,
+                      0.2
                     ],
                     "Position": [
                       -59.85273974522222,
-                      3.15,
+                      3.05,
                       7.402282587635241
                     ],
                     "Color": [
@@ -19555,13 +19828,13 @@
                   "properties": {
                     "Anchored": true,
                     "Size": [
-                      0.9,
-                      0.22,
-                      0.22
+                      1.0,
+                      0.2,
+                      0.2
                     ],
                     "Position": [
                       -59.85273974522222,
-                      3.15,
+                      3.12,
                       7.402282587635241
                     ],
                     "Color": [
@@ -19596,13 +19869,13 @@
                   "properties": {
                     "Anchored": true,
                     "Size": [
-                      13.0,
-                      1.5,
-                      6.0
+                      12.4,
+                      1.9,
+                      5.4
                     ],
                     "Position": [
                       34.0,
-                      0.9999999999999998,
+                      0.95,
                       30.0
                     ],
                     "Color": [
@@ -19622,111 +19895,18 @@
                   }
                 },
                 {
-                  "name": "Skirt",
-                  "className": "Part",
-                  "properties": {
-                    "Anchored": true,
-                    "Size": [
-                      13.4,
-                      0.7,
-                      6.4
-                    ],
-                    "Position": [
-                      34.0,
-                      1.4999999999999998,
-                      30.0
-                    ],
-                    "Color": [
-                      0.12,
-                      0.06,
-                      0.03
-                    ],
-                    "Material": "Wood",
-                    "TopSurface": "Smooth",
-                    "BottomSurface": "Smooth",
-                    "CanCollide": true,
-                    "Orientation": [
-                      0.0,
-                      -10.0,
-                      0.0
-                    ]
-                  }
-                },
-                {
-                  "name": "Rim",
-                  "className": "Part",
-                  "properties": {
-                    "Anchored": true,
-                    "Size": [
-                      13.6,
-                      0.6,
-                      6.6
-                    ],
-                    "Position": [
-                      34.0,
-                      1.9999999999999998,
-                      30.0
-                    ],
-                    "Color": [
-                      0.3,
-                      0.14,
-                      0.07
-                    ],
-                    "Material": "Wood",
-                    "TopSurface": "Smooth",
-                    "BottomSurface": "Smooth",
-                    "CanCollide": true,
-                    "Orientation": [
-                      0.0,
-                      -10.0,
-                      0.0
-                    ]
-                  }
-                },
-                {
-                  "name": "RimGold",
-                  "className": "Part",
-                  "properties": {
-                    "Anchored": true,
-                    "Size": [
-                      13.7,
-                      0.14,
-                      6.7
-                    ],
-                    "Position": [
-                      34.0,
-                      2.23,
-                      30.0
-                    ],
-                    "Color": [
-                      0.92,
-                      0.75,
-                      0.32
-                    ],
-                    "Material": "Metal",
-                    "TopSurface": "Smooth",
-                    "BottomSurface": "Smooth",
-                    "CanCollide": true,
-                    "Orientation": [
-                      0.0,
-                      -10.0,
-                      0.0
-                    ]
-                  }
-                },
-                {
                   "name": "Felt",
                   "className": "Part",
                   "properties": {
                     "Anchored": true,
                     "Size": [
                       13.0,
-                      0.2,
+                      0.3,
                       6.0
                     ],
                     "Position": [
                       34.0,
-                      2.25,
+                      2.05,
                       30.0
                     ],
                     "Color": [
@@ -19746,18 +19926,266 @@
                   }
                 },
                 {
+                  "name": "BorderN",
+                  "className": "Part",
+                  "properties": {
+                    "Anchored": true,
+                    "Size": [
+                      13.6,
+                      0.5,
+                      0.6
+                    ],
+                    "Position": [
+                      34.57303898630087,
+                      2.15,
+                      33.24986558494029
+                    ],
+                    "Color": [
+                      0.3,
+                      0.14,
+                      0.07
+                    ],
+                    "Material": "Wood",
+                    "TopSurface": "Smooth",
+                    "BottomSurface": "Smooth",
+                    "CanCollide": true,
+                    "Orientation": [
+                      0.0,
+                      -10.0,
+                      0.0
+                    ]
+                  }
+                },
+                {
+                  "name": "BorderS",
+                  "className": "Part",
+                  "properties": {
+                    "Anchored": true,
+                    "Size": [
+                      13.6,
+                      0.5,
+                      0.6
+                    ],
+                    "Position": [
+                      33.42696101369913,
+                      2.15,
+                      26.750134415059712
+                    ],
+                    "Color": [
+                      0.3,
+                      0.14,
+                      0.07
+                    ],
+                    "Material": "Wood",
+                    "TopSurface": "Smooth",
+                    "BottomSurface": "Smooth",
+                    "CanCollide": true,
+                    "Orientation": [
+                      0.0,
+                      -10.0,
+                      0.0
+                    ]
+                  }
+                },
+                {
+                  "name": "BorderE",
+                  "className": "Part",
+                  "properties": {
+                    "Anchored": true,
+                    "Size": [
+                      0.6,
+                      0.5,
+                      6.0
+                    ],
+                    "Position": [
+                      40.696692720483014,
+                      2.15,
+                      28.819192391864874
+                    ],
+                    "Color": [
+                      0.3,
+                      0.14,
+                      0.07
+                    ],
+                    "Material": "Wood",
+                    "TopSurface": "Smooth",
+                    "BottomSurface": "Smooth",
+                    "CanCollide": true,
+                    "Orientation": [
+                      0.0,
+                      -10.0,
+                      0.0
+                    ]
+                  }
+                },
+                {
+                  "name": "BorderW",
+                  "className": "Part",
+                  "properties": {
+                    "Anchored": true,
+                    "Size": [
+                      0.6,
+                      0.5,
+                      6.0
+                    ],
+                    "Position": [
+                      27.303307279516986,
+                      2.15,
+                      31.180807608135126
+                    ],
+                    "Color": [
+                      0.3,
+                      0.14,
+                      0.07
+                    ],
+                    "Material": "Wood",
+                    "TopSurface": "Smooth",
+                    "BottomSurface": "Smooth",
+                    "CanCollide": true,
+                    "Orientation": [
+                      0.0,
+                      -10.0,
+                      0.0
+                    ]
+                  }
+                },
+                {
+                  "name": "GoldN",
+                  "className": "Part",
+                  "properties": {
+                    "Anchored": true,
+                    "Size": [
+                      13.6,
+                      0.08,
+                      0.6
+                    ],
+                    "Position": [
+                      34.57303898630087,
+                      2.44,
+                      33.24986558494029
+                    ],
+                    "Color": [
+                      0.92,
+                      0.75,
+                      0.32
+                    ],
+                    "Material": "Metal",
+                    "TopSurface": "Smooth",
+                    "BottomSurface": "Smooth",
+                    "CanCollide": true,
+                    "Orientation": [
+                      0.0,
+                      -10.0,
+                      0.0
+                    ]
+                  }
+                },
+                {
+                  "name": "GoldS",
+                  "className": "Part",
+                  "properties": {
+                    "Anchored": true,
+                    "Size": [
+                      13.6,
+                      0.08,
+                      0.6
+                    ],
+                    "Position": [
+                      33.42696101369913,
+                      2.44,
+                      26.750134415059712
+                    ],
+                    "Color": [
+                      0.92,
+                      0.75,
+                      0.32
+                    ],
+                    "Material": "Metal",
+                    "TopSurface": "Smooth",
+                    "BottomSurface": "Smooth",
+                    "CanCollide": true,
+                    "Orientation": [
+                      0.0,
+                      -10.0,
+                      0.0
+                    ]
+                  }
+                },
+                {
+                  "name": "GoldE",
+                  "className": "Part",
+                  "properties": {
+                    "Anchored": true,
+                    "Size": [
+                      0.6,
+                      0.08,
+                      6.0
+                    ],
+                    "Position": [
+                      40.696692720483014,
+                      2.44,
+                      28.819192391864874
+                    ],
+                    "Color": [
+                      0.92,
+                      0.75,
+                      0.32
+                    ],
+                    "Material": "Metal",
+                    "TopSurface": "Smooth",
+                    "BottomSurface": "Smooth",
+                    "CanCollide": true,
+                    "Orientation": [
+                      0.0,
+                      -10.0,
+                      0.0
+                    ]
+                  }
+                },
+                {
+                  "name": "GoldW",
+                  "className": "Part",
+                  "properties": {
+                    "Anchored": true,
+                    "Size": [
+                      0.6,
+                      0.08,
+                      6.0
+                    ],
+                    "Position": [
+                      27.303307279516986,
+                      2.44,
+                      31.180807608135126
+                    ],
+                    "Color": [
+                      0.92,
+                      0.75,
+                      0.32
+                    ],
+                    "Material": "Metal",
+                    "TopSurface": "Smooth",
+                    "BottomSurface": "Smooth",
+                    "CanCollide": true,
+                    "Orientation": [
+                      0.0,
+                      -10.0,
+                      0.0
+                    ]
+                  }
+                },
+                {
                   "name": "FeltLayout",
                   "className": "Part",
                   "properties": {
                     "Anchored": true,
                     "Size": [
                       7.3,
-                      0.14,
+                      0.1,
                       4.9
                     ],
                     "Position": [
                       36.65898093313296,
-                      2.36,
+                      2.28,
                       29.53114992029929
                     ],
                     "Color": [
@@ -19777,26 +20205,26 @@
                   }
                 },
                 {
-                  "name": "WheelWell",
+                  "name": "WheelHousing",
                   "className": "Part",
                   "properties": {
                     "Anchored": true,
                     "Size": [
-                      0.55,
-                      4.6,
-                      4.6
+                      0.5,
+                      5.2,
+                      5.2
                     ],
                     "Position": [
                       29.96228821264995,
-                      2.33,
+                      2.17,
                       30.711957528434414
                     ],
                     "Color": [
-                      0.1,
-                      0.05,
-                      0.03
+                      0.92,
+                      0.75,
+                      0.32
                     ],
-                    "Material": "Wood",
+                    "Material": "Metal",
                     "TopSurface": "Smooth",
                     "BottomSurface": "Smooth",
                     "CanCollide": true,
@@ -19809,26 +20237,26 @@
                   }
                 },
                 {
-                  "name": "WheelWellGold",
+                  "name": "WheelWell",
                   "className": "Part",
                   "properties": {
                     "Anchored": true,
                     "Size": [
                       0.5,
-                      5.0,
-                      5.0
+                      4.6,
+                      4.6
                     ],
                     "Position": [
                       29.96228821264995,
-                      2.27,
+                      2.25,
                       30.711957528434414
                     ],
                     "Color": [
-                      0.92,
-                      0.75,
-                      0.32
+                      0.1,
+                      0.05,
+                      0.03
                     ],
-                    "Material": "Metal",
+                    "Material": "Wood",
                     "TopSurface": "Smooth",
                     "BottomSurface": "Smooth",
                     "CanCollide": true,
@@ -19852,7 +20280,7 @@
                     ],
                     "Position": [
                       29.96228821264995,
-                      2.4699999999999998,
+                      2.33,
                       30.711957528434414
                     ],
                     "Color": [
@@ -19878,13 +20306,13 @@
                   "properties": {
                     "Anchored": true,
                     "Size": [
-                      0.32,
+                      0.5,
                       3.3,
                       3.3
                     ],
                     "Position": [
                       29.96228821264995,
-                      2.65,
+                      2.41,
                       30.711957528434414
                     ],
                     "Color": [
@@ -19910,14 +20338,14 @@
                   "properties": {
                     "Anchored": true,
                     "Size": [
-                      0.4,
-                      0.2,
-                      0.72
+                      0.42,
+                      0.16,
+                      0.7
                     ],
                     "Position": [
-                      30.191503807170296,
-                      2.71,
-                      32.011903762410526
+                      30.196713252500306,
+                      2.66,
+                      32.041447995000894
                     ],
                     "Color": [
                       0.1,
@@ -19941,14 +20369,14 @@
                   "properties": {
                     "Anchored": true,
                     "Size": [
-                      0.4,
-                      0.2,
-                      0.72
+                      0.42,
+                      0.16,
+                      0.7
                     ],
                     "Position": [
-                      30.622288212649945,
-                      2.71,
-                      31.855111061429874
+                      30.63728821264995,
+                      2.66,
+                      31.881091823543407
                     ],
                     "Color": [
                       0.78,
@@ -19972,14 +20400,14 @@
                   "properties": {
                     "Anchored": true,
                     "Size": [
-                      0.4,
-                      0.2,
-                      0.72
+                      0.42,
+                      0.16,
+                      0.7
                     ],
                     "Position": [
-                      30.973466877567,
-                      2.71,
-                      31.56043717322065
+                      30.996448210860567,
+                      2.66,
+                      31.579720801511243
                     ],
                     "Color": [
                       0.05,
@@ -20003,14 +20431,14 @@
                   "properties": {
                     "Anchored": true,
                     "Size": [
-                      0.4,
-                      0.2,
-                      0.72
+                      0.42,
+                      0.16,
+                      0.7
                     ],
                     "Position": [
-                      31.202682472087346,
-                      2.71,
-                      31.1634241176243
+                      31.230873250710925,
+                      2.66,
+                      31.17368472192407
                     ],
                     "Color": [
                       0.78,
@@ -20034,13 +20462,13 @@
                   "properties": {
                     "Anchored": true,
                     "Size": [
-                      0.4,
-                      0.2,
-                      0.72
+                      0.42,
+                      0.16,
+                      0.7
                     ],
                     "Position": [
-                      31.282288212649945,
-                      2.71,
+                      31.31228821264995,
+                      2.66,
                       30.711957528434414
                     ],
                     "Color": [
@@ -20065,14 +20493,14 @@
                   "properties": {
                     "Anchored": true,
                     "Size": [
-                      0.4,
-                      0.2,
-                      0.72
+                      0.42,
+                      0.16,
+                      0.7
                     ],
                     "Position": [
-                      31.202682472087346,
-                      2.71,
-                      30.26049093924453
+                      31.230873250710925,
+                      2.66,
+                      30.250230334944764
                     ],
                     "Color": [
                       0.78,
@@ -20096,14 +20524,14 @@
                   "properties": {
                     "Anchored": true,
                     "Size": [
-                      0.4,
-                      0.2,
-                      0.72
+                      0.42,
+                      0.16,
+                      0.7
                     ],
                     "Position": [
-                      30.973466877567,
-                      2.71,
-                      29.863477883648184
+                      30.996448210860567,
+                      2.66,
+                      29.844194255357586
                     ],
                     "Color": [
                       0.05,
@@ -20127,14 +20555,14 @@
                   "properties": {
                     "Anchored": true,
                     "Size": [
-                      0.4,
-                      0.2,
-                      0.72
+                      0.42,
+                      0.16,
+                      0.7
                     ],
                     "Position": [
-                      30.62228821264995,
-                      2.71,
-                      29.568803995438955
+                      30.637288212649946,
+                      2.66,
+                      29.54282323332542
                     ],
                     "Color": [
                       0.78,
@@ -20158,14 +20586,14 @@
                   "properties": {
                     "Anchored": true,
                     "Size": [
-                      0.4,
-                      0.2,
-                      0.72
+                      0.42,
+                      0.16,
+                      0.7
                     ],
                     "Position": [
-                      30.191503807170296,
-                      2.71,
-                      29.412011294458303
+                      30.196713252500302,
+                      2.66,
+                      29.382467061867935
                     ],
                     "Color": [
                       0.05,
@@ -20189,14 +20617,14 @@
                   "properties": {
                     "Anchored": true,
                     "Size": [
-                      0.4,
-                      0.2,
-                      0.72
+                      0.42,
+                      0.16,
+                      0.7
                     ],
                     "Position": [
-                      29.7330726181296,
-                      2.71,
-                      29.4120112944583
+                      29.72786317279959,
+                      2.66,
+                      29.382467061867935
                     ],
                     "Color": [
                       0.78,
@@ -20220,14 +20648,14 @@
                   "properties": {
                     "Anchored": true,
                     "Size": [
-                      0.4,
-                      0.2,
-                      0.72
+                      0.42,
+                      0.16,
+                      0.7
                     ],
                     "Position": [
-                      29.302288212649948,
-                      2.71,
-                      29.568803995438955
+                      29.287288212649948,
+                      2.66,
+                      29.54282323332542
                     ],
                     "Color": [
                       0.05,
@@ -20251,14 +20679,14 @@
                   "properties": {
                     "Anchored": true,
                     "Size": [
-                      0.4,
-                      0.2,
-                      0.72
+                      0.42,
+                      0.16,
+                      0.7
                     ],
                     "Position": [
-                      28.951109547732898,
-                      2.71,
-                      29.86347788364818
+                      28.928128214439326,
+                      2.66,
+                      29.844194255357586
                     ],
                     "Color": [
                       0.78,
@@ -20282,14 +20710,14 @@
                   "properties": {
                     "Anchored": true,
                     "Size": [
-                      0.4,
-                      0.2,
-                      0.72
+                      0.42,
+                      0.16,
+                      0.7
                     ],
                     "Position": [
-                      28.721893953212547,
-                      2.71,
-                      30.26049093924453
+                      28.693703174588972,
+                      2.66,
+                      30.25023033494476
                     ],
                     "Color": [
                       0.05,
@@ -20313,13 +20741,13 @@
                   "properties": {
                     "Anchored": true,
                     "Size": [
-                      0.4,
-                      0.2,
-                      0.72
+                      0.42,
+                      0.16,
+                      0.7
                     ],
                     "Position": [
-                      28.642288212649948,
-                      2.71,
+                      28.612288212649947,
+                      2.66,
                       30.711957528434414
                     ],
                     "Color": [
@@ -20344,14 +20772,14 @@
                   "properties": {
                     "Anchored": true,
                     "Size": [
-                      0.4,
-                      0.2,
-                      0.72
+                      0.42,
+                      0.16,
+                      0.7
                     ],
                     "Position": [
-                      28.721893953212547,
-                      2.71,
-                      31.1634241176243
+                      28.693703174588972,
+                      2.66,
+                      31.173684721924065
                     ],
                     "Color": [
                       0.05,
@@ -20375,14 +20803,14 @@
                   "properties": {
                     "Anchored": true,
                     "Size": [
-                      0.4,
-                      0.2,
-                      0.72
+                      0.42,
+                      0.16,
+                      0.7
                     ],
                     "Position": [
-                      28.951109547732894,
-                      2.71,
-                      31.560437173220645
+                      28.92812821443933,
+                      2.66,
+                      31.579720801511243
                     ],
                     "Color": [
                       0.78,
@@ -20406,14 +20834,14 @@
                   "properties": {
                     "Anchored": true,
                     "Size": [
-                      0.4,
-                      0.2,
-                      0.72
+                      0.42,
+                      0.16,
+                      0.7
                     ],
                     "Position": [
-                      29.302288212649945,
-                      2.71,
-                      31.855111061429874
+                      29.287288212649948,
+                      2.66,
+                      31.881091823543407
                     ],
                     "Color": [
                       0.05,
@@ -20437,14 +20865,14 @@
                   "properties": {
                     "Anchored": true,
                     "Size": [
-                      0.4,
-                      0.2,
-                      0.72
+                      0.42,
+                      0.16,
+                      0.7
                     ],
                     "Position": [
-                      29.733072618129597,
-                      2.71,
-                      32.011903762410526
+                      29.727863172799594,
+                      2.66,
+                      32.041447995000894
                     ],
                     "Color": [
                       0.78,
@@ -20468,13 +20896,13 @@
                   "properties": {
                     "Anchored": true,
                     "Size": [
-                      0.34,
-                      1.5,
-                      1.5
+                      0.3,
+                      1.4,
+                      1.4
                     ],
                     "Position": [
                       29.96228821264995,
-                      2.71,
+                      2.65,
                       30.711957528434414
                     ],
                     "Color": [
@@ -20501,12 +20929,12 @@
                     "Anchored": true,
                     "Size": [
                       0.5,
-                      0.7,
-                      0.7
+                      0.8,
+                      0.8
                     ],
                     "Position": [
                       29.96228821264995,
-                      2.83,
+                      2.7,
                       30.711957528434414
                     ],
                     "Color": [
@@ -20532,13 +20960,13 @@
                   "properties": {
                     "Anchored": true,
                     "Size": [
-                      0.9,
-                      0.22,
-                      0.22
+                      1.0,
+                      0.2,
+                      0.2
                     ],
                     "Position": [
                       29.96228821264995,
-                      3.15,
+                      3.05,
                       30.711957528434414
                     ],
                     "Color": [
@@ -20563,13 +20991,13 @@
                   "properties": {
                     "Anchored": true,
                     "Size": [
-                      0.9,
-                      0.22,
-                      0.22
+                      1.0,
+                      0.2,
+                      0.2
                     ],
                     "Position": [
                       29.96228821264995,
-                      3.15,
+                      3.12,
                       30.711957528434414
                     ],
                     "Color": [
@@ -20604,13 +21032,13 @@
                   "properties": {
                     "Anchored": true,
                     "Size": [
-                      13.0,
-                      1.5,
-                      6.0
+                      12.4,
+                      1.9,
+                      5.4
                     ],
                     "Position": [
                       56.0,
-                      0.9999999999999998,
+                      0.95,
                       6.0
                     ],
                     "Color": [
@@ -20630,111 +21058,18 @@
                   }
                 },
                 {
-                  "name": "Skirt",
-                  "className": "Part",
-                  "properties": {
-                    "Anchored": true,
-                    "Size": [
-                      13.4,
-                      0.7,
-                      6.4
-                    ],
-                    "Position": [
-                      56.0,
-                      1.4999999999999998,
-                      6.0
-                    ],
-                    "Color": [
-                      0.12,
-                      0.06,
-                      0.03
-                    ],
-                    "Material": "Wood",
-                    "TopSurface": "Smooth",
-                    "BottomSurface": "Smooth",
-                    "CanCollide": true,
-                    "Orientation": [
-                      0.0,
-                      20.0,
-                      0.0
-                    ]
-                  }
-                },
-                {
-                  "name": "Rim",
-                  "className": "Part",
-                  "properties": {
-                    "Anchored": true,
-                    "Size": [
-                      13.6,
-                      0.6,
-                      6.6
-                    ],
-                    "Position": [
-                      56.0,
-                      1.9999999999999998,
-                      6.0
-                    ],
-                    "Color": [
-                      0.3,
-                      0.14,
-                      0.07
-                    ],
-                    "Material": "Wood",
-                    "TopSurface": "Smooth",
-                    "BottomSurface": "Smooth",
-                    "CanCollide": true,
-                    "Orientation": [
-                      0.0,
-                      20.0,
-                      0.0
-                    ]
-                  }
-                },
-                {
-                  "name": "RimGold",
-                  "className": "Part",
-                  "properties": {
-                    "Anchored": true,
-                    "Size": [
-                      13.7,
-                      0.14,
-                      6.7
-                    ],
-                    "Position": [
-                      56.0,
-                      2.23,
-                      6.0
-                    ],
-                    "Color": [
-                      0.92,
-                      0.75,
-                      0.32
-                    ],
-                    "Material": "Metal",
-                    "TopSurface": "Smooth",
-                    "BottomSurface": "Smooth",
-                    "CanCollide": true,
-                    "Orientation": [
-                      0.0,
-                      20.0,
-                      0.0
-                    ]
-                  }
-                },
-                {
                   "name": "Felt",
                   "className": "Part",
                   "properties": {
                     "Anchored": true,
                     "Size": [
                       13.0,
-                      0.2,
+                      0.3,
                       6.0
                     ],
                     "Position": [
                       56.0,
-                      2.25,
+                      2.05,
                       6.0
                     ],
                     "Color": [
@@ -20754,18 +21089,266 @@
                   }
                 },
                 {
+                  "name": "BorderN",
+                  "className": "Part",
+                  "properties": {
+                    "Anchored": true,
+                    "Size": [
+                      13.6,
+                      0.5,
+                      0.6
+                    ],
+                    "Position": [
+                      54.87133352702529,
+                      2.15,
+                      9.100985648593497
+                    ],
+                    "Color": [
+                      0.3,
+                      0.14,
+                      0.07
+                    ],
+                    "Material": "Wood",
+                    "TopSurface": "Smooth",
+                    "BottomSurface": "Smooth",
+                    "CanCollide": true,
+                    "Orientation": [
+                      0.0,
+                      20.0,
+                      0.0
+                    ]
+                  }
+                },
+                {
+                  "name": "BorderS",
+                  "className": "Part",
+                  "properties": {
+                    "Anchored": true,
+                    "Size": [
+                      13.6,
+                      0.5,
+                      0.6
+                    ],
+                    "Position": [
+                      57.12866647297471,
+                      2.15,
+                      2.8990143514065023
+                    ],
+                    "Color": [
+                      0.3,
+                      0.14,
+                      0.07
+                    ],
+                    "Material": "Wood",
+                    "TopSurface": "Smooth",
+                    "BottomSurface": "Smooth",
+                    "CanCollide": true,
+                    "Orientation": [
+                      0.0,
+                      20.0,
+                      0.0
+                    ]
+                  }
+                },
+                {
+                  "name": "BorderE",
+                  "className": "Part",
+                  "properties": {
+                    "Anchored": true,
+                    "Size": [
+                      0.6,
+                      0.5,
+                      6.0
+                    ],
+                    "Position": [
+                      62.389909821344176,
+                      2.15,
+                      8.325736974614546
+                    ],
+                    "Color": [
+                      0.3,
+                      0.14,
+                      0.07
+                    ],
+                    "Material": "Wood",
+                    "TopSurface": "Smooth",
+                    "BottomSurface": "Smooth",
+                    "CanCollide": true,
+                    "Orientation": [
+                      0.0,
+                      20.0,
+                      0.0
+                    ]
+                  }
+                },
+                {
+                  "name": "BorderW",
+                  "className": "Part",
+                  "properties": {
+                    "Anchored": true,
+                    "Size": [
+                      0.6,
+                      0.5,
+                      6.0
+                    ],
+                    "Position": [
+                      49.610090178655824,
+                      2.15,
+                      3.6742630253854527
+                    ],
+                    "Color": [
+                      0.3,
+                      0.14,
+                      0.07
+                    ],
+                    "Material": "Wood",
+                    "TopSurface": "Smooth",
+                    "BottomSurface": "Smooth",
+                    "CanCollide": true,
+                    "Orientation": [
+                      0.0,
+                      20.0,
+                      0.0
+                    ]
+                  }
+                },
+                {
+                  "name": "GoldN",
+                  "className": "Part",
+                  "properties": {
+                    "Anchored": true,
+                    "Size": [
+                      13.6,
+                      0.08,
+                      0.6
+                    ],
+                    "Position": [
+                      54.87133352702529,
+                      2.44,
+                      9.100985648593497
+                    ],
+                    "Color": [
+                      0.92,
+                      0.75,
+                      0.32
+                    ],
+                    "Material": "Metal",
+                    "TopSurface": "Smooth",
+                    "BottomSurface": "Smooth",
+                    "CanCollide": true,
+                    "Orientation": [
+                      0.0,
+                      20.0,
+                      0.0
+                    ]
+                  }
+                },
+                {
+                  "name": "GoldS",
+                  "className": "Part",
+                  "properties": {
+                    "Anchored": true,
+                    "Size": [
+                      13.6,
+                      0.08,
+                      0.6
+                    ],
+                    "Position": [
+                      57.12866647297471,
+                      2.44,
+                      2.8990143514065023
+                    ],
+                    "Color": [
+                      0.92,
+                      0.75,
+                      0.32
+                    ],
+                    "Material": "Metal",
+                    "TopSurface": "Smooth",
+                    "BottomSurface": "Smooth",
+                    "CanCollide": true,
+                    "Orientation": [
+                      0.0,
+                      20.0,
+                      0.0
+                    ]
+                  }
+                },
+                {
+                  "name": "GoldE",
+                  "className": "Part",
+                  "properties": {
+                    "Anchored": true,
+                    "Size": [
+                      0.6,
+                      0.08,
+                      6.0
+                    ],
+                    "Position": [
+                      62.389909821344176,
+                      2.44,
+                      8.325736974614546
+                    ],
+                    "Color": [
+                      0.92,
+                      0.75,
+                      0.32
+                    ],
+                    "Material": "Metal",
+                    "TopSurface": "Smooth",
+                    "BottomSurface": "Smooth",
+                    "CanCollide": true,
+                    "Orientation": [
+                      0.0,
+                      20.0,
+                      0.0
+                    ]
+                  }
+                },
+                {
+                  "name": "GoldW",
+                  "className": "Part",
+                  "properties": {
+                    "Anchored": true,
+                    "Size": [
+                      0.6,
+                      0.08,
+                      6.0
+                    ],
+                    "Position": [
+                      49.610090178655824,
+                      2.44,
+                      3.6742630253854527
+                    ],
+                    "Color": [
+                      0.92,
+                      0.75,
+                      0.32
+                    ],
+                    "Material": "Metal",
+                    "TopSurface": "Smooth",
+                    "BottomSurface": "Smooth",
+                    "CanCollide": true,
+                    "Orientation": [
+                      0.0,
+                      20.0,
+                      0.0
+                    ]
+                  }
+                },
+                {
                   "name": "FeltLayout",
                   "className": "Part",
                   "properties": {
                     "Anchored": true,
                     "Size": [
                       7.3,
-                      0.14,
+                      0.1,
                       4.9
                     ],
                     "Position": [
                       58.53717007612195,
-                      2.36,
+                      2.28,
                       6.923454386979306
                     ],
                     "Color": [
@@ -20785,26 +21368,26 @@
                   }
                 },
                 {
-                  "name": "WheelWell",
+                  "name": "WheelHousing",
                   "className": "Part",
                   "properties": {
                     "Anchored": true,
                     "Size": [
-                      0.55,
-                      4.6,
-                      4.6
+                      0.5,
+                      5.2,
+                      5.2
                     ],
                     "Position": [
                       52.14726025477778,
-                      2.33,
+                      2.17,
                       4.597717412364759
                     ],
                     "Color": [
-                      0.1,
-                      0.05,
-                      0.03
+                      0.92,
+                      0.75,
+                      0.32
                     ],
-                    "Material": "Wood",
+                    "Material": "Metal",
                     "TopSurface": "Smooth",
                     "BottomSurface": "Smooth",
                     "CanCollide": true,
@@ -20817,26 +21400,26 @@
                   }
                 },
                 {
-                  "name": "WheelWellGold",
+                  "name": "WheelWell",
                   "className": "Part",
                   "properties": {
                     "Anchored": true,
                     "Size": [
                       0.5,
-                      5.0,
-                      5.0
+                      4.6,
+                      4.6
                     ],
                     "Position": [
                       52.14726025477778,
-                      2.27,
+                      2.25,
                       4.597717412364759
                     ],
                     "Color": [
-                      0.92,
-                      0.75,
-                      0.32
+                      0.1,
+                      0.05,
+                      0.03
                     ],
-                    "Material": "Metal",
+                    "Material": "Wood",
                     "TopSurface": "Smooth",
                     "BottomSurface": "Smooth",
                     "CanCollide": true,
@@ -20860,7 +21443,7 @@
                     ],
                     "Position": [
                       52.14726025477778,
-                      2.4699999999999998,
+                      2.33,
                       4.597717412364759
                     ],
                     "Color": [
@@ -20886,13 +21469,13 @@
                   "properties": {
                     "Anchored": true,
                     "Size": [
-                      0.32,
+                      0.5,
                       3.3,
                       3.3
                     ],
                     "Position": [
                       52.14726025477778,
-                      2.65,
+                      2.41,
                       4.597717412364759
                     ],
                     "Color": [
@@ -20918,14 +21501,14 @@
                   "properties": {
                     "Anchored": true,
                     "Size": [
-                      0.4,
-                      0.2,
-                      0.72
+                      0.42,
+                      0.16,
+                      0.7
                     ],
                     "Position": [
-                      51.69579366558789,
-                      2.71,
-                      5.8381116718021575
+                      51.685533061288126,
+                      2.66,
+                      5.866302450425735
                     ],
                     "Color": [
                       0.1,
@@ -20949,14 +21532,14 @@
                   "properties": {
                     "Anchored": true,
                     "Size": [
-                      0.4,
-                      0.2,
-                      0.72
+                      0.42,
+                      0.16,
+                      0.7
                     ],
                     "Position": [
-                      52.14726025477777,
-                      2.71,
-                      5.917717412364758
+                      52.14726025477778,
+                      2.66,
+                      5.947717412364758
                     ],
                     "Color": [
                       0.78,
@@ -20980,14 +21563,14 @@
                   "properties": {
                     "Anchored": true,
                     "Size": [
-                      0.4,
-                      0.2,
-                      0.72
+                      0.42,
+                      0.16,
+                      0.7
                     ],
                     "Position": [
-                      52.598726843967654,
-                      2.71,
-                      5.8381116718021575
+                      52.60898744826743,
+                      2.66,
+                      5.866302450425735
                     ],
                     "Color": [
                       0.05,
@@ -21011,14 +21594,14 @@
                   "properties": {
                     "Anchored": true,
                     "Size": [
-                      0.4,
-                      0.2,
-                      0.72
+                      0.42,
+                      0.16,
+                      0.7
                     ],
                     "Position": [
-                      52.99573989956401,
-                      2.71,
-                      5.60889607728181
+                      53.0150235278546,
+                      2.66,
+                      5.631877410575379
                     ],
                     "Color": [
                       0.78,
@@ -21042,14 +21625,14 @@
                   "properties": {
                     "Anchored": true,
                     "Size": [
-                      0.4,
-                      0.2,
-                      0.72
+                      0.42,
+                      0.16,
+                      0.7
                     ],
                     "Position": [
-                      53.29041378777323,
-                      2.71,
-                      5.257717412364759
+                      53.316394549886766,
+                      2.66,
+                      5.272717412364758
                     ],
                     "Color": [
                       0.05,
@@ -21073,14 +21656,14 @@
                   "properties": {
                     "Anchored": true,
                     "Size": [
-                      0.4,
-                      0.2,
-                      0.72
+                      0.42,
+                      0.16,
+                      0.7
                     ],
                     "Position": [
-                      53.44720648875389,
-                      2.71,
-                      4.826933006885106
+                      53.47675072134426,
+                      2.66,
+                      4.832142452215114
                     ],
                     "Color": [
                       0.78,
@@ -21104,14 +21687,14 @@
                   "properties": {
                     "Anchored": true,
                     "Size": [
-                      0.4,
-                      0.2,
-                      0.72
+                      0.42,
+                      0.16,
+                      0.7
                     ],
                     "Position": [
-                      53.447206488753885,
-                      2.71,
-                      4.368501817844411
+                      53.47675072134425,
+                      2.66,
+                      4.363292372514403
                     ],
                     "Color": [
                       0.05,
@@ -21135,14 +21718,14 @@
                   "properties": {
                     "Anchored": true,
                     "Size": [
-                      0.4,
-                      0.2,
-                      0.72
+                      0.42,
+                      0.16,
+                      0.7
                     ],
                     "Position": [
-                      53.29041378777324,
-                      2.71,
-                      3.937717412364758
+                      53.316394549886766,
+                      2.66,
+                      3.9227174123647583
                     ],
                     "Color": [
                       0.78,
@@ -21166,14 +21749,14 @@
                   "properties": {
                     "Anchored": true,
                     "Size": [
-                      0.4,
-                      0.2,
-                      0.72
+                      0.42,
+                      0.16,
+                      0.7
                     ],
                     "Position": [
-                      52.995739899564015,
-                      2.71,
-                      3.586538747447708
+                      53.01502352785461,
+                      2.66,
+                      3.563557414154138
                     ],
                     "Color": [
                       0.05,
@@ -21197,14 +21780,14 @@
                   "properties": {
                     "Anchored": true,
                     "Size": [
-                      0.4,
-                      0.2,
-                      0.72
+                      0.42,
+                      0.16,
+                      0.7
                     ],
                     "Position": [
-                      52.59872684396766,
-                      2.71,
-                      3.3573231529273597
+                      52.60898744826743,
+                      2.66,
+                      3.329132374303782
                     ],
                     "Color": [
                       0.78,
@@ -21228,14 +21811,14 @@
                   "properties": {
                     "Anchored": true,
                     "Size": [
-                      0.4,
-                      0.2,
-                      0.72
+                      0.42,
+                      0.16,
+                      0.7
                     ],
                     "Position": [
                       52.14726025477778,
-                      2.71,
-                      3.2777174123647583
+                      2.66,
+                      3.247717412364759
                     ],
                     "Color": [
                       0.05,
@@ -21259,14 +21842,14 @@
                   "properties": {
                     "Anchored": true,
                     "Size": [
-                      0.4,
-                      0.2,
-                      0.72
+                      0.42,
+                      0.16,
+                      0.7
                     ],
                     "Position": [
-                      51.69579366558789,
-                      2.71,
-                      3.3573231529273593
+                      51.685533061288126,
+                      2.66,
+                      3.3291323743037826
                     ],
                     "Color": [
                       0.78,
@@ -21290,14 +21873,14 @@
                   "properties": {
                     "Anchored": true,
                     "Size": [
-                      0.4,
-                      0.2,
-                      0.72
+                      0.42,
+                      0.16,
+                      0.7
                     ],
                     "Position": [
-                      51.29878060999154,
-                      2.71,
-                      3.5865387474477073
+                      51.279496981700945,
+                      2.66,
+                      3.5635574141541375
                     ],
                     "Color": [
                       0.05,
@@ -21321,14 +21904,14 @@
                   "properties": {
                     "Anchored": true,
                     "Size": [
-                      0.4,
-                      0.2,
-                      0.72
+                      0.42,
+                      0.16,
+                      0.7
                     ],
                     "Position": [
-                      51.00410672178232,
-                      2.71,
-                      3.937717412364758
+                      50.97812595966879,
+                      2.66,
+                      3.9227174123647583
                     ],
                     "Color": [
                       0.78,
@@ -21352,14 +21935,14 @@
                   "properties": {
                     "Anchored": true,
                     "Size": [
-                      0.4,
-                      0.2,
-                      0.72
+                      0.42,
+                      0.16,
+                      0.7
                     ],
                     "Position": [
-                      50.84731402080166,
-                      2.71,
-                      4.368501817844409
+                      50.817769788211294,
+                      2.66,
+                      4.363292372514402
                     ],
                     "Color": [
                       0.05,
@@ -21383,14 +21966,14 @@
                   "properties": {
                     "Anchored": true,
                     "Size": [
-                      0.4,
-                      0.2,
-                      0.72
+                      0.42,
+                      0.16,
+                      0.7
                     ],
                     "Position": [
-                      50.84731402080166,
-                      2.71,
-                      4.826933006885107
+                      50.817769788211294,
+                      2.66,
+                      4.832142452215114
                     ],
                     "Color": [
                       0.78,
@@ -21414,14 +21997,14 @@
                   "properties": {
                     "Anchored": true,
                     "Size": [
-                      0.4,
-                      0.2,
-                      0.72
+                      0.42,
+                      0.16,
+                      0.7
                     ],
                     "Position": [
-                      51.004106721782314,
-                      2.71,
-                      5.257717412364758
+                      50.97812595966878,
+                      2.66,
+                      5.2727174123647575
                     ],
                     "Color": [
                       0.05,
@@ -21445,14 +22028,14 @@
                   "properties": {
                     "Anchored": true,
                     "Size": [
-                      0.4,
-                      0.2,
-                      0.72
+                      0.42,
+                      0.16,
+                      0.7
                     ],
                     "Position": [
-                      51.29878060999154,
-                      2.71,
-                      5.608896077281809
+                      51.279496981700945,
+                      2.66,
+                      5.631877410575379
                     ],
                     "Color": [
                       0.78,
@@ -21476,13 +22059,13 @@
                   "properties": {
                     "Anchored": true,
                     "Size": [
-                      0.34,
-                      1.5,
-                      1.5
+                      0.3,
+                      1.4,
+                      1.4
                     ],
                     "Position": [
                       52.14726025477778,
-                      2.71,
+                      2.65,
                       4.597717412364759
                     ],
                     "Color": [
@@ -21509,12 +22092,12 @@
                     "Anchored": true,
                     "Size": [
                       0.5,
-                      0.7,
-                      0.7
+                      0.8,
+                      0.8
                     ],
                     "Position": [
                       52.14726025477778,
-                      2.83,
+                      2.7,
                       4.597717412364759
                     ],
                     "Color": [
@@ -21540,13 +22123,13 @@
                   "properties": {
                     "Anchored": true,
                     "Size": [
-                      0.9,
-                      0.22,
-                      0.22
+                      1.0,
+                      0.2,
+                      0.2
                     ],
                     "Position": [
                       52.14726025477778,
-                      3.15,
+                      3.05,
                       4.597717412364759
                     ],
                     "Color": [
@@ -21571,13 +22154,13 @@
                   "properties": {
                     "Anchored": true,
                     "Size": [
-                      0.9,
-                      0.22,
-                      0.22
+                      1.0,
+                      0.2,
+                      0.2
                     ],
                     "Position": [
                       52.14726025477778,
-                      3.15,
+                      3.12,
                       4.597717412364759
                     ],
                     "Color": [
