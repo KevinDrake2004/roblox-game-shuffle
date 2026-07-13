@@ -6,21 +6,20 @@
 	## Flow
 
 	1. Lobby portal → `PlinkoPoints.join` teleports into `Workspace.PlinkoArena`.
-	2. Client sets wager via `PlinkoPointsSetWager` (clamped to Config).
+	2. Client sets wager / balls / risk via `PlinkoPointsSetWager` (clamped to Config).
 	3. `PlinkoPointsDrop` deducts `wager * ballCount` and fires `PlinkoPointsDropStarted`.
 	4. Client releases balls in short bursts; each runs an independent free physics sim
 	   (balls never collide with each other, only pegs).
-	5. Client reports `PlinkoPointsLanded` per ball; server settles each bucket.
+	5. Client reports `PlinkoPointsLanded` per ball; server settles with the risk tier's multipliers.
 	6. Leave returns the player to `Config.LOBBY.SpawnPosition` (refunds unsettled balls).
 
 	## Economy
 
 	- Total stake `wager * ballCount` deducted before the volley starts.
 	- Insufficient balance → drop rejected.
-	- Landing bucket comes from client physics; multipliers come from Config.
-	- Soft-center / near-center use integer mults (`0` / `1` / `2`) so wager=1 still pays correctly.
-	- Design RTP ≈ 139% by tuning `BucketMultipliers` against the Galton / binomial
-	  land curve (`TargetRTP` is the aim, not an extra payout multiply).
+	- Landing bucket comes from client physics; multipliers come from the selected risk tier.
+	- Risk scale: Low (small jackpots, higher RTP, high ball cap) → Medium (default) →
+	  High (large max mult, RTP → 100%, tight ball cap).
 	- Unreported lands time out as a center land (anti-hang). Leave mid-drop refunds.
 
 	Arena geometry lives only under `Workspace.PlinkoArena` (east of Rocket Run).
@@ -49,6 +48,7 @@ type PlinkoPointsResultPayload = Types.PlinkoPointsResultPayload
 type PendingBall = {
 	dropId: number,
 	wager: number,
+	riskId: string,
 }
 
 type PendingSession = {
@@ -82,14 +82,18 @@ local function clampWager(rawWager: unknown): number
 	return math.clamp(wager, cfg.MinWager, cfg.MaxWager)
 end
 
-local function clampBallCount(rawCount: unknown): number
+local function clampBallCount(rawCount: unknown, riskId: unknown): number
 	local cfg = Config.PLINKO
+	local risk = Config.getPlinkoRisk(riskId)
 	local count = math.floor(tonumber(rawCount) or cfg.DefaultBallCount)
 	if count ~= count or count < cfg.MinBallCount then
-		return cfg.MinBallCount
+		count = cfg.MinBallCount
 	end
-	-- No hard max: affordability is enforced at drop time (wager * balls ≤ balance).
-	return count
+	return math.clamp(count, cfg.MinBallCount, risk.maxBallCount)
+end
+
+local function clampRiskId(rawRisk: unknown): string
+	return Config.getPlinkoRisk(rawRisk).id
 end
 
 -- Large volleys release several balls per wave so total release stays under MaxReleaseSeconds.
@@ -107,10 +111,12 @@ local function computeReleaseTiming(ballCount: number): (number, number)
 end
 
 local function getLoadout(player: Player): PlinkoPointsLoadout
-	return loadouts[player] or {
-		wager = Config.PLINKO.DefaultWager,
-		ballCount = Config.PLINKO.DefaultBallCount,
-	}
+	return loadouts[player]
+		or {
+			wager = Config.PLINKO.DefaultWager,
+			ballCount = Config.PLINKO.DefaultBallCount,
+			riskId = Config.PLINKO.DefaultRiskId,
+		}
 end
 
 local function teleportTo(player: Player, position: Vector3)
@@ -284,9 +290,12 @@ end
 
 local function joinedPayload(player: Player): PlinkoPointsJoined
 	local loadout = getLoadout(player)
+	local risk = Config.getPlinkoRisk(loadout.riskId)
 	return {
 		wager = loadout.wager,
 		ballCount = loadout.ballCount,
+		riskId = risk.id,
+		maxBallCount = risk.maxBallCount,
 		chips = CurrencyService.getChips(player),
 		highScore = DataService.getHighScore(player, "PlinkoPoints"),
 	}
@@ -297,7 +306,8 @@ local function rejectDrop(player: Player, reason: string)
 end
 
 local function settleBall(player: Player, ball: PendingBall, bucketIndex0: number)
-	local multipliers = Config.PLINKO.BucketMultipliers
+	local risk = Config.getPlinkoRisk(ball.riskId)
+	local multipliers = risk.bucketMultipliers
 	local maxIndex = #multipliers - 1
 	local bucketIndex0Clamped = math.clamp(math.floor(bucketIndex0), 0, maxIndex)
 	local multiplier = multipliers[bucketIndex0Clamped + 1] or 0
@@ -377,6 +387,7 @@ local function beginDrop(player: Player)
 	local loadout = getLoadout(player)
 	local wager = loadout.wager
 	local ballCount = loadout.ballCount
+	local riskId = clampRiskId(loadout.riskId)
 	local totalStake = wager * ballCount
 	if CurrencyService.getChips(player) < totalStake then
 		rejectDrop(player, string.format("Need %d chips for %d balls", totalStake, ballCount))
@@ -399,6 +410,7 @@ local function beginDrop(player: Player)
 		balls[dropId] = {
 			dropId = dropId,
 			wager = wager,
+			riskId = riskId,
 		}
 	end
 
@@ -539,10 +551,12 @@ function PlinkoPoints.start()
 	end
 
 	Remotes.getEvent("PlinkoPointsSetWager").OnServerEvent
-		:Connect(function(player: Player, wager: unknown, ballCount: unknown)
+		:Connect(function(player: Player, wager: unknown, ballCount: unknown, riskId: unknown)
+			local clampedRisk = clampRiskId(riskId)
 			loadouts[player] = {
 				wager = clampWager(wager),
-				ballCount = clampBallCount(ballCount),
+				ballCount = clampBallCount(ballCount, clampedRisk),
+				riskId = clampedRisk,
 			}
 		end)
 

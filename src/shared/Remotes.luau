@@ -23,7 +23,7 @@
 
 	| Name | Direction | Purpose |
 	|------|-----------|---------|
-	| `PlinkoPointsSetWager` | C→S | Set chips wagered per ball + ball count |
+	| `PlinkoPointsSetWager` | C→S | Set chips wagered per ball + ball count + risk id |
 	| `PlinkoPointsJoined` | S→C | Arena enter snapshot (`PlinkoPointsJoined`) |
 	| `PlinkoPointsDrop` | C→S | Request a ball drop at the current wager |
 	| `PlinkoPointsDropStarted` | S→C | Wager accepted; client starts free physics (`PlinkoPointsDropStarted`) |

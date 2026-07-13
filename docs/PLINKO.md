@@ -8,7 +8,7 @@ This document describes **current** behavior for playtesting and economy tuning.
 
 1. Enter the **Plinko Points** portal from the lobby (existing hub portal at `(0, 3.5, -28)`).
 2. You teleport to **PlinkoArena** (east of Rocket Run). Purple neon board + pegs + buckets.
-3. Set **wager** (chips bet per drop) and press **Drop Ball**.
+3. Set **wager**, **balls**, and **risk** (Low / Medium / High), press Apply, then **Drop**.
 4. Watch the ball fall with gravity and bounce off pegs. It lands wherever physics takes it.
 5. WIN / BUST / LOSS feedback updates chips and session P/L.
 6. Leave via the Leave button or the spawn-pad proximity prompt.
@@ -37,19 +37,27 @@ Ball visuals are client-only (`CurrentCamera.PlinkoLocalFx`). Other players neve
 | Any land | `payout = floor(wager * multiplier)` | Wager already deducted; credit `payout` (0 on bust). `netDelta = payout - wager`. |
 | Center soft land | multiplier `0` | Stake lost; `payout = 0`. Near-center is `1x` (push). |
 
-### RTP
+### RTP / risk scale
 
 - Landing distribution comes from **Galton-board physics** (center-biased ≈ normal / binomial).
 - `BucketWeights` document the intended `C(8,k)` spread for RTP math; they are not rolled as RNG.
-- **RTP is just `E[BucketMultipliers]` under that curve.** Tune the multipliers until that equals `TargetRTP` (~1.39). There is no separate player-return factor on Plinko.
+- Players pick a **risk tier**; each tier has its own integer `bucketMultipliers`, design RTP, and **ball cap**.
+- Higher risk → larger max jackpot, design RTP approaches **100%**, lower ball cap.
+- Lower risk → smaller jackpots, higher design RTP, higher ball cap.
+- Default is **Medium** (current ~139% / 26x max / 100 ball cap).
 - Multipliers are **integers** so `floor(wager * mult)` does not wipe sub-1x buckets at wager `1`.
-- Short-term center busts still drain sessions; edge jackpots are rare.
+
+| Risk | Max mult | Design RTP | Ball cap | Multipliers L→R |
+|------|----------|------------|----------|-----------------|
+| Low | 10x | ~148% | 200 | `10, 4, 2, 1, 1, 1, 2, 4, 10` |
+| Medium | 26x | ~139% | 100 | `26, 5, 2, 1, 0, 1, 2, 5, 26` |
+| High | 60x | 100% | 25 | `60, 5, 1, 0, 0, 0, 1, 5, 60` |
 
 ### Daily earn cap
 
 Same as Rocket Run: `Config.DAILY_EARN_CAP` applies to earn-only `awardChips`. Wager payouts use `creditPayout` and are **not** clipped by the cap.
 
-## Buckets (default)
+## Buckets (medium / default)
 
 Left → right (9 buckets). Design land curve ≈ binomial `C(8, k)` (center-heavy / normal-like).
 
@@ -65,9 +73,9 @@ Left → right (9 buckets). Design land curve ≈ binomial `C(8, k)` (center-hea
 | 7 | 5x | 8 | 3.1% |
 | 8 | 26x | 1 | 0.4% |
 
-`E[multiplier] = 356 / 256 = 1.390625` → design **RTP ≈ 139%** when lands match this curve.
+`E[multiplier] = 356 / 256 = 1.390625` → design **RTP ≈ 139%** on Medium when lands match this curve.
 
-The Galton peg board (row `r` has `r+1` pegs) is what creates that center bias in the free physics sim. Multipliers pay the rare edges; common center is a bust, near-center is a push (`1x`).
+The Galton peg board (row `r` has `r+1` pegs) is what creates that center bias in the free physics sim.
 
 ## Arena coordinates
 
@@ -86,8 +94,8 @@ All Plinko geometry lives under `Workspace.PlinkoArena` only.
 | Key | Role |
 |-----|------|
 | `DefaultWager` / `MinWager` / `MaxWager` | Stake clamps |
-| `TargetRTP` | Design aim only (~1.39); match by tuning multipliers vs land curve |
-| `BucketMultipliers` | Payout per landed bucket (`payout = floor(wager * mult)`) |
+| `DefaultRiskId` / `RiskLevels` | Risk scale: multipliers, target RTP, ball cap per tier |
+| `TargetRTP` / `BucketMultipliers` | Mirror of Medium tier (convenience / fallbacks) |
 | `BucketWeights` | Tuning reference for physical land spread (not rolled) |
 | `DropCooldownSeconds` | Per-player drop throttle |
 | `LandReportTimeoutSeconds` | Max wait for client land report |

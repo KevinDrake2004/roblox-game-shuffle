@@ -133,25 +133,29 @@ export type JobResultPayload = {
 }
 
 --[=[
-	Per-player Plinko loadout. Clamped to `Config.PLINKO` min/max on the server.
+	Per-player Plinko loadout. Wager / balls / risk clamped on the server.
+	Ball count is capped by the selected risk tier's `maxBallCount`.
 
-	@type PlinkoPointsLoadout {wager: number, ballCount: number}
+	@type PlinkoPointsLoadout {wager: number, ballCount: number, riskId: string}
 	@within Types
 ]=]
 export type PlinkoPointsLoadout = {
 	wager: number,
 	ballCount: number,
+	riskId: string,
 }
 
 --[=[
 	Fired when the player enters the Plinko arena (HUD bootstrap).
 
-	@type PlinkoPointsJoined {wager: number, ballCount: number, chips: number, highScore: number}
+	@type PlinkoPointsJoined {wager: number, ballCount: number, riskId: string, maxBallCount: number, chips: number, highScore: number}
 	@within Types
 ]=]
 export type PlinkoPointsJoined = {
 	wager: number,
 	ballCount: number,
+	riskId: string,
+	maxBallCount: number,
 	chips: number,
 	highScore: number,
 }

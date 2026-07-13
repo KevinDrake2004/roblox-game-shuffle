@@ -2,6 +2,23 @@
 
 Session notes for `feature/plinko-dev`. Flaws and successes as we iterate.
 
+## 2026-07-13 - Risk scale (Low / Medium / High)
+
+### Goal
+
+Let players pick a risk profile that sets max jackpot, design RTP, and ball cap.
+
+### Design
+
+| Risk | Max mult | Design RTP | Ball cap |
+|------|----------|------------|----------|
+| Low | 10x | ~148% | 200 |
+| Medium (default) | 26x | ~139% | 100 |
+| High | 60x | 100% | 25 |
+
+Higher risk → RTP approaches 100% with bigger edges; lower risk → smaller jackpots,
+gentler curve, higher RTP, higher ball cap. Bucket labels refresh when risk is Applied.
+
 ## 2026-07-13 - Wager=1 floor was killing RTP (not ball speed)
 
 ### Flaw

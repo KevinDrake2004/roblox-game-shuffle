@@ -22,15 +22,51 @@ local scoreLabel: TextLabel? = nil
 local sessionLabel: TextLabel? = nil
 local wagerBox: TextBox? = nil
 local ballsBox: TextBox? = nil
+local ballsLabel: TextLabel? = nil
+local noteLabel: TextLabel? = nil
 local dropButton: TextButton? = nil
 local loadoutFrame: Frame? = nil
 local feedbackFlash: Frame? = nil
+local riskButtons: { [string]: TextButton } = {}
+local selectedRiskId: string = Config.PLINKO.DefaultRiskId
 
 local onDrop: (() -> ())? = nil
 local onLeave: (() -> ())? = nil
-local onApplyLoadout: ((wager: number, ballCount: number) -> ())? = nil
+local onApplyLoadout: ((wager: number, ballCount: number, riskId: string) -> ())? = nil
 
 local ensureGui: () -> ()
+
+local function refreshRiskButtonStyles()
+	for riskId, button in riskButtons do
+		local selected = riskId == selectedRiskId
+		button.BackgroundColor3 = if selected then Color3.fromRGB(72, 42, 110) else Color3.fromRGB(42, 28, 72)
+		button.TextColor3 = if selected then Config.COLORS.NeonLime else Config.COLORS.Text
+	end
+end
+
+local function applyRiskSelection(riskId: string)
+	local risk = Config.getPlinkoRisk(riskId)
+	selectedRiskId = risk.id
+	refreshRiskButtonStyles()
+	if ballsLabel then
+		ballsLabel.Text = string.format("Balls (max %d)", risk.maxBallCount)
+	end
+	if noteLabel then
+		noteLabel.Text = string.format(
+			"%s risk · max %dx · RTP ~%d%%\nBall cap %d.",
+			risk.displayName,
+			risk.maxMultiplier,
+			math.floor(risk.targetRTP * 100 + 0.5),
+			risk.maxBallCount
+		)
+	end
+	if ballsBox then
+		local current = tonumber(ballsBox.Text) or Config.PLINKO.DefaultBallCount
+		if current > risk.maxBallCount then
+			ballsBox.Text = tostring(risk.maxBallCount)
+		end
+	end
+end
 
 local function flashFeedback(color: Color3)
 	ensureGui()
@@ -131,7 +167,7 @@ ensureGui = function()
 	panel.Name = "Loadout"
 	panel.AnchorPoint = Vector2.new(0, 0.5)
 	panel.Position = UDim2.new(0, 24, 0.5, 0)
-	panel.Size = UDim2.fromOffset(220, 248)
+	panel.Size = UDim2.fromOffset(220, 318)
 	panel.BackgroundColor3 = Color3.fromRGB(16, 10, 28)
 	panel.BackgroundTransparency = 0.1
 	panel.BorderSizePixel = 0
@@ -179,16 +215,17 @@ ensureGui = function()
 	wagerCorner.CornerRadius = UDim.new(0, 8)
 	wagerCorner.Parent = wager
 
-	local ballsLabel = Instance.new("TextLabel")
-	ballsLabel.BackgroundTransparency = 1
-	ballsLabel.Position = UDim2.fromOffset(12, 74)
-	ballsLabel.Size = UDim2.new(1, -24, 0, 20)
-	ballsLabel.Font = Enum.Font.GothamBold
-	ballsLabel.TextXAlignment = Enum.TextXAlignment.Left
-	ballsLabel.TextColor3 = Config.COLORS.Text
-	ballsLabel.TextScaled = true
-	ballsLabel.Text = "Balls"
-	ballsLabel.Parent = panel
+	local ballsCaption = Instance.new("TextLabel")
+	ballsCaption.BackgroundTransparency = 1
+	ballsCaption.Position = UDim2.fromOffset(12, 74)
+	ballsCaption.Size = UDim2.new(1, -24, 0, 20)
+	ballsCaption.Font = Enum.Font.GothamBold
+	ballsCaption.TextXAlignment = Enum.TextXAlignment.Left
+	ballsCaption.TextColor3 = Config.COLORS.Text
+	ballsCaption.TextScaled = true
+	ballsCaption.Text = "Balls"
+	ballsCaption.Parent = panel
+	ballsLabel = ballsCaption
 
 	local balls = Instance.new("TextBox")
 	balls.Name = "Balls"
@@ -209,9 +246,59 @@ ensureGui = function()
 	ballsCorner.CornerRadius = UDim.new(0, 8)
 	ballsCorner.Parent = balls
 
+	local riskCaption = Instance.new("TextLabel")
+	riskCaption.BackgroundTransparency = 1
+	riskCaption.Position = UDim2.fromOffset(12, 134)
+	riskCaption.Size = UDim2.new(1, -24, 0, 18)
+	riskCaption.Font = Enum.Font.GothamBold
+	riskCaption.TextXAlignment = Enum.TextXAlignment.Left
+	riskCaption.TextColor3 = Config.COLORS.Text
+	riskCaption.TextScaled = true
+	riskCaption.Text = "Risk"
+	riskCaption.Parent = panel
+
+	local riskRow = Instance.new("Frame")
+	riskRow.Name = "RiskRow"
+	riskRow.BackgroundTransparency = 1
+	riskRow.Position = UDim2.fromOffset(12, 154)
+	riskRow.Size = UDim2.new(1, -24, 0, 30)
+	riskRow.Parent = panel
+
+	local riskLayout = Instance.new("UIListLayout")
+	riskLayout.FillDirection = Enum.FillDirection.Horizontal
+	riskLayout.Padding = UDim.new(0, 6)
+	riskLayout.SortOrder = Enum.SortOrder.LayoutOrder
+	riskLayout.Parent = riskRow
+
+	table.clear(riskButtons)
+	local riskCount = #Config.PLINKO.RiskLevels
+	local riskButtonWidth = math.floor((196 - 6 * (riskCount - 1)) / riskCount)
+	for index, level in Config.PLINKO.RiskLevels do
+		local button = Instance.new("TextButton")
+		button.Name = `Risk_{level.id}`
+		button.Size = UDim2.fromOffset(riskButtonWidth, 30)
+		button.BackgroundColor3 = Color3.fromRGB(42, 28, 72)
+		button.BorderSizePixel = 0
+		button.Font = Enum.Font.GothamBold
+		button.TextColor3 = Config.COLORS.Text
+		button.TextScaled = true
+		button.Text = level.displayName
+		button.LayoutOrder = index
+		button.Parent = riskRow
+		riskButtons[level.id] = button
+
+		local corner = Instance.new("UICorner")
+		corner.CornerRadius = UDim.new(0, 6)
+		corner.Parent = button
+
+		button.MouseButton1Click:Connect(function()
+			applyRiskSelection(level.id)
+		end)
+	end
+
 	local apply = Instance.new("TextButton")
 	apply.Name = "Apply"
-	apply.Position = UDim2.fromOffset(12, 140)
+	apply.Position = UDim2.fromOffset(12, 196)
 	apply.Size = UDim2.new(1, -24, 0, 36)
 	apply.BackgroundColor3 = Color3.fromRGB(42, 28, 72)
 	apply.BorderSizePixel = 0
@@ -231,18 +318,21 @@ ensureGui = function()
 		end
 		local wagerValue = tonumber(wager.Text) or Config.PLINKO.DefaultWager
 		local ballsValue = tonumber(balls.Text) or Config.PLINKO.DefaultBallCount
-		onApplyLoadout(wagerValue, ballsValue)
+		onApplyLoadout(wagerValue, ballsValue, selectedRiskId)
 	end)
 
 	local note = Instance.new("TextLabel")
 	note.BackgroundTransparency = 1
-	note.Position = UDim2.fromOffset(12, 184)
-	note.Size = UDim2.new(1, -24, 0, 48)
+	note.Position = UDim2.fromOffset(12, 240)
+	note.Size = UDim2.new(1, -24, 0, 64)
 	note.Font = Enum.Font.Gotham
 	note.TextColor3 = Color3.fromRGB(170, 160, 200)
 	note.TextScaled = true
-	note.Text = "Wager is per ball.\nBig volleys burst out fast."
+	note.Text = "Pick a risk, then Apply."
 	note.Parent = panel
+	noteLabel = note
+
+	applyRiskSelection(Config.PLINKO.DefaultRiskId)
 
 	local drop = Instance.new("TextButton")
 	drop.Name = "Drop"
@@ -306,7 +396,7 @@ end
 function PlinkoPointsHud.start(
 	dropHandler: () -> (),
 	leaveHandler: () -> (),
-	applyHandler: (wager: number, ballCount: number) -> ()
+	applyHandler: (wager: number, ballCount: number, riskId: string) -> ()
 )
 	onDrop = dropHandler
 	onLeave = leaveHandler
@@ -399,9 +489,9 @@ function PlinkoPointsHud.setWagerEnabled(enabled: boolean)
 end
 
 --[=[
-	Sync wager + ball-count text boxes from server / default values.
+	Sync wager + ball-count + risk from server / default values.
 ]=]
-function PlinkoPointsHud.setLoadoutValues(wager: number, ballCount: number)
+function PlinkoPointsHud.setLoadoutValues(wager: number, ballCount: number, riskId: string?)
 	ensureGui()
 	if wagerBox then
 		wagerBox.Text = tostring(wager)
@@ -409,6 +499,13 @@ function PlinkoPointsHud.setLoadoutValues(wager: number, ballCount: number)
 	if ballsBox then
 		ballsBox.Text = tostring(ballCount)
 	end
+	if riskId then
+		applyRiskSelection(riskId)
+	end
+end
+
+function PlinkoPointsHud.getSelectedRiskId(): string
+	return selectedRiskId
 end
 
 --[=[

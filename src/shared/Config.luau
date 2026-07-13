@@ -115,22 +115,18 @@ Config.ROCKET_RUN = {
 }
 
 --[=[
-	Plinko Points tuning: per-drop wager clamps, bucket payouts, and RTP.
+	Plinko Points tuning: per-drop wager clamps, risk tiers, and RTP.
 
 	- `DefaultWager` / `MinWager` / `MaxWager` - stake clamps per ball drop
-	- `DefaultBallCount` / `MinBallCount` / `BallDropStaggerSeconds` / `BallDropMaxReleaseSeconds` - multi-ball drops (no hard max; balance gates total stake; large volleys burst within a short release window)
-	- `BucketMultipliers` - payout multipliers left→right (edges high, soft center)
+	- `DefaultBallCount` / `MinBallCount` / `BallDropStaggerSeconds` / `BallDropMaxReleaseSeconds` - multi-ball release timing
+	- `RiskLevels` / `DefaultRiskId` - risk scale (max jackpot ↑ as risk ↑; design RTP → 100%)
 	- `BucketWeights` - documented binomial land curve for RTP math (not rolled)
-	- `TargetRTP` - design aim only (~1.39); achieved by tuning multipliers vs the land curve
+	- `BucketMultipliers` - mirrors the default (medium) risk tier for convenience
 	- `DropCooldownSeconds` - minimum delay between drops per player
-	- `BallRadius` / `BallGravity` / `BallBounce` - client gravity sim feel
-	- `BallPegLeaveSpeed` / `BallPegLeaveAngleDeg` / `BallPegApexNormalX` / `BallPegReflectBlend` / `BallPegMaxUpSpeed` - peg collision leave response (Galton L/R)
-	- `BallMaxSimSeconds` / `BallPegHitCooldown` / `BallHorizontalDrag` / `BallStartSpeedX` / `BallMaxSpeed` / `BallSubsteps` - Galton sim feel
-	- `PegRows` / `PegSpacingX` / `PegSpacingY` / `PegLayoutVersion` - Galton board layout
-	- Arena / camera fields drive world presentation only (east of Rocket Run)
+	- Ball / peg / arena fields drive client sim + world presentation
 
-	Payout is `floor(wager * BucketMultipliers[landed])` with no extra scale factor.
-	Keep multipliers integer (or ≥1 when fractional) so low wagers do not silently zero out RTP.
+	Payout is `floor(wager * risk.bucketMultipliers[landed])`. Multipliers stay integer
+	so wager=1 does not silently zero sub-1x buckets.
 
 	@prop PLINKO table
 	@within Config
@@ -145,14 +141,41 @@ Config.PLINKO = {
 	-- whole release finishes within BallDropMaxReleaseSeconds (not N × stagger).
 	BallDropStaggerSeconds = 0.05,
 	BallDropMaxReleaseSeconds = 1.5,
-	-- Design aim: E[BucketMultipliers] under BucketWeights ≈ TargetRTP (no extra factor).
-	-- Integer multipliers only: payout is floor(wager * mult), so fractional mults at
-	-- wager=1 were paying 0 and crashed live RTP to ~73% (felt like "always bankrupt").
+	DefaultRiskId = "medium",
+	-- Risk scale: lower risk = smaller jackpots + higher RTP + higher ball cap.
+	-- Higher risk = larger max multiplier, design RTP approaches 100%, tighter ball cap.
+	-- E[mult] under BucketWeights C(8,k) / 256:
+	--   low ≈ 1.477, medium ≈ 1.391, high = 1.000.
+	RiskLevels = {
+		{
+			id = "low",
+			displayName = "Low",
+			targetRTP = 1.48,
+			maxBallCount = 200,
+			maxMultiplier = 10,
+			bucketMultipliers = { 10, 4, 2, 1, 1, 1, 2, 4, 10 },
+		},
+		{
+			id = "medium",
+			displayName = "Medium",
+			targetRTP = 1.39,
+			maxBallCount = 100,
+			maxMultiplier = 26,
+			bucketMultipliers = { 26, 5, 2, 1, 0, 1, 2, 5, 26 },
+		},
+		{
+			id = "high",
+			displayName = "High",
+			targetRTP = 1.0,
+			maxBallCount = 25,
+			maxMultiplier = 60,
+			bucketMultipliers = { 60, 5, 1, 0, 0, 0, 1, 5, 60 },
+		},
+	},
+	-- Convenience mirror of medium tier (physics bucket count / fallbacks).
 	TargetRTP = 1.39,
-	DropCooldownSeconds = 0.75,
-	-- Symmetric board: rare edge jackpots, common center bust / near-push.
-	-- Under binomial C(8,k) weights: E[multiplier] = 356/256 = 1.390625.
 	BucketMultipliers = { 26, 5, 2, 1, 0, 1, 2, 5, 26 },
+	DropCooldownSeconds = 0.75,
 	BucketWeights = { 1, 8, 28, 56, 70, 56, 28, 8, 1 },
 	-- World / camera (east of Rocket Run at 0, 5, -140 — ~90 studs apart)
 	ArenaOrigin = Vector3.new(90, 5, -140),
@@ -184,6 +207,34 @@ Config.PLINKO = {
 	BallPegMaxUpSpeed = 5,
 	LandReportTimeoutSeconds = 9,
 }
+
+type PlinkoRiskLevel = {
+	id: string,
+	displayName: string,
+	targetRTP: number,
+	maxBallCount: number,
+	maxMultiplier: number,
+	bucketMultipliers: { number },
+}
+
+--[=[
+	Resolve a Plinko risk tier by id (falls back to DefaultRiskId).
+]=]
+function Config.getPlinkoRisk(riskId: unknown): PlinkoRiskLevel
+	local levels = Config.PLINKO.RiskLevels
+	local wanted = if typeof(riskId) == "string" then riskId else Config.PLINKO.DefaultRiskId
+	for _, level in levels do
+		if level.id == wanted then
+			return level
+		end
+	end
+	for _, level in levels do
+		if level.id == Config.PLINKO.DefaultRiskId then
+			return level
+		end
+	end
+	return levels[1]
+end
 
 Config.JOB = {
 	Reward = 15,

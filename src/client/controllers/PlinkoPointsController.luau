@@ -41,6 +41,7 @@ local dropBusy = false
 local pendingResults = 0
 local activeDropIds: { [number]: boolean } = {}
 local currentBallCount = Config.PLINKO.DefaultBallCount
+local currentRiskId = Config.PLINKO.DefaultRiskId
 local savedCameraType: Enum.CameraType? = nil
 local cameraActive = false
 
@@ -133,7 +134,7 @@ local function showLocalMultiplierLabels()
 		return
 	end
 
-	local multipliers = Config.PLINKO.BucketMultipliers
+	local multipliers = Config.getPlinkoRisk(currentRiskId).bucketMultipliers
 	for index, multiplier in multipliers do
 		local bucket = buckets:FindFirstChild(`Bucket_{index - 1}`)
 		if not (bucket and bucket:IsA("BasePart")) then
@@ -301,16 +302,30 @@ local function requestLeave()
 	Remotes.getEvent("PlinkoPointsLeave"):FireServer()
 end
 
-local function applyLoadout(wager: number, ballCount: number)
+local function applyLoadout(wager: number, ballCount: number, riskId: string)
+	local risk = Config.getPlinkoRisk(riskId)
 	local clampedWager = math.clamp(math.floor(wager), Config.PLINKO.MinWager, Config.PLINKO.MaxWager)
-	local clampedBalls = math.max(Config.PLINKO.MinBallCount, math.floor(ballCount))
-	Remotes.getEvent("PlinkoPointsSetWager"):FireServer(clampedWager, clampedBalls)
+	local clampedBalls = math.clamp(
+		math.max(Config.PLINKO.MinBallCount, math.floor(ballCount)),
+		Config.PLINKO.MinBallCount,
+		risk.maxBallCount
+	)
+	currentRiskId = risk.id
+	Remotes.getEvent("PlinkoPointsSetWager"):FireServer(clampedWager, clampedBalls, risk.id)
 	currentBallCount = clampedBalls
-	PlinkoPointsHud.setLoadoutValues(clampedWager, clampedBalls)
+	PlinkoPointsHud.setLoadoutValues(clampedWager, clampedBalls, risk.id)
 	PlinkoPointsHud.setDropLabel(dropButtonLabel(clampedBalls))
 	PlinkoPointsHud.setStatus(
-		string.format("Wager %d × %d ball(s) = %d chips", clampedWager, clampedBalls, clampedWager * clampedBalls)
+		string.format(
+			"%s · wager %d × %d = %d · max %dx",
+			risk.displayName,
+			clampedWager,
+			clampedBalls,
+			clampedWager * clampedBalls,
+			risk.maxMultiplier
+		)
 	)
+	showLocalMultiplierLabels()
 end
 
 local function startFreeDrop(payload: PlinkoPointsDropStarted)
@@ -374,16 +389,20 @@ function PlinkoPointsController.startSession(payload: PlinkoPointsJoined)
 	table.clear(activeDropIds)
 	sessionNet = 0
 	currentBallCount = payload.ballCount
+	currentRiskId = payload.riskId
 
 	HubHud.setTitle("Plinko Points")
 	HubHud.setChips(payload.chips)
 	PlinkoPointsHud.setVisible(true)
 	PlinkoPointsHud.setWagerEnabled(true)
-	PlinkoPointsHud.setLoadoutValues(payload.wager, payload.ballCount)
+	PlinkoPointsHud.setLoadoutValues(payload.wager, payload.ballCount, payload.riskId)
 	PlinkoPointsHud.setDropEnabled(true)
 	PlinkoPointsHud.setDropLabel(dropButtonLabel(payload.ballCount))
 	PlinkoPointsHud.setResult("Drop a ball", Config.COLORS.NeonPurple)
-	PlinkoPointsHud.setStatus("Set wager & balls, then drop")
+	local risk = Config.getPlinkoRisk(payload.riskId)
+	PlinkoPointsHud.setStatus(
+		string.format("Risk %s · max %dx · ball cap %d", risk.displayName, risk.maxMultiplier, payload.maxBallCount)
+	)
 	PlinkoPointsHud.setScoreLine(
 		string.format(
 			"Wager %d × %d  |  Balance %d  |  High score: %d",
@@ -410,7 +429,7 @@ function PlinkoPointsController.start()
 	clearLocalMultiplierLabels()
 
 	PlinkoPointsHud.start(requestDrop, requestLeave, applyLoadout)
-	applyLoadout(Config.PLINKO.DefaultWager, Config.PLINKO.DefaultBallCount)
+	applyLoadout(Config.PLINKO.DefaultWager, Config.PLINKO.DefaultBallCount, Config.PLINKO.DefaultRiskId)
 
 	Remotes.getEvent("PlinkoPointsJoined").OnClientEvent:Connect(function(payload: PlinkoPointsJoined)
 		PlinkoPointsController.startSession(payload)
