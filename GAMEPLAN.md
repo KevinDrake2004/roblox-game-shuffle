@@ -34,11 +34,11 @@ Roblox arcade hub inspired by [Shuffle.com](https://shuffle.com). Soft currency 
 
 ### In progress
 
-- **Casino shell** - unified hub visuals, portal polish, lighting (`feature/casino-shell`). See [`docs/CASINO.md`](docs/CASINO.md). Arenas stay at current world positions; portals remain server-wired via `LobbyService`.
+- **Casino shell** - Hard Rock-style enclosed building, table-pit atmosphere, indoor Arcade wing (`feature/casino-shell`). See [`docs/CASINO.md`](docs/CASINO.md). Arenas still remote; portals remain server-wired via `LobbyService`.
 
 ### Next
 
-- Casino shell phase 2 (optional corridors / arena relocation)
+- Casino shell phase 2 (relocate arenas into arcade alcoves / rocket launch attached to building)
 - Leaderboards / further hub polish
 - Optional chip sinks (cosmetics, VIP) to offset RTP inflation
 
@@ -53,7 +53,7 @@ Each live game validates client requests on the server. Typical wager settlement
 `eligible` / stake deducted → cash-out → `creditPayout(...)`  
 or bust / crash / mine → stake kept by the round (`netDelta` negative).
 
-Hub entry: spawn in `Workspace.Lobby` → portal ProximityPrompt → game `join`. Leave returns to `Config.LOBBY.SpawnPosition`.
+Hub entry: spawn in `Workspace.Lobby` → walk casino floor → Arcade station ProximityPrompt → game `join`. Leave returns to `Config.LOBBY.SpawnPosition`.
 
 ## Monetization
 

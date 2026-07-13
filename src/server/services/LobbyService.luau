@@ -140,6 +140,30 @@ local function ensurePortalLabels()
 		stroke.Thickness = 2
 		stroke.Parent = title
 	end
+
+	local arcadeSign = lobby:FindFirstChild("ArcadeSign")
+	if arcadeSign and arcadeSign:IsA("BasePart") and not arcadeSign:FindFirstChild("SignGui") then
+		local gui = Instance.new("SurfaceGui")
+		gui.Name = "SignGui"
+		gui.Face = Enum.NormalId.Front
+		gui.SizingMode = Enum.SurfaceGuiSizingMode.PixelsPerStud
+		gui.PixelsPerStud = 50
+		gui.Parent = arcadeSign
+
+		local title = Instance.new("TextLabel")
+		title.BackgroundTransparency = 1
+		title.Size = UDim2.fromScale(1, 1)
+		title.Font = Enum.Font.GothamBlack
+		title.TextScaled = true
+		title.TextColor3 = Config.COLORS.Text
+		title.Text = "ARCADE"
+		title.Parent = gui
+
+		local stroke = Instance.new("UIStroke")
+		stroke.Color = Config.COLORS.NeonPurple
+		stroke.Thickness = 2
+		stroke.Parent = title
+	end
 end
 
 local function handlePortalRequest(player: Player, gameId: GameId)

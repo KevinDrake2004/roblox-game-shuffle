@@ -36,9 +36,9 @@ Config.COLORS = {
 }
 
 Config.LOBBY = {
-	-- Bounding box of the casino footprint (main hall + side rooms + rocket apron).
-	FloorSize = Vector3.new(110, 1, 72),
-	SpawnPosition = Vector3.new(0, 3, 20),
+	-- Enclosed Hard Rock-style casino footprint (see docs/CASINO.md).
+	FloorSize = Vector3.new(140, 1, 120),
+	SpawnPosition = Vector3.new(0, 3, 48),
 	Ambient = Color3.fromRGB(72, 58, 110),
 	OutdoorAmbient = Color3.fromRGB(48, 40, 78),
 	FogColor = Color3.fromRGB(42, 28, 72),
@@ -48,25 +48,24 @@ Config.LOBBY = {
 	ExposureCompensation = 0.15,
 }
 
--- Portal positions are enter gates inside the casino shell (see docs/CASINO.md).
--- Soft TP still sends players to remote ArenaOrigin until arenas relocate in phase 2.
+-- Enter gates live in the indoor Arcade wing (north wall). Soft TP still uses remote ArenaOrigin.
 local portals: { PortalConfig } = {
 	{
 		id = "RocketRun",
 		displayName = "Rocket Run",
-		position = Vector3.new(0, 3, -30),
+		position = Vector3.new(0, 3, -48),
 		accentColor = Config.COLORS.NeonCyan,
 	},
 	{
 		id = "PlinkoPoints",
 		displayName = "Plinko Points",
-		position = Vector3.new(42, 3, -14),
+		position = Vector3.new(28, 3, -48),
 		accentColor = Config.COLORS.NeonPurple,
 	},
 	{
 		id = "MineSweeper",
 		displayName = "Mine Sweeper Arcade",
-		position = Vector3.new(-42, 3, -14),
+		position = Vector3.new(-28, 3, -48),
 		accentColor = Config.COLORS.NeonMagenta,
 	},
 }
