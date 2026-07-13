@@ -1,30 +1,36 @@
-# Casino Shell - First Pass
+# Casino Shell - Resort Polish Pass
 
-Hard Rock-style enclosed casino hub. Players spawn on the floor, walk the pit, then enter physical game rooms in the north wing.
+Hard Rock / Vegas-strip inspired enclosed casino hub with a south resort facade and approach plaza. Players spawn on the plaza, walk the porte-cochere into the lobby, cross the pit, then enter physical game rooms in the north wing.
 
-This document is the **source of truth for the first casino floor pass** (building shell, atmosphere, decorative tables). Game rules stay in [`ROCKET_RUN.md`](ROCKET_RUN.md), [`PLINKO.md`](PLINKO.md), and [`MINES.md`](MINES.md). Game-room interiors are **out of scope for this pass** and will be fixed region-by-region later.
+This document is the **source of truth for the casino floor + exterior polish** (building shell, plaza, vestibule, atmosphere). Game rules stay in [`ROCKET_RUN.md`](ROCKET_RUN.md), [`PLINKO.md`](PLINKO.md), and [`MINES.md`](MINES.md). Game-room interiors remain **deferred** and are fixed region-by-region later.
 
 ## Pass status
 
 | Area | Status |
 |------|--------|
-| Building envelope, walls, roofs | Done |
+| Building envelope, walls, roofs | Done (first pass) |
 | Floor layers (green field, red aisles, chips) | Done |
 | Decorative table pit (roulette / blackjack / poker) | Done |
 | Runtime chairs + dealer seats | Done |
-| Lounge bar (west wall) | Done |
-| Lighting (chandeliers, sconces, ceiling lights) | Done |
+| Lounge bar (west wall) | Done + bar-glow polish |
+| Lighting (chandeliers, sconces, ceiling lights) | Done + cove / foyer wash |
 | Game-room doorways / portal labels | Done (visual) |
-| Zone-based room entry (walk in / walk out) | In progress on `feature/casino-shell` |
+| Zone-based room entry (walk in / walk out) | Done on main |
+| **Exterior resort facade + plaza (Phase A)** | **Done on `feature/casino-polish`** |
+| **Entrance vestibule / foyer (Phase B)** | **Done on `feature/casino-polish`** |
+| **Interior luxury trim (Phase C)** | **Done on `feature/casino-polish`** |
 | Rocket / Plinko / Mines room polish | **Deferred** - fix per region later |
 
 ## Design intent
 
 | Zone | What it is |
 |------|------------|
+| **Approach plaza** | South of the envelope - valet curb loop, fountain medallion, lit planters, red-carpet queue language (decorative, not a wait system) |
+| **Resort facade** | Tall south front, porte-cochere canopy, gold molding, glass curtain bands, marquee + brand sign, diamond crown silhouette |
+| **Vestibule / foyer** | Open double doors, reception desk, VIP rope cue, foyer chandelier - clear doors → aisle → pit sightline |
 | **Casino floor** | Enclosed building - green pit field, red aisle runners, pillars, lounge |
-| **Table pit** | Non-playable roulette, blackjack, and poker props |
-| **Game hall** | North corridor with three labeled doorways |
+| **Table pit** | Non-playable roulette, blackjack, and poker props + chip-tray / pit-rail polish |
+| **Game hall** | North corridor with three labeled VIP-framed doorways |
 | **Game rooms** | Physical `*Arena` folders seated in those rooms (gameplay polish later) |
 
 Atmosphere props never touch remotes or currency. Only the three playable rooms run wager loops.
@@ -33,19 +39,26 @@ Atmosphere props never touch remotes or currency. Only the three playable rooms 
 
 | Piece | Path / instance |
 |-------|-----------------|
-| Casino shell | `src/map/Lobby.model.json` → `Workspace.Lobby` |
+| Casino shell + exterior | `src/map/Lobby.model.json` → `Workspace.Lobby` |
 | Runtime chairs | `src/server/services/CasinoChairs.luau` |
-| Felt / bar dressing | `src/server/services/LobbyService.luau` |
-| Zone entry (in progress) | `src/server/services/ArenaZones.luau` |
+| Felt / bar / sign dressing | `src/server/services/LobbyService.luau` |
+| Zone entry | `src/server/services/ArenaZones.luau` |
 | Game rooms | `RocketRunArena`, `PlinkoArena`, `MineSweeperArena` |
 | Origins | `Config.ROCKET_RUN` / `PLINKO` / `MINE_SWEEPER` (`ArenaOrigin`) |
 
 Map rebuild / fix helpers (idempotent Python):
 
+- `scripts/rebuild_casino_polish.py` - exterior, plaza, vestibule, luxury trim (this pass)
 - `scripts/rebuild_roulette_and_bar.py`
 - `scripts/fix_floor_carpet_zfight.py`
 - `scripts/fix_blackjack_betspots.py`
 - `scripts/fix_blackjack_alignment.py`
+
+Re-run polish after floor/wall rebuilds if those scripts replace `Structure` children wholesale:
+
+```bash
+python3 scripts/rebuild_casino_polish.py
+```
 
 ## Footprint (top-down)
 
@@ -64,24 +77,55 @@ Map rebuild / fix helpers (idempotent Python):
             |   (roulette / blackjack / poker)      |
             |         red carpet aisle              |
             |  LoungeBar (west)                     |
-            |======= grand entrance / spawn ========|
+            |======= vestibule / grand doors =======|
+            |    porte-cochere / canopy (z~66-84)   |
+            |  plaza carpet · fountain · valet loop |
+            |           spawn (0, 3, 100)            |
                          +Z (south)
 ```
 
-Envelope ≈ **184 × 206** studs (outer walls at X±92, Z +66 / −140). Pit roof ~22 studs; game-room roof ~54 studs (Plinko board height).
+Envelope ≈ **184 × 206** studs (outer walls at X±92, Z +66 / −140). Plaza extends to roughly **Z +118**. Pit roof ~22 studs; game-room roof ~54 studs (Plinko board height). Marquee / crown read above the south parapet (~Y 28–48).
 
-## Floor and walls (first-pass rules)
+## Exterior (Phase A)
 
-Floor layers use a **strict height ladder** so coplanar faces never z-fight:
+`Structure.Exterior` + `Atmosphere.Plaza`:
+
+- **Porte-cochere** - canopy deck, gold edge, cyan underside neon, four marble columns with gold caps
+- **Facade** - south parapet + gold cornice, glass curtain bands with warm window glow, entry gold molding, side pilasters + window bands
+- **Marquee** - board + cyan/magenta neon; `Lobby.BrandSign` relocated to `(0, 28.5, 71.2)` facing south (SurfaceGui still dressed by `LobbyService`)
+- **Crown** - diamond + spire silhouette on the south roof line (original geometry; not third-party IP)
+- **Plaza** - asphalt ground, stone apron, split red carpet around fountain, valet curb oval, lit planters, queue stanchions/ropes, facade flood SpotLights
+
+Night read: facade floods, marquee wash, window bands, planter uplights, fountain orb.
+
+## Entrance sequence (Phase B)
+
+`Atmosphere.Vestibule`:
+
+- Swung-open double doors with gold frames + glass
+- Stone threshold into the pit
+- Reception desk east of the aisle (center sightline kept clear)
+- VIP rope + sign west of the aisle
+- Foyer chandelier ring + mirrored side panels
+
+## Interior luxury (Phase C)
+
+| Folder | Role |
+|--------|------|
+| `Structure.LuxuryTrim` | Marble veneers, gold baseboards/cornice, aisle gold borders, VIP door frames, wall art, wayfinding bar |
+| `Structure.Coffers` | Pit ceiling coffer grid |
+| `Structure.CoveLights` | Warm / cyan / magenta cove strips |
+| `Atmosphere.PitDressing` | Blackjack chip trays + pit rail caps (non-playable) |
+| `Atmosphere.BarGlow` | Bar canopy neon, back-bar glow, extra bottles |
+
+Floor height ladder is unchanged:
 
 1. Base / green casino field under pits and rooms
 2. Red aisle runners and cross arms (walk paths only)
 3. Medallion / accents
 4. Decorative floor chips
 
-**Red carpet stays on walk aisles only.** Table pits stay on green so chairs do not sit on red (avoids red-on-red parallax flicker).
-
-Walls and corner posts are nudged so room-facing faces are not coplanar with hall fills. Do not stack overlapping floor parts at the same Y.
+Plaza carpets sit on their own apron/asphalt south of the envelope and do not stack on green pit layers.
 
 ## Decorative tables
 
@@ -123,21 +167,25 @@ Re-running chair placement is safe after clearing `Atmosphere.Chairs`.
 
 ## Lounge bar
 
-`Atmosphere.LoungeBar` sits on the **west wall**: back cabinet, bottle shelves, marble counter, foot rail, lit `BarSign` ("BAR" SurfaceGui). Tagged `TableType = "Bar"` for stool placement. This replaced an earlier ambiguous pit prop that read as a "weird area."
+`Atmosphere.LoungeBar` sits on the **west wall**: back cabinet, bottle shelves, marble counter, foot rail, lit `BarSign` ("BAR" SurfaceGui). Tagged `TableType = "Bar"` for stool placement. `Atmosphere.BarGlow` adds canopy / back-bar neon and an extra bottle row without rewriting the core bar rebuild.
 
 ## Lighting
 
 `Workspace.Lobby.Structure`:
 
 - `CeilingLights` / `Chandeliers` / `Sconces` - pit and hall
+- `CoveLights` / foyer + plaza washes - polish pass
 - Lobby lighting also set in `LobbyService` from `Config.LOBBY` (clock, ambient, fog)
+
+`Config.LOBBY` keeps a night clock (`ClockTime = 22`) so facade neon and window glow read correctly.
 
 ## Player flow (target)
 
-1. Spawn at `Config.LOBBY.SpawnPosition` `(0, 3, 48)`.
-2. Walk the red carpet through the table pit into the game hall.
-3. Walk into a game room - session starts (HUD / focused camera). **No teleport.**
-4. Walk out of the room floor bounds - session ends. **No leave button required.**
+1. Spawn at `Config.LOBBY.SpawnPosition` `(0, 3, 100)` on the plaza, facing the facade.
+2. Walk the red carpet under the porte-cochere through the grand doors into the foyer.
+3. Follow the red carpet through the table pit into the game hall.
+4. Walk into a game room - session starts (HUD / focused camera). **No teleport.**
+5. Walk out of the room floor bounds - session ends. **No leave button required.**
 
 Doorway models under `Lobby.Portals` keep visual gates / labels (`Portal_<GameId>` + `GameId` attribute). Enter / leave **ProximityPrompts** are removed; volume entry is driven by `ArenaZones` against each arena `Floor` part.
 
@@ -153,6 +201,17 @@ Legacy `LeavePosition` values in Config still point at the corridor just south o
 
 Rocket home: `Config.ROCKET_RUN.RocketHomePosition` `(0, 7, -118)`.
 
+**This polish pass does not move ArenaOrigins.**
+
+## Manual verify checklist
+
+- [ ] Approach from south / spawn on plaza - facade reads as a hotel casino at night (marquee, crown, canopy, window glow)
+- [ ] Walk plaza carpet → doors → foyer → pit → game hall without gaps or blocked center aisle
+- [ ] Fountain sits in valet loop medallion; carpet splits around it
+- [ ] Brand sign shows game name on the exterior marquee
+- [ ] Rocket Run / Plinko / Mines still join, wager, settle, and leave via zone walk
+- [ ] No new remotes or currency touches from atmosphere props
+
 ## What this pass does not own
 
 Fix these **per region** in later passes - do not treat them as casino-floor regressions:
@@ -162,6 +221,8 @@ Fix these **per region** in later passes - do not treat them as casino-floor reg
 - Mine Sweeper table / tile presentation inside `MineSweeperArena`
 - Free-walk vs focused-camera HUD polish per game
 - Richer table meshes / real casino kit assets
+- Mandatory queue / skip monetization
+- Cosmetics / VIP product
 
 ## What not to touch
 
@@ -172,6 +233,6 @@ Fix these **per region** in later passes - do not treat them as casino-floor reg
 
 ## Follow-ups
 
-1. Finish zone-based entry client polish (HUD leave removal, free-walk toggles) on `feature/casino-shell`
-2. Region passes: Mines room → Rocket room → Plinko room
+1. Region passes: Mines room → Rocket room → Plinko room
+2. Optional richer marquee letter meshes if SurfaceGui read is weak at distance
 3. Optional chip sinks (VIP, cosmetics) to offset RTP > 100%

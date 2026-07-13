@@ -162,6 +162,44 @@ local function ensurePortalLabels()
 		stroke.Thickness = 2
 		stroke.Parent = title
 	end
+
+	local function dressNamedSign(part: BasePart, text: string, accent: Color3, face: Enum.NormalId)
+		if part:FindFirstChild("SignGui") then
+			return
+		end
+		local gui = Instance.new("SurfaceGui")
+		gui.Name = "SignGui"
+		gui.Face = face
+		gui.SizingMode = Enum.SurfaceGuiSizingMode.PixelsPerStud
+		gui.PixelsPerStud = 55
+		gui.Parent = part
+
+		local title = Instance.new("TextLabel")
+		title.BackgroundTransparency = 1
+		title.Size = UDim2.fromScale(1, 1)
+		title.Font = Enum.Font.GothamBlack
+		title.TextScaled = true
+		title.TextColor3 = Config.COLORS.Text
+		title.Text = text
+		title.Parent = gui
+
+		local stroke = Instance.new("UIStroke")
+		stroke.Color = accent
+		stroke.Thickness = 2
+		stroke.Parent = title
+	end
+
+	local atmosphere = lobby:FindFirstChild("Atmosphere")
+	local plaza = atmosphere and atmosphere:FindFirstChild("Plaza")
+	local vestibule = atmosphere and atmosphere:FindFirstChild("Vestibule")
+	local valetSign = plaza and plaza:FindFirstChild("ValetSign")
+	local vipSign = vestibule and vestibule:FindFirstChild("VipSign")
+	if valetSign and valetSign:IsA("BasePart") then
+		dressNamedSign(valetSign, "VALET", Config.COLORS.NeonCyan, Enum.NormalId.Front)
+	end
+	if vipSign and vipSign:IsA("BasePart") then
+		dressNamedSign(vipSign, "VIP", Config.COLORS.NeonMagenta, Enum.NormalId.Front)
+	end
 end
 
 local ROULETTE_RED: { [number]: boolean } = {}

@@ -41,7 +41,8 @@ Config.COLORS = {
 Config.LOBBY = {
 	-- Enclosed casino + north game rooms (see docs/CASINO.md).
 	FloorSize = Vector3.new(180, 1, 200),
-	SpawnPosition = Vector3.new(0, 3, 48),
+	-- Plaza approach south of the porte-cochere (see docs/CASINO.md).
+	SpawnPosition = Vector3.new(0, 3, 100),
 	Ambient = Color3.fromRGB(72, 58, 110),
 	OutdoorAmbient = Color3.fromRGB(48, 40, 78),
 	FogColor = Color3.fromRGB(42, 28, 72),
