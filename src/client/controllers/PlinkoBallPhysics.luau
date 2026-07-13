@@ -259,8 +259,10 @@ function PlinkoBallPhysics.rebuildBoard(riskId: string): boolean
 	bucketsFolder.Parent = board
 
 	local leftX, rightX = railBounds(arena)
-	local usableWidth = math.max(4, (rightX - leftX) - 0.8)
-	local spacingX = usableWidth / rows
+	-- Fill rail-to-rail with a continuous bucket bar (no gaps between cups).
+	local usableWidth = math.max(4, rightX - leftX)
+	local bucketWidth = usableWidth / bucketCount
+	local spacingX = bucketWidth
 	local topY = origin.Position.Y - 1.5
 	local bottomY = Config.PLINKO.ArenaOrigin.Y + 2.4
 	local spacingY = math.max(1.1, (topY - bottomY) / rows)
@@ -296,11 +298,12 @@ function PlinkoBallPhysics.rebuildBoard(riskId: string): boolean
 		end
 	end
 
-	local bucketWidth = spacingX * 0.92
+	-- Edge-to-edge cups: width == spacing so the bottom reads as one solid bar.
 	local bucketHeight = 2.0
 	local bucketDepth = 2.0
 	local bucketY = bottomY - 0.35
-	local firstCenter = originX - (bucketCount - 1) * spacingX * 0.5
+	local firstCenter = originX - usableWidth * 0.5 + bucketWidth * 0.5
+	local sizeX = bucketWidth + 0.02 -- tiny overlap hides seam gaps
 	for index = 0, bucketCount - 1 do
 		local bucket = Instance.new("Part")
 		bucket.Name = `Bucket_{index}`
@@ -309,8 +312,8 @@ function PlinkoBallPhysics.rebuildBoard(riskId: string): boolean
 		bucket.CanQuery = false
 		bucket.CanTouch = false
 		bucket.CastShadow = false
-		bucket.Size = Vector3.new(bucketWidth, bucketHeight, bucketDepth)
-		bucket.Position = Vector3.new(firstCenter + index * spacingX, bucketY, boardZ)
+		bucket.Size = Vector3.new(sizeX, bucketHeight, bucketDepth)
+		bucket.Position = Vector3.new(firstCenter + index * bucketWidth, bucketY, boardZ)
 		local mult = multipliers[index + 1] or 0
 		if mult <= 0 then
 			bucket.Color = Config.COLORS.NeonMagenta
@@ -322,6 +325,20 @@ function PlinkoBallPhysics.rebuildBoard(riskId: string): boolean
 		bucket.Material = Enum.Material.Neon
 		bucket.Parent = bucketsFolder
 	end
+
+	-- Continuous plate behind the cups so the bottom always reads as one solid bar.
+	local bar = Instance.new("Part")
+	bar.Name = "BucketBar"
+	bar.Anchored = true
+	bar.CanCollide = false
+	bar.CanQuery = false
+	bar.CanTouch = false
+	bar.CastShadow = false
+	bar.Size = Vector3.new(usableWidth + 0.1, bucketHeight * 0.92, bucketDepth * 0.7)
+	bar.Position = Vector3.new(originX, bucketY, boardZ + 0.12)
+	bar.Color = Color3.fromRGB(18, 10, 32)
+	bar.Material = Enum.Material.SmoothPlastic
+	bar.Parent = bucketsFolder
 
 	setSharedDecorVisible(false)
 	return true
@@ -360,11 +377,7 @@ local function resolveBucketAtX(buckets: { BucketInfo }, x: number): BucketInfo?
 	if #buckets == 0 then
 		return nil
 	end
-	for _, bucket in buckets do
-		if x >= bucket.minX and x <= bucket.maxX then
-			return bucket
-		end
-	end
+	-- Nearest center (bucket sizes may overlap slightly for a seamless bar).
 	local best = buckets[1]
 	local bestDist = math.abs(x - best.centerX)
 	for index = 2, #buckets do
