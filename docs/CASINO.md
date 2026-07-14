@@ -100,7 +100,7 @@ South entry has a real door cutout (`|x| < 12`, under `Ext_South_Lint` / `EntryB
 - **Corners** - SW / SE towers with gold caps and window bays
 - **Sides** - marble veneer, pilaster rhythm, east/west window modules (no continuous side neon belts)
 - **Plaza / ground / site lighting** - flat apron parts + perimeter lamps; hills from real Terrain
-- **Terrain** (`CasinoTerrain`) - bakes once (`ShuffleCasinoTerrainVersion`); LeafyGrass recolored to WorldGrass synthetic green; smooth FillBall ramp starting ~25% back from the south facade (flanks + behind shell); spawn `(0, 3, 112)` outside. Bump `VERSION` to reshape, then Save. ArenaOrigins unchanged
+- **Terrain** (`CasinoTerrain`) - bakes once (`ShuffleCasinoTerrainVersion`); LeafyGrass recolored to WorldGrass synthetic green; smooth FillBall ramp starting ~25% back from the south facade (flanks + behind shell); **RampWalkway** asphalt paths + street lamps on both flanks from south corners to north landings (heights follow `rampTopY`); spawn `(0, 3, 112)` outside. Bump `VERSION` to reshape Terrain, then Save. ArenaOrigins unchanged
 
 ### Mesh accents
 
