@@ -398,15 +398,16 @@ def spot_part(
     return p
 
 
-def street_lamp(name: str, x: float, z: float, *, yaw: float = 0.0) -> list:
+def street_lamp(name: str, x: float, z: float, *, yaw: float = 0.0, ground_y: float = 0.0) -> list:
     """Visible lamp post with warm PointLight. Does not collide with players."""
     kids: list = []
+    gy = ground_y
     # Base + pole
-    kids.append(part(f"{name}_Base", (1.2, 0.35, 1.2), (x, 0.4, z), STONE, material="Concrete", can_collide=False))
+    kids.append(part(f"{name}_Base", (1.2, 0.35, 1.2), (x, gy + 0.4, z), STONE, material="Concrete", can_collide=False))
     kids.append(
-        part(f"{name}_Pole", (0.35, 12.0, 0.35), (x, 6.4, z), [0.12, 0.12, 0.14], material="Metal", can_collide=False)
+        part(f"{name}_Pole", (0.35, 12.0, 0.35), (x, gy + 6.4, z), [0.12, 0.12, 0.14], material="Metal", can_collide=False)
     )
-    kids.append(part(f"{name}_Collar", (0.55, 0.25, 0.55), (x, 12.2, z), GOLD, material="Metal", can_collide=False))
+    kids.append(part(f"{name}_Collar", (0.55, 0.25, 0.55), (x, gy + 12.2, z), GOLD, material="Metal", can_collide=False))
     # Arm reaches toward plaza/path (local +Z after yaw)
     t = math.radians(yaw)
     arm_len = 2.4
@@ -416,7 +417,7 @@ def street_lamp(name: str, x: float, z: float, *, yaw: float = 0.0) -> list:
         part(
             f"{name}_Arm",
             (0.25, 0.25, arm_len),
-            (ax, 12.35, az),
+            (ax, gy + 12.35, az),
             [0.12, 0.12, 0.14],
             material="Metal",
             can_collide=False,
@@ -426,21 +427,21 @@ def street_lamp(name: str, x: float, z: float, *, yaw: float = 0.0) -> list:
     hx = x + arm_len * math.sin(t)
     hz = z + arm_len * math.cos(t)
     kids.append(
-        part(f"{name}_Head", (1.1, 0.55, 1.1), (hx, 12.1, hz), [0.08, 0.08, 0.1], material="Metal", can_collide=False)
+        part(f"{name}_Head", (1.1, 0.55, 1.1), (hx, gy + 12.1, hz), [0.08, 0.08, 0.1], material="Metal", can_collide=False)
     )
     # Soft visible lamp glass (small, intentional - not a floating wash cube)
     kids.append(
         part(
             f"{name}_Glow",
             (0.7, 0.35, 0.7),
-            (hx, 11.85, hz),
+            (hx, gy + 11.85, hz),
             WARM,
             material="Neon",
             can_collide=False,
             transparency=0.15,
         )
     )
-    kids.append(light_part(f"{name}_Light", (hx, 11.5, hz), WARM, brightness=2.8, range_=48.0))
+    kids.append(light_part(f"{name}_Light", (hx, gy + 11.5, hz), WARM, brightness=2.8, range_=48.0))
     return kids
 
 
@@ -472,17 +473,17 @@ def build_site_lighting() -> list:
     kids: list = []
 
     # --- Perimeter street lamps only (no posts on the entrance approach) ---
-    # Kept outside hill slope toes so posts are not buried in berms.
+    # Keep posts outside Terrain flank / back-range toes (smooth ramp ~|x|<=145, z>=-230).
     # South grass / path (arms face north toward building)
     for i, x in enumerate((-90.0, -45.0, 0.0, 45.0, 90.0)):
-        kids.extend(street_lamp(f"PerimS{i}", x, 148.0, yaw=180.0))
-    # North beyond ridge toe (arms face south)
+        kids.extend(street_lamp(f"PerimS{i}", x, 155.0, yaw=180.0))
+    # North beyond back-range toe (arms face south)
     for i, x in enumerate((-90.0, -45.0, 0.0, 45.0, 90.0)):
-        kids.extend(street_lamp(f"PerimN{i}", x, -220.0, yaw=0.0))
-    # West / east beyond flank slope toes
-    for i, z in enumerate((-120.0, -60.0, 0.0, 40.0, 100.0)):
-        kids.extend(street_lamp(f"PerimW{i}", -170.0, z, yaw=90.0))
-        kids.extend(street_lamp(f"PerimE{i}", 170.0, z, yaw=-90.0))
+        kids.extend(street_lamp(f"PerimN{i}", x, -280.0, yaw=0.0))
+    # West / east: front and mid only (skip north-flank z that sits in the ramp)
+    for i, z in enumerate((-20.0, 40.0, 100.0)):
+        kids.extend(street_lamp(f"PerimW{i}", -205.0, z, yaw=90.0))
+        kids.extend(street_lamp(f"PerimE{i}", 205.0, z, yaw=-90.0))
 
     # --- Entrance / porte-cochere: downward spots only (softer than perimeter wash) ---
     entry_spots = [
@@ -520,20 +521,20 @@ def build_site_lighting() -> list:
     for i, x in enumerate((-70.0, -35.0, 0.0, 35.0, 70.0)):
         kids.append(roof_down_spot(f"RoofSpot_N{i}", x, 54.0, -138.0, brightness=3.5, range_=60.0))
     # Corner down-spots for apron coverage (outside flank slopes)
-    for i, (x, z) in enumerate(((-110.0, 70.0), (110.0, 70.0), (-165.0, -145.0), (165.0, -145.0))):
+    for i, (x, z) in enumerate(((-110.0, 70.0), (110.0, 70.0), (-210.0, -20.0), (210.0, -20.0))):
         kids.append(roof_down_spot(f"RoofSpot_Corner{i}", x, 24.0, z, brightness=3.2, range_=55.0))
 
     # Soft ambient fills over open grass (invisible hosts only) - keep off the door axis
-    # and above / outside berm volumes so hosts are not inside solid slopes.
+    # and above / outside Terrain ramp volumes so hosts are not inside solid slopes.
     for i, (x, y, z) in enumerate(
         (
-            (-50.0, 14.0, 140.0),
-            (50.0, 14.0, 140.0),
-            (0.0, 8.0, -225.0),
-            (-175.0, 14.0, -20.0),
-            (175.0, 14.0, -20.0),
-            (-175.0, 20.0, -100.0),
-            (175.0, 20.0, -100.0),
+            (-50.0, 14.0, 145.0),
+            (50.0, 14.0, 145.0),
+            (0.0, 36.0, -250.0),
+            (-215.0, 14.0, -20.0),
+            (215.0, 14.0, -20.0),
+            (-215.0, 18.0, 60.0),
+            (215.0, 18.0, 60.0),
         )
     ):
         kids.append(light_part(f"GrassFill_{i}", (x, y, z), WARM, brightness=1.4, range_=50.0))
