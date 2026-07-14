@@ -127,6 +127,30 @@ def part(
     return {"name": name, "className": "Part", "properties": props}
 
 
+def wedge_part(
+    name: str,
+    size,
+    pos,
+    color,
+    *,
+    material: str = "Grass",
+    can_collide: bool = True,
+    orientation=None,
+    transparency=None,
+) -> dict:
+    """WedgePart for terrain berms / slopes (same props as part)."""
+    node = part(
+        name,
+        size,
+        pos,
+        color,
+        material=material,
+        can_collide=can_collide,
+        orientation=orientation,
+        transparency=transparency,
+    )
+    node["className"] = "WedgePart"
+    return node
 
 
 # Mesh accent helpers. Prefer SpecialMesh MeshType (always loads). FileMesh IDs
@@ -801,29 +825,7 @@ def build_exterior() -> list:
     # East / west side elevations - bay rhythm
     # -------------------------------------------------------------------------
     for side, x, outward in (("W", -93.4, -1.0), ("E", 93.4, 1.0)):
-        # Continuous gold belt
-        kids.append(
-            part(
-                f"SideBeltGold_{side}",
-                (0.35, 0.55, 200.0),
-                (x + outward * 0.2, 21.5, -37.0),
-                GOLD,
-                material="Metal",
-                can_collide=False,
-            )
-        )
-        kids.append(
-            part(
-                f"SideBeltNeon_{side}",
-                (0.25, 0.3, 196.0),
-                (x + outward * 0.45, 21.5, -37.0),
-                CYAN if side == "W" else MAGENTA,
-                material="Neon",
-                can_collide=False,
-                transparency=0.25,
-            )
-        )
-        # Veneer strip
+        # Veneer strip (no floating side belts - they read as a cyan outline)
         kids.append(
             part(
                 f"SideVeneer_{side}",
@@ -1104,8 +1106,13 @@ def build_plaza() -> list:
     return kids
 
 
+ROCK = [0.32, 0.30, 0.28]
+ROCK_DARK = [0.22, 0.20, 0.18]
+GRASS_DARK = [0.14, 0.34, 0.12]
+
+
 def build_ground() -> list:
-    """Walkable grass apron around the whole casino footprint."""
+    """Walkable grass apron + hill berms that nest the north game-room wing."""
     kids: list = []
     # Large collide grass under/around everything. Building MainFloor + PlazaFloor sit on top.
     kids.append(
@@ -1133,7 +1140,7 @@ def build_ground() -> list:
         part(
             "PerimeterPath_N",
             (220.0, 0.2, 18.0),
-            (0.0, 0.05, -155.0),
+            (0.0, 0.05, -195.0),
             [0.35, 0.32, 0.28],
             material="Ground",
             can_collide=False,
@@ -1143,7 +1150,7 @@ def build_ground() -> list:
         part(
             "PerimeterPath_W",
             (18.0, 0.2, 280.0),
-            (-115.0, 0.05, -20.0),
+            (-145.0, 0.05, -20.0),
             [0.35, 0.32, 0.28],
             material="Ground",
             can_collide=False,
@@ -1153,12 +1160,158 @@ def build_ground() -> list:
         part(
             "PerimeterPath_E",
             (18.0, 0.2, 280.0),
-            (115.0, 0.05, -20.0),
+            (145.0, 0.05, -20.0),
             [0.35, 0.32, 0.28],
             material="Ground",
             can_collide=False,
         )
     )
+
+    # -------------------------------------------------------------------------
+    # Hill / berms - building stays at Y≈0; terrain rises around the envelope
+    # so the tall north room wing reads nestled in a ridge (no ArenaOrigin moves).
+    # -------------------------------------------------------------------------
+    # North ridge core behind Z≈-140 (room wing north wall)
+    kids.append(
+        part(
+            "Hill_NorthCore",
+            (220.0, 42.0, 48.0),
+            (0.0, 20.5, -168.0),
+            GRASS_DARK,
+            material="Grass",
+            can_collide=True,
+        )
+    )
+    kids.append(
+        part(
+            "Hill_NorthRockBand",
+            (210.0, 18.0, 22.0),
+            (0.0, 8.5, -152.0),
+            ROCK,
+            material="Slate",
+            can_collide=True,
+        )
+    )
+    # Slope from ridge crest down toward the north wall (wedge high edge north)
+    kids.append(
+        wedge_part(
+            "Hill_NorthSlope",
+            (200.0, 28.0, 24.0),
+            (0.0, 13.5, -146.0),
+            GRASS,
+            material="Grass",
+            can_collide=True,
+            orientation=(0.0, 180.0, 0.0),
+        )
+    )
+    # Outer north fallaway so the mass reads as a hill, not a cliff slab
+    kids.append(
+        wedge_part(
+            "Hill_NorthOuter",
+            (230.0, 36.0, 36.0),
+            (0.0, 17.5, -192.0),
+            GRASS,
+            material="Grass",
+            can_collide=True,
+            orientation=(0.0, 0.0, 0.0),
+        )
+    )
+
+    # East / west flank berms along the tall room wing (z -140..-55)
+    for side, sx in (("W", -1.0), ("E", 1.0)):
+        x_core = sx * 118.0
+        x_outer = sx * 148.0
+        kids.append(
+            part(
+                f"Hill_FlankCore_{side}",
+                (36.0, 38.0, 95.0),
+                (x_core, 18.5, -97.0),
+                GRASS_DARK,
+                material="Grass",
+                can_collide=True,
+            )
+        )
+        kids.append(
+            part(
+                f"Hill_FlankRock_{side}",
+                (14.0, 22.0, 90.0),
+                (sx * 100.0, 10.5, -97.0),
+                ROCK,
+                material="Slate",
+                can_collide=True,
+            )
+        )
+        # Outer flank slope (wedge: high edge toward building)
+        yaw = 90.0 if side == "W" else -90.0
+        kids.append(
+            wedge_part(
+                f"Hill_FlankOuter_{side}",
+                (40.0, 32.0, 100.0),
+                (x_outer, 15.5, -97.0),
+                GRASS,
+                material="Grass",
+                can_collide=True,
+                orientation=(0.0, yaw, 0.0),
+            )
+        )
+        # Corner fillers NE / NW so ridge meets flanks
+        kids.append(
+            part(
+                f"Hill_Corner_{side}",
+                (48.0, 36.0, 40.0),
+                (sx * 120.0, 17.5, -155.0),
+                GRASS_DARK,
+                material="Grass",
+                can_collide=True,
+            )
+        )
+
+    # Soft mounds on the apron (south/east/west) - keep plaza + spawn clear
+    mound_specs = (
+        ("Hill_Mound_SW", (-95.0, 4.0, 105.0), (42.0, 8.0, 36.0), GRASS),
+        ("Hill_Mound_SE", (100.0, 3.5, 108.0), (38.0, 7.0, 32.0), GRASS),
+        ("Hill_Mound_W", (-130.0, 5.0, 20.0), (48.0, 10.0, 55.0), GRASS_DARK),
+        ("Hill_Mound_E", (130.0, 5.0, 15.0), (48.0, 10.0, 55.0), GRASS_DARK),
+        ("Hill_Mound_FarS", (-40.0, 2.5, 155.0), (50.0, 5.0, 28.0), GRASS),
+        ("Hill_Mound_FarSE", (55.0, 2.8, 158.0), (44.0, 5.5, 26.0), GRASS),
+    )
+    for name, pos, size, color in mound_specs:
+        kids.append(
+            part(
+                name,
+                size,
+                pos,
+                color,
+                material="Grass",
+                can_collide=True,
+            )
+        )
+
+    # Rock outcrops near room-wing flanks for cliff read
+    for side, sx in (("W", -1.0), ("E", 1.0)):
+        kids.append(
+            part(
+                f"Hill_Outcrop_{side}1",
+                (10.0, 14.0, 16.0),
+                (sx * 108.0, 6.5, -120.0),
+                ROCK_DARK,
+                material="Slate",
+                can_collide=True,
+                orientation=(0.0, 18.0 * sx, 8.0),
+            )
+        )
+        kids.append(
+            part(
+                f"Hill_Outcrop_{side}2",
+                (12.0, 18.0, 12.0),
+                (sx * 112.0, 8.5, -75.0),
+                ROCK,
+                material="Rock",
+                can_collide=True,
+                orientation=(0.0, -12.0 * sx, -6.0),
+            )
+        )
+
     return kids
 
 
@@ -1574,12 +1727,13 @@ def build_bar_glow() -> list:
 def relocate_brand_sign(lobby: dict) -> None:
     """Move BrandSign onto exterior marquee, facing south approach."""
     remove_named(lobby, "BrandSign")
+    # Sized to fill MarqueeNeonOuter (~58x11.2) so SurfaceGui text reads large.
     sign = {
         "name": "BrandSign",
         "className": "Part",
         "properties": {
             "Anchored": True,
-            "Size": [50.0, 8.0, 1.5],
+            "Size": [56.0, 10.0, 1.5],
             "Position": [0.0, 29.5, 72.2],
             "Color": MARBLE,
             "Material": "Slate",
@@ -1589,7 +1743,7 @@ def relocate_brand_sign(lobby: dict) -> None:
         "children": [
             part(
                 "SignFrame",
-                (52.0, 9.0, 0.45),
+                (58.0, 10.8, 0.45),
                 (0.0, 29.5, 71.4),
                 CYAN,
                 material="Neon",

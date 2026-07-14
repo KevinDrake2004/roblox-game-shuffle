@@ -24498,59 +24498,6 @@
               }
             },
             {
-              "name": "SideBeltGold_W",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  0.35,
-                  0.55,
-                  200.0
-                ],
-                "Position": [
-                  -93.60000000000001,
-                  21.5,
-                  -37.0
-                ],
-                "Color": [
-                  0.92,
-                  0.75,
-                  0.32
-                ],
-                "Material": "Metal",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false
-              }
-            },
-            {
-              "name": "SideBeltNeon_W",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  0.25,
-                  0.3,
-                  196.0
-                ],
-                "Position": [
-                  -93.85000000000001,
-                  21.5,
-                  -37.0
-                ],
-                "Color": [
-                  0.133,
-                  0.827,
-                  0.933
-                ],
-                "Material": "Neon",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false,
-                "Transparency": 0.25
-              }
-            },
-            {
               "name": "SideVeneer_W",
               "className": "Part",
               "properties": {
@@ -25684,59 +25631,6 @@
                 "TopSurface": "Smooth",
                 "BottomSurface": "Smooth",
                 "CanCollide": false
-              }
-            },
-            {
-              "name": "SideBeltGold_E",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  0.35,
-                  0.55,
-                  200.0
-                ],
-                "Position": [
-                  93.60000000000001,
-                  21.5,
-                  -37.0
-                ],
-                "Color": [
-                  0.92,
-                  0.75,
-                  0.32
-                ],
-                "Material": "Metal",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false
-              }
-            },
-            {
-              "name": "SideBeltNeon_E",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  0.25,
-                  0.3,
-                  196.0
-                ],
-                "Position": [
-                  93.85000000000001,
-                  21.5,
-                  -37.0
-                ],
-                "Color": [
-                  0.925,
-                  0.282,
-                  0.6
-                ],
-                "Material": "Neon",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false,
-                "Transparency": 0.25
               }
             },
             {
@@ -46637,7 +46531,7 @@
                 "Position": [
                   0.0,
                   0.05,
-                  -155.0
+                  -195.0
                 ],
                 "Color": [
                   0.35,
@@ -46661,7 +46555,7 @@
                   280.0
                 ],
                 "Position": [
-                  -115.0,
+                  -145.0,
                   0.05,
                   -20.0
                 ],
@@ -46687,7 +46581,7 @@
                   280.0
                 ],
                 "Position": [
-                  115.0,
+                  145.0,
                   0.05,
                   -20.0
                 ],
@@ -46700,6 +46594,618 @@
                 "TopSurface": "Smooth",
                 "BottomSurface": "Smooth",
                 "CanCollide": false
+              }
+            },
+            {
+              "name": "Hill_NorthCore",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  220.0,
+                  42.0,
+                  48.0
+                ],
+                "Position": [
+                  0.0,
+                  20.5,
+                  -168.0
+                ],
+                "Color": [
+                  0.14,
+                  0.34,
+                  0.12
+                ],
+                "Material": "Grass",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": true
+              }
+            },
+            {
+              "name": "Hill_NorthRockBand",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  210.0,
+                  18.0,
+                  22.0
+                ],
+                "Position": [
+                  0.0,
+                  8.5,
+                  -152.0
+                ],
+                "Color": [
+                  0.32,
+                  0.3,
+                  0.28
+                ],
+                "Material": "Slate",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": true
+              }
+            },
+            {
+              "name": "Hill_NorthSlope",
+              "className": "WedgePart",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  200.0,
+                  28.0,
+                  24.0
+                ],
+                "Position": [
+                  0.0,
+                  13.5,
+                  -146.0
+                ],
+                "Color": [
+                  0.18,
+                  0.42,
+                  0.16
+                ],
+                "Material": "Grass",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": true,
+                "Orientation": [
+                  0.0,
+                  180.0,
+                  0.0
+                ]
+              }
+            },
+            {
+              "name": "Hill_NorthOuter",
+              "className": "WedgePart",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  230.0,
+                  36.0,
+                  36.0
+                ],
+                "Position": [
+                  0.0,
+                  17.5,
+                  -192.0
+                ],
+                "Color": [
+                  0.18,
+                  0.42,
+                  0.16
+                ],
+                "Material": "Grass",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": true,
+                "Orientation": [
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              }
+            },
+            {
+              "name": "Hill_FlankCore_W",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  36.0,
+                  38.0,
+                  95.0
+                ],
+                "Position": [
+                  -118.0,
+                  18.5,
+                  -97.0
+                ],
+                "Color": [
+                  0.14,
+                  0.34,
+                  0.12
+                ],
+                "Material": "Grass",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": true
+              }
+            },
+            {
+              "name": "Hill_FlankRock_W",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  14.0,
+                  22.0,
+                  90.0
+                ],
+                "Position": [
+                  -100.0,
+                  10.5,
+                  -97.0
+                ],
+                "Color": [
+                  0.32,
+                  0.3,
+                  0.28
+                ],
+                "Material": "Slate",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": true
+              }
+            },
+            {
+              "name": "Hill_FlankOuter_W",
+              "className": "WedgePart",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  40.0,
+                  32.0,
+                  100.0
+                ],
+                "Position": [
+                  -148.0,
+                  15.5,
+                  -97.0
+                ],
+                "Color": [
+                  0.18,
+                  0.42,
+                  0.16
+                ],
+                "Material": "Grass",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": true,
+                "Orientation": [
+                  0.0,
+                  90.0,
+                  0.0
+                ]
+              }
+            },
+            {
+              "name": "Hill_Corner_W",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  48.0,
+                  36.0,
+                  40.0
+                ],
+                "Position": [
+                  -120.0,
+                  17.5,
+                  -155.0
+                ],
+                "Color": [
+                  0.14,
+                  0.34,
+                  0.12
+                ],
+                "Material": "Grass",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": true
+              }
+            },
+            {
+              "name": "Hill_FlankCore_E",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  36.0,
+                  38.0,
+                  95.0
+                ],
+                "Position": [
+                  118.0,
+                  18.5,
+                  -97.0
+                ],
+                "Color": [
+                  0.14,
+                  0.34,
+                  0.12
+                ],
+                "Material": "Grass",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": true
+              }
+            },
+            {
+              "name": "Hill_FlankRock_E",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  14.0,
+                  22.0,
+                  90.0
+                ],
+                "Position": [
+                  100.0,
+                  10.5,
+                  -97.0
+                ],
+                "Color": [
+                  0.32,
+                  0.3,
+                  0.28
+                ],
+                "Material": "Slate",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": true
+              }
+            },
+            {
+              "name": "Hill_FlankOuter_E",
+              "className": "WedgePart",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  40.0,
+                  32.0,
+                  100.0
+                ],
+                "Position": [
+                  148.0,
+                  15.5,
+                  -97.0
+                ],
+                "Color": [
+                  0.18,
+                  0.42,
+                  0.16
+                ],
+                "Material": "Grass",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": true,
+                "Orientation": [
+                  0.0,
+                  -90.0,
+                  0.0
+                ]
+              }
+            },
+            {
+              "name": "Hill_Corner_E",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  48.0,
+                  36.0,
+                  40.0
+                ],
+                "Position": [
+                  120.0,
+                  17.5,
+                  -155.0
+                ],
+                "Color": [
+                  0.14,
+                  0.34,
+                  0.12
+                ],
+                "Material": "Grass",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": true
+              }
+            },
+            {
+              "name": "Hill_Mound_SW",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  42.0,
+                  8.0,
+                  36.0
+                ],
+                "Position": [
+                  -95.0,
+                  4.0,
+                  105.0
+                ],
+                "Color": [
+                  0.18,
+                  0.42,
+                  0.16
+                ],
+                "Material": "Grass",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": true
+              }
+            },
+            {
+              "name": "Hill_Mound_SE",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  38.0,
+                  7.0,
+                  32.0
+                ],
+                "Position": [
+                  100.0,
+                  3.5,
+                  108.0
+                ],
+                "Color": [
+                  0.18,
+                  0.42,
+                  0.16
+                ],
+                "Material": "Grass",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": true
+              }
+            },
+            {
+              "name": "Hill_Mound_W",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  48.0,
+                  10.0,
+                  55.0
+                ],
+                "Position": [
+                  -130.0,
+                  5.0,
+                  20.0
+                ],
+                "Color": [
+                  0.14,
+                  0.34,
+                  0.12
+                ],
+                "Material": "Grass",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": true
+              }
+            },
+            {
+              "name": "Hill_Mound_E",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  48.0,
+                  10.0,
+                  55.0
+                ],
+                "Position": [
+                  130.0,
+                  5.0,
+                  15.0
+                ],
+                "Color": [
+                  0.14,
+                  0.34,
+                  0.12
+                ],
+                "Material": "Grass",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": true
+              }
+            },
+            {
+              "name": "Hill_Mound_FarS",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  50.0,
+                  5.0,
+                  28.0
+                ],
+                "Position": [
+                  -40.0,
+                  2.5,
+                  155.0
+                ],
+                "Color": [
+                  0.18,
+                  0.42,
+                  0.16
+                ],
+                "Material": "Grass",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": true
+              }
+            },
+            {
+              "name": "Hill_Mound_FarSE",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  44.0,
+                  5.5,
+                  26.0
+                ],
+                "Position": [
+                  55.0,
+                  2.8,
+                  158.0
+                ],
+                "Color": [
+                  0.18,
+                  0.42,
+                  0.16
+                ],
+                "Material": "Grass",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": true
+              }
+            },
+            {
+              "name": "Hill_Outcrop_W1",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  10.0,
+                  14.0,
+                  16.0
+                ],
+                "Position": [
+                  -108.0,
+                  6.5,
+                  -120.0
+                ],
+                "Color": [
+                  0.22,
+                  0.2,
+                  0.18
+                ],
+                "Material": "Slate",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": true,
+                "Orientation": [
+                  0.0,
+                  -18.0,
+                  8.0
+                ]
+              }
+            },
+            {
+              "name": "Hill_Outcrop_W2",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  12.0,
+                  18.0,
+                  12.0
+                ],
+                "Position": [
+                  -112.0,
+                  8.5,
+                  -75.0
+                ],
+                "Color": [
+                  0.32,
+                  0.3,
+                  0.28
+                ],
+                "Material": "Rock",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": true,
+                "Orientation": [
+                  0.0,
+                  12.0,
+                  -6.0
+                ]
+              }
+            },
+            {
+              "name": "Hill_Outcrop_E1",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  10.0,
+                  14.0,
+                  16.0
+                ],
+                "Position": [
+                  108.0,
+                  6.5,
+                  -120.0
+                ],
+                "Color": [
+                  0.22,
+                  0.2,
+                  0.18
+                ],
+                "Material": "Slate",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": true,
+                "Orientation": [
+                  0.0,
+                  18.0,
+                  8.0
+                ]
+              }
+            },
+            {
+              "name": "Hill_Outcrop_E2",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  12.0,
+                  18.0,
+                  12.0
+                ],
+                "Position": [
+                  112.0,
+                  8.5,
+                  -75.0
+                ],
+                "Color": [
+                  0.32,
+                  0.3,
+                  0.28
+                ],
+                "Material": "Rock",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": true,
+                "Orientation": [
+                  0.0,
+                  -12.0,
+                  -6.0
+                ]
               }
             }
           ]
@@ -55863,8 +56369,8 @@
       "properties": {
         "Anchored": true,
         "Size": [
-          50.0,
-          8.0,
+          56.0,
+          10.0,
           1.5
         ],
         "Position": [
@@ -55891,8 +56397,8 @@
           "properties": {
             "Anchored": true,
             "Size": [
-              52.0,
-              9.0,
+              58.0,
+              10.8,
               0.45
             ],
             "Position": [

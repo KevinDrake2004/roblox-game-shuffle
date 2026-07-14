@@ -121,7 +121,7 @@ local function ensurePortalLabels()
 		gui.Name = "SignGui"
 		gui.Face = Enum.NormalId.Front
 		gui.SizingMode = Enum.SurfaceGuiSizingMode.PixelsPerStud
-		gui.PixelsPerStud = 50
+		gui.PixelsPerStud = 80
 		gui.Parent = sign
 
 		local title = Instance.new("TextLabel")
@@ -133,9 +133,16 @@ local function ensurePortalLabels()
 		title.Text = Config.GAME_NAME
 		title.Parent = gui
 
+		local padding = Instance.new("UIPadding")
+		padding.PaddingLeft = UDim.new(0.05, 0)
+		padding.PaddingRight = UDim.new(0.05, 0)
+		padding.PaddingTop = UDim.new(0.06, 0)
+		padding.PaddingBottom = UDim.new(0.06, 0)
+		padding.Parent = title
+
 		local stroke = Instance.new("UIStroke")
 		stroke.Color = Config.COLORS.NeonCyan
-		stroke.Thickness = 2
+		stroke.Thickness = 3
 		stroke.Parent = title
 	end
 

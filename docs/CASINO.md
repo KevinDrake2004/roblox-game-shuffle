@@ -95,11 +95,12 @@ South entry has a real door cutout (`|x| < 12`, under `Ext_South_Lint` / `EntryB
 
 - **South hero** - wing podium + gold water-table (door bay kept clear), tall center entry bay with entablature, marble veneer, **repeating window modules** (frame / glass / mullion / warm glow)
 - **Porte-cochere** - thicker canopy, gold fascia, soffit coffers, cyan underside neon, four **classical fluted columns** (plinth / shaft / capital) outside the walk channel (`|x|≈17`)
-- **Marquee** - deep board + stepped cyan / purple / magenta neon bezels; `Lobby.BrandSign` at `(0, 29.5, 72.2)` facing south
+- **Marquee** - deep board + stepped cyan / purple / magenta neon bezels; `Lobby.BrandSign` at `(0, 29.5, 72.2)` sized `56×10` facing south (fills outer neon board)
 - **Crown** - multi-part diamond + fins + spire + SpecialMesh Sphere/FileMesh gem accents (original silhouette; not third-party IP)
 - **Corners** - SW / SE towers with gold caps and window bays
-- **Sides** - marble veneer, pilaster rhythm, east/west window modules, continuous gold + neon belt
-- **Plaza / ground / site lighting** - unchanged from prior polish (side ropes, east fountain, grass apron, entrance down-spots only)
+- **Sides** - marble veneer, pilaster rhythm, east/west window modules (no continuous side neon belts)
+- **Plaza / ground / site lighting** - grass apron plus part-based hill berms nesting the north room wing; entrance down-spots only
+- **Hill berms** (`Atmosphere.Ground`) - north ridge + east/west flank berms/outcrops hide the tall game-room mass from outside; plaza and spawn stay clear; ArenaOrigins unchanged
 
 ### Mesh accents
 
