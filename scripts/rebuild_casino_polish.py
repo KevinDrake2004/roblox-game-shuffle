@@ -55,6 +55,7 @@ POLISH_FOLDERS = (
     "Plaza",
     "Vestibule",
     "Ground",
+    "SiteLighting",
     "PitDressing",
     "BarGlow",
     "LuxuryTrim",
@@ -143,9 +144,23 @@ def light_part(name: str, pos, color, *, brightness=2.0, range_=28.0) -> dict:
     return p
 
 
-def spot_part(name: str, pos, color, *, brightness=3.0, range_=40.0, angle=70.0) -> dict:
-    """Invisible host for a SpotLight aimed at the facade (faces -Z / north into building)."""
+def spot_part(
+    name: str,
+    pos,
+    color,
+    *,
+    brightness=3.0,
+    range_=40.0,
+    angle=70.0,
+    orientation=(0.0, 0.0, 0.0),
+) -> dict:
+    """Invisible SpotLight host. Face=Front (-Z local). Use orientation to aim.
+
+    Downward wash: orientation=(-90, yaw, 0) so Front points world -Y.
+    Facade wash from plaza: orientation=(0, 0, 0) aims world -Z (north).
+    """
     p = part(name, (0.2, 0.2, 0.2), pos, color, material="SmoothPlastic", can_collide=False, transparency=1.0)
+    p["properties"]["Orientation"] = [float(o) for o in orientation]
     p["children"] = [
         {
             "name": "Spot",
@@ -159,9 +174,137 @@ def spot_part(name: str, pos, color, *, brightness=3.0, range_=40.0, angle=70.0)
             },
         }
     ]
-    # Orientation so Front (-Z local) aims toward -Z world (into facade from plaza)
-    p["properties"]["Orientation"] = [0.0, 0.0, 0.0]
     return p
+
+
+def street_lamp(name: str, x: float, z: float, *, yaw: float = 0.0) -> list:
+    """Visible lamp post with warm PointLight. Does not collide with players."""
+    kids: list = []
+    # Base + pole
+    kids.append(part(f"{name}_Base", (1.2, 0.35, 1.2), (x, 0.4, z), STONE, material="Concrete", can_collide=False))
+    kids.append(
+        part(f"{name}_Pole", (0.35, 12.0, 0.35), (x, 6.4, z), [0.12, 0.12, 0.14], material="Metal", can_collide=False)
+    )
+    kids.append(part(f"{name}_Collar", (0.55, 0.25, 0.55), (x, 12.2, z), GOLD, material="Metal", can_collide=False))
+    # Arm reaches toward plaza/path (local +Z after yaw)
+    t = math.radians(yaw)
+    arm_len = 2.4
+    ax = x + arm_len * 0.5 * math.sin(t)
+    az = z + arm_len * 0.5 * math.cos(t)
+    kids.append(
+        part(
+            f"{name}_Arm",
+            (0.25, 0.25, arm_len),
+            (ax, 12.35, az),
+            [0.12, 0.12, 0.14],
+            material="Metal",
+            can_collide=False,
+            orientation=(0.0, yaw, 0.0),
+        )
+    )
+    hx = x + arm_len * math.sin(t)
+    hz = z + arm_len * math.cos(t)
+    kids.append(
+        part(f"{name}_Head", (1.1, 0.55, 1.1), (hx, 12.1, hz), [0.08, 0.08, 0.1], material="Metal", can_collide=False)
+    )
+    # Soft visible lamp glass (small, intentional - not a floating wash cube)
+    kids.append(
+        part(
+            f"{name}_Glow",
+            (0.7, 0.35, 0.7),
+            (hx, 11.85, hz),
+            WARM,
+            material="Neon",
+            can_collide=False,
+            transparency=0.15,
+        )
+    )
+    kids.append(light_part(f"{name}_Light", (hx, 11.5, hz), WARM, brightness=2.8, range_=48.0))
+    return kids
+
+
+def roof_down_spot(name: str, x: float, y: float, z: float, *, yaw: float = 0.0) -> dict:
+    """Roof-mounted spotlight aimed straight down onto walkable ground."""
+    return spot_part(
+        name,
+        (x, y, z),
+        WARM,
+        brightness=5.0,
+        range_=70.0,
+        angle=80.0,
+        orientation=(-90.0, yaw, 0.0),
+    )
+
+
+def build_site_lighting() -> list:
+    """Street lamps + roof-down spots covering plaza and grass perimeter."""
+    kids: list = []
+
+    # --- Street lamps along plaza approach (arms face inward toward carpet) ---
+    plaza_lamps = [
+        # west row (yaw 90 → arm toward +X / carpet)
+        ("PlazaW0", -18.0, 72.0, 90.0),
+        ("PlazaW1", -18.0, 88.0, 90.0),
+        ("PlazaW2", -18.0, 104.0, 90.0),
+        ("PlazaW3", -18.0, 120.0, 90.0),
+        # east row (yaw -90 → arm toward -X / carpet)
+        ("PlazaE0", 18.0, 72.0, -90.0),
+        ("PlazaE1", 18.0, 88.0, -90.0),
+        ("PlazaE2", 18.0, 104.0, -90.0),
+        ("PlazaE3", 18.0, 120.0, -90.0),
+    ]
+    for name, x, z, yaw in plaza_lamps:
+        kids.extend(street_lamp(name, x, z, yaw=yaw))
+
+    # --- Perimeter lamps for walking around the building ---
+    # South grass / path (arms face north toward building)
+    for i, x in enumerate((-90.0, -45.0, 0.0, 45.0, 90.0)):
+        kids.extend(street_lamp(f"PerimS{i}", x, 138.0, yaw=180.0))
+    # North grass / path (arms face south)
+    for i, x in enumerate((-90.0, -45.0, 0.0, 45.0, 90.0)):
+        kids.extend(street_lamp(f"PerimN{i}", x, -158.0, yaw=0.0))
+    # West path (arms face east)
+    for i, z in enumerate((-120.0, -60.0, 0.0, 40.0, 100.0)):
+        kids.extend(street_lamp(f"PerimW{i}", -120.0, z, yaw=90.0))
+    # East path (arms face west)
+    for i, z in enumerate((-120.0, -60.0, 0.0, 40.0, 100.0)):
+        kids.extend(street_lamp(f"PerimE{i}", 120.0, z, yaw=-90.0))
+
+    # --- Roof-edge spotlights aimed straight down ---
+    # South parapet / canopy line over plaza
+    for i, x in enumerate((-70.0, -35.0, 0.0, 35.0, 70.0)):
+        kids.append(roof_down_spot(f"RoofSpot_S{i}", x, 24.5, 68.5))
+    # Canopy underside extras over porte-cochere
+    for i, x in enumerate((-12.0, 12.0)):
+        kids.append(roof_down_spot(f"RoofSpot_Canopy{i}", x, 18.2, 78.0))
+    # East / west pit-roof edges
+    for i, z in enumerate((-40.0, -10.0, 20.0, 50.0)):
+        kids.append(roof_down_spot(f"RoofSpot_W{i}", -90.0, 23.5, z))
+        kids.append(roof_down_spot(f"RoofSpot_E{i}", 90.0, 23.5, z))
+    # North game-room roof edge over north path
+    for i, x in enumerate((-70.0, -35.0, 0.0, 35.0, 70.0)):
+        kids.append(roof_down_spot(f"RoofSpot_N{i}", x, 54.0, -138.0))
+    # Corner down-spots for apron coverage
+    for i, (x, z) in enumerate(((-100.0, 70.0), (100.0, 70.0), (-100.0, -130.0), (100.0, -130.0))):
+        kids.append(roof_down_spot(f"RoofSpot_Corner{i}", x, 24.0, z))
+
+    # Soft ambient fills over open grass (invisible hosts only)
+    for i, (x, z) in enumerate(
+        (
+            (0.0, 130.0),
+            (0.0, -155.0),
+            (-115.0, -20.0),
+            (115.0, -20.0),
+            (-60.0, 110.0),
+            (60.0, 110.0),
+            (-60.0, -100.0),
+            (60.0, -100.0),
+        )
+    ):
+        kids.append(light_part(f"GrassFill_{i}", (x, 14.0, z), WARM, brightness=1.6, range_=55.0))
+
+    return kids
+
 
 
 def stanchion_pair(prefix: str, x: float, z: float) -> list:
@@ -1223,6 +1366,10 @@ def main() -> None:
     clear_folder(ground)
     ground["children"] = build_ground()
 
+    site_lights = ensure_folder(atmosphere, "SiteLighting")
+    clear_folder(site_lights)
+    site_lights["children"] = build_site_lighting()
+
     relocate_brand_sign(lobby)
     update_spawn(lobby)
     upgrade_entry_columns(walls)
@@ -1263,6 +1410,7 @@ def main() -> None:
     print(f"  Exterior parts: {len(exterior['children'])}")
     print(f"  Plaza parts: {len(plaza['children'])}")
     print(f"  Ground parts: {len(ground['children'])}")
+    print(f"  SiteLighting parts: {len(site_lights['children'])}")
     print(f"  Vestibule parts: {len(vestibule['children'])}")
     print(f"  LuxuryTrim parts: {len(luxury['children'])}")
     print(f"  Spawn -> {SPAWN_POS}")

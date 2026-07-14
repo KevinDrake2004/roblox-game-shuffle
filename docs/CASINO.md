@@ -96,8 +96,9 @@ Envelope ≈ **184 × 206** studs (outer walls at X±92, Z +66 / −140). Plaza 
 - **Crown** - diamond + spire silhouette on the south roof line (original geometry; not third-party IP)
 - **Plaza** - asphalt pad, continuous center red carpet with **side-only** velvet ropes (never across the walk), valet curb pad, east fountain + west planter island, lit planters, facade flood SpotLights
 - **Ground** - large grass collide plane + perimeter dirt paths for walking around the building
+- **Site lighting** - street lamps on plaza + perimeter paths; roof-edge SpotLights aimed straight down; soft grass fill PointLights (invisible hosts only)
 
-Night wash lights use fully invisible host parts (`Transparency = 1`) so no floating neon cubes appear near the marquee.
+Night wash lights use fully invisible host parts (`Transparency = 1`) so no floating neon cubes appear near the marquee. Lamp posts keep a small intentional neon glow under the head.
 
 ## Entrance sequence (Phase B)
 
