@@ -100,7 +100,7 @@ South entry has a real door cutout (`|x| < 12`, under `Ext_South_Lint` / `EntryB
 - **Corners** - SW / SE towers with gold caps and window bays
 - **Sides** - marble veneer, pilaster rhythm, east/west window modules (no continuous side neon belts)
 - **Plaza / ground / site lighting** - flat apron parts + perimeter lamps; hills from real Terrain
-- **Terrain** (`CasinoTerrain`) - full hill plateau under the casino (summit under floors/plaza; outer slopes fall away) plus a taller north/flank ridge so the tall room wing is built into the hillside. Plaza walk space stays Air above y=0; ArenaOrigins unchanged
+- **Terrain** (`CasinoTerrain`) - hill plateau under the apron (summit below WorldGrass; Ground/Rock near the resort - **no Grass** so blades do not poke floors). Outer slopes may use Grass farther out; taller north ridge nests the room wing. ArenaOrigins unchanged
 
 ### Mesh accents
 
