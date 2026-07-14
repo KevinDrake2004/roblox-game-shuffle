@@ -127,6 +127,203 @@ def part(
     return {"name": name, "className": "Part", "properties": props}
 
 
+
+
+# Mesh accent helpers. Prefer SpecialMesh MeshType (always loads). FileMesh IDs
+# below are optional catalog accents - swap freely and document in docs/CASINO.md.
+MESH_DIAMOND = "rbxassetid://67524904"  # optional gem mesh; Sphere fallback used if unavailable
+
+
+def mesh_part(
+    name: str,
+    size,
+    pos,
+    color,
+    mesh_id: str,
+    *,
+    material: str = "SmoothPlastic",
+    can_collide: bool = False,
+    orientation=None,
+    transparency=None,
+    texture_id: str | None = None,
+) -> dict:
+    """MeshPart authored for Rojo sync (MeshId set at load time, not runtime scripts)."""
+    props = {
+        "Anchored": True,
+        "Size": [float(size[0]), float(size[1]), float(size[2])],
+        "Position": [float(pos[0]), float(pos[1]), float(pos[2])],
+        "Color": [float(c) for c in color],
+        "Material": material,
+        "CanCollide": can_collide,
+        "MeshId": mesh_id,
+    }
+    if orientation is not None:
+        props["Orientation"] = [float(o) for o in orientation]
+    if transparency is not None:
+        props["Transparency"] = float(transparency)
+    if texture_id is not None:
+        props["TextureID"] = texture_id
+    return {"name": name, "className": "MeshPart", "properties": props}
+
+
+def special_mesh_part(
+    name: str,
+    size,
+    pos,
+    color,
+    *,
+    mesh_type: str = "Cylinder",
+    mesh_id: str | None = None,
+    mesh_scale=None,
+    material: str = "SmoothPlastic",
+    can_collide: bool = False,
+    orientation=None,
+    transparency=None,
+) -> dict:
+    """Part + SpecialMesh (reliable Rojo path for FileMesh / Cylinder / Sphere)."""
+    p = part(
+        name,
+        size,
+        pos,
+        color,
+        material=material,
+        can_collide=can_collide,
+        orientation=orientation,
+        transparency=transparency,
+    )
+    mesh_props: dict = {"MeshType": mesh_type}
+    if mesh_id is not None:
+        mesh_props["MeshType"] = "FileMesh"
+        mesh_props["MeshId"] = mesh_id
+    if mesh_scale is not None:
+        mesh_props["Scale"] = [float(mesh_scale[0]), float(mesh_scale[1]), float(mesh_scale[2])]
+    p["children"] = [{"name": "Mesh", "className": "SpecialMesh", "properties": mesh_props}]
+    return p
+
+
+def classical_column(name: str, x: float, z: float, *, height: float = 18.0, yaw: float = 0.0) -> list:
+    """Hotel-casino column: fluted shaft, gold base/capital. Walk channel stays clear."""
+    kids: list = []
+    y_mid = height * 0.5
+    # Pedestal
+    kids.append(part(f"{name}_Plinth", (3.4, 0.7, 3.4), (x, 0.45, z), STONE, material="Concrete", can_collide=True))
+    kids.append(part(f"{name}_Base", (2.9, 0.55, 2.9), (x, 1.0, z), GOLD, material="Metal", can_collide=False))
+    kids.append(
+        part(f"{name}_BaseRing", (3.1, 0.2, 3.1), (x, 1.35, z), GOLD, material="Metal", can_collide=False, shape="Cylinder")
+    )
+    # Main shaft (cylinder)
+    shaft_h = height - 3.2
+    kids.append(
+        part(
+            f"{name}_Shaft",
+            (2.1, shaft_h, 2.1),
+            (x, 1.6 + shaft_h * 0.5, z),
+            MARBLE,
+            material="Marble",
+            can_collide=True,
+            shape="Cylinder",
+        )
+    )
+    # Flute ribs
+    for i in range(8):
+        ang = i * (math.tau / 8)
+        rx = x + 1.05 * math.cos(ang)
+        rz = z + 1.05 * math.sin(ang)
+        kids.append(
+            part(
+                f"{name}_Flute_{i}",
+                (0.28, shaft_h * 0.92, 0.28),
+                (rx, 1.6 + shaft_h * 0.5, rz),
+                MARBLE_VEIN,
+                material="Marble",
+                can_collide=False,
+                shape="Cylinder",
+            )
+        )
+    # Capital
+    cap_y = height - 0.9
+    kids.append(part(f"{name}_Neck", (2.3, 0.35, 2.3), (x, cap_y - 0.5, z), GOLD, material="Metal", can_collide=False, shape="Cylinder"))
+    kids.append(part(f"{name}_Capital", (3.2, 0.7, 3.2), (x, cap_y, z), GOLD, material="Metal", can_collide=False))
+    kids.append(part(f"{name}_Abacus", (3.6, 0.35, 3.6), (x, cap_y + 0.45, z), GOLD, material="Metal", can_collide=False))
+    # Neon pin on outer face (south-facing for canopy cols)
+    kids.append(
+        part(f"{name}_Neon", (0.25, shaft_h * 0.7, 0.25), (x, 1.6 + shaft_h * 0.5, z + 1.25), GOLD, material="Neon", can_collide=False)
+    )
+    return kids
+
+
+def window_bay(name: str, cx: float, cy: float, cz: float, *, width: float = 8.0, height: float = 9.0) -> list:
+    """Single hotel window module facing south (+Z): gold frame, glass, warm glow."""
+    kids: list = []
+    depth = 0.55
+    kids.append(
+        part(f"{name}_Frame", (width, height, depth), (cx, cy, cz), GOLD, material="Metal", can_collide=False)
+    )
+    kids.append(
+        part(
+            f"{name}_Glass",
+            (width - 0.7, height - 0.7, 0.2),
+            (cx, cy, cz + 0.15),
+            GLASS,
+            material="Glass",
+            can_collide=False,
+            transparency=0.4,
+            reflectance=0.3,
+        )
+    )
+    kids.append(
+        part(
+            f"{name}_Glow",
+            (width - 1.2, height - 1.2, 0.12),
+            (cx, cy, cz + 0.28),
+            WARM,
+            material="Neon",
+            can_collide=False,
+            transparency=0.25,
+        )
+    )
+    kids.append(part(f"{name}_MullionV", (0.2, height - 0.9, 0.22), (cx, cy, cz + 0.2), GOLD, material="Metal", can_collide=False))
+    kids.append(part(f"{name}_MullionH", (width - 0.9, 0.2, 0.22), (cx, cy, cz + 0.2), GOLD, material="Metal", can_collide=False))
+    return kids
+
+
+def window_bay_ew(name: str, cx: float, cy: float, cz: float, *, outward: float, width: float = 5.5, height: float = 8.0) -> list:
+    """Window module on east/west elevation (thin axis along X, facing outward)."""
+    kids: list = []
+    sign = 1.0 if outward > 0 else -1.0
+    kids.append(part(f"{name}_Frame", (0.55, height, width), (cx, cy, cz), GOLD, material="Metal", can_collide=False))
+    kids.append(
+        part(
+            f"{name}_Glass",
+            (0.2, height - 0.7, width - 0.7),
+            (cx + sign * 0.15, cy, cz),
+            GLASS,
+            material="Glass",
+            can_collide=False,
+            transparency=0.4,
+            reflectance=0.3,
+        )
+    )
+    kids.append(
+        part(
+            f"{name}_Glow",
+            (0.12, height - 1.2, width - 1.2),
+            (cx + sign * 0.28, cy, cz),
+            WARM,
+            material="Neon",
+            can_collide=False,
+            transparency=0.25,
+        )
+    )
+    kids.append(
+        part(f"{name}_MullionV", (0.22, height - 0.9, 0.2), (cx + sign * 0.2, cy, cz), GOLD, material="Metal", can_collide=False)
+    )
+    kids.append(
+        part(f"{name}_MullionH", (0.22, 0.2, width - 0.9), (cx + sign * 0.2, cy, cz), GOLD, material="Metal", can_collide=False)
+    )
+    return kids
+
+
 def light_part(name: str, pos, color, *, brightness=2.0, range_=28.0) -> dict:
     """Fully invisible PointLight host - never leave neon cubes floating in world."""
     p = part(name, (0.2, 0.2, 0.2), pos, color, material="SmoothPlastic", can_collide=False, transparency=1.0)
@@ -350,117 +547,178 @@ def side_rope(name: str, x: float, z0: float, z1: float) -> dict:
 
 
 def build_exterior() -> list:
+    """Hotel-casino south facade + sides: podium, window bays, canopy, marquee, crown."""
     kids: list = []
+    wall_z = 66.0
+    face_z = 67.35  # cladding just south of collide wall
 
-    # --- Porte-cochere canopy ---
+    # -------------------------------------------------------------------------
+    # South podium / water table (wings only - keep door bay walkable)
+    # -------------------------------------------------------------------------
     kids.append(
-        part("CanopyDeck", (40.0, 1.2, 18.0), (0.0, 19.2, 75.0), MARBLE, material="Slate", can_collide=True)
+        part("SouthPodium_L", (78.0, 2.0, 3.5), (-53.0, 1.1, 67.5), STONE, material="Slate", can_collide=False)
     )
     kids.append(
-        part("CanopyGoldEdge", (41.0, 0.35, 0.5), (0.0, 19.95, 84.0), GOLD, material="Metal", can_collide=False)
+        part("SouthPodium_R", (78.0, 2.0, 3.5), (53.0, 1.1, 67.5), STONE, material="Slate", can_collide=False)
     )
     kids.append(
-        part("CanopyGoldEdgeN", (41.0, 0.35, 0.5), (0.0, 19.95, 66.2), GOLD, material="Metal", can_collide=False)
+        part("SouthWaterTable_L", (80.0, 0.3, 4.0), (-53.0, 2.2, 67.7), GOLD, material="Metal", can_collide=False)
     )
     kids.append(
-        part("CanopyGoldSideL", (0.5, 0.35, 18.0), (-20.25, 19.95, 75.0), GOLD, material="Metal", can_collide=False)
+        part("SouthWaterTable_R", (80.0, 0.3, 4.0), (53.0, 2.2, 67.7), GOLD, material="Metal", can_collide=False)
     )
     kids.append(
-        part("CanopyGoldSideR", (0.5, 0.35, 18.0), (20.25, 19.95, 75.0), GOLD, material="Metal", can_collide=False)
-    )
-    # Underside cove neon
-    kids.append(
-        part("CanopyNeon", (36.0, 0.2, 14.0), (0.0, 18.45, 75.0), CYAN, material="Neon", can_collide=False, transparency=0.25)
+        part("SouthPodiumNeon", (170.0, 0.15, 0.25), (0.0, 2.35, 69.5), CYAN, material="Neon", can_collide=False, transparency=0.2)
     )
 
-    # Canopy columns (porte-cochere posts)
-    for i, x in enumerate((-16.0, 16.0)):
-        for j, z in enumerate((70.0, 82.0)):
-            kids.append(
-                part(f"CanopyCol_{i}_{j}", (2.4, 18.5, 2.4), (x, 9.25, z), MARBLE, material="Slate", can_collide=True)
-            )
-            kids.append(
-                part(f"CanopyColCap_{i}_{j}", (3.0, 0.55, 3.0), (x, 18.7, z), GOLD, material="Metal", can_collide=False)
-            )
-            kids.append(
-                part(f"CanopyColBase_{i}_{j}", (3.0, 0.55, 3.0), (x, 0.55, z), GOLD, material="Metal", can_collide=False)
-            )
+    # -------------------------------------------------------------------------
+    # Tall center entry bay (hotel-scale around doors)
+    # -------------------------------------------------------------------------
+    kids.append(
+        part("EntryBayBack", (28.0, 32.0, 2.0), (0.0, 16.5, 65.2), MARBLE, material="Marble", can_collide=False)
+    )
+    kids.append(
+        part("EntryBayPilaster_L", (3.2, 30.0, 3.5), (-14.5, 15.5, 65.8), MARBLE, material="Marble", can_collide=False)
+    )
+    kids.append(
+        part("EntryBayPilaster_R", (3.2, 30.0, 3.5), (14.5, 15.5, 65.8), MARBLE, material="Marble", can_collide=False)
+    )
+    kids.append(
+        part("EntryBayEntablature", (32.0, 2.2, 4.0), (0.0, 31.5, 66.5), GOLD, material="Metal", can_collide=False)
+    )
+    kids.append(
+        part("EntryBayFrieze", (30.0, 1.2, 3.2), (0.0, 30.0, 66.3), MARBLE, material="Slate", can_collide=False)
+    )
+    kids.append(
+        part("EntryBayNeon", (28.0, 0.25, 0.3), (0.0, 30.0, 68.0), MAGENTA, material="Neon", can_collide=False)
+    )
+    # Gold door surround (outside walk |x|<10)
+    kids.append(part("EntryMold_L", (0.7, 20.0, 1.2), (-12.2, 10.5, 66.9), GOLD, material="Metal", can_collide=False))
+    kids.append(part("EntryMold_R", (0.7, 20.0, 1.2), (12.2, 10.5, 66.9), GOLD, material="Metal", can_collide=False))
+    kids.append(part("EntryMold_Top", (25.8, 0.9, 1.2), (0.0, 20.8, 66.9), GOLD, material="Metal", can_collide=False))
+    kids.append(part("EntryMold_Key", (3.5, 1.6, 1.4), (0.0, 22.0, 67.2), GOLD, material="Metal", can_collide=False))
+
+    # -------------------------------------------------------------------------
+    # South wing cladding + repeating window bays (replace flat GlassBand)
+    # -------------------------------------------------------------------------
+    # Dark stone veneer over south wings
+    kids.append(
+        part("SouthVeneer_L", (78.0, 20.0, 1.2), (-52.0, 12.5, face_z), MARBLE, material="Marble", can_collide=False)
+    )
+    kids.append(
+        part("SouthVeneer_R", (78.0, 20.0, 1.2), (52.0, 12.5, face_z), MARBLE, material="Marble", can_collide=False)
+    )
+    # Window bay grid on each wing
+    bay_xs_l = [-80.0, -70.0, -60.0, -50.0, -40.0, -30.0, -22.0]
+    bay_xs_r = [22.0, 30.0, 40.0, 50.0, 60.0, 70.0, 80.0]
+    for row, cy in enumerate((8.5, 17.5)):
+        for i, bx in enumerate(bay_xs_l):
+            kids.extend(window_bay(f"Win_L_{row}_{i}", bx, cy, face_z + 0.4, width=7.5, height=7.5))
+        for i, bx in enumerate(bay_xs_r):
+            kids.extend(window_bay(f"Win_R_{row}_{i}", bx, cy, face_z + 0.4, width=7.5, height=7.5))
+
+    # -------------------------------------------------------------------------
+    # Cornice / parapet stack (full south)
+    # -------------------------------------------------------------------------
+    kids.append(
+        part("SouthParapet", (186.0, 5.5, 3.8), (0.0, 25.5, 66.4), DARK, material="Slate", can_collide=False)
+    )
+    kids.append(
+        part("SouthCorniceLower", (188.0, 0.55, 4.6), (0.0, 23.0, 66.8), GOLD, material="Metal", can_collide=False)
+    )
+    kids.append(
+        part("SouthCornice", (190.0, 0.85, 5.0), (0.0, 28.5, 66.9), GOLD, material="Metal", can_collide=False)
+    )
+    kids.append(
+        part("SouthCorniceNeon", (176.0, 0.28, 0.35), (0.0, 27.9, 69.0), MAGENTA, material="Neon", can_collide=False)
+    )
+    kids.append(
+        part("SouthAttic", (160.0, 3.0, 2.5), (0.0, 30.8, 66.2), MARBLE, material="Marble", can_collide=False)
+    )
+
+    # -------------------------------------------------------------------------
+    # Porte-cochere (thicker canopy + coffers + classical columns)
+    # -------------------------------------------------------------------------
+    kids.append(
+        part("CanopyDeck", (44.0, 1.6, 20.0), (0.0, 19.5, 76.0), MARBLE, material="Slate", can_collide=False)
+    )
+    kids.append(
+        part("CanopyFasciaS", (45.0, 1.1, 0.7), (0.0, 20.5, 86.0), GOLD, material="Metal", can_collide=False)
+    )
+    kids.append(
+        part("CanopyFasciaN", (45.0, 1.1, 0.7), (0.0, 20.5, 66.2), GOLD, material="Metal", can_collide=False)
+    )
+    kids.append(
+        part("CanopyFasciaL", (0.7, 1.1, 20.0), (-22.0, 20.5, 76.0), GOLD, material="Metal", can_collide=False)
+    )
+    kids.append(
+        part("CanopyFasciaR", (0.7, 1.1, 20.0), (22.0, 20.5, 76.0), GOLD, material="Metal", can_collide=False)
+    )
+    kids.append(
+        part("CanopyNeon", (38.0, 0.2, 16.0), (0.0, 18.55, 76.0), CYAN, material="Neon", can_collide=False, transparency=0.3)
+    )
+    # Soffit coffers
+    idx = 0
+    for cx in (-12.0, 0.0, 12.0):
+        for cz in (70.0, 76.0, 82.0):
             kids.append(
                 part(
-                    f"CanopyColNeon_{i}_{j}",
-                    (0.35, 16.0, 0.35),
-                    (x, 9.0, z + 1.35),
-                    GOLD,
-                    material="Neon",
+                    f"CanopyCoffer_{idx}",
+                    (9.0, 0.25, 4.5),
+                    (cx, 18.7, cz),
+                    GOLD_DIM,
+                    material="Metal",
                     can_collide=False,
                 )
             )
-
-    # --- Tall facade parapet / cornice above south wall ---
-    kids.append(
-        part("SouthParapet", (186.0, 4.5, 3.2), (0.0, 24.5, 66.2), DARK, material="Slate", can_collide=True)
-    )
-    kids.append(
-        part("SouthCornice", (188.0, 0.7, 4.0), (0.0, 27.0, 66.5), GOLD, material="Metal", can_collide=False)
-    )
-    kids.append(
-        part("SouthCorniceNeon", (180.0, 0.25, 0.35), (0.0, 26.5, 68.2), MAGENTA, material="Neon", can_collide=False)
-    )
-
-    # Glass curtain bands on south face (left / right of entry)
-    for side, cx in (("L", -52.0), ("R", 52.0)):
-        kids.append(
-            part(
-                f"GlassBand_{side}",
-                (72.0, 10.0, 0.4),
-                (cx, 12.0, 67.4),
-                GLASS,
-                material="Glass",
-                can_collide=False,
-                transparency=0.45,
-                reflectance=0.25,
-            )
-        )
-        kids.append(
-            part(f"GlassGoldFrame_{side}", (74.0, 10.6, 0.25), (cx, 12.0, 67.15), GOLD, material="Metal", can_collide=False)
-        )
-        # Window glow strips (night read)
-        for wi, wy in enumerate((8.0, 12.0, 16.0)):
             kids.append(
                 part(
-                    f"WindowGlow_{side}_{wi}",
-                    (68.0, 0.35, 0.2),
-                    (cx, wy, 67.55),
-                    WARM,
-                    material="Neon",
+                    f"CanopyCofferInset_{idx}",
+                    (7.5, 0.2, 3.5),
+                    (cx, 18.55, cz),
+                    MARBLE,
+                    material="Slate",
                     can_collide=False,
-                    transparency=0.2,
                 )
             )
+            idx += 1
 
-    # Entry gold molding around opening
-    kids.append(part("EntryMold_L", (0.6, 18.5, 1.0), (-12.4, 9.5, 66.8), GOLD, material="Metal", can_collide=False))
-    kids.append(part("EntryMold_R", (0.6, 18.5, 1.0), (12.4, 9.5, 66.8), GOLD, material="Metal", can_collide=False))
-    kids.append(part("EntryMold_Top", (25.4, 0.7, 1.0), (0.0, 18.9, 66.8), GOLD, material="Metal", can_collide=False))
+    # Columns outside walk channel (|x| >= 16)
+    for i, x in enumerate((-17.0, 17.0)):
+        for j, z in enumerate((70.0, 83.0)):
+            kids.extend(classical_column(f"CanopyCol_{i}_{j}", x, z, height=18.5))
 
-    # --- Iconic marquee board (BrandSign sits in front of this) ---
+    # -------------------------------------------------------------------------
+    # Marquee (deeper board + stepped neon)
+    # -------------------------------------------------------------------------
     kids.append(
-        part("MarqueeBoard", (52.0, 9.0, 2.0), (0.0, 28.5, 69.0), MARBLE, material="Slate", can_collide=True)
+        part("MarqueeBoard", (56.0, 10.0, 3.2), (0.0, 29.5, 69.5), MARBLE, material="Slate", can_collide=False)
     )
     kids.append(
-        part("MarqueeNeonOuter", (54.0, 10.0, 0.45), (0.0, 28.5, 70.15), CYAN, material="Neon", can_collide=False, transparency=0.15)
+        part("MarqueeGoldReturn", (58.0, 11.0, 0.6), (0.0, 29.5, 67.8), GOLD, material="Metal", can_collide=False)
     )
     kids.append(
-        part("MarqueeNeonInner", (50.0, 7.6, 0.35), (0.0, 28.5, 70.25), MAGENTA, material="Neon", can_collide=False, transparency=0.25)
+        part("MarqueeNeonOuter", (58.0, 11.2, 0.45), (0.0, 29.5, 71.3), CYAN, material="Neon", can_collide=False, transparency=0.12)
     )
-    kids.append(light_part("MarqueeWash", (0.0, 26.0, 74.0), CYAN, brightness=3.5, range_=55.0))
+    kids.append(
+        part("MarqueeNeonMid", (54.0, 9.0, 0.35), (0.0, 29.5, 71.45), PURPLE, material="Neon", can_collide=False, transparency=0.2)
+    )
+    kids.append(
+        part("MarqueeNeonInner", (50.0, 7.2, 0.3), (0.0, 29.5, 71.55), MAGENTA, material="Neon", can_collide=False, transparency=0.25)
+    )
+    kids.append(light_part("MarqueeWash", (0.0, 27.0, 74.5), CYAN, brightness=2.8, range_=48.0))
 
-    # Diamond / crown rooftop silhouette (original geometry, not Rockstar IP)
+    # -------------------------------------------------------------------------
+    # Crown / diamond rooftop silhouette (multi-part + mesh accent)
+    # -------------------------------------------------------------------------
+    kids.append(
+        part("CrownPedestal", (14.0, 2.0, 4.0), (0.0, 33.0, 66.5), MARBLE, material="Slate", can_collide=False)
+    )
     kids.append(
         part(
             "CrownDiamond",
-            (10.0, 10.0, 2.5),
-            (0.0, 36.0, 66.5),
+            (9.0, 9.0, 2.2),
+            (0.0, 38.0, 66.6),
             GOLD,
             material="Metal",
             can_collide=False,
@@ -470,69 +728,142 @@ def build_exterior() -> list:
     kids.append(
         part(
             "CrownDiamondCore",
-            (5.5, 5.5, 2.0),
-            (0.0, 36.0, 66.8),
+            (5.0, 5.0, 1.8),
+            (0.0, 38.0, 66.9),
             CYAN,
             material="Neon",
             can_collide=False,
             orientation=(0.0, 0.0, 45.0),
-            transparency=0.1,
+            transparency=0.12,
         )
     )
-    kids.append(part("CrownSpire", (1.6, 8.0, 1.6), (0.0, 43.0, 66.5), GOLD, material="Metal", can_collide=False))
-    kids.append(part("CrownSpireTip", (0.9, 2.2, 0.9), (0.0, 48.0, 66.5), MAGENTA, material="Neon", can_collide=False))
-    kids.append(light_part("CrownLight", (0.0, 40.0, 68.0), GOLD, brightness=2.8, range_=45.0))
+    # Mesh gem accent (SpecialMesh Sphere - always loads; FileMesh optional overlay)
+    kids.append(
+        special_mesh_part(
+            "CrownMeshGem",
+            (5.5, 5.5, 5.5),
+            (0.0, 38.0, 68.5),
+            CYAN,
+            mesh_type="Sphere",
+            material="Neon",
+            can_collide=False,
+            transparency=0.2,
+        )
+    )
+    kids.append(
+        special_mesh_part(
+            "CrownMeshGemFile",
+            (3.5, 3.5, 3.5),
+            (0.0, 41.5, 68.0),
+            GOLD,
+            mesh_type="FileMesh",
+            mesh_id=MESH_DIAMOND,
+            mesh_scale=(1.5, 1.5, 1.5),
+            material="Neon",
+            can_collide=False,
+            transparency=0.25,
+        )
+    )
+    kids.append(part("CrownSpire", (1.4, 9.0, 1.4), (0.0, 45.5, 66.5), GOLD, material="Metal", can_collide=False, shape="Cylinder"))
+    kids.append(part("CrownSpireTip", (1.0, 2.5, 1.0), (0.0, 51.0, 66.5), MAGENTA, material="Neon", can_collide=False, shape="Ball"))
+    kids.append(part("CrownFin_L", (0.6, 6.0, 2.5), (-5.0, 40.0, 66.5), GOLD, material="Metal", can_collide=False, orientation=(0.0, 0.0, 18.0)))
+    kids.append(part("CrownFin_R", (0.6, 6.0, 2.5), (5.0, 40.0, 66.5), GOLD, material="Metal", can_collide=False, orientation=(0.0, 0.0, -18.0)))
+    kids.append(light_part("CrownLight", (0.0, 42.0, 69.0), GOLD, brightness=2.4, range_=40.0))
 
-    # Side elevation pilasters + window bands (readable from afar)
-    for side, x in (("W", -93.2), ("E", 93.2)):
-        for i, z in enumerate(range(-120, 60, 22)):
+    # -------------------------------------------------------------------------
+    # Corner towers SW / SE
+    # -------------------------------------------------------------------------
+    for side, x in (("SW", -90.0), ("SE", 90.0)):
+        kids.append(
+            part(f"Tower_{side}", (8.0, 34.0, 8.0), (x, 17.5, 64.0), MARBLE, material="Marble", can_collide=False)
+        )
+        kids.append(
+            part(f"TowerCap_{side}", (9.5, 1.2, 9.5), (x, 35.0, 64.0), GOLD, material="Metal", can_collide=False)
+        )
+        kids.append(
+            part(f"TowerSpire_{side}", (2.0, 8.0, 2.0), (x, 40.0, 64.0), GOLD, material="Metal", can_collide=False, shape="Cylinder")
+        )
+        kids.append(
+            part(f"TowerNeon_{side}", (0.4, 28.0, 0.4), (x, 16.0, 68.2), CYAN if side == "SW" else MAGENTA, material="Neon", can_collide=False)
+        )
+        # Window slits on tower south face
+        for wi, wy in enumerate((8.0, 16.0, 24.0)):
+            kids.extend(window_bay(f"TowerWin_{side}_{wi}", x, wy, 68.2, width=4.5, height=5.5))
+
+    # -------------------------------------------------------------------------
+    # East / west side elevations - bay rhythm
+    # -------------------------------------------------------------------------
+    for side, x, outward in (("W", -93.4, -1.0), ("E", 93.4, 1.0)):
+        # Continuous gold belt
+        kids.append(
+            part(
+                f"SideBeltGold_{side}",
+                (0.35, 0.55, 200.0),
+                (x + outward * 0.2, 21.5, -37.0),
+                GOLD,
+                material="Metal",
+                can_collide=False,
+            )
+        )
+        kids.append(
+            part(
+                f"SideBeltNeon_{side}",
+                (0.25, 0.3, 196.0),
+                (x + outward * 0.45, 21.5, -37.0),
+                CYAN if side == "W" else MAGENTA,
+                material="Neon",
+                can_collide=False,
+                transparency=0.25,
+            )
+        )
+        # Veneer strip
+        kids.append(
+            part(
+                f"SideVeneer_{side}",
+                (0.8, 20.0, 200.0),
+                (x, 11.0, -37.0),
+                MARBLE,
+                material="Marble",
+                can_collide=False,
+            )
+        )
+        for i, z in enumerate(range(-120, 62, 18)):
             kids.append(
                 part(
                     f"Pilaster_{side}_{i}",
-                    (2.2, 22.0, 2.8),
-                    (x, 11.0, float(z)),
+                    (2.6, 22.0, 3.2),
+                    (x, 11.5, float(z)),
                     MARBLE,
-                    material="Slate",
+                    material="Marble",
                     can_collide=False,
                 )
             )
             kids.append(
                 part(
                     f"PilasterCap_{side}_{i}",
-                    (2.6, 0.5, 3.2),
-                    (x, 22.2, float(z)),
+                    (3.0, 0.55, 3.6),
+                    (x, 22.8, float(z)),
                     GOLD,
                     material="Metal",
                     can_collide=False,
                 )
             )
-        # Horizontal window glow band mid-height
-        kids.append(
-            part(
-                f"SideWindowBand_{side}",
-                (0.3, 1.2, 180.0),
-                (x + (0.6 if side == "W" else -0.6), 14.0, -37.0),
-                WARM,
-                material="Neon",
-                can_collide=False,
-                transparency=0.3,
+            # Side window between pilasters
+            kids.extend(
+                window_bay_ew(
+                    f"SideWin_{side}_{i}",
+                    x + outward * 0.9,
+                    12.0,
+                    float(z) + 8.0,
+                    outward=outward,
+                    width=5.5,
+                    height=8.0,
+                )
             )
-        )
-        kids.append(
-            part(
-                f"SideGoldRail_{side}",
-                (0.25, 0.35, 190.0),
-                (x + (0.5 if side == "W" else -0.5), 21.0, -37.0),
-                GOLD,
-                material="Metal",
-                can_collide=False,
-            )
-        )
 
-    # Facade flood spots from plaza looking north
-    # Facade floods from plaza - keep off the door centerline and softer than before
-    for i, x in enumerate((-48.0, -28.0, 28.0, 48.0)):
-        kids.append(spot_part(f"FacadeFlood_{i}", (x, 6.0, 92.0), WARM, brightness=2.2, range_=40.0, angle=55.0))
+    # Soft facade floods (off door centerline)
+    for i, x in enumerate((-52.0, -30.0, 30.0, 52.0)):
+        kids.append(spot_part(f"FacadeFlood_{i}", (x, 6.0, 94.0), WARM, brightness=2.0, range_=38.0, angle=50.0))
 
     return kids
 
@@ -1241,8 +1572,8 @@ def relocate_brand_sign(lobby: dict) -> None:
         "className": "Part",
         "properties": {
             "Anchored": True,
-            "Size": [46.0, 7.5, 1.4],
-            "Position": [0.0, 28.5, 71.2],
+            "Size": [50.0, 8.0, 1.5],
+            "Position": [0.0, 29.5, 72.2],
             "Color": MARBLE,
             "Material": "Slate",
             # Face Front (+ approach from south): yaw 180 so local -Z -> world +Z
@@ -1251,8 +1582,8 @@ def relocate_brand_sign(lobby: dict) -> None:
         "children": [
             part(
                 "SignFrame",
-                (48.0, 8.5, 0.45),
-                (0.0, 28.5, 70.3),
+                (52.0, 9.0, 0.45),
+                (0.0, 29.5, 71.4),
                 CYAN,
                 material="Neon",
                 can_collide=False,
@@ -1297,16 +1628,22 @@ def upgrade_entry_columns(walls: dict) -> None:
         if name == "Entry_Marquee":
             continue  # replaced by Structure.Exterior marquee
         if name in ("Entry_Column_L", "Entry_Column_R"):
-            props["Material"] = "Slate"
+            props["Material"] = "Marble"
             props["Color"] = MARBLE
-            props["Size"] = [3.8, 28.0, 3.8]
+            props["Size"] = [4.0, 32.0, 4.0]
             pos = props.get("Position") or [0, 13, 64.5]
-            props["Position"] = [pos[0], 14.0, 64.2]
+            props["Position"] = [pos[0], 16.5, 64.0]
         if name in ("Entry_ColNeon_L", "Entry_ColNeon_R"):
-            props["Size"] = [0.5, 26.0, 0.5]
+            props["Size"] = [0.55, 30.0, 0.55]
             pos = props.get("Position") or [0, 13, 66.3]
-            props["Position"] = [pos[0], 14.0, 66.5]
+            props["Position"] = [pos[0], 16.5, 66.6]
             props["Color"] = GOLD
+        if name in ("Corner_SW", "Corner_SE"):
+            props["Material"] = "Marble"
+            props["Color"] = MARBLE
+            props["Size"] = [6.0, 34.0, 6.0]
+            pos = props.get("Position") or [0, 10, 65]
+            props["Position"] = [pos[0], 17.5, 64.0]
         kept.append(child)
     walls["children"] = kept
 

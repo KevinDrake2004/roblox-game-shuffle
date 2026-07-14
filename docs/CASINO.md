@@ -19,6 +19,7 @@ This document is the **source of truth for the casino floor + exterior polish** 
 | **Exterior resort facade + plaza (Phase A)** | **Done on `feature/casino-polish`** |
 | **Entrance vestibule / foyer (Phase B)** | **Done on `feature/casino-polish`** |
 | **Interior luxury trim (Phase C)** | **Done on `feature/casino-polish`** |
+| **Facade quality pass (window bays, columns, crown)** | **Done on `feature/casino-polish`** |
 | Rocket / Plinko / Mines room polish | **Deferred** - fix per region later |
 
 ## Design intent
@@ -26,7 +27,7 @@ This document is the **source of truth for the casino floor + exterior polish** 
 | Zone | What it is |
 |------|------------|
 | **Approach plaza** | South of the envelope - valet curb loop, fountain medallion, lit planters, red-carpet queue language (decorative, not a wait system) |
-| **Resort facade** | Tall south front, porte-cochere canopy, gold molding, glass curtain bands, marquee + brand sign, diamond crown silhouette |
+| **Resort facade** | Tall south front with window-bay grid, porte-cochere + fluted columns, marquee, diamond crown, corner towers, side elevation bays |
 | **Vestibule / foyer** | Open double doors, reception desk, VIP rope cue, foyer chandelier - clear doors → aisle → pit sightline |
 | **Casino floor** | Enclosed building - green pit field, red aisle runners, pillars, lounge |
 | **Table pit** | Non-playable roulette, blackjack, and poker props + chip-tray / pit-rail polish |
@@ -80,23 +81,34 @@ python3 scripts/rebuild_casino_polish.py
             |======= vestibule / grand doors =======|
             |    porte-cochere / canopy (z~66-84)   |
             |  plaza carpet · fountain · valet loop |
-            |           spawn (0, 3, 100)            |
+            |           spawn (0, 3, 112)            |
                          +Z (south)
 ```
 
-Envelope ≈ **184 × 206** studs (outer walls at X±92, Z +66 / −140). Plaza extends to roughly **Z +125**. World grass apron ≈ **420 × 420** under/around the resort (`Atmosphere.Ground.WorldGrass`) so players can walk the perimeter. Pit roof ~22 studs; game-room roof ~54 studs (Plinko board height). Marquee / crown read above the south parapet (~Y 28–48).
+Envelope ≈ **184 × 206** studs (outer walls at X±92, Z +66 / −140). Plaza extends to roughly **Z +125**. World grass apron ≈ **420 × 420** under/around the resort (`Atmosphere.Ground.WorldGrass`) so players can walk the perimeter. Pit roof ~22 studs; game-room roof ~54 studs (Plinko board height). Marquee / crown read above the south parapet (~Y 28–51).
 
-## Exterior (Phase A)
+## Exterior (facade pass)
 
-`Structure.Exterior` + `Atmosphere.Plaza` + `Atmosphere.Ground`:
+`Structure.Exterior` + `Atmosphere.Plaza` + `Atmosphere.Ground` + `Atmosphere.SiteLighting`:
 
-- **Porte-cochere** - canopy deck, gold edge, cyan underside neon, four marble columns with gold caps
-- **Facade** - south parapet + gold cornice, glass curtain bands with warm window glow, entry gold molding, side pilasters + window bands
-- **Marquee** - board + cyan/magenta neon; `Lobby.BrandSign` at `(0, 28.5, 71.2)` facing south (SurfaceGui dressed by `LobbyService`)
-- **Crown** - diamond + spire silhouette on the south roof line (original geometry; not third-party IP)
-- **Plaza** - asphalt pad, continuous center red carpet with **side-only** velvet ropes (never across the walk), valet curb pad, east fountain + west planter island, lit planters, facade flood SpotLights
-- **Ground** - large grass collide plane + perimeter dirt paths for walking around the building
-- **Site lighting** - perimeter street lamps on the grass paths; entrance / porte-cochere uses softer downward SpotLights only (no posts on the approach); roof-edge spots on sides/north; soft grass fill PointLights (invisible hosts)
+- **South hero** - wing podium + gold water-table (door bay kept clear), tall center entry bay with entablature, marble veneer, **repeating window modules** (frame / glass / mullion / warm glow)
+- **Porte-cochere** - thicker canopy, gold fascia, soffit coffers, cyan underside neon, four **classical fluted columns** (plinth / shaft / capital) outside the walk channel (`|x|≈17`)
+- **Marquee** - deep board + stepped cyan / purple / magenta neon bezels; `Lobby.BrandSign` at `(0, 29.5, 72.2)` facing south
+- **Crown** - multi-part diamond + fins + spire + SpecialMesh Sphere/FileMesh gem accents (original silhouette; not third-party IP)
+- **Corners** - SW / SE towers with gold caps and window bays
+- **Sides** - marble veneer, pilaster rhythm, east/west window modules, continuous gold + neon belt
+- **Plaza / ground / site lighting** - unchanged from prior polish (side ropes, east fountain, grass apron, entrance down-spots only)
+
+### Mesh accents
+
+| Instance | Approach | Notes |
+|----------|----------|-------|
+| Column shafts / capitals | Part + `Shape=Cylinder` + flute ribs | Always loads |
+| `CrownMeshGem` | SpecialMesh `MeshType=Sphere` | Always loads |
+| `CrownMeshGemFile` | SpecialMesh FileMesh `rbxassetid://67524904` | Optional gem; swap ID in `rebuild_casino_polish.py` if needed |
+| `mesh_part()` helper | MeshPart + `MeshId` | Ready for future catalog meshes via Rojo |
+
+Rebuild: `python3 scripts/rebuild_casino_polish.py`
 
 Night wash lights use fully invisible host parts (`Transparency = 1`) so no floating neon cubes appear near the marquee. Lamp posts keep a small intentional neon glow under the head.
 
@@ -210,12 +222,13 @@ Rocket home: `Config.ROCKET_RUN.RocketHomePosition` `(0, 7, -118)`.
 
 ## Manual verify checklist
 
-- [ ] Approach from south / spawn on plaza - facade reads as a hotel casino at night (marquee, crown, canopy, window glow)
+- [ ] Approach from south / spawn on plaza - facade reads hotel-casino (podium, tall center bay, window grid, marquee, crown, corner towers)
 - [ ] No floating neon cubes near the marquee / wash lights
-- [ ] Continuous carpet with side ropes only; walk doors → foyer → pit → game hall
+- [ ] Continuous carpet with side ropes only; walk doors → foyer → pit → game hall (columns outside walk)
 - [ ] Reception (east) and VIP podium (west) readable just inside the doors
 - [ ] Fountain visible east of the approach; grass walkable around the building
 - [ ] Brand sign shows game name on the exterior marquee
+- [ ] Sides readable from grass perimeter (pilasters + windows + gold belt)
 - [ ] Rocket Run / Plinko / Mines still join, wager, settle, and leave via zone walk
 - [ ] No new remotes or currency touches from atmosphere props
 
