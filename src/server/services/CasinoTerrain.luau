@@ -1,7 +1,8 @@
 --!strict
 --[[
-	Casino Terrain via FillBlock / FillBall (reliable).
-	Avoids WriteVoxels grid-size mismatches that wiped the site to empty air.
+	Casino Terrain: flat front plaza + slope up to a two-hill back range.
+	Uses FillBlock / FillBall only (no WriteVoxels).
+	LeafyGrass (not Grass) so animated grass blades never spawn.
 	Spawn stays outside at (0, 3, 112). Plaza is not air-carved.
 ]]
 
@@ -12,6 +13,11 @@ local CasinoTerrain = {}
 local WALL_X = 94.0
 local WALL_Z_S = 68.0
 local WALL_Z_N = -142.0
+
+-- Green without Terrain grass blades. Grass material always grows decoration.
+local SURFACE = Enum.Material.LeafyGrass
+local DIRT = Enum.Material.Ground
+local ROCK = Enum.Material.Rock
 
 local function fillBall(terrain: Terrain, pos: Vector3, radius: number, material: Enum.Material)
 	terrain:FillBall(pos, radius, material)
@@ -25,53 +31,43 @@ function CasinoTerrain.start()
 	local terrain = Workspace.Terrain
 
 	local ok, err = pcall(function()
-		-- Broad dirt/grass foundation under the whole resort (meets WorldGrass ~y=-0.55)
-		fillBlock(terrain, CFrame.new(0, -10, -20), Vector3.new(320, 20, 340), Enum.Material.Grass)
+		-- Drop prior FillBall skirts so Play mode does not keep old blobs
+		terrain:Clear()
 
-		-- Outer skirt mounds so the site reads as a hill from far away
-		local skirt = {
-			-- x, y, z, radius
-			{ 0, -18, 175, 55 },
-			{ -70, -16, 150, 42 },
-			{ 70, -16, 150, 42 },
-			{ -130, -14, 40, 48 },
-			{ 130, -14, 40, 48 },
-			{ -130, -14, -40, 48 },
-			{ 130, -14, -40, 48 },
-			{ -100, -12, 100, 36 },
-			{ 100, -12, 100, 36 },
-			{ 0, -20, 210, 50 },
+		-- Deep dirt base under the whole resort (meets WorldGrass ~y=-0.55)
+		fillBlock(terrain, CFrame.new(0, -14, -20), Vector3.new(360, 28, 400), DIRT)
+
+		-- Flat front + building pad (spawn → mid site). No balls here.
+		-- Covers z ≈ 200 down through the facade / pit; surface under WorldGrass.
+		fillBlock(terrain, CFrame.new(0, -7, 30), Vector3.new(300, 14, 300), SURFACE)
+
+		-- Soft side berms only beside / behind the envelope (not in front of the plaza)
+		fillBlock(terrain, CFrame.new(-145, -2, -40), Vector3.new(50, 18, 200), SURFACE)
+		fillBlock(terrain, CFrame.new(145, -2, -40), Vector3.new(50, 18, 200), SURFACE)
+
+		-- Gradual rise toward the north wing (still blocky-smooth, not spheres)
+		-- Flat top ~y=-0.5 at z=-80 → ~y=14 at z=-145
+		local steps = {
+			{ z = -85, y = -4.5, h = 10, w = 220, d = 28 },
+			{ z = -105, y = -1.5, h = 14, w = 230, d = 28 },
+			{ z = -125, y = 2.0, h = 18, w = 240, d = 28 },
+			{ z = -145, y = 6.0, h = 22, w = 250, d = 32 },
 		}
-		for _, m in skirt do
-			fillBall(terrain, Vector3.new(m[1], m[2], m[3]), m[4], Enum.Material.Grass)
+		for _, s in steps do
+			fillBlock(terrain, CFrame.new(0, s.y, s.z), Vector3.new(s.w, s.h, s.d), SURFACE)
 		end
 
-		-- Tall back ridge / flanks - nest the game-room wing
-		local ridge = {
-			{ 0, 18, -175, 62 },
-			{ -45, 22, -168, 52 },
-			{ 45, 22, -168, 52 },
-			{ -85, 16, -155, 46 },
-			{ 85, 16, -155, 46 },
-			{ 0, 28, -195, 48 },
-			{ -120, 8, -110, 44 },
-			{ 120, 8, -110, 44 },
-			{ -115, 12, -145, 40 },
-			{ 115, 12, -145, 40 },
-			{ -70, 14, -130, 38 },
-			{ 70, 14, -130, 38 },
-		}
-		for _, m in ridge do
-			fillBall(terrain, Vector3.new(m[1], m[2], m[3]), m[4], Enum.Material.Grass)
-		end
+		-- Back two-range hills (user-approved look) - centers buried north of rooms
+		fillBall(terrain, Vector3.new(-42, 10, -188), 58, SURFACE)
+		fillBall(terrain, Vector3.new(42, 10, -188), 58, SURFACE)
+		-- Soft saddle / deeper spine so the pair reads as one range
+		fillBall(terrain, Vector3.new(0, 4, -200), 52, SURFACE)
+		fillBall(terrain, Vector3.new(-95, 2, -165), 40, SURFACE)
+		fillBall(terrain, Vector3.new(95, 2, -165), 40, SURFACE)
 
-		-- Rock knuckles on the crest
-		fillBall(terrain, Vector3.new(0, 30, -160), 22, Enum.Material.Rock)
-		fillBall(terrain, Vector3.new(-55, 24, -170), 16, Enum.Material.Rock)
-		fillBall(terrain, Vector3.new(55, 24, -170), 16, Enum.Material.Rock)
-
-		-- Smooth green cap on the plaza / apron (under WorldGrass, not above floors)
-		fillBlock(terrain, CFrame.new(0, -1.2, 10), Vector3.new(240, 2.2, 240), Enum.Material.Grass)
+		-- Rock knuckles on the crest only
+		fillBall(terrain, Vector3.new(-40, 28, -175), 14, ROCK)
+		fillBall(terrain, Vector3.new(40, 28, -175), 14, ROCK)
 
 		-- Hollow building volume only (keep plaza / spawn Terrain)
 		fillBlock(
@@ -87,7 +83,7 @@ function CasinoTerrain.start()
 		return
 	end
 
-	print("[Shuffle] CasinoTerrain FillBall/FillBlock hill written")
+	print("[Shuffle] CasinoTerrain flat-front + back-range hill written")
 end
 
 return CasinoTerrain
