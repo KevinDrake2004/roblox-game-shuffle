@@ -46474,12 +46474,12 @@
                 "Size": [
                   250.0,
                   1.0,
-                  290.0
+                  260.0
                 ],
                 "Position": [
                   0.0,
                   -0.55,
-                  -20.0
+                  -15.0
                 ],
                 "Color": [
                   0.18,
@@ -46498,14 +46498,14 @@
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  200.0,
-                  0.2,
-                  14.0
+                  160.0,
+                  0.25,
+                  12.0
                 ],
                 "Position": [
                   0.0,
                   0.05,
-                  128.0
+                  118.0
                 ],
                 "Color": [
                   0.35,
@@ -46519,19 +46519,331 @@
               }
             },
             {
+              "name": "ApproachWalk_0",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  18.0,
+                  0.35,
+                  14.0
+                ],
+                "Position": [
+                  0.0,
+                  -2.5,
+                  132.0
+                ],
+                "Color": [
+                  0.38,
+                  0.34,
+                  0.28
+                ],
+                "Material": "Ground",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": true
+              }
+            },
+            {
+              "name": "ApproachRail_0_L",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  0.35,
+                  1.2,
+                  12.6
+                ],
+                "Position": [
+                  -9.5,
+                  -1.8,
+                  132.0
+                ],
+                "Color": [
+                  0.72,
+                  0.55,
+                  0.22
+                ],
+                "Material": "Metal",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": false
+              }
+            },
+            {
+              "name": "ApproachRail_0_R",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  0.35,
+                  1.2,
+                  12.6
+                ],
+                "Position": [
+                  9.5,
+                  -1.8,
+                  132.0
+                ],
+                "Color": [
+                  0.72,
+                  0.55,
+                  0.22
+                ],
+                "Material": "Metal",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": false
+              }
+            },
+            {
+              "name": "ApproachWalk_1",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  18.0,
+                  0.35,
+                  16.0
+                ],
+                "Position": [
+                  0.0,
+                  -6.5,
+                  148.0
+                ],
+                "Color": [
+                  0.38,
+                  0.34,
+                  0.28
+                ],
+                "Material": "Ground",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": true
+              }
+            },
+            {
+              "name": "ApproachRail_1_L",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  0.35,
+                  1.2,
+                  14.4
+                ],
+                "Position": [
+                  -9.5,
+                  -5.8,
+                  148.0
+                ],
+                "Color": [
+                  0.72,
+                  0.55,
+                  0.22
+                ],
+                "Material": "Metal",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": false
+              }
+            },
+            {
+              "name": "ApproachRail_1_R",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  0.35,
+                  1.2,
+                  14.4
+                ],
+                "Position": [
+                  9.5,
+                  -5.8,
+                  148.0
+                ],
+                "Color": [
+                  0.72,
+                  0.55,
+                  0.22
+                ],
+                "Material": "Metal",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": false
+              }
+            },
+            {
+              "name": "ApproachWalk_2",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  18.0,
+                  0.35,
+                  18.0
+                ],
+                "Position": [
+                  0.0,
+                  -11.0,
+                  166.0
+                ],
+                "Color": [
+                  0.38,
+                  0.34,
+                  0.28
+                ],
+                "Material": "Ground",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": true
+              }
+            },
+            {
+              "name": "ApproachRail_2_L",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  0.35,
+                  1.2,
+                  16.2
+                ],
+                "Position": [
+                  -9.5,
+                  -10.3,
+                  166.0
+                ],
+                "Color": [
+                  0.72,
+                  0.55,
+                  0.22
+                ],
+                "Material": "Metal",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": false
+              }
+            },
+            {
+              "name": "ApproachRail_2_R",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  0.35,
+                  1.2,
+                  16.2
+                ],
+                "Position": [
+                  9.5,
+                  -10.3,
+                  166.0
+                ],
+                "Color": [
+                  0.72,
+                  0.55,
+                  0.22
+                ],
+                "Material": "Metal",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": false
+              }
+            },
+            {
+              "name": "ApproachWalk_3",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  18.0,
+                  0.35,
+                  20.0
+                ],
+                "Position": [
+                  0.0,
+                  -16.0,
+                  186.0
+                ],
+                "Color": [
+                  0.38,
+                  0.34,
+                  0.28
+                ],
+                "Material": "Ground",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": true
+              }
+            },
+            {
+              "name": "ApproachRail_3_L",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  0.35,
+                  1.2,
+                  18.0
+                ],
+                "Position": [
+                  -9.5,
+                  -15.3,
+                  186.0
+                ],
+                "Color": [
+                  0.72,
+                  0.55,
+                  0.22
+                ],
+                "Material": "Metal",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": false
+              }
+            },
+            {
+              "name": "ApproachRail_3_R",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  0.35,
+                  1.2,
+                  18.0
+                ],
+                "Position": [
+                  9.5,
+                  -15.3,
+                  186.0
+                ],
+                "Color": [
+                  0.72,
+                  0.55,
+                  0.22
+                ],
+                "Material": "Metal",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": false
+              }
+            },
+            {
               "name": "PerimeterPath_N",
               "className": "Part",
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  200.0,
-                  0.2,
-                  14.0
+                  160.0,
+                  0.25,
+                  12.0
                 ],
                 "Position": [
                   0.0,
                   0.05,
-                  -175.0
+                  -168.0
                 ],
                 "Color": [
                   0.35,
@@ -46550,14 +46862,14 @@
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  14.0,
-                  0.2,
-                  280.0
+                  12.0,
+                  0.25,
+                  260.0
                 ],
                 "Position": [
-                  -128.0,
+                  -125.0,
                   0.05,
-                  -20.0
+                  -15.0
                 ],
                 "Color": [
                   0.35,
@@ -46576,14 +46888,14 @@
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  14.0,
-                  0.2,
-                  280.0
+                  12.0,
+                  0.25,
+                  260.0
                 ],
                 "Position": [
-                  128.0,
+                  125.0,
                   0.05,
-                  -20.0
+                  -15.0
                 ],
                 "Color": [
                   0.35,
