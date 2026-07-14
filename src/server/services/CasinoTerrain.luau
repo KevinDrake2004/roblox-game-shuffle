@@ -1,8 +1,10 @@
 --!strict
 --[[
-	Real Roblox Terrain heightmap - BACK of the casino only.
-	Hides the tall game-room wing (north / flanks). Does NOT paint plaza,
-	walkways, pit, or building interior. ArenaOrigins untouched.
+	Casino sits on a real Terrain hill plateau.
+	- Summit under the site (just below part floors / plaza) so walkways stay clean
+	- Outer slopes fall away so the resort reads as perched on a big hill
+	- Taller north / flank ridge nests the tall game-room wing into the hillside
+	ArenaOrigins and wager loops untouched.
 ]]
 
 local Workspace = game:GetService("Workspace")
@@ -11,19 +13,21 @@ local CasinoTerrain = {}
 
 local RESOLUTION = 4
 
--- Building envelope
 local WALL_X = 94.0
+local WALL_Z_S = 68.0
 local WALL_Z_N = -142.0
--- South limit of the tall room wing (~origins at z=-110). No hills south of this.
 local ROOM_WING_Z_S = -55.0
 
--- Full wipe bounds (clears any prior mistaken plaza / interior terrain)
-local WIPE_MIN = Vector3.new(-240, -28, -280)
-local WIPE_MAX = Vector3.new(240, 80, 200)
+-- Plateau ellipse (flat summit under casino + plaza)
+local PLATEAU_RX = 128.0
+local PLATEAU_RZ_S = 138.0 -- south toward spawn
+local PLATEAU_RZ_N = 158.0 -- north behind rooms
 
--- Write bounds: north ridge + room-wing flanks only
-local HILL_MIN = Vector3.new(-210, -24, -260)
-local HILL_MAX = Vector3.new(210, 72, ROOM_WING_Z_S)
+local WIPE_MIN = Vector3.new(-280, -48, -300)
+local WIPE_MAX = Vector3.new(280, 90, 220)
+
+local HILL_MIN = Vector3.new(-260, -40, -280)
+local HILL_MAX = Vector3.new(260, 80, 200)
 
 local function smoothstep(t: number): number
 	t = math.clamp(t, 0, 1)
@@ -37,63 +41,73 @@ local function noise2(x: number, z: number): number
 end
 
 local function insideBuilding(x: number, z: number): boolean
-	return math.abs(x) <= WALL_X and z <= 68 and z >= WALL_Z_N
+	return math.abs(x) <= WALL_X and z <= WALL_Z_S and z >= WALL_Z_N
 end
 
--- Height above y=0, or nil = leave Air (no terrain here).
-local function surfaceHeight(x: number, z: number): number?
-	-- Never inside the shell
-	if insideBuilding(x, z) then
-		return nil
-	end
-	-- Never south of the room wing (plaza, pit, walkways, entrance)
-	if z > ROOM_WING_Z_S then
-		return nil
-	end
+-- 0 on/inside rim, >0 outside. Uses different south/north radii.
+local function plateauEdgeDist(x: number, z: number): number
+	local nx = x / PLATEAU_RX
+	local nz = if z >= 0 then z / PLATEAU_RZ_S else z / PLATEAU_RZ_N
+	local r = math.sqrt(nx * nx + nz * nz)
+	return (r - 1) * ((PLATEAU_RX + PLATEAU_RZ_S) * 0.5)
+end
 
+local function surfaceHeight(x: number, z: number): number
 	local n = noise2(x, z)
-	local h = 0.0
+	local edge = plateauEdgeDist(x, z)
+	local h: number
 
-	-- North ridge behind the room-wing wall
-	if z < WALL_Z_N then
-		local d = WALL_Z_N - z
-		local ridge = 48 * math.exp(-((d - 16) / 26) ^ 2)
-		local fall = smoothstep(1 - d / 100)
-		h = math.max(h, ridge * fall + n * 4)
-	end
-
-	-- East / west flanks outside the tall room wing only
-	if z <= ROOM_WING_Z_S and z >= WALL_Z_N - 8 then
-		local dx = math.abs(x) - WALL_X
-		if dx > 2 then
-			local flank = 38 * math.exp(-((dx - 20) / 24) ^ 2)
-			local zFade = 1 - math.abs(z + 97) / 52
-			h = math.max(h, flank * math.clamp(zFade, 0, 1) + n * 3)
+	if edge <= 0 then
+		-- Flat summit: under part apron / floors (never bury walkways)
+		if insideBuilding(x, z) then
+			h = -1.4
+		else
+			h = -0.4 + n * 0.12
 		end
+	else
+		-- Outer hill flanks: drop from summit rim down to lowlands
+		local t = smoothstep(math.clamp(edge / 95, 0, 1))
+		h = -0.35 - 32 * t + n * 2.2
 	end
 
-	-- NE / NW corner blend (still behind / beside rooms)
-	if z < -120 and math.abs(x) > 75 then
-		local corner = 30 * math.exp(-((math.abs(x) - 112) / 32) ^ 2) * math.exp(-((z + 158) / 28) ^ 2)
-		h = math.max(h, corner + n * 2)
+	-- Tall back ridge - rooms built into the hillside
+	if z < ROOM_WING_Z_S then
+		local behind = math.max(WALL_Z_N - z, 0)
+		local along = math.clamp(1 - math.abs(z + 100) / 58, 0, 1)
+
+		-- Peak just behind the north wall, higher than before
+		local ridge = 62 * math.exp(-((behind - 22) / 32) ^ 2) * (0.55 + 0.45 * along)
+		-- Extra mass when still beside the room wing (wrap around)
+		if z >= WALL_Z_N - 12 and z <= ROOM_WING_Z_S then
+			local dx = math.abs(x) - WALL_X
+			if dx > -4 then
+				local flank = 56 * math.exp(-((math.max(dx, 0) - 16) / 30) ^ 2) * along
+				ridge = math.max(ridge, flank)
+			end
+		end
+		-- NE / NW shoulders
+		if z < -115 and math.abs(x) > 70 then
+			local shoulder = 40 * math.exp(-((math.abs(x) - 118) / 36) ^ 2) * math.exp(-((z + 160) / 34) ^ 2)
+			ridge = math.max(ridge, shoulder)
+		end
+
+		h = math.max(h, ridge + n * 3)
 	end
 
-	if h < 2.5 then
-		return nil
-	end
 	return h
 end
 
 local function materialAt(x: number, z: number, y: number, surfaceY: number): Enum.Material
 	local depth = surfaceY - y
-	if depth > 10 then
+	if depth > 14 then
 		return Enum.Material.Slate
 	end
-	if depth > 3.5 then
+	if depth > 4 then
 		return Enum.Material.Ground
 	end
-	if surfaceY > 22 and depth < 6 then
-		if (math.floor(x / 8) + math.floor(z / 8)) % 5 == 0 then
+	-- Rocky faces on the steep back / flank
+	if surfaceY > 18 and (z < WALL_Z_N + 8 or math.abs(x) > WALL_X + 8) and depth < 8 then
+		if (math.floor(x / 7) + math.floor(z / 7)) % 4 == 0 then
 			return Enum.Material.Rock
 		end
 	end
@@ -103,7 +117,6 @@ end
 function CasinoTerrain.start()
 	local terrain = Workspace.Terrain
 
-	-- Wipe entire prior site so plaza / interior never keep old grass voxels
 	local wipe = Region3.new(WIPE_MIN, WIPE_MAX):ExpandToGrid(RESOLUTION)
 	terrain:FillRegion(wipe, RESOLUTION, Enum.Material.Air)
 
@@ -129,11 +142,11 @@ function CasinoTerrain.start()
 				local worldZ = corner.Z + (iz - 0.5) * RESOLUTION
 				local top = surfaceHeight(worldX, worldZ)
 
-				if top ~= nil and worldY <= top and worldY >= HILL_MIN.Y + 1 then
+				if worldY <= top and worldY >= HILL_MIN.Y + 1 then
 					materials[ix][iy][iz] = materialAt(worldX, worldZ, worldY, top)
 					local edge = top - worldY
 					if edge < RESOLUTION then
-						occupancy[ix][iy][iz] = math.clamp(edge / RESOLUTION, 0.15, 1)
+						occupancy[ix][iy][iz] = math.clamp(edge / RESOLUTION, 0.2, 1)
 					else
 						occupancy[ix][iy][iz] = 1
 					end
@@ -147,15 +160,16 @@ function CasinoTerrain.start()
 
 	terrain:WriteVoxels(region, RESOLUTION, materials, occupancy)
 
-	-- Hard-clear plaza / pit / approach and full building volume (belt + braces)
-	terrain:FillBlock(CFrame.new(0, 20, 50), Vector3.new(420, 80, 220), Enum.Material.Air)
+	-- Keep interiors / pit / plaza walk space clear above the summit pad
 	terrain:FillBlock(
-		CFrame.new(0, 28, (68 + WALL_Z_N) * 0.5),
-		Vector3.new(WALL_X * 2 + 4, 75, 68 - WALL_Z_N + 4),
+		CFrame.new(0, 30, (WALL_Z_S + WALL_Z_N) * 0.5),
+		Vector3.new(WALL_X * 2 - 2, 72, WALL_Z_S - WALL_Z_N - 2),
 		Enum.Material.Air
 	)
+	-- Plaza + approach: air above y=0 so asphalt / carpet / paths stay dominant
+	terrain:FillBlock(CFrame.new(0, 22, 95), Vector3.new(200, 44, 90), Enum.Material.Air)
 
-	print("[Shuffle] CasinoTerrain back-ridge heightmap written")
+	print("[Shuffle] CasinoTerrain plateau + back-ridge written")
 end
 
 return CasinoTerrain

@@ -1112,14 +1112,14 @@ GRASS_DARK = [0.14, 0.34, 0.12]
 
 
 def build_ground() -> list:
-    """Flat walkable apron only. Hills come from CasinoTerrain (real Roblox Terrain)."""
+    """Summit apron only - sized so outer Terrain hill slopes stay visible."""
     kids: list = []
-    # Thin collide pad under plaza / paths. Real terrain fills the site around the shell.
+    # Flat collide pad on the plateau top (plaza + shell). Outer slopes are Terrain.
     kids.append(
         part(
             "WorldGrass",
-            (520.0, 1.0, 520.0),
-            (0.0, -0.55, -30.0),
+            (250.0, 1.0, 290.0),
+            (0.0, -0.55, -20.0),
             GRASS,
             material="Grass",
             can_collide=True,
@@ -1128,8 +1128,8 @@ def build_ground() -> list:
     kids.append(
         part(
             "PerimeterPath_S",
-            (260.0, 0.2, 16.0),
-            (0.0, 0.05, 148.0),
+            (200.0, 0.2, 14.0),
+            (0.0, 0.05, 128.0),
             [0.35, 0.32, 0.28],
             material="Ground",
             can_collide=False,
@@ -1138,8 +1138,8 @@ def build_ground() -> list:
     kids.append(
         part(
             "PerimeterPath_N",
-            (260.0, 0.2, 16.0),
-            (0.0, 0.05, -220.0),
+            (200.0, 0.2, 14.0),
+            (0.0, 0.05, -175.0),
             [0.35, 0.32, 0.28],
             material="Ground",
             can_collide=False,
@@ -1148,8 +1148,8 @@ def build_ground() -> list:
     kids.append(
         part(
             "PerimeterPath_W",
-            (16.0, 0.2, 340.0),
-            (-170.0, 0.05, -30.0),
+            (14.0, 0.2, 280.0),
+            (-128.0, 0.05, -20.0),
             [0.35, 0.32, 0.28],
             material="Ground",
             can_collide=False,
@@ -1158,8 +1158,8 @@ def build_ground() -> list:
     kids.append(
         part(
             "PerimeterPath_E",
-            (16.0, 0.2, 340.0),
-            (170.0, 0.05, -30.0),
+            (14.0, 0.2, 280.0),
+            (128.0, 0.05, -20.0),
             [0.35, 0.32, 0.28],
             material="Ground",
             can_collide=False,
