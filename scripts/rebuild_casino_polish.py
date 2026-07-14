@@ -1112,67 +1112,34 @@ GRASS_DARK = [0.14, 0.34, 0.12]
 
 
 def build_ground() -> list:
-    """Summit apron + downhill approach path on the south Terrain slope."""
+    """Summit apron only - sized so outer Terrain hill slopes stay visible."""
     kids: list = []
-    # Thin green pad coplanar with Terrain summit (CasinoTerrain SUMMIT_Y ≈ -0.05)
+    # Flat collide pad on the plateau top (plaza + shell). Outer slopes are Terrain.
     kids.append(
         part(
             "WorldGrass",
-            (250.0, 1.0, 260.0),
-            (0.0, -0.55, -15.0),
+            (250.0, 1.0, 290.0),
+            (0.0, -0.55, -20.0),
             GRASS,
             material="Grass",
             can_collide=True,
         )
     )
-    # South rim path at summit, then stepped walkway down the front slope
     kids.append(
         part(
             "PerimeterPath_S",
-            (160.0, 0.25, 12.0),
-            (0.0, 0.05, 118.0),
+            (200.0, 0.2, 14.0),
+            (0.0, 0.05, 128.0),
             [0.35, 0.32, 0.28],
             material="Ground",
             can_collide=False,
         )
     )
-    # Descending approach walk (matches Terrain front falloff south of the facade)
-    for i, (z, y, depth) in enumerate(
-        (
-            (132.0, -2.5, 14.0),
-            (148.0, -6.5, 16.0),
-            (166.0, -11.0, 18.0),
-            (186.0, -16.0, 20.0),
-        )
-    ):
-        kids.append(
-            part(
-                f"ApproachWalk_{i}",
-                (18.0, 0.35, depth),
-                (0.0, y, z),
-                [0.38, 0.34, 0.28],
-                material="Ground",
-                can_collide=True,
-            )
-        )
-        # Side rails so the grade reads as a path
-        for side, sx in (("L", -1.0), ("R", 1.0)):
-            kids.append(
-                part(
-                    f"ApproachRail_{i}_{side}",
-                    (0.35, 1.2, depth * 0.9),
-                    (sx * 9.5, y + 0.7, z),
-                    GOLD_DIM,
-                    material="Metal",
-                    can_collide=False,
-                )
-            )
-
     kids.append(
         part(
             "PerimeterPath_N",
-            (160.0, 0.25, 12.0),
-            (0.0, 0.05, -168.0),
+            (200.0, 0.2, 14.0),
+            (0.0, 0.05, -175.0),
             [0.35, 0.32, 0.28],
             material="Ground",
             can_collide=False,
@@ -1181,8 +1148,8 @@ def build_ground() -> list:
     kids.append(
         part(
             "PerimeterPath_W",
-            (12.0, 0.25, 260.0),
-            (-125.0, 0.05, -15.0),
+            (14.0, 0.2, 280.0),
+            (-128.0, 0.05, -20.0),
             [0.35, 0.32, 0.28],
             material="Ground",
             can_collide=False,
@@ -1191,8 +1158,8 @@ def build_ground() -> list:
     kids.append(
         part(
             "PerimeterPath_E",
-            (12.0, 0.25, 260.0),
-            (125.0, 0.05, -15.0),
+            (14.0, 0.2, 280.0),
+            (128.0, 0.05, -20.0),
             [0.35, 0.32, 0.28],
             material="Ground",
             can_collide=False,
