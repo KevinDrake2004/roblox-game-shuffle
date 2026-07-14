@@ -1,14 +1,21 @@
 --!strict
 --[[
-	Casino Terrain: flat front plaza + slope up to a two-hill back range.
-	Uses FillBlock / FillBall only (no WriteVoxels).
+	Casino Terrain: flat front under plaza parts + aggressive rise to a two-hill back range.
+
+	Bakes once per place / server when ShuffleCasinoTerrainVersion matches.
+	Bump VERSION below to reshape; Play once, then Save the place so Studio keeps
+	the voxels for walkway / platform work (no Clear every Play).
+
 	LeafyGrass (not Grass) so animated grass blades never spawn.
-	Spawn stays outside at (0, 3, 112). Plaza is not air-carved.
+	Spawn stays outside at (0, 3, 112). ArenaOrigins unchanged.
 ]]
 
 local Workspace = game:GetService("Workspace")
 
 local CasinoTerrain = {}
+
+-- Bump when reshaping hills so servers / Studio rebuild once.
+local VERSION = 4
 
 local WALL_X = 94.0
 local WALL_Z_S = 68.0
@@ -19,6 +26,9 @@ local SURFACE = Enum.Material.LeafyGrass
 local DIRT = Enum.Material.Ground
 local ROCK = Enum.Material.Rock
 
+-- Plaza / WorldGrass sit near y=0; keep Terrain under them.
+local FRONT_TOP_Y = -1.5
+
 local function fillBall(terrain: Terrain, pos: Vector3, radius: number, material: Enum.Material)
 	terrain:FillBall(pos, radius, material)
 end
@@ -27,49 +37,70 @@ local function fillBlock(terrain: Terrain, cf: CFrame, size: Vector3, material: 
 	terrain:FillBlock(cf, size, material)
 end
 
+local function fillPad(
+	terrain: Terrain,
+	center: Vector3,
+	sizeXZ: Vector2,
+	topY: number,
+	thickness: number,
+	material: Enum.Material
+)
+	local height = thickness
+	local cy = topY - height * 0.5
+	fillBlock(terrain, CFrame.new(center.X, cy, center.Z), Vector3.new(sizeXZ.X, height, sizeXZ.Y), material)
+end
+
 function CasinoTerrain.start()
 	local terrain = Workspace.Terrain
+	local baked = Workspace:GetAttribute("ShuffleCasinoTerrainVersion")
+	if baked == VERSION then
+		print(`[Shuffle] CasinoTerrain already baked (v{VERSION}) - skip`)
+		return
+	end
 
 	local ok, err = pcall(function()
-		-- Drop prior FillBall skirts so Play mode does not keep old blobs
 		terrain:Clear()
 
-		-- Deep dirt base under the whole resort (meets WorldGrass ~y=-0.55)
-		fillBlock(terrain, CFrame.new(0, -14, -20), Vector3.new(360, 28, 400), DIRT)
+		-- Deep dirt base under the whole resort
+		fillBlock(terrain, CFrame.new(0, -16, -30), Vector3.new(380, 30, 420), DIRT)
 
-		-- Flat front + building pad (spawn → mid site). No balls here.
-		-- Covers z ≈ 200 down through the facade / pit; surface under WorldGrass.
-		fillBlock(terrain, CFrame.new(0, -7, 30), Vector3.new(300, 14, 300), SURFACE)
+		-- Flat front pad: top under WorldGrass / PlazaFloor / carpet (not flush with y=0)
+		fillPad(terrain, Vector3.new(0, 0, 40), Vector2.new(300, 300), FRONT_TOP_Y, 16, SURFACE)
 
-		-- Soft side berms only beside / behind the envelope (not in front of the plaza)
-		fillBlock(terrain, CFrame.new(-145, -2, -40), Vector3.new(50, 18, 200), SURFACE)
-		fillBlock(terrain, CFrame.new(145, -2, -40), Vector3.new(50, 18, 200), SURFACE)
+		-- Low side berms (rise only as we go north - stay under facade sides up front)
+		fillPad(terrain, Vector3.new(-150, 0, 20), Vector2.new(55, 160), -0.5, 14, SURFACE)
+		fillPad(terrain, Vector3.new(150, 0, 20), Vector2.new(55, 160), -0.5, 14, SURFACE)
+		fillPad(terrain, Vector3.new(-155, 0, -80), Vector2.new(60, 140), 6, 20, SURFACE)
+		fillPad(terrain, Vector3.new(155, 0, -80), Vector2.new(60, 140), 6, 20, SURFACE)
 
-		-- Gradual rise toward the north wing (still blocky-smooth, not spheres)
-		-- Flat top ~y=-0.5 at z=-80 → ~y=14 at z=-145
+		-- Aggressive rise toward the north wing / back range
+		-- Flat ~-1.5 at z≈-55 → ~y=36 crest behind rooms
 		local steps = {
-			{ z = -85, y = -4.5, h = 10, w = 220, d = 28 },
-			{ z = -105, y = -1.5, h = 14, w = 230, d = 28 },
-			{ z = -125, y = 2.0, h = 18, w = 240, d = 28 },
-			{ z = -145, y = 6.0, h = 22, w = 250, d = 32 },
+			{ z = -60, top = 1.5, h = 12, w = 230, d = 24 },
+			{ z = -80, top = 6.0, h = 16, w = 240, d = 26 },
+			{ z = -100, top = 12.0, h = 20, w = 250, d = 28 },
+			{ z = -120, top = 20.0, h = 26, w = 260, d = 30 },
+			{ z = -140, top = 28.0, h = 32, w = 270, d = 32 },
+			{ z = -160, top = 34.0, h = 36, w = 280, d = 34 },
 		}
 		for _, s in steps do
-			fillBlock(terrain, CFrame.new(0, s.y, s.z), Vector3.new(s.w, s.h, s.d), SURFACE)
+			fillPad(terrain, Vector3.new(0, 0, s.z), Vector2.new(s.w, s.d), s.top, s.h, SURFACE)
 		end
 
-		-- Back two-range hills (user-approved look) - centers buried north of rooms
-		fillBall(terrain, Vector3.new(-42, 10, -188), 58, SURFACE)
-		fillBall(terrain, Vector3.new(42, 10, -188), 58, SURFACE)
-		-- Soft saddle / deeper spine so the pair reads as one range
-		fillBall(terrain, Vector3.new(0, 4, -200), 52, SURFACE)
-		fillBall(terrain, Vector3.new(-95, 2, -165), 40, SURFACE)
-		fillBall(terrain, Vector3.new(95, 2, -165), 40, SURFACE)
+		-- Back two-range hills (taller / farther north so the slope reads hard)
+		fillBall(terrain, Vector3.new(-48, 22, -200), 68, SURFACE)
+		fillBall(terrain, Vector3.new(48, 22, -200), 68, SURFACE)
+		fillBall(terrain, Vector3.new(0, 14, -215), 58, SURFACE)
+		fillBall(terrain, Vector3.new(-105, 10, -175), 46, SURFACE)
+		fillBall(terrain, Vector3.new(105, 10, -175), 46, SURFACE)
 
-		-- Rock knuckles on the crest only
-		fillBall(terrain, Vector3.new(-40, 28, -175), 14, ROCK)
-		fillBall(terrain, Vector3.new(40, 28, -175), 14, ROCK)
+		fillBall(terrain, Vector3.new(-45, 42, -185), 16, ROCK)
+		fillBall(terrain, Vector3.new(45, 42, -185), 16, ROCK)
 
-		-- Hollow building volume only (keep plaza / spawn Terrain)
+		-- Relieve plaza / apron / carpet only (do not flatten the back slope)
+		fillBlock(terrain, CFrame.new(0, 3.5, 60), Vector3.new(200, 12, 140), Enum.Material.Air)
+
+		-- Hollow building volume
 		fillBlock(
 			terrain,
 			CFrame.new(0, 34, (WALL_Z_S + WALL_Z_N) * 0.5),
@@ -83,7 +114,8 @@ function CasinoTerrain.start()
 		return
 	end
 
-	print("[Shuffle] CasinoTerrain flat-front + back-range hill written")
+	Workspace:SetAttribute("ShuffleCasinoTerrainVersion", VERSION)
+	print(`[Shuffle] CasinoTerrain baked v{VERSION} (flat front under plaza, steep back range)`)
 end
 
 return CasinoTerrain
