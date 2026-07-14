@@ -100,7 +100,7 @@ South entry has a real door cutout (`|x| < 12`, under `Ext_South_Lint` / `EntryB
 - **Corners** - SW / SE towers with gold caps and window bays
 - **Sides** - marble veneer, pilaster rhythm, east/west window modules (no continuous side neon belts)
 - **Plaza / ground / site lighting** - grass apron plus smooth wedge-hill slopes nesting the north room wing; entrance down-spots only
-- **Hill berms** (`Atmosphere.Ground`) - WedgePart slopes + thin rock cliff faces (no cube berms); perimeter lamps sit outside slope toes; ArenaOrigins unchanged
+- **Hill berms** (`Atmosphere.Ground`) - overlapping Ball mounds + staggered rock faces (organic ridge, not toy wedges); perimeter lamps sit outside slope toes; ArenaOrigins unchanged
 
 ### Mesh accents
 

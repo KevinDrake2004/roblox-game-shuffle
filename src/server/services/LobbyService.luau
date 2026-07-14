@@ -117,8 +117,8 @@ local function ensurePortalLabels()
 
 	local sign = lobby:FindFirstChild("BrandSign")
 	if sign and sign:IsA("BasePart") then
-		-- Recreate each boot so marquee layout updates apply (single-line TextScaled
-		-- stays tiny on a wide board because width caps glyph height).
+		-- Recreate each boot. TextScaled defaults MaxTextSize=100, which keeps
+		-- marquee type tiny on a large board - raise the constraint so glyphs fill.
 		local oldGui = sign:FindFirstChild("SignGui")
 		if oldGui then
 			oldGui:Destroy()
@@ -128,7 +128,7 @@ local function ensurePortalLabels()
 		gui.Name = "SignGui"
 		gui.Face = Enum.NormalId.Front
 		gui.SizingMode = Enum.SurfaceGuiSizingMode.PixelsPerStud
-		gui.PixelsPerStud = 100
+		gui.PixelsPerStud = 80
 		gui.Parent = sign
 
 		local root = Instance.new("Frame")
@@ -137,37 +137,38 @@ local function ensurePortalLabels()
 		root.Parent = gui
 
 		local padding = Instance.new("UIPadding")
-		padding.PaddingLeft = UDim.new(0.04, 0)
-		padding.PaddingRight = UDim.new(0.04, 0)
-		padding.PaddingTop = UDim.new(0.04, 0)
-		padding.PaddingBottom = UDim.new(0.04, 0)
+		padding.PaddingLeft = UDim.new(0.02, 0)
+		padding.PaddingRight = UDim.new(0.02, 0)
+		padding.PaddingTop = UDim.new(0.02, 0)
+		padding.PaddingBottom = UDim.new(0.02, 0)
 		padding.Parent = root
-
-		local list = Instance.new("UIListLayout")
-		list.FillDirection = Enum.FillDirection.Vertical
-		list.HorizontalAlignment = Enum.HorizontalAlignment.Center
-		list.VerticalAlignment = Enum.VerticalAlignment.Center
-		list.Padding = UDim.new(0, 6)
-		list.Parent = root
 
 		local words = string.split(string.upper(Config.GAME_NAME), " ")
 		if #words == 0 then
 			words = { string.upper(Config.GAME_NAME) }
 		end
-		local lineHeight = 0.92 / math.max(#words, 1)
-		for _, word in words do
+
+		local count = math.max(#words, 1)
+		for index, word in words do
 			local title = Instance.new("TextLabel")
 			title.BackgroundTransparency = 1
-			title.Size = UDim2.new(1, 0, lineHeight, 0)
+			title.BorderSizePixel = 0
+			title.Position = UDim2.fromScale(0, (index - 1) / count)
+			title.Size = UDim2.fromScale(1, 1 / count)
 			title.Font = Enum.Font.GothamBlack
 			title.TextScaled = true
 			title.TextColor3 = Config.COLORS.Text
 			title.Text = word
 			title.Parent = root
 
+			local sizeConstraint = Instance.new("UITextSizeConstraint")
+			sizeConstraint.MaxTextSize = 600
+			sizeConstraint.MinTextSize = 24
+			sizeConstraint.Parent = title
+
 			local stroke = Instance.new("UIStroke")
 			stroke.Color = Config.COLORS.NeonCyan
-			stroke.Thickness = 4
+			stroke.Thickness = 5
 			stroke.Parent = title
 		end
 	end
