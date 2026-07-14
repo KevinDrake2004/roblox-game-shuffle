@@ -85,7 +85,9 @@ python3 scripts/rebuild_casino_polish.py
                          +Z (south)
 ```
 
-Envelope ≈ **184 × 206** studs (outer walls at X±92, Z +66 / −140). Plaza extends to roughly **Z +125**. World grass apron ≈ **420 × 420** under/around the resort (`Atmosphere.Ground.WorldGrass`) so players can walk the perimeter. Pit roof ~22 studs; game-room roof ~54 studs (Plinko board height). Marquee / crown read above the south parapet (~Y 28–51).
+Envelope ≈ **184 × 206** studs (outer walls at X±92, Z +66 / −140). South / pit wing walls are **~22** studs tall; game-room wing walls stay **~54** for Plinko height. Plaza extends to roughly **Z +125**. World grass apron ≈ **420 × 420**. Marquee / crown read above the south parapet (~Y 25–51).
+
+South entry has a real door cutout (`|x| < 12`, under `Ext_South_Lint` / `EntryBayLint`). `EntryBayBack` is L/R only so the opening is visible. Canopy soffit uses a strict Y ladder (neon / coffer inset / coffer / deck) so down-spots do not z-fight.
 
 ## Exterior (facade pass)
 

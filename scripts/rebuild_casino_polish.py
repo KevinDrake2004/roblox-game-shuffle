@@ -464,15 +464,15 @@ def build_site_lighting() -> list:
     # --- Entrance / porte-cochere: downward spots only (softer than perimeter wash) ---
     entry_spots = [
         # Under canopy - walk path
-        ("EntrySpot_CanopyL", -8.0, 18.2, 74.0),
-        ("EntrySpot_CanopyC", 0.0, 18.2, 76.0),
-        ("EntrySpot_CanopyR", 8.0, 18.2, 74.0),
-        ("EntrySpot_CanopyFL", -10.0, 18.2, 82.0),
-        ("EntrySpot_CanopyFR", 10.0, 18.2, 82.0),
+        ("EntrySpot_CanopyL", -8.0, 17.9, 74.0),
+        ("EntrySpot_CanopyC", 0.0, 17.9, 76.0),
+        ("EntrySpot_CanopyR", 8.0, 17.9, 74.0),
+        ("EntrySpot_CanopyFL", -10.0, 17.9, 82.0),
+        ("EntrySpot_CanopyFR", 10.0, 17.9, 82.0),
         # South parapet over doors / apron
-        ("EntrySpot_DoorL", -10.0, 23.5, 67.5),
-        ("EntrySpot_DoorC", 0.0, 23.5, 67.5),
-        ("EntrySpot_DoorR", 10.0, 23.5, 67.5),
+        ("EntrySpot_DoorL", -10.0, 21.5, 67.5),
+        ("EntrySpot_DoorC", 0.0, 21.5, 67.5),
+        ("EntrySpot_DoorR", 10.0, 21.5, 67.5),
         # Approach carpet (mounted high on invisible hosts - still "from roof" energy)
         ("EntrySpot_Approach0", -6.0, 22.0, 88.0),
         ("EntrySpot_Approach1", 6.0, 22.0, 88.0),
@@ -574,23 +574,31 @@ def build_exterior() -> list:
     # -------------------------------------------------------------------------
     # Tall center entry bay (hotel-scale around doors)
     # -------------------------------------------------------------------------
+    # Tall center entry bay - L/R backs only so the door opening is a real cutout
+    # Opening: |x| < 11, y ~ 0..18 (matches Ext_South gap + lint)
     kids.append(
-        part("EntryBayBack", (28.0, 32.0, 2.0), (0.0, 16.5, 65.2), MARBLE, material="Marble", can_collide=False)
+        part("EntryBayBack_L", (4.0, 18.0, 2.0), (-14.0, 9.5, 65.2), MARBLE, material="Marble", can_collide=False)
     )
     kids.append(
-        part("EntryBayPilaster_L", (3.2, 30.0, 3.5), (-14.5, 15.5, 65.8), MARBLE, material="Marble", can_collide=False)
+        part("EntryBayBack_R", (4.0, 18.0, 2.0), (14.0, 9.5, 65.2), MARBLE, material="Marble", can_collide=False)
     )
     kids.append(
-        part("EntryBayPilaster_R", (3.2, 30.0, 3.5), (14.5, 15.5, 65.8), MARBLE, material="Marble", can_collide=False)
+        part("EntryBayLint", (24.0, 3.0, 2.0), (0.0, 19.5, 65.2), MARBLE, material="Marble", can_collide=False)
     )
     kids.append(
-        part("EntryBayEntablature", (32.0, 2.2, 4.0), (0.0, 31.5, 66.5), GOLD, material="Metal", can_collide=False)
+        part("EntryBayPilaster_L", (3.2, 24.0, 3.5), (-14.5, 12.5, 65.8), MARBLE, material="Marble", can_collide=False)
     )
     kids.append(
-        part("EntryBayFrieze", (30.0, 1.2, 3.2), (0.0, 30.0, 66.3), MARBLE, material="Slate", can_collide=False)
+        part("EntryBayPilaster_R", (3.2, 24.0, 3.5), (14.5, 12.5, 65.8), MARBLE, material="Marble", can_collide=False)
     )
     kids.append(
-        part("EntryBayNeon", (28.0, 0.25, 0.3), (0.0, 30.0, 68.0), MAGENTA, material="Neon", can_collide=False)
+        part("EntryBayEntablature", (32.0, 2.0, 4.0), (0.0, 25.5, 66.5), GOLD, material="Metal", can_collide=False)
+    )
+    kids.append(
+        part("EntryBayFrieze", (30.0, 1.0, 3.2), (0.0, 24.2, 66.3), MARBLE, material="Slate", can_collide=False)
+    )
+    kids.append(
+        part("EntryBayNeon", (28.0, 0.25, 0.3), (0.0, 24.2, 68.0), MAGENTA, material="Neon", can_collide=False)
     )
     # Gold door surround (outside walk |x|<10)
     kids.append(part("EntryMold_L", (0.7, 20.0, 1.2), (-12.2, 10.5, 66.9), GOLD, material="Metal", can_collide=False))
@@ -640,7 +648,7 @@ def build_exterior() -> list:
     # Porte-cochere (thicker canopy + coffers + classical columns)
     # -------------------------------------------------------------------------
     kids.append(
-        part("CanopyDeck", (44.0, 1.6, 20.0), (0.0, 19.5, 76.0), MARBLE, material="Slate", can_collide=False)
+        part("CanopyDeck", (44.0, 1.4, 20.0), (0.0, 19.6, 76.0), MARBLE, material="Slate", can_collide=False)
     )
     kids.append(
         part("CanopyFasciaS", (45.0, 1.1, 0.7), (0.0, 20.5, 86.0), GOLD, material="Metal", can_collide=False)
@@ -654,8 +662,10 @@ def build_exterior() -> list:
     kids.append(
         part("CanopyFasciaR", (0.7, 1.1, 20.0), (22.0, 20.5, 76.0), GOLD, material="Metal", can_collide=False)
     )
+    # Strict soffit Y ladder (no coplanar faces -> no z-fight flash):
+    # Deck bottom ~18.9 · coffer frame 18.65 · inset 18.45 · neon strip 18.25 · spots 17.9
     kids.append(
-        part("CanopyNeon", (38.0, 0.2, 16.0), (0.0, 18.55, 76.0), CYAN, material="Neon", can_collide=False, transparency=0.3)
+        part("CanopyNeon", (36.0, 0.12, 14.0), (0.0, 18.25, 76.0), CYAN, material="Neon", can_collide=False, transparency=0.35)
     )
     # Soffit coffers
     idx = 0
@@ -664,8 +674,8 @@ def build_exterior() -> list:
             kids.append(
                 part(
                     f"CanopyCoffer_{idx}",
-                    (9.0, 0.25, 4.5),
-                    (cx, 18.7, cz),
+                    (9.0, 0.18, 4.5),
+                    (cx, 18.65, cz),
                     GOLD_DIM,
                     material="Metal",
                     can_collide=False,
@@ -674,8 +684,8 @@ def build_exterior() -> list:
             kids.append(
                 part(
                     f"CanopyCofferInset_{idx}",
-                    (7.5, 0.2, 3.5),
-                    (cx, 18.55, cz),
+                    (7.5, 0.14, 3.5),
+                    (cx, 18.45, cz),
                     MARBLE,
                     material="Slate",
                     can_collide=False,
@@ -771,26 +781,23 @@ def build_exterior() -> list:
     kids.append(light_part("CrownLight", (0.0, 42.0, 69.0), GOLD, brightness=2.4, range_=40.0))
 
     # -------------------------------------------------------------------------
-    # Corner towers SW / SE
-    # -------------------------------------------------------------------------
+    # Corner towers SW / SE (match south facade height ~22-25)
     for side, x in (("SW", -90.0), ("SE", 90.0)):
         kids.append(
-            part(f"Tower_{side}", (8.0, 34.0, 8.0), (x, 17.5, 64.0), MARBLE, material="Marble", can_collide=False)
+            part(f"Tower_{side}", (7.0, 24.0, 7.0), (x, 12.5, 64.0), MARBLE, material="Marble", can_collide=False)
         )
         kids.append(
-            part(f"TowerCap_{side}", (9.5, 1.2, 9.5), (x, 35.0, 64.0), GOLD, material="Metal", can_collide=False)
+            part(f"TowerCap_{side}", (8.2, 1.0, 8.2), (x, 25.0, 64.0), GOLD, material="Metal", can_collide=False)
         )
         kids.append(
-            part(f"TowerSpire_{side}", (2.0, 8.0, 2.0), (x, 40.0, 64.0), GOLD, material="Metal", can_collide=False, shape="Cylinder")
+            part(f"TowerSpire_{side}", (1.6, 5.0, 1.6), (x, 28.5, 64.0), GOLD, material="Metal", can_collide=False, shape="Cylinder")
         )
         kids.append(
-            part(f"TowerNeon_{side}", (0.4, 28.0, 0.4), (x, 16.0, 68.2), CYAN if side == "SW" else MAGENTA, material="Neon", can_collide=False)
+            part(f"TowerNeon_{side}", (0.35, 20.0, 0.35), (x, 11.0, 67.8), CYAN if side == "SW" else MAGENTA, material="Neon", can_collide=False)
         )
-        # Window slits on tower south face
-        for wi, wy in enumerate((8.0, 16.0, 24.0)):
-            kids.extend(window_bay(f"TowerWin_{side}_{wi}", x, wy, 68.2, width=4.5, height=5.5))
+        for wi, wy in enumerate((7.0, 14.0)):
+            kids.extend(window_bay(f"TowerWin_{side}_{wi}", x, wy, 67.8, width=4.0, height=5.0))
 
-    # -------------------------------------------------------------------------
     # East / west side elevations - bay rhythm
     # -------------------------------------------------------------------------
     for side, x, outward in (("W", -93.4, -1.0), ("E", 93.4, 1.0)):
@@ -820,19 +827,20 @@ def build_exterior() -> list:
         kids.append(
             part(
                 f"SideVeneer_{side}",
-                (0.8, 20.0, 200.0),
-                (x, 11.0, -37.0),
+                (0.8, 20.0, 120.0),
+                (x, 11.0, 5.0),
                 MARBLE,
                 material="Marble",
                 can_collide=False,
             )
         )
-        for i, z in enumerate(range(-120, 62, 18)):
+        # Side bays only along the pit wing (match south height) - not the tall room wing
+        for i, z in enumerate(range(-40, 62, 18)):
             kids.append(
                 part(
                     f"Pilaster_{side}_{i}",
-                    (2.6, 22.0, 3.2),
-                    (x, 11.5, float(z)),
+                    (2.6, 20.0, 3.2),
+                    (x, 10.5, float(z)),
                     MARBLE,
                     material="Marble",
                     can_collide=False,
@@ -841,23 +849,22 @@ def build_exterior() -> list:
             kids.append(
                 part(
                     f"PilasterCap_{side}_{i}",
-                    (3.0, 0.55, 3.6),
-                    (x, 22.8, float(z)),
+                    (3.0, 0.5, 3.6),
+                    (x, 20.8, float(z)),
                     GOLD,
                     material="Metal",
                     can_collide=False,
                 )
             )
-            # Side window between pilasters
             kids.extend(
                 window_bay_ew(
                     f"SideWin_{side}_{i}",
                     x + outward * 0.9,
-                    12.0,
+                    11.0,
                     float(z) + 8.0,
                     outward=outward,
                     width=5.5,
-                    height=8.0,
+                    height=7.5,
                 )
             )
 
@@ -1620,31 +1627,73 @@ def update_spawn(lobby: dict) -> None:
 
 
 def upgrade_entry_columns(walls: dict) -> None:
-    """Enrich existing entry columns; drop superseded Entry_Marquee strip."""
+    """Align envelope with south facade height; keep tall walls only on game-room wing.
+
+    Splits Ext_East/West into pit-height (matches south ~22) and room-height (~54).
+    Also drops superseded Entry_Marquee and tunes entry columns / SW-SE corners.
+    """
     kept = []
     for child in walls.get("children") or []:
         name = child.get("name") or ""
         props = child.get("properties") or {}
-        if name == "Entry_Marquee":
-            continue  # replaced by Structure.Exterior marquee
+        if name in (
+            "Entry_Marquee",
+            "Ext_East",
+            "Ext_West",
+            "Ext_E_Pit",
+            "Ext_W_Pit",
+            "Ext_E_Rooms",
+            "Ext_W_Rooms",
+        ):
+            # Replaced by fresh split segments below (idempotent)
+            continue
         if name in ("Entry_Column_L", "Entry_Column_R"):
+            # Match south facade height ladder (wall ~22 + parapet), not 32-stud towers
             props["Material"] = "Marble"
             props["Color"] = MARBLE
-            props["Size"] = [4.0, 32.0, 4.0]
+            props["Size"] = [3.6, 24.0, 3.6]
             pos = props.get("Position") or [0, 13, 64.5]
-            props["Position"] = [pos[0], 16.5, 64.0]
+            props["Position"] = [pos[0], 12.5, 64.2]
         if name in ("Entry_ColNeon_L", "Entry_ColNeon_R"):
-            props["Size"] = [0.55, 30.0, 0.55]
+            props["Size"] = [0.5, 22.0, 0.5]
             pos = props.get("Position") or [0, 13, 66.3]
-            props["Position"] = [pos[0], 16.5, 66.6]
+            props["Position"] = [pos[0], 12.5, 66.5]
             props["Color"] = GOLD
         if name in ("Corner_SW", "Corner_SE"):
+            # Align with south wall top (~22), slightly proud as corner posts
             props["Material"] = "Marble"
             props["Color"] = MARBLE
-            props["Size"] = [6.0, 34.0, 6.0]
+            props["Size"] = [4.5, 24.0, 4.5]
             pos = props.get("Position") or [0, 10, 65]
-            props["Position"] = [pos[0], 17.5, 64.0]
+            props["Position"] = [pos[0], 12.5, 65.0]
         kept.append(child)
+
+    # Pit-side walls: same height as Ext_South (22). z from -55 (pit north) to +66 (south).
+    # depth=121, center z = (-55+66)/2 = 5.5
+    for side, x in (("W", -92.0), ("E", 92.0)):
+        kept.append(
+            part(
+                f"Ext_{side}_Pit",
+                (2.5, 22.0, 121.0),
+                (x, 11.0, 5.5),
+                DARK,
+                material="SmoothPlastic",
+                can_collide=True,
+            )
+        )
+        # Game-room wing stays tall (Plinko board clearance). z -140..-55.
+        # depth=85, center z = (-140-55)/2 = -97.5
+        kept.append(
+            part(
+                f"Ext_{side}_Rooms",
+                (2.5, 54.0, 85.0),
+                (x, 27.0, -97.5),
+                DARK,
+                material="SmoothPlastic",
+                can_collide=True,
+            )
+        )
+
     walls["children"] = kept
 
 
