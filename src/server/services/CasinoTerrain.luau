@@ -3,7 +3,7 @@
 	Casino Terrain: flat front under plaza + smooth walkable slope to a two-hill back range.
 
 	Bakes Terrain once per place / server when ShuffleCasinoTerrainVersion matches.
-	Always (re)builds RampWalkway parts so pavement + lamps follow rampTopY.
+	-- Pavement + lamps always refresh; heights use FillBall crest (rampTopY + 0.22*radius), not rampTopY alone.
 
 	Uses LeafyGrass recolored to match WorldGrass (synthetic green, no grass blades).
 	Slope is overlapping FillBalls (no block steps). Building shell is air-carved with margin.
@@ -39,10 +39,17 @@ local CREST_TOP_Y = 22.0
 local RAMP_Z0 = WALL_Z_S - (WALL_Z_S - WALL_Z_N) * 0.25 -- ≈ 15.5
 local RAMP_Z1 = -190.0
 
+-- Must match FillBall radius used for the walkable ramp.
+local RAMP_BALL_RADIUS = 20.0
+-- Centers are placed at rampTopY - radius*0.78, so the crest is +radius*0.22 above rampTopY.
+local RAMP_BALL_CREST_EXTRA = RAMP_BALL_RADIUS * 0.22
+-- Extra clearance for voxel smoothing + pavement thickness so parts sit ON the grass.
+local PATH_SURFACE_CLEARANCE = 1.25
+
 -- Flank path sits on the Terrain ramp balls (|x| ≈ 120–155).
 local PATH_X = { -128.0, 128.0 }
 local PATH_WIDTH = 10.0
-local PATH_THICKNESS = 0.45
+local PATH_THICKNESS = 0.55
 local PATH_SEG = 7.0
 local PATH_Z_START = WALL_Z_S + 4.0 -- south facade corners
 local PATH_Z_END = WALL_Z_N - 12.0 -- past the north wall / back of casino
@@ -78,14 +85,28 @@ local function rampTopY(z: number): number
 	return FRONT_TOP_Y + t * (CREST_TOP_Y - FRONT_TOP_Y)
 end
 
--- Pavement sits on plaza grade until the Terrain ramp rises above it.
-local function pathY(z: number): number
-	local plazaY = 0.28
-	local onRamp = rampTopY(z) + 0.7
+-- Actual Terrain grass crest under the flank path (FillBall peak, not rampTopY alone).
+local function terrainCrestY(z: number): number
 	if z >= RAMP_Z0 then
-		return plazaY
+		-- Flat front pad top is FRONT_TOP_Y
+		return FRONT_TOP_Y
 	end
-	return math.max(plazaY, onRamp)
+	return rampTopY(z) + RAMP_BALL_CREST_EXTRA
+end
+
+-- Part center Y so pavement top sits clearly above Terrain.
+local function pathY(z: number): number
+	local plazaCenter = 0.28 + PATH_THICKNESS * 0.5
+	local onRampCenter = terrainCrestY(z) + PATH_SURFACE_CLEARANCE + PATH_THICKNESS * 0.5
+	if z >= RAMP_Z0 then
+		return plazaCenter
+	end
+	return math.max(plazaCenter, onRampCenter)
+end
+
+-- Walkable top of the pavement (lamp bases sit here).
+local function pathSurfaceY(z: number): number
+	return pathY(z) + PATH_THICKNESS * 0.5
 end
 
 local function inBuildingPlan(x: number, z: number, margin: number): boolean
@@ -284,17 +305,16 @@ local function buildRampWalkway()
 			true
 		)
 
-		-- Street lamps along the outer edge
+		-- Street lamps along the outer edge (bases on pavement top)
 		local lampI = 0
 		local lz = PATH_Z_START - 4
 		while lz >= PATH_Z_END do
-			local gy = pathY(lz)
-			addStreetLamp(folder, `RampLamp_{sideName}{lampI}`, lampX, lz, gy, lampYaw)
+			addStreetLamp(folder, `RampLamp_{sideName}{lampI}`, lampX, lz, pathSurfaceY(lz), lampYaw)
 			lampI += 1
 			lz -= LAMP_SPACING
 		end
 		-- Final lamp on the back landing
-		addStreetLamp(folder, `RampLamp_{sideName}End`, lampX, PATH_Z_END - 2, pathY(PATH_Z_END - 2), lampYaw)
+		addStreetLamp(folder, `RampLamp_{sideName}End`, lampX, PATH_Z_END - 2, pathSurfaceY(PATH_Z_END - 2), lampYaw)
 	end
 
 	print(`[Shuffle] RampWalkway built ({PATH_Z_START} → {PATH_Z_END})`)
@@ -319,7 +339,7 @@ function CasinoTerrain.start()
 			fillBlock(terrain, CFrame.new(0, FRONT_TOP_Y - 8, flatCenterZ), Vector3.new(300, 16, flatDepth), SURFACE)
 
 			-- Smooth walkable ramp: dense overlapping balls, surface follows rampTopY
-			local radius = 20
+			local radius = RAMP_BALL_RADIUS
 			local step = 7
 			for z = RAMP_Z0, RAMP_Z1 - 40, -step do
 				local top = rampTopY(z)
