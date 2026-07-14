@@ -18850,9 +18850,9 @@
                   0.2
                 ],
                 "Position": [
-                  -40.0,
+                  -48.0,
                   6.0,
-                  90.0
+                  92.0
                 ],
                 "Color": [
                   1.0,
@@ -18875,9 +18875,9 @@
                   "name": "Spot",
                   "className": "SpotLight",
                   "properties": {
-                    "Brightness": 4.0,
-                    "Range": 55.0,
-                    "Angle": 65.0,
+                    "Brightness": 2.2,
+                    "Range": 40.0,
+                    "Angle": 55.0,
                     "Face": "Front",
                     "Color": [
                       1.0,
@@ -18899,9 +18899,9 @@
                   0.2
                 ],
                 "Position": [
-                  -15.0,
+                  -28.0,
                   6.0,
-                  90.0
+                  92.0
                 ],
                 "Color": [
                   1.0,
@@ -18924,9 +18924,9 @@
                   "name": "Spot",
                   "className": "SpotLight",
                   "properties": {
-                    "Brightness": 4.0,
-                    "Range": 55.0,
-                    "Angle": 65.0,
+                    "Brightness": 2.2,
+                    "Range": 40.0,
+                    "Angle": 55.0,
                     "Face": "Front",
                     "Color": [
                       1.0,
@@ -18948,9 +18948,9 @@
                   0.2
                 ],
                 "Position": [
-                  15.0,
+                  28.0,
                   6.0,
-                  90.0
+                  92.0
                 ],
                 "Color": [
                   1.0,
@@ -18973,9 +18973,9 @@
                   "name": "Spot",
                   "className": "SpotLight",
                   "properties": {
-                    "Brightness": 4.0,
-                    "Range": 55.0,
-                    "Angle": 65.0,
+                    "Brightness": 2.2,
+                    "Range": 40.0,
+                    "Angle": 55.0,
                     "Face": "Front",
                     "Color": [
                       1.0,
@@ -18997,9 +18997,9 @@
                   0.2
                 ],
                 "Position": [
-                  40.0,
+                  48.0,
                   6.0,
-                  90.0
+                  92.0
                 ],
                 "Color": [
                   1.0,
@@ -19022,9 +19022,9 @@
                   "name": "Spot",
                   "className": "SpotLight",
                   "properties": {
-                    "Brightness": 4.0,
-                    "Range": 55.0,
-                    "Angle": 65.0,
+                    "Brightness": 2.2,
+                    "Range": 40.0,
+                    "Angle": 55.0,
                     "Face": "Front",
                     "Color": [
                       1.0,
@@ -38477,8 +38477,8 @@
                   "name": "Light",
                   "className": "PointLight",
                   "properties": {
-                    "Brightness": 2.0,
-                    "Range": 50.0,
+                    "Brightness": 1.1,
+                    "Range": 36.0,
                     "Color": [
                       1.0,
                       0.85,
@@ -38519,8 +38519,8 @@
                   "name": "Light",
                   "className": "PointLight",
                   "properties": {
-                    "Brightness": 1.6,
-                    "Range": 35.0,
+                    "Brightness": 1.0,
+                    "Range": 28.0,
                     "Color": [
                       0.659,
                       0.333,
@@ -38672,1638 +38672,6 @@
           "name": "SiteLighting",
           "className": "Folder",
           "children": [
-            {
-              "name": "PlazaW0_Base",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  1.2,
-                  0.35,
-                  1.2
-                ],
-                "Position": [
-                  -18.0,
-                  0.4,
-                  72.0
-                ],
-                "Color": [
-                  0.22,
-                  0.2,
-                  0.24
-                ],
-                "Material": "Concrete",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false
-              }
-            },
-            {
-              "name": "PlazaW0_Pole",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  0.35,
-                  12.0,
-                  0.35
-                ],
-                "Position": [
-                  -18.0,
-                  6.4,
-                  72.0
-                ],
-                "Color": [
-                  0.12,
-                  0.12,
-                  0.14
-                ],
-                "Material": "Metal",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false
-              }
-            },
-            {
-              "name": "PlazaW0_Collar",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  0.55,
-                  0.25,
-                  0.55
-                ],
-                "Position": [
-                  -18.0,
-                  12.2,
-                  72.0
-                ],
-                "Color": [
-                  0.92,
-                  0.75,
-                  0.32
-                ],
-                "Material": "Metal",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false
-              }
-            },
-            {
-              "name": "PlazaW0_Arm",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  0.25,
-                  0.25,
-                  2.4
-                ],
-                "Position": [
-                  -16.8,
-                  12.35,
-                  72.0
-                ],
-                "Color": [
-                  0.12,
-                  0.12,
-                  0.14
-                ],
-                "Material": "Metal",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false,
-                "Orientation": [
-                  0.0,
-                  90.0,
-                  0.0
-                ]
-              }
-            },
-            {
-              "name": "PlazaW0_Head",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  1.1,
-                  0.55,
-                  1.1
-                ],
-                "Position": [
-                  -15.6,
-                  12.1,
-                  72.0
-                ],
-                "Color": [
-                  0.08,
-                  0.08,
-                  0.1
-                ],
-                "Material": "Metal",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false
-              }
-            },
-            {
-              "name": "PlazaW0_Glow",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  0.7,
-                  0.35,
-                  0.7
-                ],
-                "Position": [
-                  -15.6,
-                  11.85,
-                  72.0
-                ],
-                "Color": [
-                  1.0,
-                  0.85,
-                  0.55
-                ],
-                "Material": "Neon",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false,
-                "Transparency": 0.15
-              }
-            },
-            {
-              "name": "PlazaW0_Light",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  0.2,
-                  0.2,
-                  0.2
-                ],
-                "Position": [
-                  -15.6,
-                  11.5,
-                  72.0
-                ],
-                "Color": [
-                  1.0,
-                  0.85,
-                  0.55
-                ],
-                "Material": "SmoothPlastic",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false,
-                "Transparency": 1.0
-              },
-              "children": [
-                {
-                  "name": "Light",
-                  "className": "PointLight",
-                  "properties": {
-                    "Brightness": 2.8,
-                    "Range": 48.0,
-                    "Color": [
-                      1.0,
-                      0.85,
-                      0.55
-                    ]
-                  }
-                }
-              ]
-            },
-            {
-              "name": "PlazaW1_Base",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  1.2,
-                  0.35,
-                  1.2
-                ],
-                "Position": [
-                  -18.0,
-                  0.4,
-                  88.0
-                ],
-                "Color": [
-                  0.22,
-                  0.2,
-                  0.24
-                ],
-                "Material": "Concrete",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false
-              }
-            },
-            {
-              "name": "PlazaW1_Pole",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  0.35,
-                  12.0,
-                  0.35
-                ],
-                "Position": [
-                  -18.0,
-                  6.4,
-                  88.0
-                ],
-                "Color": [
-                  0.12,
-                  0.12,
-                  0.14
-                ],
-                "Material": "Metal",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false
-              }
-            },
-            {
-              "name": "PlazaW1_Collar",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  0.55,
-                  0.25,
-                  0.55
-                ],
-                "Position": [
-                  -18.0,
-                  12.2,
-                  88.0
-                ],
-                "Color": [
-                  0.92,
-                  0.75,
-                  0.32
-                ],
-                "Material": "Metal",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false
-              }
-            },
-            {
-              "name": "PlazaW1_Arm",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  0.25,
-                  0.25,
-                  2.4
-                ],
-                "Position": [
-                  -16.8,
-                  12.35,
-                  88.0
-                ],
-                "Color": [
-                  0.12,
-                  0.12,
-                  0.14
-                ],
-                "Material": "Metal",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false,
-                "Orientation": [
-                  0.0,
-                  90.0,
-                  0.0
-                ]
-              }
-            },
-            {
-              "name": "PlazaW1_Head",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  1.1,
-                  0.55,
-                  1.1
-                ],
-                "Position": [
-                  -15.6,
-                  12.1,
-                  88.0
-                ],
-                "Color": [
-                  0.08,
-                  0.08,
-                  0.1
-                ],
-                "Material": "Metal",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false
-              }
-            },
-            {
-              "name": "PlazaW1_Glow",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  0.7,
-                  0.35,
-                  0.7
-                ],
-                "Position": [
-                  -15.6,
-                  11.85,
-                  88.0
-                ],
-                "Color": [
-                  1.0,
-                  0.85,
-                  0.55
-                ],
-                "Material": "Neon",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false,
-                "Transparency": 0.15
-              }
-            },
-            {
-              "name": "PlazaW1_Light",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  0.2,
-                  0.2,
-                  0.2
-                ],
-                "Position": [
-                  -15.6,
-                  11.5,
-                  88.0
-                ],
-                "Color": [
-                  1.0,
-                  0.85,
-                  0.55
-                ],
-                "Material": "SmoothPlastic",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false,
-                "Transparency": 1.0
-              },
-              "children": [
-                {
-                  "name": "Light",
-                  "className": "PointLight",
-                  "properties": {
-                    "Brightness": 2.8,
-                    "Range": 48.0,
-                    "Color": [
-                      1.0,
-                      0.85,
-                      0.55
-                    ]
-                  }
-                }
-              ]
-            },
-            {
-              "name": "PlazaW2_Base",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  1.2,
-                  0.35,
-                  1.2
-                ],
-                "Position": [
-                  -18.0,
-                  0.4,
-                  104.0
-                ],
-                "Color": [
-                  0.22,
-                  0.2,
-                  0.24
-                ],
-                "Material": "Concrete",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false
-              }
-            },
-            {
-              "name": "PlazaW2_Pole",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  0.35,
-                  12.0,
-                  0.35
-                ],
-                "Position": [
-                  -18.0,
-                  6.4,
-                  104.0
-                ],
-                "Color": [
-                  0.12,
-                  0.12,
-                  0.14
-                ],
-                "Material": "Metal",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false
-              }
-            },
-            {
-              "name": "PlazaW2_Collar",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  0.55,
-                  0.25,
-                  0.55
-                ],
-                "Position": [
-                  -18.0,
-                  12.2,
-                  104.0
-                ],
-                "Color": [
-                  0.92,
-                  0.75,
-                  0.32
-                ],
-                "Material": "Metal",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false
-              }
-            },
-            {
-              "name": "PlazaW2_Arm",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  0.25,
-                  0.25,
-                  2.4
-                ],
-                "Position": [
-                  -16.8,
-                  12.35,
-                  104.0
-                ],
-                "Color": [
-                  0.12,
-                  0.12,
-                  0.14
-                ],
-                "Material": "Metal",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false,
-                "Orientation": [
-                  0.0,
-                  90.0,
-                  0.0
-                ]
-              }
-            },
-            {
-              "name": "PlazaW2_Head",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  1.1,
-                  0.55,
-                  1.1
-                ],
-                "Position": [
-                  -15.6,
-                  12.1,
-                  104.0
-                ],
-                "Color": [
-                  0.08,
-                  0.08,
-                  0.1
-                ],
-                "Material": "Metal",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false
-              }
-            },
-            {
-              "name": "PlazaW2_Glow",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  0.7,
-                  0.35,
-                  0.7
-                ],
-                "Position": [
-                  -15.6,
-                  11.85,
-                  104.0
-                ],
-                "Color": [
-                  1.0,
-                  0.85,
-                  0.55
-                ],
-                "Material": "Neon",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false,
-                "Transparency": 0.15
-              }
-            },
-            {
-              "name": "PlazaW2_Light",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  0.2,
-                  0.2,
-                  0.2
-                ],
-                "Position": [
-                  -15.6,
-                  11.5,
-                  104.0
-                ],
-                "Color": [
-                  1.0,
-                  0.85,
-                  0.55
-                ],
-                "Material": "SmoothPlastic",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false,
-                "Transparency": 1.0
-              },
-              "children": [
-                {
-                  "name": "Light",
-                  "className": "PointLight",
-                  "properties": {
-                    "Brightness": 2.8,
-                    "Range": 48.0,
-                    "Color": [
-                      1.0,
-                      0.85,
-                      0.55
-                    ]
-                  }
-                }
-              ]
-            },
-            {
-              "name": "PlazaW3_Base",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  1.2,
-                  0.35,
-                  1.2
-                ],
-                "Position": [
-                  -18.0,
-                  0.4,
-                  120.0
-                ],
-                "Color": [
-                  0.22,
-                  0.2,
-                  0.24
-                ],
-                "Material": "Concrete",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false
-              }
-            },
-            {
-              "name": "PlazaW3_Pole",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  0.35,
-                  12.0,
-                  0.35
-                ],
-                "Position": [
-                  -18.0,
-                  6.4,
-                  120.0
-                ],
-                "Color": [
-                  0.12,
-                  0.12,
-                  0.14
-                ],
-                "Material": "Metal",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false
-              }
-            },
-            {
-              "name": "PlazaW3_Collar",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  0.55,
-                  0.25,
-                  0.55
-                ],
-                "Position": [
-                  -18.0,
-                  12.2,
-                  120.0
-                ],
-                "Color": [
-                  0.92,
-                  0.75,
-                  0.32
-                ],
-                "Material": "Metal",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false
-              }
-            },
-            {
-              "name": "PlazaW3_Arm",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  0.25,
-                  0.25,
-                  2.4
-                ],
-                "Position": [
-                  -16.8,
-                  12.35,
-                  120.0
-                ],
-                "Color": [
-                  0.12,
-                  0.12,
-                  0.14
-                ],
-                "Material": "Metal",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false,
-                "Orientation": [
-                  0.0,
-                  90.0,
-                  0.0
-                ]
-              }
-            },
-            {
-              "name": "PlazaW3_Head",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  1.1,
-                  0.55,
-                  1.1
-                ],
-                "Position": [
-                  -15.6,
-                  12.1,
-                  120.0
-                ],
-                "Color": [
-                  0.08,
-                  0.08,
-                  0.1
-                ],
-                "Material": "Metal",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false
-              }
-            },
-            {
-              "name": "PlazaW3_Glow",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  0.7,
-                  0.35,
-                  0.7
-                ],
-                "Position": [
-                  -15.6,
-                  11.85,
-                  120.0
-                ],
-                "Color": [
-                  1.0,
-                  0.85,
-                  0.55
-                ],
-                "Material": "Neon",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false,
-                "Transparency": 0.15
-              }
-            },
-            {
-              "name": "PlazaW3_Light",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  0.2,
-                  0.2,
-                  0.2
-                ],
-                "Position": [
-                  -15.6,
-                  11.5,
-                  120.0
-                ],
-                "Color": [
-                  1.0,
-                  0.85,
-                  0.55
-                ],
-                "Material": "SmoothPlastic",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false,
-                "Transparency": 1.0
-              },
-              "children": [
-                {
-                  "name": "Light",
-                  "className": "PointLight",
-                  "properties": {
-                    "Brightness": 2.8,
-                    "Range": 48.0,
-                    "Color": [
-                      1.0,
-                      0.85,
-                      0.55
-                    ]
-                  }
-                }
-              ]
-            },
-            {
-              "name": "PlazaE0_Base",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  1.2,
-                  0.35,
-                  1.2
-                ],
-                "Position": [
-                  18.0,
-                  0.4,
-                  72.0
-                ],
-                "Color": [
-                  0.22,
-                  0.2,
-                  0.24
-                ],
-                "Material": "Concrete",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false
-              }
-            },
-            {
-              "name": "PlazaE0_Pole",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  0.35,
-                  12.0,
-                  0.35
-                ],
-                "Position": [
-                  18.0,
-                  6.4,
-                  72.0
-                ],
-                "Color": [
-                  0.12,
-                  0.12,
-                  0.14
-                ],
-                "Material": "Metal",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false
-              }
-            },
-            {
-              "name": "PlazaE0_Collar",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  0.55,
-                  0.25,
-                  0.55
-                ],
-                "Position": [
-                  18.0,
-                  12.2,
-                  72.0
-                ],
-                "Color": [
-                  0.92,
-                  0.75,
-                  0.32
-                ],
-                "Material": "Metal",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false
-              }
-            },
-            {
-              "name": "PlazaE0_Arm",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  0.25,
-                  0.25,
-                  2.4
-                ],
-                "Position": [
-                  16.8,
-                  12.35,
-                  72.0
-                ],
-                "Color": [
-                  0.12,
-                  0.12,
-                  0.14
-                ],
-                "Material": "Metal",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false,
-                "Orientation": [
-                  0.0,
-                  -90.0,
-                  0.0
-                ]
-              }
-            },
-            {
-              "name": "PlazaE0_Head",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  1.1,
-                  0.55,
-                  1.1
-                ],
-                "Position": [
-                  15.6,
-                  12.1,
-                  72.0
-                ],
-                "Color": [
-                  0.08,
-                  0.08,
-                  0.1
-                ],
-                "Material": "Metal",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false
-              }
-            },
-            {
-              "name": "PlazaE0_Glow",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  0.7,
-                  0.35,
-                  0.7
-                ],
-                "Position": [
-                  15.6,
-                  11.85,
-                  72.0
-                ],
-                "Color": [
-                  1.0,
-                  0.85,
-                  0.55
-                ],
-                "Material": "Neon",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false,
-                "Transparency": 0.15
-              }
-            },
-            {
-              "name": "PlazaE0_Light",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  0.2,
-                  0.2,
-                  0.2
-                ],
-                "Position": [
-                  15.6,
-                  11.5,
-                  72.0
-                ],
-                "Color": [
-                  1.0,
-                  0.85,
-                  0.55
-                ],
-                "Material": "SmoothPlastic",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false,
-                "Transparency": 1.0
-              },
-              "children": [
-                {
-                  "name": "Light",
-                  "className": "PointLight",
-                  "properties": {
-                    "Brightness": 2.8,
-                    "Range": 48.0,
-                    "Color": [
-                      1.0,
-                      0.85,
-                      0.55
-                    ]
-                  }
-                }
-              ]
-            },
-            {
-              "name": "PlazaE1_Base",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  1.2,
-                  0.35,
-                  1.2
-                ],
-                "Position": [
-                  18.0,
-                  0.4,
-                  88.0
-                ],
-                "Color": [
-                  0.22,
-                  0.2,
-                  0.24
-                ],
-                "Material": "Concrete",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false
-              }
-            },
-            {
-              "name": "PlazaE1_Pole",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  0.35,
-                  12.0,
-                  0.35
-                ],
-                "Position": [
-                  18.0,
-                  6.4,
-                  88.0
-                ],
-                "Color": [
-                  0.12,
-                  0.12,
-                  0.14
-                ],
-                "Material": "Metal",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false
-              }
-            },
-            {
-              "name": "PlazaE1_Collar",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  0.55,
-                  0.25,
-                  0.55
-                ],
-                "Position": [
-                  18.0,
-                  12.2,
-                  88.0
-                ],
-                "Color": [
-                  0.92,
-                  0.75,
-                  0.32
-                ],
-                "Material": "Metal",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false
-              }
-            },
-            {
-              "name": "PlazaE1_Arm",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  0.25,
-                  0.25,
-                  2.4
-                ],
-                "Position": [
-                  16.8,
-                  12.35,
-                  88.0
-                ],
-                "Color": [
-                  0.12,
-                  0.12,
-                  0.14
-                ],
-                "Material": "Metal",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false,
-                "Orientation": [
-                  0.0,
-                  -90.0,
-                  0.0
-                ]
-              }
-            },
-            {
-              "name": "PlazaE1_Head",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  1.1,
-                  0.55,
-                  1.1
-                ],
-                "Position": [
-                  15.6,
-                  12.1,
-                  88.0
-                ],
-                "Color": [
-                  0.08,
-                  0.08,
-                  0.1
-                ],
-                "Material": "Metal",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false
-              }
-            },
-            {
-              "name": "PlazaE1_Glow",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  0.7,
-                  0.35,
-                  0.7
-                ],
-                "Position": [
-                  15.6,
-                  11.85,
-                  88.0
-                ],
-                "Color": [
-                  1.0,
-                  0.85,
-                  0.55
-                ],
-                "Material": "Neon",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false,
-                "Transparency": 0.15
-              }
-            },
-            {
-              "name": "PlazaE1_Light",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  0.2,
-                  0.2,
-                  0.2
-                ],
-                "Position": [
-                  15.6,
-                  11.5,
-                  88.0
-                ],
-                "Color": [
-                  1.0,
-                  0.85,
-                  0.55
-                ],
-                "Material": "SmoothPlastic",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false,
-                "Transparency": 1.0
-              },
-              "children": [
-                {
-                  "name": "Light",
-                  "className": "PointLight",
-                  "properties": {
-                    "Brightness": 2.8,
-                    "Range": 48.0,
-                    "Color": [
-                      1.0,
-                      0.85,
-                      0.55
-                    ]
-                  }
-                }
-              ]
-            },
-            {
-              "name": "PlazaE2_Base",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  1.2,
-                  0.35,
-                  1.2
-                ],
-                "Position": [
-                  18.0,
-                  0.4,
-                  104.0
-                ],
-                "Color": [
-                  0.22,
-                  0.2,
-                  0.24
-                ],
-                "Material": "Concrete",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false
-              }
-            },
-            {
-              "name": "PlazaE2_Pole",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  0.35,
-                  12.0,
-                  0.35
-                ],
-                "Position": [
-                  18.0,
-                  6.4,
-                  104.0
-                ],
-                "Color": [
-                  0.12,
-                  0.12,
-                  0.14
-                ],
-                "Material": "Metal",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false
-              }
-            },
-            {
-              "name": "PlazaE2_Collar",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  0.55,
-                  0.25,
-                  0.55
-                ],
-                "Position": [
-                  18.0,
-                  12.2,
-                  104.0
-                ],
-                "Color": [
-                  0.92,
-                  0.75,
-                  0.32
-                ],
-                "Material": "Metal",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false
-              }
-            },
-            {
-              "name": "PlazaE2_Arm",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  0.25,
-                  0.25,
-                  2.4
-                ],
-                "Position": [
-                  16.8,
-                  12.35,
-                  104.0
-                ],
-                "Color": [
-                  0.12,
-                  0.12,
-                  0.14
-                ],
-                "Material": "Metal",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false,
-                "Orientation": [
-                  0.0,
-                  -90.0,
-                  0.0
-                ]
-              }
-            },
-            {
-              "name": "PlazaE2_Head",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  1.1,
-                  0.55,
-                  1.1
-                ],
-                "Position": [
-                  15.6,
-                  12.1,
-                  104.0
-                ],
-                "Color": [
-                  0.08,
-                  0.08,
-                  0.1
-                ],
-                "Material": "Metal",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false
-              }
-            },
-            {
-              "name": "PlazaE2_Glow",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  0.7,
-                  0.35,
-                  0.7
-                ],
-                "Position": [
-                  15.6,
-                  11.85,
-                  104.0
-                ],
-                "Color": [
-                  1.0,
-                  0.85,
-                  0.55
-                ],
-                "Material": "Neon",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false,
-                "Transparency": 0.15
-              }
-            },
-            {
-              "name": "PlazaE2_Light",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  0.2,
-                  0.2,
-                  0.2
-                ],
-                "Position": [
-                  15.6,
-                  11.5,
-                  104.0
-                ],
-                "Color": [
-                  1.0,
-                  0.85,
-                  0.55
-                ],
-                "Material": "SmoothPlastic",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false,
-                "Transparency": 1.0
-              },
-              "children": [
-                {
-                  "name": "Light",
-                  "className": "PointLight",
-                  "properties": {
-                    "Brightness": 2.8,
-                    "Range": 48.0,
-                    "Color": [
-                      1.0,
-                      0.85,
-                      0.55
-                    ]
-                  }
-                }
-              ]
-            },
-            {
-              "name": "PlazaE3_Base",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  1.2,
-                  0.35,
-                  1.2
-                ],
-                "Position": [
-                  18.0,
-                  0.4,
-                  120.0
-                ],
-                "Color": [
-                  0.22,
-                  0.2,
-                  0.24
-                ],
-                "Material": "Concrete",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false
-              }
-            },
-            {
-              "name": "PlazaE3_Pole",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  0.35,
-                  12.0,
-                  0.35
-                ],
-                "Position": [
-                  18.0,
-                  6.4,
-                  120.0
-                ],
-                "Color": [
-                  0.12,
-                  0.12,
-                  0.14
-                ],
-                "Material": "Metal",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false
-              }
-            },
-            {
-              "name": "PlazaE3_Collar",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  0.55,
-                  0.25,
-                  0.55
-                ],
-                "Position": [
-                  18.0,
-                  12.2,
-                  120.0
-                ],
-                "Color": [
-                  0.92,
-                  0.75,
-                  0.32
-                ],
-                "Material": "Metal",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false
-              }
-            },
-            {
-              "name": "PlazaE3_Arm",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  0.25,
-                  0.25,
-                  2.4
-                ],
-                "Position": [
-                  16.8,
-                  12.35,
-                  120.0
-                ],
-                "Color": [
-                  0.12,
-                  0.12,
-                  0.14
-                ],
-                "Material": "Metal",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false,
-                "Orientation": [
-                  0.0,
-                  -90.0,
-                  0.0
-                ]
-              }
-            },
-            {
-              "name": "PlazaE3_Head",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  1.1,
-                  0.55,
-                  1.1
-                ],
-                "Position": [
-                  15.6,
-                  12.1,
-                  120.0
-                ],
-                "Color": [
-                  0.08,
-                  0.08,
-                  0.1
-                ],
-                "Material": "Metal",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false
-              }
-            },
-            {
-              "name": "PlazaE3_Glow",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  0.7,
-                  0.35,
-                  0.7
-                ],
-                "Position": [
-                  15.6,
-                  11.85,
-                  120.0
-                ],
-                "Color": [
-                  1.0,
-                  0.85,
-                  0.55
-                ],
-                "Material": "Neon",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false,
-                "Transparency": 0.15
-              }
-            },
-            {
-              "name": "PlazaE3_Light",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  0.2,
-                  0.2,
-                  0.2
-                ],
-                "Position": [
-                  15.6,
-                  11.5,
-                  120.0
-                ],
-                "Color": [
-                  1.0,
-                  0.85,
-                  0.55
-                ],
-                "Material": "SmoothPlastic",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false,
-                "Transparency": 1.0
-              },
-              "children": [
-                {
-                  "name": "Light",
-                  "className": "PointLight",
-                  "properties": {
-                    "Brightness": 2.8,
-                    "Range": 48.0,
-                    "Color": [
-                      1.0,
-                      0.85,
-                      0.55
-                    ]
-                  }
-                }
-              ]
-            },
             {
               "name": "PerimS0_Base",
               "className": "Part",
@@ -44385,6 +42753,643 @@
               ]
             },
             {
+              "name": "EntrySpot_CanopyL",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  0.2,
+                  0.2,
+                  0.2
+                ],
+                "Position": [
+                  -8.0,
+                  18.2,
+                  74.0
+                ],
+                "Color": [
+                  1.0,
+                  0.85,
+                  0.55
+                ],
+                "Material": "SmoothPlastic",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": false,
+                "Transparency": 1.0,
+                "Orientation": [
+                  -90.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "children": [
+                {
+                  "name": "Spot",
+                  "className": "SpotLight",
+                  "properties": {
+                    "Brightness": 2.4,
+                    "Range": 42.0,
+                    "Angle": 70.0,
+                    "Face": "Front",
+                    "Color": [
+                      1.0,
+                      0.85,
+                      0.55
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "name": "EntrySpot_CanopyC",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  0.2,
+                  0.2,
+                  0.2
+                ],
+                "Position": [
+                  0.0,
+                  18.2,
+                  76.0
+                ],
+                "Color": [
+                  1.0,
+                  0.85,
+                  0.55
+                ],
+                "Material": "SmoothPlastic",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": false,
+                "Transparency": 1.0,
+                "Orientation": [
+                  -90.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "children": [
+                {
+                  "name": "Spot",
+                  "className": "SpotLight",
+                  "properties": {
+                    "Brightness": 2.4,
+                    "Range": 42.0,
+                    "Angle": 70.0,
+                    "Face": "Front",
+                    "Color": [
+                      1.0,
+                      0.85,
+                      0.55
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "name": "EntrySpot_CanopyR",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  0.2,
+                  0.2,
+                  0.2
+                ],
+                "Position": [
+                  8.0,
+                  18.2,
+                  74.0
+                ],
+                "Color": [
+                  1.0,
+                  0.85,
+                  0.55
+                ],
+                "Material": "SmoothPlastic",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": false,
+                "Transparency": 1.0,
+                "Orientation": [
+                  -90.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "children": [
+                {
+                  "name": "Spot",
+                  "className": "SpotLight",
+                  "properties": {
+                    "Brightness": 2.4,
+                    "Range": 42.0,
+                    "Angle": 70.0,
+                    "Face": "Front",
+                    "Color": [
+                      1.0,
+                      0.85,
+                      0.55
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "name": "EntrySpot_CanopyFL",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  0.2,
+                  0.2,
+                  0.2
+                ],
+                "Position": [
+                  -10.0,
+                  18.2,
+                  82.0
+                ],
+                "Color": [
+                  1.0,
+                  0.85,
+                  0.55
+                ],
+                "Material": "SmoothPlastic",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": false,
+                "Transparency": 1.0,
+                "Orientation": [
+                  -90.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "children": [
+                {
+                  "name": "Spot",
+                  "className": "SpotLight",
+                  "properties": {
+                    "Brightness": 2.4,
+                    "Range": 42.0,
+                    "Angle": 70.0,
+                    "Face": "Front",
+                    "Color": [
+                      1.0,
+                      0.85,
+                      0.55
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "name": "EntrySpot_CanopyFR",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  0.2,
+                  0.2,
+                  0.2
+                ],
+                "Position": [
+                  10.0,
+                  18.2,
+                  82.0
+                ],
+                "Color": [
+                  1.0,
+                  0.85,
+                  0.55
+                ],
+                "Material": "SmoothPlastic",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": false,
+                "Transparency": 1.0,
+                "Orientation": [
+                  -90.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "children": [
+                {
+                  "name": "Spot",
+                  "className": "SpotLight",
+                  "properties": {
+                    "Brightness": 2.4,
+                    "Range": 42.0,
+                    "Angle": 70.0,
+                    "Face": "Front",
+                    "Color": [
+                      1.0,
+                      0.85,
+                      0.55
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "name": "EntrySpot_DoorL",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  0.2,
+                  0.2,
+                  0.2
+                ],
+                "Position": [
+                  -10.0,
+                  23.5,
+                  67.5
+                ],
+                "Color": [
+                  1.0,
+                  0.85,
+                  0.55
+                ],
+                "Material": "SmoothPlastic",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": false,
+                "Transparency": 1.0,
+                "Orientation": [
+                  -90.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "children": [
+                {
+                  "name": "Spot",
+                  "className": "SpotLight",
+                  "properties": {
+                    "Brightness": 2.4,
+                    "Range": 42.0,
+                    "Angle": 70.0,
+                    "Face": "Front",
+                    "Color": [
+                      1.0,
+                      0.85,
+                      0.55
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "name": "EntrySpot_DoorC",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  0.2,
+                  0.2,
+                  0.2
+                ],
+                "Position": [
+                  0.0,
+                  23.5,
+                  67.5
+                ],
+                "Color": [
+                  1.0,
+                  0.85,
+                  0.55
+                ],
+                "Material": "SmoothPlastic",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": false,
+                "Transparency": 1.0,
+                "Orientation": [
+                  -90.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "children": [
+                {
+                  "name": "Spot",
+                  "className": "SpotLight",
+                  "properties": {
+                    "Brightness": 2.4,
+                    "Range": 42.0,
+                    "Angle": 70.0,
+                    "Face": "Front",
+                    "Color": [
+                      1.0,
+                      0.85,
+                      0.55
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "name": "EntrySpot_DoorR",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  0.2,
+                  0.2,
+                  0.2
+                ],
+                "Position": [
+                  10.0,
+                  23.5,
+                  67.5
+                ],
+                "Color": [
+                  1.0,
+                  0.85,
+                  0.55
+                ],
+                "Material": "SmoothPlastic",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": false,
+                "Transparency": 1.0,
+                "Orientation": [
+                  -90.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "children": [
+                {
+                  "name": "Spot",
+                  "className": "SpotLight",
+                  "properties": {
+                    "Brightness": 2.4,
+                    "Range": 42.0,
+                    "Angle": 70.0,
+                    "Face": "Front",
+                    "Color": [
+                      1.0,
+                      0.85,
+                      0.55
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "name": "EntrySpot_Approach0",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  0.2,
+                  0.2,
+                  0.2
+                ],
+                "Position": [
+                  -6.0,
+                  22.0,
+                  88.0
+                ],
+                "Color": [
+                  1.0,
+                  0.85,
+                  0.55
+                ],
+                "Material": "SmoothPlastic",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": false,
+                "Transparency": 1.0,
+                "Orientation": [
+                  -90.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "children": [
+                {
+                  "name": "Spot",
+                  "className": "SpotLight",
+                  "properties": {
+                    "Brightness": 2.4,
+                    "Range": 42.0,
+                    "Angle": 70.0,
+                    "Face": "Front",
+                    "Color": [
+                      1.0,
+                      0.85,
+                      0.55
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "name": "EntrySpot_Approach1",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  0.2,
+                  0.2,
+                  0.2
+                ],
+                "Position": [
+                  6.0,
+                  22.0,
+                  88.0
+                ],
+                "Color": [
+                  1.0,
+                  0.85,
+                  0.55
+                ],
+                "Material": "SmoothPlastic",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": false,
+                "Transparency": 1.0,
+                "Orientation": [
+                  -90.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "children": [
+                {
+                  "name": "Spot",
+                  "className": "SpotLight",
+                  "properties": {
+                    "Brightness": 2.4,
+                    "Range": 42.0,
+                    "Angle": 70.0,
+                    "Face": "Front",
+                    "Color": [
+                      1.0,
+                      0.85,
+                      0.55
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "name": "EntrySpot_Approach2",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  0.2,
+                  0.2,
+                  0.2
+                ],
+                "Position": [
+                  -6.0,
+                  22.0,
+                  100.0
+                ],
+                "Color": [
+                  1.0,
+                  0.85,
+                  0.55
+                ],
+                "Material": "SmoothPlastic",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": false,
+                "Transparency": 1.0,
+                "Orientation": [
+                  -90.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "children": [
+                {
+                  "name": "Spot",
+                  "className": "SpotLight",
+                  "properties": {
+                    "Brightness": 2.4,
+                    "Range": 42.0,
+                    "Angle": 70.0,
+                    "Face": "Front",
+                    "Color": [
+                      1.0,
+                      0.85,
+                      0.55
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "name": "EntrySpot_Approach3",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  0.2,
+                  0.2,
+                  0.2
+                ],
+                "Position": [
+                  6.0,
+                  22.0,
+                  100.0
+                ],
+                "Color": [
+                  1.0,
+                  0.85,
+                  0.55
+                ],
+                "Material": "SmoothPlastic",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": false,
+                "Transparency": 1.0,
+                "Orientation": [
+                  -90.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "children": [
+                {
+                  "name": "Spot",
+                  "className": "SpotLight",
+                  "properties": {
+                    "Brightness": 2.4,
+                    "Range": 42.0,
+                    "Angle": 70.0,
+                    "Face": "Front",
+                    "Color": [
+                      1.0,
+                      0.85,
+                      0.55
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "name": "EntrySpot_Approach4",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  0.2,
+                  0.2,
+                  0.2
+                ],
+                "Position": [
+                  0.0,
+                  22.0,
+                  112.0
+                ],
+                "Color": [
+                  1.0,
+                  0.85,
+                  0.55
+                ],
+                "Material": "SmoothPlastic",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": false,
+                "Transparency": 1.0,
+                "Orientation": [
+                  -90.0,
+                  0.0,
+                  0.0
+                ]
+              },
+              "children": [
+                {
+                  "name": "Spot",
+                  "className": "SpotLight",
+                  "properties": {
+                    "Brightness": 2.4,
+                    "Range": 42.0,
+                    "Angle": 70.0,
+                    "Face": "Front",
+                    "Color": [
+                      1.0,
+                      0.85,
+                      0.55
+                    ]
+                  }
+                }
+              ]
+            },
+            {
               "name": "RoofSpot_S0",
               "className": "Part",
               "properties": {
@@ -44420,8 +43425,8 @@
                   "name": "Spot",
                   "className": "SpotLight",
                   "properties": {
-                    "Brightness": 5.0,
-                    "Range": 70.0,
+                    "Brightness": 3.2,
+                    "Range": 55.0,
                     "Angle": 80.0,
                     "Face": "Front",
                     "Color": [
@@ -44444,7 +43449,7 @@
                   0.2
                 ],
                 "Position": [
-                  -35.0,
+                  -45.0,
                   24.5,
                   68.5
                 ],
@@ -44469,8 +43474,8 @@
                   "name": "Spot",
                   "className": "SpotLight",
                   "properties": {
-                    "Brightness": 5.0,
-                    "Range": 70.0,
+                    "Brightness": 3.2,
+                    "Range": 55.0,
                     "Angle": 80.0,
                     "Face": "Front",
                     "Color": [
@@ -44493,7 +43498,7 @@
                   0.2
                 ],
                 "Position": [
-                  0.0,
+                  45.0,
                   24.5,
                   68.5
                 ],
@@ -44518,8 +43523,8 @@
                   "name": "Spot",
                   "className": "SpotLight",
                   "properties": {
-                    "Brightness": 5.0,
-                    "Range": 70.0,
+                    "Brightness": 3.2,
+                    "Range": 55.0,
                     "Angle": 80.0,
                     "Face": "Front",
                     "Color": [
@@ -44533,55 +43538,6 @@
             },
             {
               "name": "RoofSpot_S3",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  0.2,
-                  0.2,
-                  0.2
-                ],
-                "Position": [
-                  35.0,
-                  24.5,
-                  68.5
-                ],
-                "Color": [
-                  1.0,
-                  0.85,
-                  0.55
-                ],
-                "Material": "SmoothPlastic",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false,
-                "Transparency": 1.0,
-                "Orientation": [
-                  -90.0,
-                  0.0,
-                  0.0
-                ]
-              },
-              "children": [
-                {
-                  "name": "Spot",
-                  "className": "SpotLight",
-                  "properties": {
-                    "Brightness": 5.0,
-                    "Range": 70.0,
-                    "Angle": 80.0,
-                    "Face": "Front",
-                    "Color": [
-                      1.0,
-                      0.85,
-                      0.55
-                    ]
-                  }
-                }
-              ]
-            },
-            {
-              "name": "RoofSpot_S4",
               "className": "Part",
               "properties": {
                 "Anchored": true,
@@ -44616,106 +43572,8 @@
                   "name": "Spot",
                   "className": "SpotLight",
                   "properties": {
-                    "Brightness": 5.0,
-                    "Range": 70.0,
-                    "Angle": 80.0,
-                    "Face": "Front",
-                    "Color": [
-                      1.0,
-                      0.85,
-                      0.55
-                    ]
-                  }
-                }
-              ]
-            },
-            {
-              "name": "RoofSpot_Canopy0",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  0.2,
-                  0.2,
-                  0.2
-                ],
-                "Position": [
-                  -12.0,
-                  18.2,
-                  78.0
-                ],
-                "Color": [
-                  1.0,
-                  0.85,
-                  0.55
-                ],
-                "Material": "SmoothPlastic",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false,
-                "Transparency": 1.0,
-                "Orientation": [
-                  -90.0,
-                  0.0,
-                  0.0
-                ]
-              },
-              "children": [
-                {
-                  "name": "Spot",
-                  "className": "SpotLight",
-                  "properties": {
-                    "Brightness": 5.0,
-                    "Range": 70.0,
-                    "Angle": 80.0,
-                    "Face": "Front",
-                    "Color": [
-                      1.0,
-                      0.85,
-                      0.55
-                    ]
-                  }
-                }
-              ]
-            },
-            {
-              "name": "RoofSpot_Canopy1",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  0.2,
-                  0.2,
-                  0.2
-                ],
-                "Position": [
-                  12.0,
-                  18.2,
-                  78.0
-                ],
-                "Color": [
-                  1.0,
-                  0.85,
-                  0.55
-                ],
-                "Material": "SmoothPlastic",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false,
-                "Transparency": 1.0,
-                "Orientation": [
-                  -90.0,
-                  0.0,
-                  0.0
-                ]
-              },
-              "children": [
-                {
-                  "name": "Spot",
-                  "className": "SpotLight",
-                  "properties": {
-                    "Brightness": 5.0,
-                    "Range": 70.0,
+                    "Brightness": 3.2,
+                    "Range": 55.0,
                     "Angle": 80.0,
                     "Face": "Front",
                     "Color": [
@@ -44763,8 +43621,8 @@
                   "name": "Spot",
                   "className": "SpotLight",
                   "properties": {
-                    "Brightness": 5.0,
-                    "Range": 70.0,
+                    "Brightness": 3.5,
+                    "Range": 60.0,
                     "Angle": 80.0,
                     "Face": "Front",
                     "Color": [
@@ -44812,8 +43670,8 @@
                   "name": "Spot",
                   "className": "SpotLight",
                   "properties": {
-                    "Brightness": 5.0,
-                    "Range": 70.0,
+                    "Brightness": 3.5,
+                    "Range": 60.0,
                     "Angle": 80.0,
                     "Face": "Front",
                     "Color": [
@@ -44861,8 +43719,8 @@
                   "name": "Spot",
                   "className": "SpotLight",
                   "properties": {
-                    "Brightness": 5.0,
-                    "Range": 70.0,
+                    "Brightness": 3.5,
+                    "Range": 60.0,
                     "Angle": 80.0,
                     "Face": "Front",
                     "Color": [
@@ -44910,8 +43768,8 @@
                   "name": "Spot",
                   "className": "SpotLight",
                   "properties": {
-                    "Brightness": 5.0,
-                    "Range": 70.0,
+                    "Brightness": 3.5,
+                    "Range": 60.0,
                     "Angle": 80.0,
                     "Face": "Front",
                     "Color": [
@@ -44959,8 +43817,8 @@
                   "name": "Spot",
                   "className": "SpotLight",
                   "properties": {
-                    "Brightness": 5.0,
-                    "Range": 70.0,
+                    "Brightness": 3.5,
+                    "Range": 60.0,
                     "Angle": 80.0,
                     "Face": "Front",
                     "Color": [
@@ -45008,8 +43866,8 @@
                   "name": "Spot",
                   "className": "SpotLight",
                   "properties": {
-                    "Brightness": 5.0,
-                    "Range": 70.0,
+                    "Brightness": 3.5,
+                    "Range": 60.0,
                     "Angle": 80.0,
                     "Face": "Front",
                     "Color": [
@@ -45057,8 +43915,8 @@
                   "name": "Spot",
                   "className": "SpotLight",
                   "properties": {
-                    "Brightness": 5.0,
-                    "Range": 70.0,
+                    "Brightness": 3.5,
+                    "Range": 60.0,
                     "Angle": 80.0,
                     "Face": "Front",
                     "Color": [
@@ -45106,8 +43964,8 @@
                   "name": "Spot",
                   "className": "SpotLight",
                   "properties": {
-                    "Brightness": 5.0,
-                    "Range": 70.0,
+                    "Brightness": 3.5,
+                    "Range": 60.0,
                     "Angle": 80.0,
                     "Face": "Front",
                     "Color": [
@@ -45155,8 +44013,8 @@
                   "name": "Spot",
                   "className": "SpotLight",
                   "properties": {
-                    "Brightness": 5.0,
-                    "Range": 70.0,
+                    "Brightness": 3.5,
+                    "Range": 60.0,
                     "Angle": 80.0,
                     "Face": "Front",
                     "Color": [
@@ -45204,8 +44062,8 @@
                   "name": "Spot",
                   "className": "SpotLight",
                   "properties": {
-                    "Brightness": 5.0,
-                    "Range": 70.0,
+                    "Brightness": 3.5,
+                    "Range": 60.0,
                     "Angle": 80.0,
                     "Face": "Front",
                     "Color": [
@@ -45253,8 +44111,8 @@
                   "name": "Spot",
                   "className": "SpotLight",
                   "properties": {
-                    "Brightness": 5.0,
-                    "Range": 70.0,
+                    "Brightness": 3.5,
+                    "Range": 60.0,
                     "Angle": 80.0,
                     "Face": "Front",
                     "Color": [
@@ -45302,8 +44160,8 @@
                   "name": "Spot",
                   "className": "SpotLight",
                   "properties": {
-                    "Brightness": 5.0,
-                    "Range": 70.0,
+                    "Brightness": 3.5,
+                    "Range": 60.0,
                     "Angle": 80.0,
                     "Face": "Front",
                     "Color": [
@@ -45351,8 +44209,8 @@
                   "name": "Spot",
                   "className": "SpotLight",
                   "properties": {
-                    "Brightness": 5.0,
-                    "Range": 70.0,
+                    "Brightness": 3.5,
+                    "Range": 60.0,
                     "Angle": 80.0,
                     "Face": "Front",
                     "Color": [
@@ -45400,8 +44258,8 @@
                   "name": "Spot",
                   "className": "SpotLight",
                   "properties": {
-                    "Brightness": 5.0,
-                    "Range": 70.0,
+                    "Brightness": 3.2,
+                    "Range": 55.0,
                     "Angle": 80.0,
                     "Face": "Front",
                     "Color": [
@@ -45449,8 +44307,8 @@
                   "name": "Spot",
                   "className": "SpotLight",
                   "properties": {
-                    "Brightness": 5.0,
-                    "Range": 70.0,
+                    "Brightness": 3.2,
+                    "Range": 55.0,
                     "Angle": 80.0,
                     "Face": "Front",
                     "Color": [
@@ -45498,8 +44356,8 @@
                   "name": "Spot",
                   "className": "SpotLight",
                   "properties": {
-                    "Brightness": 5.0,
-                    "Range": 70.0,
+                    "Brightness": 3.2,
+                    "Range": 55.0,
                     "Angle": 80.0,
                     "Face": "Front",
                     "Color": [
@@ -45547,8 +44405,8 @@
                   "name": "Spot",
                   "className": "SpotLight",
                   "properties": {
-                    "Brightness": 5.0,
-                    "Range": 70.0,
+                    "Brightness": 3.2,
+                    "Range": 55.0,
                     "Angle": 80.0,
                     "Face": "Front",
                     "Color": [
@@ -45571,7 +44429,7 @@
                   0.2
                 ],
                 "Position": [
-                  0.0,
+                  -50.0,
                   14.0,
                   130.0
                 ],
@@ -45591,8 +44449,8 @@
                   "name": "Light",
                   "className": "PointLight",
                   "properties": {
-                    "Brightness": 1.6,
-                    "Range": 55.0,
+                    "Brightness": 1.4,
+                    "Range": 50.0,
                     "Color": [
                       1.0,
                       0.85,
@@ -45604,6 +44462,48 @@
             },
             {
               "name": "GrassFill_1",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  0.2,
+                  0.2,
+                  0.2
+                ],
+                "Position": [
+                  50.0,
+                  14.0,
+                  130.0
+                ],
+                "Color": [
+                  1.0,
+                  0.85,
+                  0.55
+                ],
+                "Material": "SmoothPlastic",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": false,
+                "Transparency": 1.0
+              },
+              "children": [
+                {
+                  "name": "Light",
+                  "className": "PointLight",
+                  "properties": {
+                    "Brightness": 1.4,
+                    "Range": 50.0,
+                    "Color": [
+                      1.0,
+                      0.85,
+                      0.55
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "name": "GrassFill_2",
               "className": "Part",
               "properties": {
                 "Anchored": true,
@@ -45633,8 +44533,8 @@
                   "name": "Light",
                   "className": "PointLight",
                   "properties": {
-                    "Brightness": 1.6,
-                    "Range": 55.0,
+                    "Brightness": 1.4,
+                    "Range": 50.0,
                     "Color": [
                       1.0,
                       0.85,
@@ -45645,7 +44545,7 @@
               ]
             },
             {
-              "name": "GrassFill_2",
+              "name": "GrassFill_3",
               "className": "Part",
               "properties": {
                 "Anchored": true,
@@ -45675,8 +44575,8 @@
                   "name": "Light",
                   "className": "PointLight",
                   "properties": {
-                    "Brightness": 1.6,
-                    "Range": 55.0,
+                    "Brightness": 1.4,
+                    "Range": 50.0,
                     "Color": [
                       1.0,
                       0.85,
@@ -45687,7 +44587,7 @@
               ]
             },
             {
-              "name": "GrassFill_3",
+              "name": "GrassFill_4",
               "className": "Part",
               "properties": {
                 "Anchored": true,
@@ -45717,50 +44617,8 @@
                   "name": "Light",
                   "className": "PointLight",
                   "properties": {
-                    "Brightness": 1.6,
-                    "Range": 55.0,
-                    "Color": [
-                      1.0,
-                      0.85,
-                      0.55
-                    ]
-                  }
-                }
-              ]
-            },
-            {
-              "name": "GrassFill_4",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  0.2,
-                  0.2,
-                  0.2
-                ],
-                "Position": [
-                  -60.0,
-                  14.0,
-                  110.0
-                ],
-                "Color": [
-                  1.0,
-                  0.85,
-                  0.55
-                ],
-                "Material": "SmoothPlastic",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false,
-                "Transparency": 1.0
-              },
-              "children": [
-                {
-                  "name": "Light",
-                  "className": "PointLight",
-                  "properties": {
-                    "Brightness": 1.6,
-                    "Range": 55.0,
+                    "Brightness": 1.4,
+                    "Range": 50.0,
                     "Color": [
                       1.0,
                       0.85,
@@ -45781,48 +44639,6 @@
                   0.2
                 ],
                 "Position": [
-                  60.0,
-                  14.0,
-                  110.0
-                ],
-                "Color": [
-                  1.0,
-                  0.85,
-                  0.55
-                ],
-                "Material": "SmoothPlastic",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false,
-                "Transparency": 1.0
-              },
-              "children": [
-                {
-                  "name": "Light",
-                  "className": "PointLight",
-                  "properties": {
-                    "Brightness": 1.6,
-                    "Range": 55.0,
-                    "Color": [
-                      1.0,
-                      0.85,
-                      0.55
-                    ]
-                  }
-                }
-              ]
-            },
-            {
-              "name": "GrassFill_6",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  0.2,
-                  0.2,
-                  0.2
-                ],
-                "Position": [
                   -60.0,
                   14.0,
                   -100.0
@@ -45843,8 +44659,8 @@
                   "name": "Light",
                   "className": "PointLight",
                   "properties": {
-                    "Brightness": 1.6,
-                    "Range": 55.0,
+                    "Brightness": 1.4,
+                    "Range": 50.0,
                     "Color": [
                       1.0,
                       0.85,
@@ -45855,7 +44671,7 @@
               ]
             },
             {
-              "name": "GrassFill_7",
+              "name": "GrassFill_6",
               "className": "Part",
               "properties": {
                 "Anchored": true,
@@ -45885,8 +44701,8 @@
                   "name": "Light",
                   "className": "PointLight",
                   "properties": {
-                    "Brightness": 1.6,
-                    "Range": 55.0,
+                    "Brightness": 1.4,
+                    "Range": 50.0,
                     "Color": [
                       1.0,
                       0.85,
@@ -48512,7 +47328,7 @@
             "Position": [
               0.0,
               10.0,
-              95.0
+              100.0
             ],
             "Color": [
               1.0,
@@ -48530,8 +47346,8 @@
               "name": "Light",
               "className": "PointLight",
               "properties": {
-                "Brightness": 2.0,
-                "Range": 55.0,
+                "Brightness": 1.2,
+                "Range": 40.0,
                 "Color": [
                   1.0,
                   0.85,
@@ -48572,8 +47388,8 @@
               "name": "Light",
               "className": "PointLight",
               "properties": {
-                "Brightness": 2.5,
-                "Range": 50.0,
+                "Brightness": 1.4,
+                "Range": 36.0,
                 "Color": [
                   0.133,
                   0.827,
@@ -48614,8 +47430,8 @@
               "name": "Light",
               "className": "PointLight",
               "properties": {
-                "Brightness": 2.2,
-                "Range": 35.0,
+                "Brightness": 1.6,
+                "Range": 28.0,
                 "Color": [
                   1.0,
                   0.85,

@@ -223,40 +223,34 @@ def street_lamp(name: str, x: float, z: float, *, yaw: float = 0.0) -> list:
     return kids
 
 
-def roof_down_spot(name: str, x: float, y: float, z: float, *, yaw: float = 0.0) -> dict:
+def roof_down_spot(
+    name: str,
+    x: float,
+    y: float,
+    z: float,
+    *,
+    yaw: float = 0.0,
+    brightness: float = 5.0,
+    range_: float = 70.0,
+    angle: float = 80.0,
+) -> dict:
     """Roof-mounted spotlight aimed straight down onto walkable ground."""
     return spot_part(
         name,
         (x, y, z),
         WARM,
-        brightness=5.0,
-        range_=70.0,
-        angle=80.0,
+        brightness=brightness,
+        range_=range_,
+        angle=angle,
         orientation=(-90.0, yaw, 0.0),
     )
 
 
 def build_site_lighting() -> list:
-    """Street lamps + roof-down spots covering plaza and grass perimeter."""
+    """Street lamps on the perimeter + roof-down spots (entrance uses spots only)."""
     kids: list = []
 
-    # --- Street lamps along plaza approach (arms face inward toward carpet) ---
-    plaza_lamps = [
-        # west row (yaw 90 → arm toward +X / carpet)
-        ("PlazaW0", -18.0, 72.0, 90.0),
-        ("PlazaW1", -18.0, 88.0, 90.0),
-        ("PlazaW2", -18.0, 104.0, 90.0),
-        ("PlazaW3", -18.0, 120.0, 90.0),
-        # east row (yaw -90 → arm toward -X / carpet)
-        ("PlazaE0", 18.0, 72.0, -90.0),
-        ("PlazaE1", 18.0, 88.0, -90.0),
-        ("PlazaE2", 18.0, 104.0, -90.0),
-        ("PlazaE3", 18.0, 120.0, -90.0),
-    ]
-    for name, x, z, yaw in plaza_lamps:
-        kids.extend(street_lamp(name, x, z, yaw=yaw))
-
-    # --- Perimeter lamps for walking around the building ---
+    # --- Perimeter street lamps only (no posts on the entrance approach) ---
     # South grass / path (arms face north toward building)
     for i, x in enumerate((-90.0, -45.0, 0.0, 45.0, 90.0)):
         kids.extend(street_lamp(f"PerimS{i}", x, 138.0, yaw=180.0))
@@ -270,38 +264,58 @@ def build_site_lighting() -> list:
     for i, z in enumerate((-120.0, -60.0, 0.0, 40.0, 100.0)):
         kids.extend(street_lamp(f"PerimE{i}", 120.0, z, yaw=-90.0))
 
-    # --- Roof-edge spotlights aimed straight down ---
-    # South parapet / canopy line over plaza
-    for i, x in enumerate((-70.0, -35.0, 0.0, 35.0, 70.0)):
-        kids.append(roof_down_spot(f"RoofSpot_S{i}", x, 24.5, 68.5))
-    # Canopy underside extras over porte-cochere
-    for i, x in enumerate((-12.0, 12.0)):
-        kids.append(roof_down_spot(f"RoofSpot_Canopy{i}", x, 18.2, 78.0))
+    # --- Entrance / porte-cochere: downward spots only (softer than perimeter wash) ---
+    entry_spots = [
+        # Under canopy - walk path
+        ("EntrySpot_CanopyL", -8.0, 18.2, 74.0),
+        ("EntrySpot_CanopyC", 0.0, 18.2, 76.0),
+        ("EntrySpot_CanopyR", 8.0, 18.2, 74.0),
+        ("EntrySpot_CanopyFL", -10.0, 18.2, 82.0),
+        ("EntrySpot_CanopyFR", 10.0, 18.2, 82.0),
+        # South parapet over doors / apron
+        ("EntrySpot_DoorL", -10.0, 23.5, 67.5),
+        ("EntrySpot_DoorC", 0.0, 23.5, 67.5),
+        ("EntrySpot_DoorR", 10.0, 23.5, 67.5),
+        # Approach carpet (mounted high on invisible hosts - still "from roof" energy)
+        ("EntrySpot_Approach0", -6.0, 22.0, 88.0),
+        ("EntrySpot_Approach1", 6.0, 22.0, 88.0),
+        ("EntrySpot_Approach2", -6.0, 22.0, 100.0),
+        ("EntrySpot_Approach3", 6.0, 22.0, 100.0),
+        ("EntrySpot_Approach4", 0.0, 22.0, 112.0),
+    ]
+    for name, x, y, z in entry_spots:
+        kids.append(
+            roof_down_spot(name, x, y, z, brightness=2.4, range_=42.0, angle=70.0)
+        )
+
+    # --- Roof-edge spotlights for sides / north / corners (not blasting the doors) ---
+    # South parapet wings (away from center entry)
+    for i, x in enumerate((-70.0, -45.0, 45.0, 70.0)):
+        kids.append(roof_down_spot(f"RoofSpot_S{i}", x, 24.5, 68.5, brightness=3.2, range_=55.0))
     # East / west pit-roof edges
     for i, z in enumerate((-40.0, -10.0, 20.0, 50.0)):
-        kids.append(roof_down_spot(f"RoofSpot_W{i}", -90.0, 23.5, z))
-        kids.append(roof_down_spot(f"RoofSpot_E{i}", 90.0, 23.5, z))
+        kids.append(roof_down_spot(f"RoofSpot_W{i}", -90.0, 23.5, z, brightness=3.5, range_=60.0))
+        kids.append(roof_down_spot(f"RoofSpot_E{i}", 90.0, 23.5, z, brightness=3.5, range_=60.0))
     # North game-room roof edge over north path
     for i, x in enumerate((-70.0, -35.0, 0.0, 35.0, 70.0)):
-        kids.append(roof_down_spot(f"RoofSpot_N{i}", x, 54.0, -138.0))
+        kids.append(roof_down_spot(f"RoofSpot_N{i}", x, 54.0, -138.0, brightness=3.5, range_=60.0))
     # Corner down-spots for apron coverage
     for i, (x, z) in enumerate(((-100.0, 70.0), (100.0, 70.0), (-100.0, -130.0), (100.0, -130.0))):
-        kids.append(roof_down_spot(f"RoofSpot_Corner{i}", x, 24.0, z))
+        kids.append(roof_down_spot(f"RoofSpot_Corner{i}", x, 24.0, z, brightness=3.2, range_=55.0))
 
-    # Soft ambient fills over open grass (invisible hosts only)
+    # Soft ambient fills over open grass (invisible hosts only) - keep off the door axis
     for i, (x, z) in enumerate(
         (
-            (0.0, 130.0),
+            (-50.0, 130.0),
+            (50.0, 130.0),
             (0.0, -155.0),
             (-115.0, -20.0),
             (115.0, -20.0),
-            (-60.0, 110.0),
-            (60.0, 110.0),
             (-60.0, -100.0),
             (60.0, -100.0),
         )
     ):
-        kids.append(light_part(f"GrassFill_{i}", (x, 14.0, z), WARM, brightness=1.6, range_=55.0))
+        kids.append(light_part(f"GrassFill_{i}", (x, 14.0, z), WARM, brightness=1.4, range_=50.0))
 
     return kids
 
@@ -516,8 +530,9 @@ def build_exterior() -> list:
         )
 
     # Facade flood spots from plaza looking north
-    for i, x in enumerate((-40.0, -15.0, 15.0, 40.0)):
-        kids.append(spot_part(f"FacadeFlood_{i}", (x, 6.0, 90.0), WARM, brightness=4.0, range_=55.0, angle=65.0))
+    # Facade floods from plaza - keep off the door centerline and softer than before
+    for i, x in enumerate((-48.0, -28.0, 28.0, 48.0)):
+        kids.append(spot_part(f"FacadeFlood_{i}", (x, 6.0, 92.0), WARM, brightness=2.2, range_=40.0, angle=55.0))
 
     return kids
 
@@ -745,8 +760,8 @@ def build_plaza() -> list:
         )
         kids.append(light_part(f"PlanterLight_{i}", (px, 2.4, pz), WARM, brightness=1.5, range_=16.0))
 
-    kids.append(light_part("PlazaWash_Center", (0.0, 12.0, 95.0), WARM, brightness=2.0, range_=50.0))
-    kids.append(light_part("PlazaWash_S", (0.0, 8.0, 118.0), PURPLE, brightness=1.6, range_=35.0))
+    kids.append(light_part("PlazaWash_Center", (0.0, 12.0, 95.0), WARM, brightness=1.1, range_=36.0))
+    kids.append(light_part("PlazaWash_S", (0.0, 8.0, 118.0), PURPLE, brightness=1.0, range_=28.0))
 
     return kids
 
@@ -1333,9 +1348,9 @@ def add_fill_lights(lobby: dict) -> None:
         and not str(c.get("name") or "").startswith("Wash_Facade")
         and not str(c.get("name") or "").startswith("Wash_Foyer")
     ]
-    fill["children"].append(light_part("Wash_Plaza", (0.0, 10.0, 95.0), WARM, brightness=2.0, range_=55.0))
-    fill["children"].append(light_part("Wash_Facade", (0.0, 22.0, 78.0), CYAN, brightness=2.5, range_=50.0))
-    fill["children"].append(light_part("Wash_Foyer", (0.0, 12.0, 58.0), WARM, brightness=2.2, range_=35.0))
+    fill["children"].append(light_part("Wash_Plaza", (0.0, 10.0, 100.0), WARM, brightness=1.2, range_=40.0))
+    fill["children"].append(light_part("Wash_Facade", (0.0, 22.0, 78.0), CYAN, brightness=1.4, range_=36.0))
+    fill["children"].append(light_part("Wash_Foyer", (0.0, 12.0, 58.0), WARM, brightness=1.6, range_=28.0))
     scrub_light_hosts(fill)
 
 
