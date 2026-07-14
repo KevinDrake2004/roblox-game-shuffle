@@ -15,7 +15,7 @@ local Workspace = game:GetService("Workspace")
 local CasinoTerrain = {}
 
 -- Bump when reshaping hills so servers / Studio rebuild once.
-local VERSION = 5
+local VERSION = 6
 
 local WALL_X = 94.0
 local WALL_Z_S = 68.0
@@ -30,7 +30,8 @@ local ROCK = Enum.Material.Rock
 
 local FRONT_TOP_Y = -1.5
 local CREST_TOP_Y = 22.0
-local RAMP_Z0 = -40.0
+-- Shell depth ~210; start rise ~25% back from south facade (was ~50% at z=-40).
+local RAMP_Z0 = WALL_Z_S - (WALL_Z_S - WALL_Z_N) * 0.25 -- ≈ 15.5
 local RAMP_Z1 = -190.0
 
 local function fillBall(terrain: Terrain, pos: Vector3, radius: number, material: Enum.Material)
@@ -83,13 +84,15 @@ function CasinoTerrain.start()
 		-- Deep base under the whole resort
 		fillBlock(terrain, CFrame.new(0, -18, -40), Vector3.new(400, 32, 440), DIRT)
 
-		-- Flat front under plaza / WorldGrass (no slope balls here)
-		fillBlock(terrain, CFrame.new(0, FRONT_TOP_Y - 8, 50), Vector3.new(300, 16, 260), SURFACE)
+		-- Flat front under plaza / WorldGrass only (stop before ramp toe)
+		local flatDepth = 200.0
+		local flatCenterZ = RAMP_Z0 + flatDepth * 0.5
+		fillBlock(terrain, CFrame.new(0, FRONT_TOP_Y - 8, flatCenterZ), Vector3.new(300, 16, flatDepth), SURFACE)
 
 		-- Smooth walkable ramp: dense overlapping balls, surface follows rampTopY
 		local radius = 20
 		local step = 7
-		for z = RAMP_Z0 + 10, RAMP_Z1 - 40, -step do
+		for z = RAMP_Z0, RAMP_Z1 - 40, -step do
 			local top = rampTopY(z)
 			local cy = top - radius * 0.78
 			local xs: { number }
@@ -116,8 +119,8 @@ function CasinoTerrain.start()
 		fillBall(terrain, Vector3.new(-48, 30, -195), 14, ROCK)
 		fillBall(terrain, Vector3.new(48, 30, -195), 14, ROCK)
 
-		-- Plaza / carpet relief
-		fillBlock(terrain, CFrame.new(0, 3.5, 60), Vector3.new(200, 12, 140), Enum.Material.Air)
+		-- Plaza / carpet relief only (do not flatten the early flank ramp)
+		fillBlock(terrain, CFrame.new(0, 3.5, 95), Vector3.new(200, 12, 70), Enum.Material.Air)
 
 		-- Hollow building + exterior margin so mounds never clip walls / rooms
 		local midZ = (WALL_Z_S + WALL_Z_N) * 0.5
