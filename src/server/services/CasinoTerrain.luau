@@ -23,7 +23,6 @@ end
 
 function CasinoTerrain.start()
 	local terrain = Workspace.Terrain
-	terrain.Decoration = false
 
 	local ok, err = pcall(function()
 		-- Broad dirt/grass foundation under the whole resort (meets WorldGrass ~y=-0.55)

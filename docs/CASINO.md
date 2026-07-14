@@ -100,7 +100,7 @@ South entry has a real door cutout (`|x| < 12`, under `Ext_South_Lint` / `EntryB
 - **Corners** - SW / SE towers with gold caps and window bays
 - **Sides** - marble veneer, pilaster rhythm, east/west window modules (no continuous side neon belts)
 - **Plaza / ground / site lighting** - flat apron parts + perimeter lamps; hills from real Terrain
-- **Terrain** (`CasinoTerrain`) - `FillBlock`/`FillBall` hill (not WriteVoxels) so generation cannot wipe to empty air; green Grass with `Decoration` off; back ridge for room wing; spawn `(0, 3, 112)` outside. ArenaOrigins unchanged
+- **Terrain** (`CasinoTerrain`) - `FillBlock`/`FillBall` hill; green Grass surface; back ridge for room wing; spawn `(0, 3, 112)` outside. ArenaOrigins unchanged
 
 ### Mesh accents
 
