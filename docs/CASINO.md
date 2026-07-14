@@ -99,8 +99,8 @@ South entry has a real door cutout (`|x| < 12`, under `Ext_South_Lint` / `EntryB
 - **Crown** - multi-part diamond + fins + spire + SpecialMesh Sphere/FileMesh gem accents (original silhouette; not third-party IP)
 - **Corners** - SW / SE towers with gold caps and window bays
 - **Sides** - marble veneer, pilaster rhythm, east/west window modules (no continuous side neon belts)
-- **Plaza / ground / site lighting** - grass apron plus part-based hill berms nesting the north room wing; entrance down-spots only
-- **Hill berms** (`Atmosphere.Ground`) - north ridge + east/west flank berms/outcrops hide the tall game-room mass from outside; plaza and spawn stay clear; ArenaOrigins unchanged
+- **Plaza / ground / site lighting** - grass apron plus smooth wedge-hill slopes nesting the north room wing; entrance down-spots only
+- **Hill berms** (`Atmosphere.Ground`) - WedgePart slopes + thin rock cliff faces (no cube berms); perimeter lamps sit outside slope toes; ArenaOrigins unchanged
 
 ### Mesh accents
 

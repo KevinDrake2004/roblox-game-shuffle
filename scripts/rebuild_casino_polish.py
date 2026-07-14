@@ -472,18 +472,17 @@ def build_site_lighting() -> list:
     kids: list = []
 
     # --- Perimeter street lamps only (no posts on the entrance approach) ---
+    # Kept outside hill slope toes so posts are not buried in berms.
     # South grass / path (arms face north toward building)
     for i, x in enumerate((-90.0, -45.0, 0.0, 45.0, 90.0)):
-        kids.extend(street_lamp(f"PerimS{i}", x, 138.0, yaw=180.0))
-    # North grass / path (arms face south)
+        kids.extend(street_lamp(f"PerimS{i}", x, 148.0, yaw=180.0))
+    # North beyond ridge toe (arms face south)
     for i, x in enumerate((-90.0, -45.0, 0.0, 45.0, 90.0)):
-        kids.extend(street_lamp(f"PerimN{i}", x, -158.0, yaw=0.0))
-    # West path (arms face east)
+        kids.extend(street_lamp(f"PerimN{i}", x, -220.0, yaw=0.0))
+    # West / east beyond flank slope toes
     for i, z in enumerate((-120.0, -60.0, 0.0, 40.0, 100.0)):
-        kids.extend(street_lamp(f"PerimW{i}", -120.0, z, yaw=90.0))
-    # East path (arms face west)
-    for i, z in enumerate((-120.0, -60.0, 0.0, 40.0, 100.0)):
-        kids.extend(street_lamp(f"PerimE{i}", 120.0, z, yaw=-90.0))
+        kids.extend(street_lamp(f"PerimW{i}", -170.0, z, yaw=90.0))
+        kids.extend(street_lamp(f"PerimE{i}", 170.0, z, yaw=-90.0))
 
     # --- Entrance / porte-cochere: downward spots only (softer than perimeter wash) ---
     entry_spots = [
@@ -520,23 +519,24 @@ def build_site_lighting() -> list:
     # North game-room roof edge over north path
     for i, x in enumerate((-70.0, -35.0, 0.0, 35.0, 70.0)):
         kids.append(roof_down_spot(f"RoofSpot_N{i}", x, 54.0, -138.0, brightness=3.5, range_=60.0))
-    # Corner down-spots for apron coverage
-    for i, (x, z) in enumerate(((-100.0, 70.0), (100.0, 70.0), (-100.0, -130.0), (100.0, -130.0))):
+    # Corner down-spots for apron coverage (outside flank slopes)
+    for i, (x, z) in enumerate(((-110.0, 70.0), (110.0, 70.0), (-165.0, -145.0), (165.0, -145.0))):
         kids.append(roof_down_spot(f"RoofSpot_Corner{i}", x, 24.0, z, brightness=3.2, range_=55.0))
 
     # Soft ambient fills over open grass (invisible hosts only) - keep off the door axis
-    for i, (x, z) in enumerate(
+    # and above / outside berm volumes so hosts are not inside solid slopes.
+    for i, (x, y, z) in enumerate(
         (
-            (-50.0, 130.0),
-            (50.0, 130.0),
-            (0.0, -155.0),
-            (-115.0, -20.0),
-            (115.0, -20.0),
-            (-60.0, -100.0),
-            (60.0, -100.0),
+            (-50.0, 14.0, 140.0),
+            (50.0, 14.0, 140.0),
+            (0.0, 8.0, -225.0),
+            (-175.0, 14.0, -20.0),
+            (175.0, 14.0, -20.0),
+            (-175.0, 20.0, -100.0),
+            (175.0, 20.0, -100.0),
         )
     ):
-        kids.append(light_part(f"GrassFill_{i}", (x, 14.0, z), WARM, brightness=1.4, range_=50.0))
+        kids.append(light_part(f"GrassFill_{i}", (x, y, z), WARM, brightness=1.4, range_=50.0))
 
     return kids
 
@@ -1111,26 +1111,49 @@ ROCK_DARK = [0.22, 0.20, 0.18]
 GRASS_DARK = [0.14, 0.34, 0.12]
 
 
+def _tent_mound(name: str, x: float, y: float, z: float, width: float, height: float, depth: float, color) -> list:
+    """Two opposing wedges that read as a smooth grass mound (no box core)."""
+    return [
+        wedge_part(
+            f"{name}_A",
+            (width, height, depth * 0.5),
+            (x, y, z - depth * 0.25),
+            color,
+            material="Grass",
+            can_collide=True,
+            orientation=(0.0, 0.0, 0.0),
+        ),
+        wedge_part(
+            f"{name}_B",
+            (width, height, depth * 0.5),
+            (x, y, z + depth * 0.25),
+            color,
+            material="Grass",
+            can_collide=True,
+            orientation=(0.0, 180.0, 0.0),
+        ),
+    ]
+
+
 def build_ground() -> list:
-    """Walkable grass apron + hill berms that nest the north game-room wing."""
+    """Walkable grass apron + smooth wedge hills nesting the north game-room wing."""
     kids: list = []
-    # Large collide grass under/around everything. Building MainFloor + PlazaFloor sit on top.
     kids.append(
         part(
             "WorldGrass",
-            (420.0, 1.0, 420.0),
-            (0.0, -0.55, -20.0),
+            (480.0, 1.0, 480.0),
+            (0.0, -0.55, -30.0),
             GRASS,
             material="Grass",
             can_collide=True,
         )
     )
-    # Soft path ring outside plaza asphalt so players can circle the building
+    # Perimeter paths sit outside slope toes (and outside relocated street lamps)
     kids.append(
         part(
             "PerimeterPath_S",
-            (220.0, 0.2, 18.0),
-            (0.0, 0.05, 130.0),
+            (240.0, 0.2, 16.0),
+            (0.0, 0.05, 148.0),
             [0.35, 0.32, 0.28],
             material="Ground",
             can_collide=False,
@@ -1139,8 +1162,8 @@ def build_ground() -> list:
     kids.append(
         part(
             "PerimeterPath_N",
-            (220.0, 0.2, 18.0),
-            (0.0, 0.05, -195.0),
+            (240.0, 0.2, 16.0),
+            (0.0, 0.05, -220.0),
             [0.35, 0.32, 0.28],
             material="Ground",
             can_collide=False,
@@ -1149,8 +1172,8 @@ def build_ground() -> list:
     kids.append(
         part(
             "PerimeterPath_W",
-            (18.0, 0.2, 280.0),
-            (-145.0, 0.05, -20.0),
+            (16.0, 0.2, 320.0),
+            (-170.0, 0.05, -30.0),
             [0.35, 0.32, 0.28],
             material="Ground",
             can_collide=False,
@@ -1159,8 +1182,8 @@ def build_ground() -> list:
     kids.append(
         part(
             "PerimeterPath_E",
-            (18.0, 0.2, 280.0),
-            (145.0, 0.05, -20.0),
+            (16.0, 0.2, 320.0),
+            (170.0, 0.05, -30.0),
             [0.35, 0.32, 0.28],
             material="Ground",
             can_collide=False,
@@ -1168,149 +1191,113 @@ def build_ground() -> list:
     )
 
     # -------------------------------------------------------------------------
-    # Hill / berms - building stays at Y≈0; terrain rises around the envelope
-    # so the tall north room wing reads nestled in a ridge (no ArenaOrigin moves).
+    # Smooth hills - WedgeParts only (plus thin cliff faces). No berm cubes.
+    # Building / ArenaOrigins stay at Y≈0; slopes rise around the envelope.
     # -------------------------------------------------------------------------
-    # North ridge core behind Z≈-140 (room wing north wall)
+    # Thin rock cliff hard against the north room-wing wall (Z≈-140)
     kids.append(
         part(
-            "Hill_NorthCore",
-            (220.0, 42.0, 48.0),
-            (0.0, 20.5, -168.0),
-            GRASS_DARK,
-            material="Grass",
-            can_collide=True,
-        )
-    )
-    kids.append(
-        part(
-            "Hill_NorthRockBand",
-            (210.0, 18.0, 22.0),
-            (0.0, 8.5, -152.0),
+            "Hill_NorthCliff",
+            (188.0, 44.0, 2.2),
+            (0.0, 21.5, -141.2),
             ROCK,
             material="Slate",
             can_collide=True,
         )
     )
-    # Slope from ridge crest down toward the north wall (wedge high edge north)
+    # Primary north fallaway - one long smooth wedge (tall face toward building)
     kids.append(
         wedge_part(
             "Hill_NorthSlope",
-            (200.0, 28.0, 24.0),
-            (0.0, 13.5, -146.0),
+            (196.0, 42.0, 72.0),
+            (0.0, 21.0, -178.0),
             GRASS,
             material="Grass",
             can_collide=True,
             orientation=(0.0, 180.0, 0.0),
         )
     )
-    # Outer north fallaway so the mass reads as a hill, not a cliff slab
+    # Softer lower apron wedge nested on the outer half for a gentler toe
     kids.append(
         wedge_part(
-            "Hill_NorthOuter",
-            (230.0, 36.0, 36.0),
-            (0.0, 17.5, -192.0),
-            GRASS,
+            "Hill_NorthToe",
+            (210.0, 16.0, 40.0),
+            (0.0, 8.0, -200.0),
+            GRASS_DARK,
             material="Grass",
             can_collide=True,
-            orientation=(0.0, 0.0, 0.0),
+            orientation=(0.0, 180.0, 0.0),
         )
     )
 
-    # East / west flank berms along the tall room wing (z -140..-55)
+    # East / west flank slopes along the tall room wing (outward only)
     for side, sx in (("W", -1.0), ("E", 1.0)):
-        x_core = sx * 118.0
-        x_outer = sx * 148.0
+        # Thin rock face against exterior wall
         kids.append(
             part(
-                f"Hill_FlankCore_{side}",
-                (36.0, 38.0, 95.0),
-                (x_core, 18.5, -97.0),
-                GRASS_DARK,
-                material="Grass",
-                can_collide=True,
-            )
-        )
-        kids.append(
-            part(
-                f"Hill_FlankRock_{side}",
-                (14.0, 22.0, 90.0),
-                (sx * 100.0, 10.5, -97.0),
-                ROCK,
+                f"Hill_FlankCliff_{side}",
+                (2.0, 40.0, 92.0),
+                (sx * 93.2, 19.5, -97.0),
+                ROCK_DARK,
                 material="Slate",
                 can_collide=True,
             )
         )
-        # Outer flank slope (wedge: high edge toward building)
+        # Main outward slope (yaw ±90: tall edge toward building)
         yaw = 90.0 if side == "W" else -90.0
         kids.append(
             wedge_part(
-                f"Hill_FlankOuter_{side}",
-                (40.0, 32.0, 100.0),
-                (x_outer, 15.5, -97.0),
+                f"Hill_FlankSlope_{side}",
+                (92.0, 38.0, 58.0),
+                (sx * 123.0, 19.0, -97.0),
                 GRASS,
                 material="Grass",
                 can_collide=True,
                 orientation=(0.0, yaw, 0.0),
             )
         )
-        # Corner fillers NE / NW so ridge meets flanks
         kids.append(
-            part(
-                f"Hill_Corner_{side}",
-                (48.0, 36.0, 40.0),
-                (sx * 120.0, 17.5, -155.0),
+            wedge_part(
+                f"Hill_FlankToe_{side}",
+                (100.0, 14.0, 36.0),
+                (sx * 148.0, 7.0, -97.0),
                 GRASS_DARK,
                 material="Grass",
                 can_collide=True,
+                orientation=(0.0, yaw, 0.0),
             )
         )
-
-    # Soft mounds on the apron (south/east/west) - keep plaza + spawn clear
-    mound_specs = (
-        ("Hill_Mound_SW", (-95.0, 4.0, 105.0), (42.0, 8.0, 36.0), GRASS),
-        ("Hill_Mound_SE", (100.0, 3.5, 108.0), (38.0, 7.0, 32.0), GRASS),
-        ("Hill_Mound_W", (-130.0, 5.0, 20.0), (48.0, 10.0, 55.0), GRASS_DARK),
-        ("Hill_Mound_E", (130.0, 5.0, 15.0), (48.0, 10.0, 55.0), GRASS_DARK),
-        ("Hill_Mound_FarS", (-40.0, 2.5, 155.0), (50.0, 5.0, 28.0), GRASS),
-        ("Hill_Mound_FarSE", (55.0, 2.8, 158.0), (44.0, 5.5, 26.0), GRASS),
-    )
-    for name, pos, size, color in mound_specs:
+        # Corner blend: slope north-west / north-east without a cube filler
         kids.append(
-            part(
-                name,
-                size,
-                pos,
-                color,
+            wedge_part(
+                f"Hill_CornerNorth_{side}",
+                (52.0, 36.0, 42.0),
+                (sx * 118.0, 18.0, -158.0),
+                GRASS,
                 material="Grass",
                 can_collide=True,
+                orientation=(0.0, 180.0, 0.0),
+            )
+        )
+        kids.append(
+            wedge_part(
+                f"Hill_CornerOut_{side}",
+                (48.0, 28.0, 40.0),
+                (sx * 138.0, 14.0, -145.0),
+                GRASS_DARK,
+                material="Grass",
+                can_collide=True,
+                orientation=(0.0, yaw, 0.0),
             )
         )
 
-    # Rock outcrops near room-wing flanks for cliff read
-    for side, sx in (("W", -1.0), ("E", 1.0)):
-        kids.append(
-            part(
-                f"Hill_Outcrop_{side}1",
-                (10.0, 14.0, 16.0),
-                (sx * 108.0, 6.5, -120.0),
-                ROCK_DARK,
-                material="Slate",
-                can_collide=True,
-                orientation=(0.0, 18.0 * sx, 8.0),
-            )
-        )
-        kids.append(
-            part(
-                f"Hill_Outcrop_{side}2",
-                (12.0, 18.0, 12.0),
-                (sx * 112.0, 8.5, -75.0),
-                ROCK,
-                material="Rock",
-                can_collide=True,
-                orientation=(0.0, -12.0 * sx, -6.0),
-            )
-        )
+    # Soft apron mounds (tent wedges) - clear of plaza carpet and street lamps
+    kids.extend(_tent_mound("Hill_Mound_SW", -100.0, 3.5, 118.0, 36.0, 7.0, 28.0, GRASS))
+    kids.extend(_tent_mound("Hill_Mound_SE", 105.0, 3.2, 120.0, 34.0, 6.5, 26.0, GRASS))
+    kids.extend(_tent_mound("Hill_Mound_W", -155.0, 4.5, 25.0, 40.0, 9.0, 44.0, GRASS_DARK))
+    kids.extend(_tent_mound("Hill_Mound_E", 155.0, 4.5, 20.0, 40.0, 9.0, 44.0, GRASS_DARK))
+    kids.extend(_tent_mound("Hill_Mound_FarS", -35.0, 2.2, 165.0, 44.0, 4.5, 22.0, GRASS))
+    kids.extend(_tent_mound("Hill_Mound_FarSE", 50.0, 2.4, 168.0, 40.0, 5.0, 20.0, GRASS))
 
     return kids
 

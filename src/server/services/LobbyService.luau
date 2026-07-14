@@ -116,34 +116,60 @@ local function ensurePortalLabels()
 	end
 
 	local sign = lobby:FindFirstChild("BrandSign")
-	if sign and sign:IsA("BasePart") and not sign:FindFirstChild("SignGui") then
+	if sign and sign:IsA("BasePart") then
+		-- Recreate each boot so marquee layout updates apply (single-line TextScaled
+		-- stays tiny on a wide board because width caps glyph height).
+		local oldGui = sign:FindFirstChild("SignGui")
+		if oldGui then
+			oldGui:Destroy()
+		end
+
 		local gui = Instance.new("SurfaceGui")
 		gui.Name = "SignGui"
 		gui.Face = Enum.NormalId.Front
 		gui.SizingMode = Enum.SurfaceGuiSizingMode.PixelsPerStud
-		gui.PixelsPerStud = 80
+		gui.PixelsPerStud = 100
 		gui.Parent = sign
 
-		local title = Instance.new("TextLabel")
-		title.BackgroundTransparency = 1
-		title.Size = UDim2.fromScale(1, 1)
-		title.Font = Enum.Font.GothamBlack
-		title.TextScaled = true
-		title.TextColor3 = Config.COLORS.Text
-		title.Text = Config.GAME_NAME
-		title.Parent = gui
+		local root = Instance.new("Frame")
+		root.BackgroundTransparency = 1
+		root.Size = UDim2.fromScale(1, 1)
+		root.Parent = gui
 
 		local padding = Instance.new("UIPadding")
-		padding.PaddingLeft = UDim.new(0.05, 0)
-		padding.PaddingRight = UDim.new(0.05, 0)
-		padding.PaddingTop = UDim.new(0.06, 0)
-		padding.PaddingBottom = UDim.new(0.06, 0)
-		padding.Parent = title
+		padding.PaddingLeft = UDim.new(0.04, 0)
+		padding.PaddingRight = UDim.new(0.04, 0)
+		padding.PaddingTop = UDim.new(0.04, 0)
+		padding.PaddingBottom = UDim.new(0.04, 0)
+		padding.Parent = root
 
-		local stroke = Instance.new("UIStroke")
-		stroke.Color = Config.COLORS.NeonCyan
-		stroke.Thickness = 3
-		stroke.Parent = title
+		local list = Instance.new("UIListLayout")
+		list.FillDirection = Enum.FillDirection.Vertical
+		list.HorizontalAlignment = Enum.HorizontalAlignment.Center
+		list.VerticalAlignment = Enum.VerticalAlignment.Center
+		list.Padding = UDim.new(0, 6)
+		list.Parent = root
+
+		local words = string.split(string.upper(Config.GAME_NAME), " ")
+		if #words == 0 then
+			words = { string.upper(Config.GAME_NAME) }
+		end
+		local lineHeight = 0.92 / math.max(#words, 1)
+		for _, word in words do
+			local title = Instance.new("TextLabel")
+			title.BackgroundTransparency = 1
+			title.Size = UDim2.new(1, 0, lineHeight, 0)
+			title.Font = Enum.Font.GothamBlack
+			title.TextScaled = true
+			title.TextColor3 = Config.COLORS.Text
+			title.Text = word
+			title.Parent = root
+
+			local stroke = Instance.new("UIStroke")
+			stroke.Color = Config.COLORS.NeonCyan
+			stroke.Thickness = 4
+			stroke.Parent = title
+		end
 	end
 
 	local arcadeSign = lobby:FindFirstChild("ArcadeSign")

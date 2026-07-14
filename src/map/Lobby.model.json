@@ -46472,14 +46472,14 @@
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  420.0,
+                  480.0,
                   1.0,
-                  420.0
+                  480.0
                 ],
                 "Position": [
                   0.0,
                   -0.55,
-                  -20.0
+                  -30.0
                 ],
                 "Color": [
                   0.18,
@@ -46498,14 +46498,14 @@
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  220.0,
+                  240.0,
                   0.2,
-                  18.0
+                  16.0
                 ],
                 "Position": [
                   0.0,
                   0.05,
-                  130.0
+                  148.0
                 ],
                 "Color": [
                   0.35,
@@ -46524,14 +46524,14 @@
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  220.0,
+                  240.0,
                   0.2,
-                  18.0
+                  16.0
                 ],
                 "Position": [
                   0.0,
                   0.05,
-                  -195.0
+                  -220.0
                 ],
                 "Color": [
                   0.35,
@@ -46550,14 +46550,14 @@
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  18.0,
+                  16.0,
                   0.2,
-                  280.0
+                  320.0
                 ],
                 "Position": [
-                  -145.0,
+                  -170.0,
                   0.05,
-                  -20.0
+                  -30.0
                 ],
                 "Color": [
                   0.35,
@@ -46576,14 +46576,14 @@
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  18.0,
+                  16.0,
                   0.2,
-                  280.0
+                  320.0
                 ],
                 "Position": [
-                  145.0,
+                  170.0,
                   0.05,
-                  -20.0
+                  -30.0
                 ],
                 "Color": [
                   0.35,
@@ -46597,45 +46597,19 @@
               }
             },
             {
-              "name": "Hill_NorthCore",
+              "name": "Hill_NorthCliff",
               "className": "Part",
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  220.0,
-                  42.0,
-                  48.0
+                  188.0,
+                  44.0,
+                  2.2
                 ],
                 "Position": [
                   0.0,
-                  20.5,
-                  -168.0
-                ],
-                "Color": [
-                  0.14,
-                  0.34,
-                  0.12
-                ],
-                "Material": "Grass",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": true
-              }
-            },
-            {
-              "name": "Hill_NorthRockBand",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  210.0,
-                  18.0,
-                  22.0
-                ],
-                "Position": [
-                  0.0,
-                  8.5,
-                  -152.0
+                  21.5,
+                  -141.2
                 ],
                 "Color": [
                   0.32,
@@ -46654,14 +46628,14 @@
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  200.0,
-                  28.0,
-                  24.0
+                  196.0,
+                  42.0,
+                  72.0
                 ],
                 "Position": [
                   0.0,
-                  13.5,
-                  -146.0
+                  21.0,
+                  -178.0
                 ],
                 "Color": [
                   0.18,
@@ -46680,50 +46654,19 @@
               }
             },
             {
-              "name": "Hill_NorthOuter",
+              "name": "Hill_NorthToe",
               "className": "WedgePart",
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  230.0,
-                  36.0,
-                  36.0
+                  210.0,
+                  16.0,
+                  40.0
                 ],
                 "Position": [
                   0.0,
-                  17.5,
-                  -192.0
-                ],
-                "Color": [
-                  0.18,
-                  0.42,
-                  0.16
-                ],
-                "Material": "Grass",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": true,
-                "Orientation": [
-                  0.0,
-                  0.0,
-                  0.0
-                ]
-              }
-            },
-            {
-              "name": "Hill_FlankCore_W",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  36.0,
-                  38.0,
-                  95.0
-                ],
-                "Position": [
-                  -118.0,
-                  18.5,
-                  -97.0
+                  8.0,
+                  -200.0
                 ],
                 "Color": [
                   0.14,
@@ -46733,28 +46676,33 @@
                 "Material": "Grass",
                 "TopSurface": "Smooth",
                 "BottomSurface": "Smooth",
-                "CanCollide": true
+                "CanCollide": true,
+                "Orientation": [
+                  0.0,
+                  180.0,
+                  0.0
+                ]
               }
             },
             {
-              "name": "Hill_FlankRock_W",
+              "name": "Hill_FlankCliff_W",
               "className": "Part",
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  14.0,
-                  22.0,
-                  90.0
+                  2.0,
+                  40.0,
+                  92.0
                 ],
                 "Position": [
-                  -100.0,
-                  10.5,
+                  -93.2,
+                  19.5,
                   -97.0
                 ],
                 "Color": [
-                  0.32,
-                  0.3,
-                  0.28
+                  0.22,
+                  0.2,
+                  0.18
                 ],
                 "Material": "Slate",
                 "TopSurface": "Smooth",
@@ -46763,18 +46711,18 @@
               }
             },
             {
-              "name": "Hill_FlankOuter_W",
+              "name": "Hill_FlankSlope_W",
               "className": "WedgePart",
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  40.0,
-                  32.0,
-                  100.0
+                  92.0,
+                  38.0,
+                  58.0
                 ],
                 "Position": [
-                  -148.0,
-                  15.5,
+                  -123.0,
+                  19.0,
                   -97.0
                 ],
                 "Color": [
@@ -46794,76 +46742,117 @@
               }
             },
             {
-              "name": "Hill_Corner_W",
-              "className": "Part",
+              "name": "Hill_FlankToe_W",
+              "className": "WedgePart",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  100.0,
+                  14.0,
+                  36.0
+                ],
+                "Position": [
+                  -148.0,
+                  7.0,
+                  -97.0
+                ],
+                "Color": [
+                  0.14,
+                  0.34,
+                  0.12
+                ],
+                "Material": "Grass",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": true,
+                "Orientation": [
+                  0.0,
+                  90.0,
+                  0.0
+                ]
+              }
+            },
+            {
+              "name": "Hill_CornerNorth_W",
+              "className": "WedgePart",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  52.0,
+                  36.0,
+                  42.0
+                ],
+                "Position": [
+                  -118.0,
+                  18.0,
+                  -158.0
+                ],
+                "Color": [
+                  0.18,
+                  0.42,
+                  0.16
+                ],
+                "Material": "Grass",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": true,
+                "Orientation": [
+                  0.0,
+                  180.0,
+                  0.0
+                ]
+              }
+            },
+            {
+              "name": "Hill_CornerOut_W",
+              "className": "WedgePart",
               "properties": {
                 "Anchored": true,
                 "Size": [
                   48.0,
-                  36.0,
+                  28.0,
                   40.0
                 ],
                 "Position": [
-                  -120.0,
-                  17.5,
-                  -155.0
-                ],
-                "Color": [
-                  0.14,
-                  0.34,
-                  0.12
-                ],
-                "Material": "Grass",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": true
-              }
-            },
-            {
-              "name": "Hill_FlankCore_E",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  36.0,
-                  38.0,
-                  95.0
-                ],
-                "Position": [
-                  118.0,
-                  18.5,
-                  -97.0
-                ],
-                "Color": [
-                  0.14,
-                  0.34,
-                  0.12
-                ],
-                "Material": "Grass",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": true
-              }
-            },
-            {
-              "name": "Hill_FlankRock_E",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
+                  -138.0,
                   14.0,
-                  22.0,
-                  90.0
+                  -145.0
+                ],
+                "Color": [
+                  0.14,
+                  0.34,
+                  0.12
+                ],
+                "Material": "Grass",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": true,
+                "Orientation": [
+                  0.0,
+                  90.0,
+                  0.0
+                ]
+              }
+            },
+            {
+              "name": "Hill_FlankCliff_E",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  2.0,
+                  40.0,
+                  92.0
                 ],
                 "Position": [
-                  100.0,
-                  10.5,
+                  93.2,
+                  19.5,
                   -97.0
                 ],
                 "Color": [
-                  0.32,
-                  0.3,
-                  0.28
+                  0.22,
+                  0.2,
+                  0.18
                 ],
                 "Material": "Slate",
                 "TopSurface": "Smooth",
@@ -46872,18 +46861,18 @@
               }
             },
             {
-              "name": "Hill_FlankOuter_E",
+              "name": "Hill_FlankSlope_E",
               "className": "WedgePart",
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  40.0,
-                  32.0,
-                  100.0
+                  92.0,
+                  38.0,
+                  58.0
                 ],
                 "Position": [
-                  148.0,
-                  15.5,
+                  123.0,
+                  19.0,
                   -97.0
                 ],
                 "Color": [
@@ -46903,71 +46892,112 @@
               }
             },
             {
-              "name": "Hill_Corner_E",
-              "className": "Part",
+              "name": "Hill_FlankToe_E",
+              "className": "WedgePart",
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  48.0,
-                  36.0,
-                  40.0
-                ],
-                "Position": [
-                  120.0,
-                  17.5,
-                  -155.0
-                ],
-                "Color": [
-                  0.14,
-                  0.34,
-                  0.12
-                ],
-                "Material": "Grass",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": true
-              }
-            },
-            {
-              "name": "Hill_Mound_SW",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  42.0,
-                  8.0,
+                  100.0,
+                  14.0,
                   36.0
                 ],
                 "Position": [
-                  -95.0,
-                  4.0,
-                  105.0
-                ],
-                "Color": [
-                  0.18,
-                  0.42,
-                  0.16
-                ],
-                "Material": "Grass",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": true
-              }
-            },
-            {
-              "name": "Hill_Mound_SE",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  38.0,
+                  148.0,
                   7.0,
-                  32.0
+                  -97.0
+                ],
+                "Color": [
+                  0.14,
+                  0.34,
+                  0.12
+                ],
+                "Material": "Grass",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": true,
+                "Orientation": [
+                  0.0,
+                  -90.0,
+                  0.0
+                ]
+              }
+            },
+            {
+              "name": "Hill_CornerNorth_E",
+              "className": "WedgePart",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  52.0,
+                  36.0,
+                  42.0
                 ],
                 "Position": [
-                  100.0,
+                  118.0,
+                  18.0,
+                  -158.0
+                ],
+                "Color": [
+                  0.18,
+                  0.42,
+                  0.16
+                ],
+                "Material": "Grass",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": true,
+                "Orientation": [
+                  0.0,
+                  180.0,
+                  0.0
+                ]
+              }
+            },
+            {
+              "name": "Hill_CornerOut_E",
+              "className": "WedgePart",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  48.0,
+                  28.0,
+                  40.0
+                ],
+                "Position": [
+                  138.0,
+                  14.0,
+                  -145.0
+                ],
+                "Color": [
+                  0.14,
+                  0.34,
+                  0.12
+                ],
+                "Material": "Grass",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": true,
+                "Orientation": [
+                  0.0,
+                  -90.0,
+                  0.0
+                ]
+              }
+            },
+            {
+              "name": "Hill_Mound_SW_A",
+              "className": "WedgePart",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  36.0,
+                  7.0,
+                  14.0
+                ],
+                "Position": [
+                  -100.0,
                   3.5,
-                  108.0
+                  111.0
                 ],
                 "Color": [
                   0.18,
@@ -46977,75 +47007,28 @@
                 "Material": "Grass",
                 "TopSurface": "Smooth",
                 "BottomSurface": "Smooth",
-                "CanCollide": true
+                "CanCollide": true,
+                "Orientation": [
+                  0.0,
+                  0.0,
+                  0.0
+                ]
               }
             },
             {
-              "name": "Hill_Mound_W",
-              "className": "Part",
+              "name": "Hill_Mound_SW_B",
+              "className": "WedgePart",
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  48.0,
-                  10.0,
-                  55.0
+                  36.0,
+                  7.0,
+                  14.0
                 ],
                 "Position": [
-                  -130.0,
-                  5.0,
-                  20.0
-                ],
-                "Color": [
-                  0.14,
-                  0.34,
-                  0.12
-                ],
-                "Material": "Grass",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": true
-              }
-            },
-            {
-              "name": "Hill_Mound_E",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  48.0,
-                  10.0,
-                  55.0
-                ],
-                "Position": [
-                  130.0,
-                  5.0,
-                  15.0
-                ],
-                "Color": [
-                  0.14,
-                  0.34,
-                  0.12
-                ],
-                "Material": "Grass",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": true
-              }
-            },
-            {
-              "name": "Hill_Mound_FarS",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  50.0,
-                  5.0,
-                  28.0
-                ],
-                "Position": [
-                  -40.0,
-                  2.5,
-                  155.0
+                  -100.0,
+                  3.5,
+                  125.0
                 ],
                 "Color": [
                   0.18,
@@ -47055,23 +47038,214 @@
                 "Material": "Grass",
                 "TopSurface": "Smooth",
                 "BottomSurface": "Smooth",
-                "CanCollide": true
+                "CanCollide": true,
+                "Orientation": [
+                  0.0,
+                  180.0,
+                  0.0
+                ]
               }
             },
             {
-              "name": "Hill_Mound_FarSE",
-              "className": "Part",
+              "name": "Hill_Mound_SE_A",
+              "className": "WedgePart",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  34.0,
+                  6.5,
+                  13.0
+                ],
+                "Position": [
+                  105.0,
+                  3.2,
+                  113.5
+                ],
+                "Color": [
+                  0.18,
+                  0.42,
+                  0.16
+                ],
+                "Material": "Grass",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": true,
+                "Orientation": [
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              }
+            },
+            {
+              "name": "Hill_Mound_SE_B",
+              "className": "WedgePart",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  34.0,
+                  6.5,
+                  13.0
+                ],
+                "Position": [
+                  105.0,
+                  3.2,
+                  126.5
+                ],
+                "Color": [
+                  0.18,
+                  0.42,
+                  0.16
+                ],
+                "Material": "Grass",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": true,
+                "Orientation": [
+                  0.0,
+                  180.0,
+                  0.0
+                ]
+              }
+            },
+            {
+              "name": "Hill_Mound_W_A",
+              "className": "WedgePart",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  40.0,
+                  9.0,
+                  22.0
+                ],
+                "Position": [
+                  -155.0,
+                  4.5,
+                  14.0
+                ],
+                "Color": [
+                  0.14,
+                  0.34,
+                  0.12
+                ],
+                "Material": "Grass",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": true,
+                "Orientation": [
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              }
+            },
+            {
+              "name": "Hill_Mound_W_B",
+              "className": "WedgePart",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  40.0,
+                  9.0,
+                  22.0
+                ],
+                "Position": [
+                  -155.0,
+                  4.5,
+                  36.0
+                ],
+                "Color": [
+                  0.14,
+                  0.34,
+                  0.12
+                ],
+                "Material": "Grass",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": true,
+                "Orientation": [
+                  0.0,
+                  180.0,
+                  0.0
+                ]
+              }
+            },
+            {
+              "name": "Hill_Mound_E_A",
+              "className": "WedgePart",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  40.0,
+                  9.0,
+                  22.0
+                ],
+                "Position": [
+                  155.0,
+                  4.5,
+                  9.0
+                ],
+                "Color": [
+                  0.14,
+                  0.34,
+                  0.12
+                ],
+                "Material": "Grass",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": true,
+                "Orientation": [
+                  0.0,
+                  0.0,
+                  0.0
+                ]
+              }
+            },
+            {
+              "name": "Hill_Mound_E_B",
+              "className": "WedgePart",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  40.0,
+                  9.0,
+                  22.0
+                ],
+                "Position": [
+                  155.0,
+                  4.5,
+                  31.0
+                ],
+                "Color": [
+                  0.14,
+                  0.34,
+                  0.12
+                ],
+                "Material": "Grass",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": true,
+                "Orientation": [
+                  0.0,
+                  180.0,
+                  0.0
+                ]
+              }
+            },
+            {
+              "name": "Hill_Mound_FarS_A",
+              "className": "WedgePart",
               "properties": {
                 "Anchored": true,
                 "Size": [
                   44.0,
-                  5.5,
-                  26.0
+                  4.5,
+                  11.0
                 ],
                 "Position": [
-                  55.0,
-                  2.8,
-                  158.0
+                  -35.0,
+                  2.2,
+                  159.5
                 ],
                 "Color": [
                   0.18,
@@ -47081,130 +47255,104 @@
                 "Material": "Grass",
                 "TopSurface": "Smooth",
                 "BottomSurface": "Smooth",
-                "CanCollide": true
-              }
-            },
-            {
-              "name": "Hill_Outcrop_W1",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  10.0,
-                  14.0,
-                  16.0
-                ],
-                "Position": [
-                  -108.0,
-                  6.5,
-                  -120.0
-                ],
-                "Color": [
-                  0.22,
-                  0.2,
-                  0.18
-                ],
-                "Material": "Slate",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
                 "CanCollide": true,
                 "Orientation": [
                   0.0,
-                  -18.0,
-                  8.0
+                  0.0,
+                  0.0
                 ]
               }
             },
             {
-              "name": "Hill_Outcrop_W2",
-              "className": "Part",
+              "name": "Hill_Mound_FarS_B",
+              "className": "WedgePart",
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  12.0,
-                  18.0,
-                  12.0
+                  44.0,
+                  4.5,
+                  11.0
                 ],
                 "Position": [
-                  -112.0,
-                  8.5,
-                  -75.0
+                  -35.0,
+                  2.2,
+                  170.5
                 ],
                 "Color": [
-                  0.32,
-                  0.3,
-                  0.28
+                  0.18,
+                  0.42,
+                  0.16
                 ],
-                "Material": "Rock",
+                "Material": "Grass",
                 "TopSurface": "Smooth",
                 "BottomSurface": "Smooth",
                 "CanCollide": true,
                 "Orientation": [
                   0.0,
-                  12.0,
-                  -6.0
+                  180.0,
+                  0.0
                 ]
               }
             },
             {
-              "name": "Hill_Outcrop_E1",
-              "className": "Part",
+              "name": "Hill_Mound_FarSE_A",
+              "className": "WedgePart",
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  10.0,
-                  14.0,
-                  16.0
+                  40.0,
+                  5.0,
+                  10.0
                 ],
                 "Position": [
-                  108.0,
-                  6.5,
-                  -120.0
+                  50.0,
+                  2.4,
+                  163.0
                 ],
                 "Color": [
-                  0.22,
-                  0.2,
-                  0.18
+                  0.18,
+                  0.42,
+                  0.16
                 ],
-                "Material": "Slate",
+                "Material": "Grass",
                 "TopSurface": "Smooth",
                 "BottomSurface": "Smooth",
                 "CanCollide": true,
                 "Orientation": [
                   0.0,
-                  18.0,
-                  8.0
+                  0.0,
+                  0.0
                 ]
               }
             },
             {
-              "name": "Hill_Outcrop_E2",
-              "className": "Part",
+              "name": "Hill_Mound_FarSE_B",
+              "className": "WedgePart",
               "properties": {
                 "Anchored": true,
                 "Size": [
-                  12.0,
-                  18.0,
-                  12.0
+                  40.0,
+                  5.0,
+                  10.0
                 ],
                 "Position": [
-                  112.0,
-                  8.5,
-                  -75.0
+                  50.0,
+                  2.4,
+                  173.0
                 ],
                 "Color": [
-                  0.32,
-                  0.3,
-                  0.28
+                  0.18,
+                  0.42,
+                  0.16
                 ],
-                "Material": "Rock",
+                "Material": "Grass",
                 "TopSurface": "Smooth",
                 "BottomSurface": "Smooth",
                 "CanCollide": true,
                 "Orientation": [
                   0.0,
-                  -12.0,
-                  -6.0
+                  180.0,
+                  0.0
                 ]
               }
             }
@@ -47227,7 +47375,7 @@
                 "Position": [
                   -90.0,
                   0.4,
-                  138.0
+                  148.0
                 ],
                 "Color": [
                   0.22,
@@ -47253,7 +47401,7 @@
                 "Position": [
                   -90.0,
                   6.4,
-                  138.0
+                  148.0
                 ],
                 "Color": [
                   0.12,
@@ -47279,7 +47427,7 @@
                 "Position": [
                   -90.0,
                   12.2,
-                  138.0
+                  148.0
                 ],
                 "Color": [
                   0.92,
@@ -47305,7 +47453,7 @@
                 "Position": [
                   -90.0,
                   12.35,
-                  136.8
+                  146.8
                 ],
                 "Color": [
                   0.12,
@@ -47336,7 +47484,7 @@
                 "Position": [
                   -90.0,
                   12.1,
-                  135.6
+                  145.6
                 ],
                 "Color": [
                   0.08,
@@ -47362,7 +47510,7 @@
                 "Position": [
                   -90.0,
                   11.85,
-                  135.6
+                  145.6
                 ],
                 "Color": [
                   1.0,
@@ -47389,7 +47537,7 @@
                 "Position": [
                   -90.0,
                   11.5,
-                  135.6
+                  145.6
                 ],
                 "Color": [
                   1.0,
@@ -47431,7 +47579,7 @@
                 "Position": [
                   -45.0,
                   0.4,
-                  138.0
+                  148.0
                 ],
                 "Color": [
                   0.22,
@@ -47457,7 +47605,7 @@
                 "Position": [
                   -45.0,
                   6.4,
-                  138.0
+                  148.0
                 ],
                 "Color": [
                   0.12,
@@ -47483,7 +47631,7 @@
                 "Position": [
                   -45.0,
                   12.2,
-                  138.0
+                  148.0
                 ],
                 "Color": [
                   0.92,
@@ -47509,7 +47657,7 @@
                 "Position": [
                   -45.0,
                   12.35,
-                  136.8
+                  146.8
                 ],
                 "Color": [
                   0.12,
@@ -47540,7 +47688,7 @@
                 "Position": [
                   -45.0,
                   12.1,
-                  135.6
+                  145.6
                 ],
                 "Color": [
                   0.08,
@@ -47566,7 +47714,7 @@
                 "Position": [
                   -45.0,
                   11.85,
-                  135.6
+                  145.6
                 ],
                 "Color": [
                   1.0,
@@ -47593,7 +47741,7 @@
                 "Position": [
                   -45.0,
                   11.5,
-                  135.6
+                  145.6
                 ],
                 "Color": [
                   1.0,
@@ -47635,7 +47783,7 @@
                 "Position": [
                   0.0,
                   0.4,
-                  138.0
+                  148.0
                 ],
                 "Color": [
                   0.22,
@@ -47661,7 +47809,7 @@
                 "Position": [
                   0.0,
                   6.4,
-                  138.0
+                  148.0
                 ],
                 "Color": [
                   0.12,
@@ -47687,7 +47835,7 @@
                 "Position": [
                   0.0,
                   12.2,
-                  138.0
+                  148.0
                 ],
                 "Color": [
                   0.92,
@@ -47713,7 +47861,7 @@
                 "Position": [
                   1.4695761589768238e-16,
                   12.35,
-                  136.8
+                  146.8
                 ],
                 "Color": [
                   0.12,
@@ -47744,7 +47892,7 @@
                 "Position": [
                   2.9391523179536476e-16,
                   12.1,
-                  135.6
+                  145.6
                 ],
                 "Color": [
                   0.08,
@@ -47770,7 +47918,7 @@
                 "Position": [
                   2.9391523179536476e-16,
                   11.85,
-                  135.6
+                  145.6
                 ],
                 "Color": [
                   1.0,
@@ -47797,7 +47945,7 @@
                 "Position": [
                   2.9391523179536476e-16,
                   11.5,
-                  135.6
+                  145.6
                 ],
                 "Color": [
                   1.0,
@@ -47839,7 +47987,7 @@
                 "Position": [
                   45.0,
                   0.4,
-                  138.0
+                  148.0
                 ],
                 "Color": [
                   0.22,
@@ -47865,7 +48013,7 @@
                 "Position": [
                   45.0,
                   6.4,
-                  138.0
+                  148.0
                 ],
                 "Color": [
                   0.12,
@@ -47891,7 +48039,7 @@
                 "Position": [
                   45.0,
                   12.2,
-                  138.0
+                  148.0
                 ],
                 "Color": [
                   0.92,
@@ -47917,7 +48065,7 @@
                 "Position": [
                   45.0,
                   12.35,
-                  136.8
+                  146.8
                 ],
                 "Color": [
                   0.12,
@@ -47948,7 +48096,7 @@
                 "Position": [
                   45.0,
                   12.1,
-                  135.6
+                  145.6
                 ],
                 "Color": [
                   0.08,
@@ -47974,7 +48122,7 @@
                 "Position": [
                   45.0,
                   11.85,
-                  135.6
+                  145.6
                 ],
                 "Color": [
                   1.0,
@@ -48001,7 +48149,7 @@
                 "Position": [
                   45.0,
                   11.5,
-                  135.6
+                  145.6
                 ],
                 "Color": [
                   1.0,
@@ -48043,7 +48191,7 @@
                 "Position": [
                   90.0,
                   0.4,
-                  138.0
+                  148.0
                 ],
                 "Color": [
                   0.22,
@@ -48069,7 +48217,7 @@
                 "Position": [
                   90.0,
                   6.4,
-                  138.0
+                  148.0
                 ],
                 "Color": [
                   0.12,
@@ -48095,7 +48243,7 @@
                 "Position": [
                   90.0,
                   12.2,
-                  138.0
+                  148.0
                 ],
                 "Color": [
                   0.92,
@@ -48121,7 +48269,7 @@
                 "Position": [
                   90.0,
                   12.35,
-                  136.8
+                  146.8
                 ],
                 "Color": [
                   0.12,
@@ -48152,7 +48300,7 @@
                 "Position": [
                   90.0,
                   12.1,
-                  135.6
+                  145.6
                 ],
                 "Color": [
                   0.08,
@@ -48178,7 +48326,7 @@
                 "Position": [
                   90.0,
                   11.85,
-                  135.6
+                  145.6
                 ],
                 "Color": [
                   1.0,
@@ -48205,7 +48353,7 @@
                 "Position": [
                   90.0,
                   11.5,
-                  135.6
+                  145.6
                 ],
                 "Color": [
                   1.0,
@@ -48247,7 +48395,7 @@
                 "Position": [
                   -90.0,
                   0.4,
-                  -158.0
+                  -220.0
                 ],
                 "Color": [
                   0.22,
@@ -48273,7 +48421,7 @@
                 "Position": [
                   -90.0,
                   6.4,
-                  -158.0
+                  -220.0
                 ],
                 "Color": [
                   0.12,
@@ -48299,7 +48447,7 @@
                 "Position": [
                   -90.0,
                   12.2,
-                  -158.0
+                  -220.0
                 ],
                 "Color": [
                   0.92,
@@ -48325,7 +48473,7 @@
                 "Position": [
                   -90.0,
                   12.35,
-                  -156.8
+                  -218.8
                 ],
                 "Color": [
                   0.12,
@@ -48356,7 +48504,7 @@
                 "Position": [
                   -90.0,
                   12.1,
-                  -155.6
+                  -217.6
                 ],
                 "Color": [
                   0.08,
@@ -48382,7 +48530,7 @@
                 "Position": [
                   -90.0,
                   11.85,
-                  -155.6
+                  -217.6
                 ],
                 "Color": [
                   1.0,
@@ -48409,7 +48557,7 @@
                 "Position": [
                   -90.0,
                   11.5,
-                  -155.6
+                  -217.6
                 ],
                 "Color": [
                   1.0,
@@ -48451,7 +48599,7 @@
                 "Position": [
                   -45.0,
                   0.4,
-                  -158.0
+                  -220.0
                 ],
                 "Color": [
                   0.22,
@@ -48477,7 +48625,7 @@
                 "Position": [
                   -45.0,
                   6.4,
-                  -158.0
+                  -220.0
                 ],
                 "Color": [
                   0.12,
@@ -48503,7 +48651,7 @@
                 "Position": [
                   -45.0,
                   12.2,
-                  -158.0
+                  -220.0
                 ],
                 "Color": [
                   0.92,
@@ -48529,7 +48677,7 @@
                 "Position": [
                   -45.0,
                   12.35,
-                  -156.8
+                  -218.8
                 ],
                 "Color": [
                   0.12,
@@ -48560,7 +48708,7 @@
                 "Position": [
                   -45.0,
                   12.1,
-                  -155.6
+                  -217.6
                 ],
                 "Color": [
                   0.08,
@@ -48586,7 +48734,7 @@
                 "Position": [
                   -45.0,
                   11.85,
-                  -155.6
+                  -217.6
                 ],
                 "Color": [
                   1.0,
@@ -48613,7 +48761,7 @@
                 "Position": [
                   -45.0,
                   11.5,
-                  -155.6
+                  -217.6
                 ],
                 "Color": [
                   1.0,
@@ -48655,7 +48803,7 @@
                 "Position": [
                   0.0,
                   0.4,
-                  -158.0
+                  -220.0
                 ],
                 "Color": [
                   0.22,
@@ -48681,7 +48829,7 @@
                 "Position": [
                   0.0,
                   6.4,
-                  -158.0
+                  -220.0
                 ],
                 "Color": [
                   0.12,
@@ -48707,7 +48855,7 @@
                 "Position": [
                   0.0,
                   12.2,
-                  -158.0
+                  -220.0
                 ],
                 "Color": [
                   0.92,
@@ -48733,7 +48881,7 @@
                 "Position": [
                   0.0,
                   12.35,
-                  -156.8
+                  -218.8
                 ],
                 "Color": [
                   0.12,
@@ -48764,7 +48912,7 @@
                 "Position": [
                   0.0,
                   12.1,
-                  -155.6
+                  -217.6
                 ],
                 "Color": [
                   0.08,
@@ -48790,7 +48938,7 @@
                 "Position": [
                   0.0,
                   11.85,
-                  -155.6
+                  -217.6
                 ],
                 "Color": [
                   1.0,
@@ -48817,7 +48965,7 @@
                 "Position": [
                   0.0,
                   11.5,
-                  -155.6
+                  -217.6
                 ],
                 "Color": [
                   1.0,
@@ -48859,7 +49007,7 @@
                 "Position": [
                   45.0,
                   0.4,
-                  -158.0
+                  -220.0
                 ],
                 "Color": [
                   0.22,
@@ -48885,7 +49033,7 @@
                 "Position": [
                   45.0,
                   6.4,
-                  -158.0
+                  -220.0
                 ],
                 "Color": [
                   0.12,
@@ -48911,7 +49059,7 @@
                 "Position": [
                   45.0,
                   12.2,
-                  -158.0
+                  -220.0
                 ],
                 "Color": [
                   0.92,
@@ -48937,7 +49085,7 @@
                 "Position": [
                   45.0,
                   12.35,
-                  -156.8
+                  -218.8
                 ],
                 "Color": [
                   0.12,
@@ -48968,7 +49116,7 @@
                 "Position": [
                   45.0,
                   12.1,
-                  -155.6
+                  -217.6
                 ],
                 "Color": [
                   0.08,
@@ -48994,7 +49142,7 @@
                 "Position": [
                   45.0,
                   11.85,
-                  -155.6
+                  -217.6
                 ],
                 "Color": [
                   1.0,
@@ -49021,7 +49169,7 @@
                 "Position": [
                   45.0,
                   11.5,
-                  -155.6
+                  -217.6
                 ],
                 "Color": [
                   1.0,
@@ -49063,7 +49211,7 @@
                 "Position": [
                   90.0,
                   0.4,
-                  -158.0
+                  -220.0
                 ],
                 "Color": [
                   0.22,
@@ -49089,7 +49237,7 @@
                 "Position": [
                   90.0,
                   6.4,
-                  -158.0
+                  -220.0
                 ],
                 "Color": [
                   0.12,
@@ -49115,7 +49263,7 @@
                 "Position": [
                   90.0,
                   12.2,
-                  -158.0
+                  -220.0
                 ],
                 "Color": [
                   0.92,
@@ -49141,7 +49289,7 @@
                 "Position": [
                   90.0,
                   12.35,
-                  -156.8
+                  -218.8
                 ],
                 "Color": [
                   0.12,
@@ -49172,7 +49320,7 @@
                 "Position": [
                   90.0,
                   12.1,
-                  -155.6
+                  -217.6
                 ],
                 "Color": [
                   0.08,
@@ -49198,7 +49346,7 @@
                 "Position": [
                   90.0,
                   11.85,
-                  -155.6
+                  -217.6
                 ],
                 "Color": [
                   1.0,
@@ -49225,7 +49373,7 @@
                 "Position": [
                   90.0,
                   11.5,
-                  -155.6
+                  -217.6
                 ],
                 "Color": [
                   1.0,
@@ -49265,7 +49413,7 @@
                   1.2
                 ],
                 "Position": [
-                  -120.0,
+                  -170.0,
                   0.4,
                   -120.0
                 ],
@@ -49291,7 +49439,7 @@
                   0.35
                 ],
                 "Position": [
-                  -120.0,
+                  -170.0,
                   6.4,
                   -120.0
                 ],
@@ -49317,7 +49465,7 @@
                   0.55
                 ],
                 "Position": [
-                  -120.0,
+                  -170.0,
                   12.2,
                   -120.0
                 ],
@@ -49343,7 +49491,7 @@
                   2.4
                 ],
                 "Position": [
-                  -118.8,
+                  -168.8,
                   12.35,
                   -120.0
                 ],
@@ -49374,7 +49522,7 @@
                   1.1
                 ],
                 "Position": [
-                  -117.6,
+                  -167.6,
                   12.1,
                   -120.0
                 ],
@@ -49400,7 +49548,7 @@
                   0.7
                 ],
                 "Position": [
-                  -117.6,
+                  -167.6,
                   11.85,
                   -120.0
                 ],
@@ -49427,7 +49575,211 @@
                   0.2
                 ],
                 "Position": [
-                  -117.6,
+                  -167.6,
+                  11.5,
+                  -120.0
+                ],
+                "Color": [
+                  1.0,
+                  0.85,
+                  0.55
+                ],
+                "Material": "SmoothPlastic",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": false,
+                "Transparency": 1.0
+              },
+              "children": [
+                {
+                  "name": "Light",
+                  "className": "PointLight",
+                  "properties": {
+                    "Brightness": 2.8,
+                    "Range": 48.0,
+                    "Color": [
+                      1.0,
+                      0.85,
+                      0.55
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "name": "PerimE0_Base",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  1.2,
+                  0.35,
+                  1.2
+                ],
+                "Position": [
+                  170.0,
+                  0.4,
+                  -120.0
+                ],
+                "Color": [
+                  0.22,
+                  0.2,
+                  0.24
+                ],
+                "Material": "Concrete",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": false
+              }
+            },
+            {
+              "name": "PerimE0_Pole",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  0.35,
+                  12.0,
+                  0.35
+                ],
+                "Position": [
+                  170.0,
+                  6.4,
+                  -120.0
+                ],
+                "Color": [
+                  0.12,
+                  0.12,
+                  0.14
+                ],
+                "Material": "Metal",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": false
+              }
+            },
+            {
+              "name": "PerimE0_Collar",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  0.55,
+                  0.25,
+                  0.55
+                ],
+                "Position": [
+                  170.0,
+                  12.2,
+                  -120.0
+                ],
+                "Color": [
+                  0.92,
+                  0.75,
+                  0.32
+                ],
+                "Material": "Metal",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": false
+              }
+            },
+            {
+              "name": "PerimE0_Arm",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  0.25,
+                  0.25,
+                  2.4
+                ],
+                "Position": [
+                  168.8,
+                  12.35,
+                  -120.0
+                ],
+                "Color": [
+                  0.12,
+                  0.12,
+                  0.14
+                ],
+                "Material": "Metal",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": false,
+                "Orientation": [
+                  0.0,
+                  -90.0,
+                  0.0
+                ]
+              }
+            },
+            {
+              "name": "PerimE0_Head",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  1.1,
+                  0.55,
+                  1.1
+                ],
+                "Position": [
+                  167.6,
+                  12.1,
+                  -120.0
+                ],
+                "Color": [
+                  0.08,
+                  0.08,
+                  0.1
+                ],
+                "Material": "Metal",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": false
+              }
+            },
+            {
+              "name": "PerimE0_Glow",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  0.7,
+                  0.35,
+                  0.7
+                ],
+                "Position": [
+                  167.6,
+                  11.85,
+                  -120.0
+                ],
+                "Color": [
+                  1.0,
+                  0.85,
+                  0.55
+                ],
+                "Material": "Neon",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": false,
+                "Transparency": 0.15
+              }
+            },
+            {
+              "name": "PerimE0_Light",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  0.2,
+                  0.2,
+                  0.2
+                ],
+                "Position": [
+                  167.6,
                   11.5,
                   -120.0
                 ],
@@ -49469,7 +49821,7 @@
                   1.2
                 ],
                 "Position": [
-                  -120.0,
+                  -170.0,
                   0.4,
                   -60.0
                 ],
@@ -49495,7 +49847,7 @@
                   0.35
                 ],
                 "Position": [
-                  -120.0,
+                  -170.0,
                   6.4,
                   -60.0
                 ],
@@ -49521,7 +49873,7 @@
                   0.55
                 ],
                 "Position": [
-                  -120.0,
+                  -170.0,
                   12.2,
                   -60.0
                 ],
@@ -49547,7 +49899,7 @@
                   2.4
                 ],
                 "Position": [
-                  -118.8,
+                  -168.8,
                   12.35,
                   -60.0
                 ],
@@ -49578,7 +49930,7 @@
                   1.1
                 ],
                 "Position": [
-                  -117.6,
+                  -167.6,
                   12.1,
                   -60.0
                 ],
@@ -49604,7 +49956,7 @@
                   0.7
                 ],
                 "Position": [
-                  -117.6,
+                  -167.6,
                   11.85,
                   -60.0
                 ],
@@ -49631,7 +49983,211 @@
                   0.2
                 ],
                 "Position": [
-                  -117.6,
+                  -167.6,
+                  11.5,
+                  -60.0
+                ],
+                "Color": [
+                  1.0,
+                  0.85,
+                  0.55
+                ],
+                "Material": "SmoothPlastic",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": false,
+                "Transparency": 1.0
+              },
+              "children": [
+                {
+                  "name": "Light",
+                  "className": "PointLight",
+                  "properties": {
+                    "Brightness": 2.8,
+                    "Range": 48.0,
+                    "Color": [
+                      1.0,
+                      0.85,
+                      0.55
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "name": "PerimE1_Base",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  1.2,
+                  0.35,
+                  1.2
+                ],
+                "Position": [
+                  170.0,
+                  0.4,
+                  -60.0
+                ],
+                "Color": [
+                  0.22,
+                  0.2,
+                  0.24
+                ],
+                "Material": "Concrete",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": false
+              }
+            },
+            {
+              "name": "PerimE1_Pole",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  0.35,
+                  12.0,
+                  0.35
+                ],
+                "Position": [
+                  170.0,
+                  6.4,
+                  -60.0
+                ],
+                "Color": [
+                  0.12,
+                  0.12,
+                  0.14
+                ],
+                "Material": "Metal",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": false
+              }
+            },
+            {
+              "name": "PerimE1_Collar",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  0.55,
+                  0.25,
+                  0.55
+                ],
+                "Position": [
+                  170.0,
+                  12.2,
+                  -60.0
+                ],
+                "Color": [
+                  0.92,
+                  0.75,
+                  0.32
+                ],
+                "Material": "Metal",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": false
+              }
+            },
+            {
+              "name": "PerimE1_Arm",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  0.25,
+                  0.25,
+                  2.4
+                ],
+                "Position": [
+                  168.8,
+                  12.35,
+                  -60.0
+                ],
+                "Color": [
+                  0.12,
+                  0.12,
+                  0.14
+                ],
+                "Material": "Metal",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": false,
+                "Orientation": [
+                  0.0,
+                  -90.0,
+                  0.0
+                ]
+              }
+            },
+            {
+              "name": "PerimE1_Head",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  1.1,
+                  0.55,
+                  1.1
+                ],
+                "Position": [
+                  167.6,
+                  12.1,
+                  -60.0
+                ],
+                "Color": [
+                  0.08,
+                  0.08,
+                  0.1
+                ],
+                "Material": "Metal",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": false
+              }
+            },
+            {
+              "name": "PerimE1_Glow",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  0.7,
+                  0.35,
+                  0.7
+                ],
+                "Position": [
+                  167.6,
+                  11.85,
+                  -60.0
+                ],
+                "Color": [
+                  1.0,
+                  0.85,
+                  0.55
+                ],
+                "Material": "Neon",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": false,
+                "Transparency": 0.15
+              }
+            },
+            {
+              "name": "PerimE1_Light",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  0.2,
+                  0.2,
+                  0.2
+                ],
+                "Position": [
+                  167.6,
                   11.5,
                   -60.0
                 ],
@@ -49673,7 +50229,7 @@
                   1.2
                 ],
                 "Position": [
-                  -120.0,
+                  -170.0,
                   0.4,
                   0.0
                 ],
@@ -49699,7 +50255,7 @@
                   0.35
                 ],
                 "Position": [
-                  -120.0,
+                  -170.0,
                   6.4,
                   0.0
                 ],
@@ -49725,7 +50281,7 @@
                   0.55
                 ],
                 "Position": [
-                  -120.0,
+                  -170.0,
                   12.2,
                   0.0
                 ],
@@ -49751,7 +50307,7 @@
                   2.4
                 ],
                 "Position": [
-                  -118.8,
+                  -168.8,
                   12.35,
                   7.347880794884119e-17
                 ],
@@ -49782,7 +50338,7 @@
                   1.1
                 ],
                 "Position": [
-                  -117.6,
+                  -167.6,
                   12.1,
                   1.4695761589768238e-16
                 ],
@@ -49808,7 +50364,7 @@
                   0.7
                 ],
                 "Position": [
-                  -117.6,
+                  -167.6,
                   11.85,
                   1.4695761589768238e-16
                 ],
@@ -49835,7 +50391,211 @@
                   0.2
                 ],
                 "Position": [
-                  -117.6,
+                  -167.6,
+                  11.5,
+                  1.4695761589768238e-16
+                ],
+                "Color": [
+                  1.0,
+                  0.85,
+                  0.55
+                ],
+                "Material": "SmoothPlastic",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": false,
+                "Transparency": 1.0
+              },
+              "children": [
+                {
+                  "name": "Light",
+                  "className": "PointLight",
+                  "properties": {
+                    "Brightness": 2.8,
+                    "Range": 48.0,
+                    "Color": [
+                      1.0,
+                      0.85,
+                      0.55
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "name": "PerimE2_Base",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  1.2,
+                  0.35,
+                  1.2
+                ],
+                "Position": [
+                  170.0,
+                  0.4,
+                  0.0
+                ],
+                "Color": [
+                  0.22,
+                  0.2,
+                  0.24
+                ],
+                "Material": "Concrete",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": false
+              }
+            },
+            {
+              "name": "PerimE2_Pole",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  0.35,
+                  12.0,
+                  0.35
+                ],
+                "Position": [
+                  170.0,
+                  6.4,
+                  0.0
+                ],
+                "Color": [
+                  0.12,
+                  0.12,
+                  0.14
+                ],
+                "Material": "Metal",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": false
+              }
+            },
+            {
+              "name": "PerimE2_Collar",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  0.55,
+                  0.25,
+                  0.55
+                ],
+                "Position": [
+                  170.0,
+                  12.2,
+                  0.0
+                ],
+                "Color": [
+                  0.92,
+                  0.75,
+                  0.32
+                ],
+                "Material": "Metal",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": false
+              }
+            },
+            {
+              "name": "PerimE2_Arm",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  0.25,
+                  0.25,
+                  2.4
+                ],
+                "Position": [
+                  168.8,
+                  12.35,
+                  7.347880794884119e-17
+                ],
+                "Color": [
+                  0.12,
+                  0.12,
+                  0.14
+                ],
+                "Material": "Metal",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": false,
+                "Orientation": [
+                  0.0,
+                  -90.0,
+                  0.0
+                ]
+              }
+            },
+            {
+              "name": "PerimE2_Head",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  1.1,
+                  0.55,
+                  1.1
+                ],
+                "Position": [
+                  167.6,
+                  12.1,
+                  1.4695761589768238e-16
+                ],
+                "Color": [
+                  0.08,
+                  0.08,
+                  0.1
+                ],
+                "Material": "Metal",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": false
+              }
+            },
+            {
+              "name": "PerimE2_Glow",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  0.7,
+                  0.35,
+                  0.7
+                ],
+                "Position": [
+                  167.6,
+                  11.85,
+                  1.4695761589768238e-16
+                ],
+                "Color": [
+                  1.0,
+                  0.85,
+                  0.55
+                ],
+                "Material": "Neon",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": false,
+                "Transparency": 0.15
+              }
+            },
+            {
+              "name": "PerimE2_Light",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  0.2,
+                  0.2,
+                  0.2
+                ],
+                "Position": [
+                  167.6,
                   11.5,
                   1.4695761589768238e-16
                 ],
@@ -49877,7 +50637,7 @@
                   1.2
                 ],
                 "Position": [
-                  -120.0,
+                  -170.0,
                   0.4,
                   40.0
                 ],
@@ -49903,7 +50663,7 @@
                   0.35
                 ],
                 "Position": [
-                  -120.0,
+                  -170.0,
                   6.4,
                   40.0
                 ],
@@ -49929,7 +50689,7 @@
                   0.55
                 ],
                 "Position": [
-                  -120.0,
+                  -170.0,
                   12.2,
                   40.0
                 ],
@@ -49955,7 +50715,7 @@
                   2.4
                 ],
                 "Position": [
-                  -118.8,
+                  -168.8,
                   12.35,
                   40.0
                 ],
@@ -49986,7 +50746,7 @@
                   1.1
                 ],
                 "Position": [
-                  -117.6,
+                  -167.6,
                   12.1,
                   40.0
                 ],
@@ -50012,7 +50772,7 @@
                   0.7
                 ],
                 "Position": [
-                  -117.6,
+                  -167.6,
                   11.85,
                   40.0
                 ],
@@ -50039,7 +50799,211 @@
                   0.2
                 ],
                 "Position": [
-                  -117.6,
+                  -167.6,
+                  11.5,
+                  40.0
+                ],
+                "Color": [
+                  1.0,
+                  0.85,
+                  0.55
+                ],
+                "Material": "SmoothPlastic",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": false,
+                "Transparency": 1.0
+              },
+              "children": [
+                {
+                  "name": "Light",
+                  "className": "PointLight",
+                  "properties": {
+                    "Brightness": 2.8,
+                    "Range": 48.0,
+                    "Color": [
+                      1.0,
+                      0.85,
+                      0.55
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "name": "PerimE3_Base",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  1.2,
+                  0.35,
+                  1.2
+                ],
+                "Position": [
+                  170.0,
+                  0.4,
+                  40.0
+                ],
+                "Color": [
+                  0.22,
+                  0.2,
+                  0.24
+                ],
+                "Material": "Concrete",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": false
+              }
+            },
+            {
+              "name": "PerimE3_Pole",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  0.35,
+                  12.0,
+                  0.35
+                ],
+                "Position": [
+                  170.0,
+                  6.4,
+                  40.0
+                ],
+                "Color": [
+                  0.12,
+                  0.12,
+                  0.14
+                ],
+                "Material": "Metal",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": false
+              }
+            },
+            {
+              "name": "PerimE3_Collar",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  0.55,
+                  0.25,
+                  0.55
+                ],
+                "Position": [
+                  170.0,
+                  12.2,
+                  40.0
+                ],
+                "Color": [
+                  0.92,
+                  0.75,
+                  0.32
+                ],
+                "Material": "Metal",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": false
+              }
+            },
+            {
+              "name": "PerimE3_Arm",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  0.25,
+                  0.25,
+                  2.4
+                ],
+                "Position": [
+                  168.8,
+                  12.35,
+                  40.0
+                ],
+                "Color": [
+                  0.12,
+                  0.12,
+                  0.14
+                ],
+                "Material": "Metal",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": false,
+                "Orientation": [
+                  0.0,
+                  -90.0,
+                  0.0
+                ]
+              }
+            },
+            {
+              "name": "PerimE3_Head",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  1.1,
+                  0.55,
+                  1.1
+                ],
+                "Position": [
+                  167.6,
+                  12.1,
+                  40.0
+                ],
+                "Color": [
+                  0.08,
+                  0.08,
+                  0.1
+                ],
+                "Material": "Metal",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": false
+              }
+            },
+            {
+              "name": "PerimE3_Glow",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  0.7,
+                  0.35,
+                  0.7
+                ],
+                "Position": [
+                  167.6,
+                  11.85,
+                  40.0
+                ],
+                "Color": [
+                  1.0,
+                  0.85,
+                  0.55
+                ],
+                "Material": "Neon",
+                "TopSurface": "Smooth",
+                "BottomSurface": "Smooth",
+                "CanCollide": false,
+                "Transparency": 0.15
+              }
+            },
+            {
+              "name": "PerimE3_Light",
+              "className": "Part",
+              "properties": {
+                "Anchored": true,
+                "Size": [
+                  0.2,
+                  0.2,
+                  0.2
+                ],
+                "Position": [
+                  167.6,
                   11.5,
                   40.0
                 ],
@@ -50081,7 +51045,7 @@
                   1.2
                 ],
                 "Position": [
-                  -120.0,
+                  -170.0,
                   0.4,
                   100.0
                 ],
@@ -50107,7 +51071,7 @@
                   0.35
                 ],
                 "Position": [
-                  -120.0,
+                  -170.0,
                   6.4,
                   100.0
                 ],
@@ -50133,7 +51097,7 @@
                   0.55
                 ],
                 "Position": [
-                  -120.0,
+                  -170.0,
                   12.2,
                   100.0
                 ],
@@ -50159,7 +51123,7 @@
                   2.4
                 ],
                 "Position": [
-                  -118.8,
+                  -168.8,
                   12.35,
                   100.0
                 ],
@@ -50190,7 +51154,7 @@
                   1.1
                 ],
                 "Position": [
-                  -117.6,
+                  -167.6,
                   12.1,
                   100.0
                 ],
@@ -50216,7 +51180,7 @@
                   0.7
                 ],
                 "Position": [
-                  -117.6,
+                  -167.6,
                   11.85,
                   100.0
                 ],
@@ -50243,825 +51207,9 @@
                   0.2
                 ],
                 "Position": [
-                  -117.6,
+                  -167.6,
                   11.5,
                   100.0
-                ],
-                "Color": [
-                  1.0,
-                  0.85,
-                  0.55
-                ],
-                "Material": "SmoothPlastic",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false,
-                "Transparency": 1.0
-              },
-              "children": [
-                {
-                  "name": "Light",
-                  "className": "PointLight",
-                  "properties": {
-                    "Brightness": 2.8,
-                    "Range": 48.0,
-                    "Color": [
-                      1.0,
-                      0.85,
-                      0.55
-                    ]
-                  }
-                }
-              ]
-            },
-            {
-              "name": "PerimE0_Base",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  1.2,
-                  0.35,
-                  1.2
-                ],
-                "Position": [
-                  120.0,
-                  0.4,
-                  -120.0
-                ],
-                "Color": [
-                  0.22,
-                  0.2,
-                  0.24
-                ],
-                "Material": "Concrete",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false
-              }
-            },
-            {
-              "name": "PerimE0_Pole",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  0.35,
-                  12.0,
-                  0.35
-                ],
-                "Position": [
-                  120.0,
-                  6.4,
-                  -120.0
-                ],
-                "Color": [
-                  0.12,
-                  0.12,
-                  0.14
-                ],
-                "Material": "Metal",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false
-              }
-            },
-            {
-              "name": "PerimE0_Collar",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  0.55,
-                  0.25,
-                  0.55
-                ],
-                "Position": [
-                  120.0,
-                  12.2,
-                  -120.0
-                ],
-                "Color": [
-                  0.92,
-                  0.75,
-                  0.32
-                ],
-                "Material": "Metal",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false
-              }
-            },
-            {
-              "name": "PerimE0_Arm",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  0.25,
-                  0.25,
-                  2.4
-                ],
-                "Position": [
-                  118.8,
-                  12.35,
-                  -120.0
-                ],
-                "Color": [
-                  0.12,
-                  0.12,
-                  0.14
-                ],
-                "Material": "Metal",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false,
-                "Orientation": [
-                  0.0,
-                  -90.0,
-                  0.0
-                ]
-              }
-            },
-            {
-              "name": "PerimE0_Head",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  1.1,
-                  0.55,
-                  1.1
-                ],
-                "Position": [
-                  117.6,
-                  12.1,
-                  -120.0
-                ],
-                "Color": [
-                  0.08,
-                  0.08,
-                  0.1
-                ],
-                "Material": "Metal",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false
-              }
-            },
-            {
-              "name": "PerimE0_Glow",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  0.7,
-                  0.35,
-                  0.7
-                ],
-                "Position": [
-                  117.6,
-                  11.85,
-                  -120.0
-                ],
-                "Color": [
-                  1.0,
-                  0.85,
-                  0.55
-                ],
-                "Material": "Neon",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false,
-                "Transparency": 0.15
-              }
-            },
-            {
-              "name": "PerimE0_Light",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  0.2,
-                  0.2,
-                  0.2
-                ],
-                "Position": [
-                  117.6,
-                  11.5,
-                  -120.0
-                ],
-                "Color": [
-                  1.0,
-                  0.85,
-                  0.55
-                ],
-                "Material": "SmoothPlastic",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false,
-                "Transparency": 1.0
-              },
-              "children": [
-                {
-                  "name": "Light",
-                  "className": "PointLight",
-                  "properties": {
-                    "Brightness": 2.8,
-                    "Range": 48.0,
-                    "Color": [
-                      1.0,
-                      0.85,
-                      0.55
-                    ]
-                  }
-                }
-              ]
-            },
-            {
-              "name": "PerimE1_Base",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  1.2,
-                  0.35,
-                  1.2
-                ],
-                "Position": [
-                  120.0,
-                  0.4,
-                  -60.0
-                ],
-                "Color": [
-                  0.22,
-                  0.2,
-                  0.24
-                ],
-                "Material": "Concrete",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false
-              }
-            },
-            {
-              "name": "PerimE1_Pole",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  0.35,
-                  12.0,
-                  0.35
-                ],
-                "Position": [
-                  120.0,
-                  6.4,
-                  -60.0
-                ],
-                "Color": [
-                  0.12,
-                  0.12,
-                  0.14
-                ],
-                "Material": "Metal",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false
-              }
-            },
-            {
-              "name": "PerimE1_Collar",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  0.55,
-                  0.25,
-                  0.55
-                ],
-                "Position": [
-                  120.0,
-                  12.2,
-                  -60.0
-                ],
-                "Color": [
-                  0.92,
-                  0.75,
-                  0.32
-                ],
-                "Material": "Metal",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false
-              }
-            },
-            {
-              "name": "PerimE1_Arm",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  0.25,
-                  0.25,
-                  2.4
-                ],
-                "Position": [
-                  118.8,
-                  12.35,
-                  -60.0
-                ],
-                "Color": [
-                  0.12,
-                  0.12,
-                  0.14
-                ],
-                "Material": "Metal",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false,
-                "Orientation": [
-                  0.0,
-                  -90.0,
-                  0.0
-                ]
-              }
-            },
-            {
-              "name": "PerimE1_Head",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  1.1,
-                  0.55,
-                  1.1
-                ],
-                "Position": [
-                  117.6,
-                  12.1,
-                  -60.0
-                ],
-                "Color": [
-                  0.08,
-                  0.08,
-                  0.1
-                ],
-                "Material": "Metal",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false
-              }
-            },
-            {
-              "name": "PerimE1_Glow",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  0.7,
-                  0.35,
-                  0.7
-                ],
-                "Position": [
-                  117.6,
-                  11.85,
-                  -60.0
-                ],
-                "Color": [
-                  1.0,
-                  0.85,
-                  0.55
-                ],
-                "Material": "Neon",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false,
-                "Transparency": 0.15
-              }
-            },
-            {
-              "name": "PerimE1_Light",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  0.2,
-                  0.2,
-                  0.2
-                ],
-                "Position": [
-                  117.6,
-                  11.5,
-                  -60.0
-                ],
-                "Color": [
-                  1.0,
-                  0.85,
-                  0.55
-                ],
-                "Material": "SmoothPlastic",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false,
-                "Transparency": 1.0
-              },
-              "children": [
-                {
-                  "name": "Light",
-                  "className": "PointLight",
-                  "properties": {
-                    "Brightness": 2.8,
-                    "Range": 48.0,
-                    "Color": [
-                      1.0,
-                      0.85,
-                      0.55
-                    ]
-                  }
-                }
-              ]
-            },
-            {
-              "name": "PerimE2_Base",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  1.2,
-                  0.35,
-                  1.2
-                ],
-                "Position": [
-                  120.0,
-                  0.4,
-                  0.0
-                ],
-                "Color": [
-                  0.22,
-                  0.2,
-                  0.24
-                ],
-                "Material": "Concrete",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false
-              }
-            },
-            {
-              "name": "PerimE2_Pole",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  0.35,
-                  12.0,
-                  0.35
-                ],
-                "Position": [
-                  120.0,
-                  6.4,
-                  0.0
-                ],
-                "Color": [
-                  0.12,
-                  0.12,
-                  0.14
-                ],
-                "Material": "Metal",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false
-              }
-            },
-            {
-              "name": "PerimE2_Collar",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  0.55,
-                  0.25,
-                  0.55
-                ],
-                "Position": [
-                  120.0,
-                  12.2,
-                  0.0
-                ],
-                "Color": [
-                  0.92,
-                  0.75,
-                  0.32
-                ],
-                "Material": "Metal",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false
-              }
-            },
-            {
-              "name": "PerimE2_Arm",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  0.25,
-                  0.25,
-                  2.4
-                ],
-                "Position": [
-                  118.8,
-                  12.35,
-                  7.347880794884119e-17
-                ],
-                "Color": [
-                  0.12,
-                  0.12,
-                  0.14
-                ],
-                "Material": "Metal",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false,
-                "Orientation": [
-                  0.0,
-                  -90.0,
-                  0.0
-                ]
-              }
-            },
-            {
-              "name": "PerimE2_Head",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  1.1,
-                  0.55,
-                  1.1
-                ],
-                "Position": [
-                  117.6,
-                  12.1,
-                  1.4695761589768238e-16
-                ],
-                "Color": [
-                  0.08,
-                  0.08,
-                  0.1
-                ],
-                "Material": "Metal",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false
-              }
-            },
-            {
-              "name": "PerimE2_Glow",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  0.7,
-                  0.35,
-                  0.7
-                ],
-                "Position": [
-                  117.6,
-                  11.85,
-                  1.4695761589768238e-16
-                ],
-                "Color": [
-                  1.0,
-                  0.85,
-                  0.55
-                ],
-                "Material": "Neon",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false,
-                "Transparency": 0.15
-              }
-            },
-            {
-              "name": "PerimE2_Light",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  0.2,
-                  0.2,
-                  0.2
-                ],
-                "Position": [
-                  117.6,
-                  11.5,
-                  1.4695761589768238e-16
-                ],
-                "Color": [
-                  1.0,
-                  0.85,
-                  0.55
-                ],
-                "Material": "SmoothPlastic",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false,
-                "Transparency": 1.0
-              },
-              "children": [
-                {
-                  "name": "Light",
-                  "className": "PointLight",
-                  "properties": {
-                    "Brightness": 2.8,
-                    "Range": 48.0,
-                    "Color": [
-                      1.0,
-                      0.85,
-                      0.55
-                    ]
-                  }
-                }
-              ]
-            },
-            {
-              "name": "PerimE3_Base",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  1.2,
-                  0.35,
-                  1.2
-                ],
-                "Position": [
-                  120.0,
-                  0.4,
-                  40.0
-                ],
-                "Color": [
-                  0.22,
-                  0.2,
-                  0.24
-                ],
-                "Material": "Concrete",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false
-              }
-            },
-            {
-              "name": "PerimE3_Pole",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  0.35,
-                  12.0,
-                  0.35
-                ],
-                "Position": [
-                  120.0,
-                  6.4,
-                  40.0
-                ],
-                "Color": [
-                  0.12,
-                  0.12,
-                  0.14
-                ],
-                "Material": "Metal",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false
-              }
-            },
-            {
-              "name": "PerimE3_Collar",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  0.55,
-                  0.25,
-                  0.55
-                ],
-                "Position": [
-                  120.0,
-                  12.2,
-                  40.0
-                ],
-                "Color": [
-                  0.92,
-                  0.75,
-                  0.32
-                ],
-                "Material": "Metal",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false
-              }
-            },
-            {
-              "name": "PerimE3_Arm",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  0.25,
-                  0.25,
-                  2.4
-                ],
-                "Position": [
-                  118.8,
-                  12.35,
-                  40.0
-                ],
-                "Color": [
-                  0.12,
-                  0.12,
-                  0.14
-                ],
-                "Material": "Metal",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false,
-                "Orientation": [
-                  0.0,
-                  -90.0,
-                  0.0
-                ]
-              }
-            },
-            {
-              "name": "PerimE3_Head",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  1.1,
-                  0.55,
-                  1.1
-                ],
-                "Position": [
-                  117.6,
-                  12.1,
-                  40.0
-                ],
-                "Color": [
-                  0.08,
-                  0.08,
-                  0.1
-                ],
-                "Material": "Metal",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false
-              }
-            },
-            {
-              "name": "PerimE3_Glow",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  0.7,
-                  0.35,
-                  0.7
-                ],
-                "Position": [
-                  117.6,
-                  11.85,
-                  40.0
-                ],
-                "Color": [
-                  1.0,
-                  0.85,
-                  0.55
-                ],
-                "Material": "Neon",
-                "TopSurface": "Smooth",
-                "BottomSurface": "Smooth",
-                "CanCollide": false,
-                "Transparency": 0.15
-              }
-            },
-            {
-              "name": "PerimE3_Light",
-              "className": "Part",
-              "properties": {
-                "Anchored": true,
-                "Size": [
-                  0.2,
-                  0.2,
-                  0.2
-                ],
-                "Position": [
-                  117.6,
-                  11.5,
-                  40.0
                 ],
                 "Color": [
                   1.0,
@@ -51101,7 +51249,7 @@
                   1.2
                 ],
                 "Position": [
-                  120.0,
+                  170.0,
                   0.4,
                   100.0
                 ],
@@ -51127,7 +51275,7 @@
                   0.35
                 ],
                 "Position": [
-                  120.0,
+                  170.0,
                   6.4,
                   100.0
                 ],
@@ -51153,7 +51301,7 @@
                   0.55
                 ],
                 "Position": [
-                  120.0,
+                  170.0,
                   12.2,
                   100.0
                 ],
@@ -51179,7 +51327,7 @@
                   2.4
                 ],
                 "Position": [
-                  118.8,
+                  168.8,
                   12.35,
                   100.0
                 ],
@@ -51210,7 +51358,7 @@
                   1.1
                 ],
                 "Position": [
-                  117.6,
+                  167.6,
                   12.1,
                   100.0
                 ],
@@ -51236,7 +51384,7 @@
                   0.7
                 ],
                 "Position": [
-                  117.6,
+                  167.6,
                   11.85,
                   100.0
                 ],
@@ -51263,7 +51411,7 @@
                   0.2
                 ],
                 "Position": [
-                  117.6,
+                  167.6,
                   11.5,
                   100.0
                 ],
@@ -52775,7 +52923,7 @@
                   0.2
                 ],
                 "Position": [
-                  -100.0,
+                  -110.0,
                   24.0,
                   70.0
                 ],
@@ -52824,7 +52972,7 @@
                   0.2
                 ],
                 "Position": [
-                  100.0,
+                  110.0,
                   24.0,
                   70.0
                 ],
@@ -52873,9 +53021,9 @@
                   0.2
                 ],
                 "Position": [
-                  -100.0,
+                  -165.0,
                   24.0,
-                  -130.0
+                  -145.0
                 ],
                 "Color": [
                   1.0,
@@ -52922,9 +53070,9 @@
                   0.2
                 ],
                 "Position": [
-                  100.0,
+                  165.0,
                   24.0,
-                  -130.0
+                  -145.0
                 ],
                 "Color": [
                   1.0,
@@ -52973,7 +53121,7 @@
                 "Position": [
                   -50.0,
                   14.0,
-                  130.0
+                  140.0
                 ],
                 "Color": [
                   1.0,
@@ -53015,7 +53163,7 @@
                 "Position": [
                   50.0,
                   14.0,
-                  130.0
+                  140.0
                 ],
                 "Color": [
                   1.0,
@@ -53056,8 +53204,8 @@
                 ],
                 "Position": [
                   0.0,
-                  14.0,
-                  -155.0
+                  8.0,
+                  -225.0
                 ],
                 "Color": [
                   1.0,
@@ -53097,7 +53245,7 @@
                   0.2
                 ],
                 "Position": [
-                  -115.0,
+                  -175.0,
                   14.0,
                   -20.0
                 ],
@@ -53139,7 +53287,7 @@
                   0.2
                 ],
                 "Position": [
-                  115.0,
+                  175.0,
                   14.0,
                   -20.0
                 ],
@@ -53181,8 +53329,8 @@
                   0.2
                 ],
                 "Position": [
-                  -60.0,
-                  14.0,
+                  -175.0,
+                  20.0,
                   -100.0
                 ],
                 "Color": [
@@ -53223,8 +53371,8 @@
                   0.2
                 ],
                 "Position": [
-                  60.0,
-                  14.0,
+                  175.0,
+                  20.0,
                   -100.0
                 ],
                 "Color": [
