@@ -194,11 +194,15 @@ local function ensurePortalLabels()
 	local vestibule = atmosphere and atmosphere:FindFirstChild("Vestibule")
 	local valetSign = plaza and plaza:FindFirstChild("ValetSign")
 	local vipSign = vestibule and vestibule:FindFirstChild("VipSign")
+	local receptionSign = vestibule and vestibule:FindFirstChild("ReceptionSign")
 	if valetSign and valetSign:IsA("BasePart") then
 		dressNamedSign(valetSign, "VALET", Config.COLORS.NeonCyan, Enum.NormalId.Front)
 	end
 	if vipSign and vipSign:IsA("BasePart") then
 		dressNamedSign(vipSign, "VIP", Config.COLORS.NeonMagenta, Enum.NormalId.Front)
+	end
+	if receptionSign and receptionSign:IsA("BasePart") then
+		dressNamedSign(receptionSign, "RECEPTION", Config.COLORS.NeonCyan, Enum.NormalId.Front)
 	end
 end
 

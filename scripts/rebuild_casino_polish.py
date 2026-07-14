@@ -31,6 +31,7 @@ ASPHALT = [0.12, 0.12, 0.14]
 STONE = [0.22, 0.2, 0.24]
 WATER = [0.25, 0.55, 0.7]
 GREEN_PLANT = [0.12, 0.42, 0.22]
+GRASS = [0.18, 0.42, 0.16]
 GLASS = [0.55, 0.75, 0.85]
 WHITE = [0.95, 0.93, 0.88]
 WARM = [1.0, 0.85, 0.55]
@@ -42,13 +43,18 @@ ENTRY_HALF = 12.0  # clear opening roughly |x| < 12
 
 # Plaza / facade extents (south of building)
 PLAZA_Z0 = 66.5
-PLAZA_Z1 = 118.0
-SPAWN_POS = [0.0, 3.0, 100.0]
+PLAZA_Z1 = 124.0
+SPAWN_POS = [0.0, 3.0, 112.0]
+# Continuous approach carpet (half-width); stanchions sit just outside edges.
+CARPET_HALF = 5.0
+STANCHION_X = 5.6
+FOUNTAIN_POS = (28.0, 92.0)  # east of carpet so the walk line stays clear
 
 POLISH_FOLDERS = (
     "Exterior",
     "Plaza",
     "Vestibule",
+    "Ground",
     "PitDressing",
     "BarGlow",
     "LuxuryTrim",
@@ -120,8 +126,9 @@ def part(
     return {"name": name, "className": "Part", "properties": props}
 
 
-def light_part(name: str, pos, color, *, brightness=2.0, range_=28.0, size=(0.4, 0.4, 0.4)) -> dict:
-    p = part(name, size, pos, color, material="Neon", can_collide=False, transparency=0.35)
+def light_part(name: str, pos, color, *, brightness=2.0, range_=28.0) -> dict:
+    """Fully invisible PointLight host - never leave neon cubes floating in world."""
+    p = part(name, (0.2, 0.2, 0.2), pos, color, material="SmoothPlastic", can_collide=False, transparency=1.0)
     p["children"] = [
         {
             "name": "Light",
@@ -138,7 +145,7 @@ def light_part(name: str, pos, color, *, brightness=2.0, range_=28.0, size=(0.4,
 
 def spot_part(name: str, pos, color, *, brightness=3.0, range_=40.0, angle=70.0) -> dict:
     """Invisible host for a SpotLight aimed at the facade (faces -Z / north into building)."""
-    p = part(name, (0.5, 0.5, 0.5), pos, color, material="Neon", can_collide=False, transparency=1.0)
+    p = part(name, (0.2, 0.2, 0.2), pos, color, material="SmoothPlastic", can_collide=False, transparency=1.0)
     p["children"] = [
         {
             "name": "Spot",
@@ -155,6 +162,29 @@ def spot_part(name: str, pos, color, *, brightness=3.0, range_=40.0, angle=70.0)
     # Orientation so Front (-Z local) aims toward -Z world (into facade from plaza)
     p["properties"]["Orientation"] = [0.0, 0.0, 0.0]
     return p
+
+
+def stanchion_pair(prefix: str, x: float, z: float) -> list:
+    """Gold post + tip at one carpet edge."""
+    return [
+        part(f"{prefix}", (0.35, 2.4, 0.35), (x, 1.4, z), GOLD, material="Metal", can_collide=False),
+        part(
+            f"{prefix}Tip",
+            (0.5, 0.22, 0.5),
+            (x, 2.7, z),
+            GOLD,
+            material="Metal",
+            can_collide=False,
+            shape="Cylinder",
+        ),
+    ]
+
+
+def side_rope(name: str, x: float, z0: float, z1: float) -> dict:
+    """Velvet rope along one carpet edge between two Z posts (not across the walk)."""
+    z_mid = (z0 + z1) * 0.5
+    depth = abs(z1 - z0)
+    return part(name, (0.1, 0.1, depth), (x, 2.25, z_mid), RED, material="Fabric", can_collide=False)
 
 
 # ---------------------------------------------------------------------------
@@ -266,7 +296,7 @@ def build_exterior() -> list:
     kids.append(
         part("MarqueeNeonInner", (50.0, 7.6, 0.35), (0.0, 28.5, 70.25), MAGENTA, material="Neon", can_collide=False, transparency=0.25)
     )
-    kids.append(light_part("MarqueeWash", (0.0, 28.5, 72.0), CYAN, brightness=3.5, range_=55.0, size=(1.0, 1.0, 1.0)))
+    kids.append(light_part("MarqueeWash", (0.0, 26.0, 74.0), CYAN, brightness=3.5, range_=55.0))
 
     # Diamond / crown rooftop silhouette (original geometry, not Rockstar IP)
     kids.append(
@@ -351,103 +381,90 @@ def build_exterior() -> list:
 
 def build_plaza() -> list:
     kids: list = []
+    fx, fz = FOUNTAIN_POS
 
-    # Ground (collidable) - south of envelope
+    # Hard plaza pad under porte-cochere / approach (sits above world grass)
     kids.append(
         part(
             "PlazaFloor",
-            (160.0, 1.0, 52.0),
-            (0.0, 0.0, 92.0),
+            (120.0, 1.0, 58.0),
+            (0.0, 0.0, 95.0),
             ASPHALT,
             material="Asphalt",
             can_collide=True,
         )
     )
-    # Stone apron near doors
     kids.append(
         part(
             "PlazaApron",
-            (80.0, 0.14, 16.0),
+            (56.0, 0.14, 18.0),
             (0.0, 0.58, 74.0),
             STONE,
             material="Slate",
             can_collide=False,
         )
     )
-    # Red carpet approach in two segments around the fountain medallion
-    # (height ladder: above apron / plaza stone).
-    for seg, z, depth in (("N", 78.0, 20.0), ("S", 108.0, 16.0)):
-        kids.append(
-            part(
-                f"PlazaCarpet_{seg}",
-                (12.0, 0.14, depth),
-                (0.0, 0.66, z),
-                RED_CARPET,
-                material="Fabric",
-                can_collide=False,
-            )
-        )
-        kids.append(
-            part(
-                f"PlazaCarpetGoldL_{seg}",
-                (0.35, 0.08, depth),
-                (-6.2, 0.74, z),
-                GOLD,
-                material="Metal",
-                can_collide=False,
-            )
-        )
-        kids.append(
-            part(
-                f"PlazaCarpetGoldR_{seg}",
-                (0.35, 0.08, depth),
-                (6.2, 0.74, z),
-                GOLD,
-                material="Metal",
-                can_collide=False,
-            )
-        )
-    # Side bypass carpets around fountain (queue split energy)
-    for side, x in (("L", -10.0), ("R", 10.0)):
-        kids.append(
-            part(
-                f"PlazaCarpetBypass_{side}",
-                (6.0, 0.14, 14.0),
-                (x, 0.66, 95.0),
-                RED_CARPET,
-                material="Fabric",
-                can_collide=False,
-            )
-        )
 
-    # Valet drive loop suggestion (curb ring)
-    for i in range(16):
-        ang = (i / 16.0) * math.tau
-        rx, rz = 38.0, 22.0
-        x = rx * math.cos(ang)
-        z = 95.0 + rz * math.sin(ang)
-        kids.append(
-            part(
-                f"ValetCurb_{i}",
-                (5.5, 0.55, 1.4),
-                (x, 0.55, z),
-                GOLD_DIM,
-                material="Concrete",
-                can_collide=True,
-                orientation=(0.0, -math.degrees(ang), 0.0),
-            )
-        )
+    # Continuous red carpet from spawn to doors (clear center walk)
+    carpet_z0, carpet_z1 = 67.0, 118.0
+    carpet_depth = carpet_z1 - carpet_z0
+    carpet_cz = (carpet_z0 + carpet_z1) * 0.5
     kids.append(
-        part("ValetPad", (18.0, 0.12, 10.0), (0.0, 0.52, 108.0), [0.18, 0.18, 0.2], material="Asphalt", can_collide=False)
+        part(
+            "PlazaCarpet",
+            (CARPET_HALF * 2, 0.14, carpet_depth),
+            (0.0, 0.66, carpet_cz),
+            RED_CARPET,
+            material="Fabric",
+            can_collide=False,
+        )
     )
     kids.append(
-        part("ValetSignPost", (0.5, 4.0, 0.5), (-22.0, 2.2, 108.0), GOLD, material="Metal", can_collide=False)
+        part(
+            "PlazaCarpetGoldL",
+            (0.3, 0.08, carpet_depth),
+            (-CARPET_HALF - 0.05, 0.74, carpet_cz),
+            GOLD,
+            material="Metal",
+            can_collide=False,
+        )
+    )
+    kids.append(
+        part(
+            "PlazaCarpetGoldR",
+            (0.3, 0.08, carpet_depth),
+            (CARPET_HALF + 0.05, 0.74, carpet_cz),
+            GOLD,
+            material="Metal",
+            can_collide=False,
+        )
+    )
+
+    # Side-only velvet ropes (connect posts along Z - never across the walk)
+    queue_zs = [68.0, 76.0, 84.0, 92.0, 100.0, 108.0, 116.0]
+    for i, z in enumerate(queue_zs):
+        kids.extend(stanchion_pair(f"QueueStanchion_L_{i}", -STANCHION_X, z))
+        kids.extend(stanchion_pair(f"QueueStanchion_R_{i}", STANCHION_X, z))
+        if i > 0:
+            kids.append(side_rope(f"QueueRope_L_{i}", -STANCHION_X, queue_zs[i - 1], z))
+            kids.append(side_rope(f"QueueRope_R_{i}", STANCHION_X, queue_zs[i - 1], z))
+
+    # Valet drop-off pad south of fountain (simple curb, not a noisy ring)
+    kids.append(
+        part("ValetPad", (28.0, 0.12, 14.0), (0.0, 0.52, 118.0), [0.16, 0.16, 0.18], material="Asphalt", can_collide=False)
+    )
+    kids.append(part("ValetCurbN", (30.0, 0.45, 0.7), (0.0, 0.45, 125.0), GOLD_DIM, material="Concrete", can_collide=True))
+    kids.append(part("ValetCurbS", (30.0, 0.45, 0.7), (0.0, 0.45, 111.0), GOLD_DIM, material="Concrete", can_collide=True))
+    kids.append(part("ValetCurbL", (0.7, 0.45, 14.0), (-15.0, 0.45, 118.0), GOLD_DIM, material="Concrete", can_collide=True))
+    kids.append(part("ValetCurbR", (0.7, 0.45, 14.0), (15.0, 0.45, 118.0), GOLD_DIM, material="Concrete", can_collide=True))
+    kids.append(
+        part("ValetSignPost", (0.5, 4.0, 0.5), (-18.0, 2.2, 118.0), GOLD, material="Metal", can_collide=False)
     )
     kids.append(
         part(
             "ValetSign",
             (3.5, 1.4, 0.3),
-            (-22.0, 4.4, 108.0),
+            (-18.0, 4.4, 118.0),
             MARBLE,
             material="Slate",
             can_collide=False,
@@ -458,7 +475,7 @@ def build_plaza() -> list:
         part(
             "ValetSignNeon",
             (3.7, 1.6, 0.15),
-            (-22.0, 4.4, 108.25),
+            (-18.0, 4.4, 118.25),
             CYAN,
             material="Neon",
             can_collide=False,
@@ -467,91 +484,185 @@ def build_plaza() -> list:
         )
     )
 
-    # Fountain / art feature
+    # Grand plaza fountain (east of carpet - always visible from approach)
     kids.append(
-        part("FountainBase", (14.0, 1.2, 14.0), (0.0, 0.9, 95.0), STONE, material="Slate", can_collide=True, shape="Cylinder")
+        part(
+            "FountainPlaza",
+            (18.0, 0.6, 18.0),
+            (fx, 0.55, fz),
+            STONE,
+            material="Slate",
+            can_collide=True,
+            shape="Cylinder",
+        )
     )
     kids.append(
-        part("FountainRim", (15.2, 0.45, 15.2), (0.0, 1.55, 95.0), GOLD, material="Metal", can_collide=False, shape="Cylinder")
+        part(
+            "FountainBase",
+            (14.0, 1.4, 14.0),
+            (fx, 1.1, fz),
+            MARBLE,
+            material="Marble",
+            can_collide=True,
+            shape="Cylinder",
+        )
+    )
+    kids.append(
+        part(
+            "FountainRim",
+            (15.5, 0.5, 15.5),
+            (fx, 1.85, fz),
+            GOLD,
+            material="Metal",
+            can_collide=False,
+            shape="Cylinder",
+        )
     )
     kids.append(
         part(
             "FountainWater",
-            (12.0, 0.7, 12.0),
-            (0.0, 1.35, 95.0),
+            (12.5, 0.85, 12.5),
+            (fx, 1.55, fz),
             WATER,
             material="Glass",
             can_collide=False,
             shape="Cylinder",
-            transparency=0.35,
+            transparency=0.3,
         )
     )
     kids.append(
-        part("FountainSpire", (1.8, 5.5, 1.8), (0.0, 4.2, 95.0), MARBLE, material="Slate", can_collide=False, shape="Cylinder")
+        part(
+            "FountainTier",
+            (7.0, 1.0, 7.0),
+            (fx, 2.6, fz),
+            MARBLE,
+            material="Marble",
+            can_collide=False,
+            shape="Cylinder",
+        )
     )
     kids.append(
-        part("FountainOrb", (2.8, 2.8, 2.8), (0.0, 7.4, 95.0), CYAN, material="Neon", can_collide=False, shape="Ball", transparency=0.15)
+        part(
+            "FountainSpire",
+            (1.6, 6.0, 1.6),
+            (fx, 5.5, fz),
+            GOLD,
+            material="Metal",
+            can_collide=False,
+            shape="Cylinder",
+        )
     )
-    kids.append(light_part("FountainLight", (0.0, 5.0, 95.0), CYAN, brightness=3.0, range_=35.0))
+    kids.append(
+        part(
+            "FountainOrb",
+            (3.2, 3.2, 3.2),
+            (fx, 9.0, fz),
+            CYAN,
+            material="Neon",
+            can_collide=False,
+            shape="Ball",
+            transparency=0.12,
+        )
+    )
+    kids.append(light_part("FountainLight", (fx, 6.0, fz), CYAN, brightness=3.2, range_=40.0))
+    # Matching west planter island so the approach stays balanced
+    wx = -fx
+    kids.append(
+        part("WestIsland", (14.0, 0.55, 14.0), (wx, 0.5, fz), STONE, material="Slate", can_collide=True, shape="Cylinder")
+    )
+    kids.append(
+        part("WestPlanter", (8.0, 1.8, 8.0), (wx, 1.2, fz), STONE, material="Concrete", can_collide=True, shape="Cylinder")
+    )
+    kids.append(
+        part("WestPlant", (5.0, 4.5, 5.0), (wx, 4.2, fz), GREEN_PLANT, material="Grass", can_collide=False, shape="Cylinder")
+    )
+    kids.append(
+        part("WestPlantTop", (6.5, 3.0, 6.5), (wx, 6.8, fz), [0.12, 0.48, 0.22], material="Grass", can_collide=False, shape="Ball")
+    )
+    kids.append(light_part("WestIslandLight", (wx, 3.0, fz), WARM, brightness=1.8, range_=22.0))
 
-    # Lit planters
-    planter_spots = [
-        (-28.0, 78.0),
-        (28.0, 78.0),
-        (-28.0, 102.0),
-        (28.0, 102.0),
-        (-45.0, 90.0),
-        (45.0, 90.0),
-    ]
+    # Lit planters flanking canopy
+    planter_spots = [(-22.0, 78.0), (22.0, 78.0), (-22.0, 105.0), (22.0, 105.0)]
     for i, (px, pz) in enumerate(planter_spots):
+        kids.append(part(f"Planter_{i}", (4.2, 1.5, 4.2), (px, 1.0, pz), STONE, material="Concrete", can_collide=True))
+        kids.append(part(f"PlanterGold_{i}", (4.5, 0.22, 4.5), (px, 1.8, pz), GOLD, material="Metal", can_collide=False))
         kids.append(
-            part(f"Planter_{i}", (4.5, 1.6, 4.5), (px, 1.0, pz), STONE, material="Concrete", can_collide=True)
+            part(f"Plant_{i}", (2.0, 3.0, 2.0), (px, 3.4, pz), GREEN_PLANT, material="Grass", can_collide=False, shape="Cylinder")
         )
-        kids.append(
-            part(f"PlanterGold_{i}", (4.8, 0.25, 4.8), (px, 1.85, pz), GOLD, material="Metal", can_collide=False)
-        )
-        kids.append(
-            part(f"Plant_{i}", (2.2, 3.2, 2.2), (px, 3.5, pz), GREEN_PLANT, material="Grass", can_collide=False, shape="Cylinder")
-        )
-        kids.append(
-            part(f"PlantTop_{i}", (3.2, 1.6, 3.2), (px, 5.2, pz), [0.1, 0.5, 0.25], material="Grass", can_collide=False, shape="Ball")
-        )
-        kids.append(light_part(f"PlanterLight_{i}", (px, 2.2, pz), WARM, brightness=1.6, range_=18.0, size=(0.3, 0.3, 0.3)))
-
-    # Rope stanchions along carpet edges (queue energy, decorative only).
-    # Skip fountain band so ropes do not cut the medallion.
-    queue_zs = list(range(70, 88, 5)) + list(range(104, 116, 5))
-    for i, z in enumerate(queue_zs):
-        for side, x in (("L", -6.5), ("R", 6.5)):
-            kids.append(
-                part(f"QueueStanchion_{side}_{i}", (0.4, 2.2, 0.4), (x, 1.3, float(z)), GOLD, material="Metal", can_collide=False)
-            )
-            kids.append(
-                part(
-                    f"QueueTip_{side}_{i}",
-                    (0.55, 0.25, 0.55),
-                    (x, 2.5, float(z)),
-                    GOLD,
-                    material="Metal",
-                    can_collide=False,
-                    shape="Cylinder",
-                )
-            )
         kids.append(
             part(
-                f"QueueRope_{i}",
-                (12.6, 0.12, 0.12),
-                (0.0, 2.15, float(z)),
-                RED,
-                material="Fabric",
+                f"PlantTop_{i}",
+                (3.0, 1.5, 3.0),
+                (px, 5.0, pz),
+                [0.1, 0.5, 0.25],
+                material="Grass",
                 can_collide=False,
+                shape="Ball",
             )
         )
+        kids.append(light_part(f"PlanterLight_{i}", (px, 2.4, pz), WARM, brightness=1.5, range_=16.0))
 
-    # Plaza fill wash
-    kids.append(light_part("PlazaWash_Center", (0.0, 12.0, 95.0), WARM, brightness=2.2, range_=50.0, size=(1.2, 1.2, 1.2)))
-    kids.append(light_part("PlazaWash_S", (0.0, 8.0, 112.0), PURPLE, brightness=1.8, range_=35.0))
+    kids.append(light_part("PlazaWash_Center", (0.0, 12.0, 95.0), WARM, brightness=2.0, range_=50.0))
+    kids.append(light_part("PlazaWash_S", (0.0, 8.0, 118.0), PURPLE, brightness=1.6, range_=35.0))
 
+    return kids
+
+
+def build_ground() -> list:
+    """Walkable grass apron around the whole casino footprint."""
+    kids: list = []
+    # Large collide grass under/around everything. Building MainFloor + PlazaFloor sit on top.
+    kids.append(
+        part(
+            "WorldGrass",
+            (420.0, 1.0, 420.0),
+            (0.0, -0.55, -20.0),
+            GRASS,
+            material="Grass",
+            can_collide=True,
+        )
+    )
+    # Soft path ring outside plaza asphalt so players can circle the building
+    kids.append(
+        part(
+            "PerimeterPath_S",
+            (220.0, 0.2, 18.0),
+            (0.0, 0.05, 130.0),
+            [0.35, 0.32, 0.28],
+            material="Ground",
+            can_collide=False,
+        )
+    )
+    kids.append(
+        part(
+            "PerimeterPath_N",
+            (220.0, 0.2, 18.0),
+            (0.0, 0.05, -155.0),
+            [0.35, 0.32, 0.28],
+            material="Ground",
+            can_collide=False,
+        )
+    )
+    kids.append(
+        part(
+            "PerimeterPath_W",
+            (18.0, 0.2, 280.0),
+            (-115.0, 0.05, -20.0),
+            [0.35, 0.32, 0.28],
+            material="Ground",
+            can_collide=False,
+        )
+    )
+    kids.append(
+        part(
+            "PerimeterPath_E",
+            (18.0, 0.2, 280.0),
+            (115.0, 0.05, -20.0),
+            [0.35, 0.32, 0.28],
+            material="Ground",
+            can_collide=False,
+        )
+    )
     return kids
 
 
@@ -592,7 +703,6 @@ def build_vestibule() -> list:
     kids.append(
         part("DoorGold_R", (5.7, 14.3, 0.2), (8.5, 7.2, 65.0), GOLD, material="Metal", can_collide=False, orientation=(0.0, -55.0, 0.0))
     )
-    # Glass panels on doors
     kids.append(
         part(
             "DoorGlass_L",
@@ -618,68 +728,90 @@ def build_vestibule() -> list:
         )
     )
 
-    # Door threshold + gold sill
     kids.append(part("Threshold", (22.0, 0.2, 2.5), (0.0, 0.62, 65.5), STONE, material="Slate", can_collide=False))
     kids.append(part("ThresholdGold", (22.5, 0.08, 0.4), (0.0, 0.74, 64.4), GOLD, material="Metal", can_collide=False))
 
-    # Reception desk (east of aisle - keeps center sightline clear)
-    kids.append(
-        part("ReceptionDesk", (10.0, 3.2, 3.2), (18.0, 1.8, 56.0), MARBLE, material="Slate", can_collide=True)
-    )
-    kids.append(
-        part("ReceptionTop", (10.4, 0.25, 3.5), (18.0, 3.5, 56.0), GOLD, material="Metal", can_collide=False)
-    )
-    kids.append(
-        part("ReceptionFront", (10.0, 2.4, 0.25), (18.0, 2.0, 57.7), MARBLE_VEIN, material="Marble", can_collide=False)
-    )
-    kids.append(
-        part("ReceptionNeon", (9.5, 0.2, 0.15), (18.0, 3.2, 57.85), CYAN, material="Neon", can_collide=False)
-    )
-    kids.append(light_part("ReceptionLight", (18.0, 5.5, 56.0), WARM, brightness=2.0, range_=22.0))
-
-    # VIP rope cue west of aisle (mirrors reception)
-    for i, z in enumerate((58.0, 54.0, 50.0)):
-        kids.append(part(f"VipStanchion_{i}", (0.45, 2.3, 0.45), (-10.0, 1.35, z), GOLD, material="Metal", can_collide=False))
-        kids.append(
-            part(f"VipTip_{i}", (0.6, 0.28, 0.6), (-10.0, 2.6, z), GOLD, material="Metal", can_collide=False, shape="Cylinder")
-        )
-    kids.append(part("VipRope_0", (0.12, 0.12, 4.2), (-10.0, 2.2, 56.0), RED, material="Fabric", can_collide=False))
-    kids.append(part("VipRope_1", (0.12, 0.12, 4.2), (-10.0, 2.2, 52.0), RED, material="Fabric", can_collide=False))
+    # Reception desk - just inside doors, east of carpet, tall + labeled
+    rx, rz = 15.0, 60.0
+    kids.append(part("ReceptionDesk", (9.0, 3.6, 3.6), (rx, 2.0, rz), MARBLE, material="Slate", can_collide=True))
+    kids.append(part("ReceptionTop", (9.5, 0.3, 4.0), (rx, 3.9, rz), GOLD, material="Metal", can_collide=False))
+    kids.append(part("ReceptionFront", (9.0, 2.8, 0.3), (rx, 2.2, rz + 1.95), MARBLE_VEIN, material="Marble", can_collide=False))
+    kids.append(part("ReceptionNeon", (8.5, 0.25, 0.18), (rx, 3.55, rz + 2.1), CYAN, material="Neon", can_collide=False))
+    kids.append(part("ReceptionBack", (0.35, 5.5, 3.6), (rx + 4.7, 4.0, rz), MARBLE, material="Slate", can_collide=False))
+    # Billboard-facing sign toward the aisle (Front = +X toward carpet after yaw -90)
     kids.append(
         part(
-            "VipSign",
-            (3.2, 1.2, 0.25),
-            (-10.0, 3.4, 54.0),
+            "ReceptionSign",
+            (4.5, 1.4, 0.3),
+            (rx - 0.2, 5.2, rz + 2.3),
             MARBLE,
             material="Slate",
             can_collide=False,
-            orientation=(0.0, -90.0, 0.0),
+            orientation=(0.0, 180.0, 0.0),
+        )
+    )
+    kids.append(
+        part(
+            "ReceptionSignNeon",
+            (4.8, 1.65, 0.15),
+            (rx - 0.2, 5.2, rz + 2.45),
+            CYAN,
+            material="Neon",
+            can_collide=False,
+            transparency=0.2,
+            orientation=(0.0, 180.0, 0.0),
+        )
+    )
+    kids.append(light_part("ReceptionLight", (rx, 6.0, rz), WARM, brightness=2.4, range_=24.0))
+
+    # VIP lounge cue - west of carpet, opposite reception (clear podium + rope pen)
+    vx, vz = -15.0, 60.0
+    kids.append(part("VipPodium", (8.0, 0.45, 10.0), (vx, 0.75, vz), MARBLE, material="Slate", can_collide=True))
+    kids.append(part("VipPodiumGold", (8.4, 0.12, 10.4), (vx, 1.0, vz), GOLD, material="Metal", can_collide=False))
+    vip_posts = [(-18.5, 64.5), (-11.5, 64.5), (-18.5, 55.5), (-11.5, 55.5)]
+    for i, (px, pz) in enumerate(vip_posts):
+        kids.extend(stanchion_pair(f"VipStanchion_{i}", px, pz))
+    # Ropes around the VIP pen (rectangle)
+    kids.append(part("VipRope_N", (7.0, 0.1, 0.1), (vx, 2.25, 64.5), RED, material="Fabric", can_collide=False))
+    kids.append(part("VipRope_S", (7.0, 0.1, 0.1), (vx, 2.25, 55.5), RED, material="Fabric", can_collide=False))
+    kids.append(part("VipRope_W", (0.1, 0.1, 9.0), (-18.5, 2.25, vz), RED, material="Fabric", can_collide=False))
+    kids.append(part("VipRope_E", (0.1, 0.1, 9.0), (-11.5, 2.25, vz), RED, material="Fabric", can_collide=False))
+    kids.append(
+        part(
+            "VipSign",
+            (4.0, 1.5, 0.3),
+            (vx, 4.0, 65.0),
+            MARBLE,
+            material="Slate",
+            can_collide=False,
+            orientation=(0.0, 180.0, 0.0),
         )
     )
     kids.append(
         part(
             "VipSignNeon",
-            (3.4, 1.4, 0.12),
-            (-9.8, 3.4, 54.0),
+            (4.3, 1.75, 0.15),
+            (vx, 4.0, 65.2),
             MAGENTA,
             material="Neon",
             can_collide=False,
-            transparency=0.2,
-            orientation=(0.0, -90.0, 0.0),
+            transparency=0.15,
+            orientation=(0.0, 180.0, 0.0),
         )
     )
+    kids.append(light_part("VipLight", (vx, 5.0, vz), MAGENTA, brightness=2.0, range_=20.0))
 
-    # Foyer chandelier accent ring (extra presence near entry)
+    # Foyer chandelier accent
     kids.append(
         part("FoyerRing", (8.0, 0.4, 8.0), (0.0, 18.5, 58.0), GOLD, material="Metal", can_collide=False, shape="Cylinder")
     )
     kids.append(
         part("FoyerCrystal", (3.5, 2.5, 3.5), (0.0, 17.2, 58.0), WHITE, material="Glass", can_collide=False, transparency=0.25)
     )
-    kids.append(light_part("FoyerChandelierLight", (0.0, 17.0, 58.0), WARM, brightness=3.2, range_=40.0, size=(1.0, 1.0, 1.0)))
+    kids.append(light_part("FoyerChandelierLight", (0.0, 17.0, 58.0), WARM, brightness=3.2, range_=40.0))
 
     # Mirrored accent panels flanking entry inside
-    for side, x in (("L", -20.0), ("R", 20.0)):
+    for side, x in (("L", -22.0), ("R", 22.0)):
         kids.append(
             part(
                 f"FoyerMirror_{side}",
@@ -693,7 +825,14 @@ def build_vestibule() -> list:
             )
         )
         kids.append(
-            part(f"FoyerMirrorFrame_{side}", (0.35, 10.5, 8.5), (x + (-0.15 if side == "L" else 0.15), 7.0, 58.0), GOLD, material="Metal", can_collide=False)
+            part(
+                f"FoyerMirrorFrame_{side}",
+                (0.35, 10.5, 8.5),
+                (x + (-0.15 if side == "L" else 0.15), 7.0, 58.0),
+                GOLD,
+                material="Metal",
+                can_collide=False,
+            )
         )
 
     return kids
@@ -992,14 +1131,16 @@ def update_spawn(lobby: dict) -> None:
 
 
 def upgrade_entry_columns(walls: dict) -> None:
-    """Enrich existing entry columns with gold capitals (mutate in place)."""
+    """Enrich existing entry columns; drop superseded Entry_Marquee strip."""
+    kept = []
     for child in walls.get("children") or []:
         name = child.get("name") or ""
         props = child.get("properties") or {}
+        if name == "Entry_Marquee":
+            continue  # replaced by Structure.Exterior marquee
         if name in ("Entry_Column_L", "Entry_Column_R"):
             props["Material"] = "Slate"
             props["Color"] = MARBLE
-            # Taller presence
             props["Size"] = [3.8, 28.0, 3.8]
             pos = props.get("Position") or [0, 13, 64.5]
             props["Position"] = [pos[0], 14.0, 64.2]
@@ -1008,28 +1149,51 @@ def upgrade_entry_columns(walls: dict) -> None:
             pos = props.get("Position") or [0, 13, 66.3]
             props["Position"] = [pos[0], 14.0, 66.5]
             props["Color"] = GOLD
-        if name == "Entry_Marquee":
-            # Superseded by Exterior marquee; hide old thin strip by shrinking / pushing
-            props["Transparency"] = 1.0
-            props["CanCollide"] = False
+        kept.append(child)
+    walls["children"] = kept
 
 
 def upgrade_existing_stanchions(stanchions: dict) -> None:
-    """Repurpose interior Structure.Stanchions as VIP foyer set (clear of plaza queue)."""
+    """Clear legacy Structure.Stanchions - vestibule/plaza own rope props now."""
     clear_folder(stanchions)
-    # Kept empty - vestibule owns VIP rope now to avoid duplicate props.
+
+
+def scrub_light_hosts(node: dict) -> None:
+    """Force pure PointLight/SpotLight host parts fully invisible (no floating cubes).
+
+    Skips parts that also parent geometry (e.g. BrandSign -> SignFrame + SignLight).
+    """
+    kids = node.get("children") or []
+    light_kids = [c for c in kids if c.get("className") in ("PointLight", "SpotLight")]
+    geo_kids = [c for c in kids if c.get("className") not in ("PointLight", "SpotLight", None) or c.get("className") == "Part"]
+    # Only lights as children (ignore empty) -> host part
+    only_lights = bool(light_kids) and all(c.get("className") in ("PointLight", "SpotLight") for c in kids)
+    props = node.get("properties")
+    if only_lights and props is not None and node.get("className") == "Part":
+        props["Transparency"] = 1.0
+        props["CanCollide"] = False
+        props["Material"] = "SmoothPlastic"
+        props["Size"] = [0.2, 0.2, 0.2]
+    for child in kids:
+        scrub_light_hosts(child)
 
 
 def add_fill_lights(lobby: dict) -> None:
     fill = find(lobby, "FillLights")
     if not fill:
         return
-    # Remove prior polish washes if re-run
     kids = fill.setdefault("children", [])
-    fill["children"] = [c for c in kids if not str(c.get("name") or "").startswith("Wash_Plaza") and not str(c.get("name") or "").startswith("Wash_Facade") and not str(c.get("name") or "").startswith("Wash_Foyer")]
-    fill["children"].append(light_part("Wash_Plaza", (0.0, 10.0, 95.0), WARM, brightness=2.0, range_=55.0, size=(2.0, 2.0, 2.0)))
-    fill["children"].append(light_part("Wash_Facade", (0.0, 22.0, 78.0), CYAN, brightness=2.5, range_=50.0, size=(2.0, 2.0, 2.0)))
-    fill["children"].append(light_part("Wash_Foyer", (0.0, 12.0, 58.0), WARM, brightness=2.2, range_=35.0, size=(1.5, 1.5, 1.5)))
+    fill["children"] = [
+        c
+        for c in kids
+        if not str(c.get("name") or "").startswith("Wash_Plaza")
+        and not str(c.get("name") or "").startswith("Wash_Facade")
+        and not str(c.get("name") or "").startswith("Wash_Foyer")
+    ]
+    fill["children"].append(light_part("Wash_Plaza", (0.0, 10.0, 95.0), WARM, brightness=2.0, range_=55.0))
+    fill["children"].append(light_part("Wash_Facade", (0.0, 22.0, 78.0), CYAN, brightness=2.5, range_=50.0))
+    fill["children"].append(light_part("Wash_Foyer", (0.0, 12.0, 58.0), WARM, brightness=2.2, range_=35.0))
+    scrub_light_hosts(fill)
 
 
 def main() -> None:
@@ -1054,6 +1218,10 @@ def main() -> None:
     plaza = ensure_folder(atmosphere, "Plaza")
     clear_folder(plaza)
     plaza["children"] = build_plaza()
+
+    ground = ensure_folder(atmosphere, "Ground")
+    clear_folder(ground)
+    ground["children"] = build_ground()
 
     relocate_brand_sign(lobby)
     update_spawn(lobby)
@@ -1088,11 +1256,13 @@ def main() -> None:
     bar_glow["children"] = build_bar_glow()
 
     add_fill_lights(lobby)
+    scrub_light_hosts(data)
 
     LOBBY.write_text(json.dumps(data, indent=2) + "\n")
     print(f"Wrote {LOBBY}")
     print(f"  Exterior parts: {len(exterior['children'])}")
     print(f"  Plaza parts: {len(plaza['children'])}")
+    print(f"  Ground parts: {len(ground['children'])}")
     print(f"  Vestibule parts: {len(vestibule['children'])}")
     print(f"  LuxuryTrim parts: {len(luxury['children'])}")
     print(f"  Spawn -> {SPAWN_POS}")

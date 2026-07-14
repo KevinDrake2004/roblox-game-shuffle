@@ -84,19 +84,20 @@ python3 scripts/rebuild_casino_polish.py
                          +Z (south)
 ```
 
-Envelope ≈ **184 × 206** studs (outer walls at X±92, Z +66 / −140). Plaza extends to roughly **Z +118**. Pit roof ~22 studs; game-room roof ~54 studs (Plinko board height). Marquee / crown read above the south parapet (~Y 28–48).
+Envelope ≈ **184 × 206** studs (outer walls at X±92, Z +66 / −140). Plaza extends to roughly **Z +125**. World grass apron ≈ **420 × 420** under/around the resort (`Atmosphere.Ground.WorldGrass`) so players can walk the perimeter. Pit roof ~22 studs; game-room roof ~54 studs (Plinko board height). Marquee / crown read above the south parapet (~Y 28–48).
 
 ## Exterior (Phase A)
 
-`Structure.Exterior` + `Atmosphere.Plaza`:
+`Structure.Exterior` + `Atmosphere.Plaza` + `Atmosphere.Ground`:
 
 - **Porte-cochere** - canopy deck, gold edge, cyan underside neon, four marble columns with gold caps
 - **Facade** - south parapet + gold cornice, glass curtain bands with warm window glow, entry gold molding, side pilasters + window bands
-- **Marquee** - board + cyan/magenta neon; `Lobby.BrandSign` relocated to `(0, 28.5, 71.2)` facing south (SurfaceGui still dressed by `LobbyService`)
+- **Marquee** - board + cyan/magenta neon; `Lobby.BrandSign` at `(0, 28.5, 71.2)` facing south (SurfaceGui dressed by `LobbyService`)
 - **Crown** - diamond + spire silhouette on the south roof line (original geometry; not third-party IP)
-- **Plaza** - asphalt ground, stone apron, split red carpet around fountain, valet curb oval, lit planters, queue stanchions/ropes, facade flood SpotLights
+- **Plaza** - asphalt pad, continuous center red carpet with **side-only** velvet ropes (never across the walk), valet curb pad, east fountain + west planter island, lit planters, facade flood SpotLights
+- **Ground** - large grass collide plane + perimeter dirt paths for walking around the building
 
-Night read: facade floods, marquee wash, window bands, planter uplights, fountain orb.
+Night wash lights use fully invisible host parts (`Transparency = 1`) so no floating neon cubes appear near the marquee.
 
 ## Entrance sequence (Phase B)
 
@@ -104,9 +105,10 @@ Night read: facade floods, marquee wash, window bands, planter uplights, fountai
 
 - Swung-open double doors with gold frames + glass
 - Stone threshold into the pit
-- Reception desk east of the aisle (center sightline kept clear)
-- VIP rope + sign west of the aisle
+- **Reception desk** just inside on the east (`ReceptionSign` SurfaceGui)
+- **VIP podium + rope pen** on the west (`VipSign` SurfaceGui)
 - Foyer chandelier ring + mirrored side panels
+- Center carpet sightline kept clear
 
 ## Interior luxury (Phase C)
 
@@ -181,11 +183,13 @@ Re-running chair placement is safe after clearing `Atmosphere.Chairs`.
 
 ## Player flow (target)
 
-1. Spawn at `Config.LOBBY.SpawnPosition` `(0, 3, 100)` on the plaza, facing the facade.
-2. Walk the red carpet under the porte-cochere through the grand doors into the foyer.
+1. Spawn at `Config.LOBBY.SpawnPosition` `(0, 3, 112)` on the plaza, facing the facade.
+2. Walk the red carpet under the porte-cochere through the grand doors into the foyer (reception east, VIP west).
 3. Follow the red carpet through the table pit into the game hall.
 4. Walk into a game room - session starts (HUD / focused camera). **No teleport.**
 5. Walk out of the room floor bounds - session ends. **No leave button required.**
+
+Players can also leave the asphalt plaza onto the grass apron and walk around the building.
 
 Doorway models under `Lobby.Portals` keep visual gates / labels (`Portal_<GameId>` + `GameId` attribute). Enter / leave **ProximityPrompts** are removed; volume entry is driven by `ArenaZones` against each arena `Floor` part.
 
@@ -206,8 +210,10 @@ Rocket home: `Config.ROCKET_RUN.RocketHomePosition` `(0, 7, -118)`.
 ## Manual verify checklist
 
 - [ ] Approach from south / spawn on plaza - facade reads as a hotel casino at night (marquee, crown, canopy, window glow)
-- [ ] Walk plaza carpet → doors → foyer → pit → game hall without gaps or blocked center aisle
-- [ ] Fountain sits in valet loop medallion; carpet splits around it
+- [ ] No floating neon cubes near the marquee / wash lights
+- [ ] Continuous carpet with side ropes only; walk doors → foyer → pit → game hall
+- [ ] Reception (east) and VIP podium (west) readable just inside the doors
+- [ ] Fountain visible east of the approach; grass walkable around the building
 - [ ] Brand sign shows game name on the exterior marquee
 - [ ] Rocket Run / Plinko / Mines still join, wager, settle, and leave via zone walk
 - [ ] No new remotes or currency touches from atmosphere props
