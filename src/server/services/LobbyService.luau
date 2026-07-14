@@ -128,7 +128,7 @@ local function ensurePortalLabels()
 		gui.Name = "SignGui"
 		gui.Face = Enum.NormalId.Front
 		gui.SizingMode = Enum.SurfaceGuiSizingMode.FixedSize
-		gui.CanvasSize = Vector2.new(1600, 500)
+		gui.CanvasSize = Vector2.new(1600, 520)
 		gui.Parent = sign
 
 		local words = string.split(string.upper(Config.GAME_NAME), " ")
@@ -141,18 +141,18 @@ local function ensurePortalLabels()
 			local title = Instance.new("TextLabel")
 			title.BackgroundTransparency = 1
 			title.BorderSizePixel = 0
-			title.Position = UDim2.fromScale(0.02, (index - 1) / count)
-			title.Size = UDim2.fromScale(0.96, 1 / count)
+			title.Position = UDim2.fromScale(0.01, (index - 1) / count)
+			title.Size = UDim2.fromScale(0.98, 1 / count)
 			title.Font = Enum.Font.GothamBlack
 			title.TextScaled = false
-			title.TextSize = if count == 1 then 280 else 220
+			title.TextSize = if count == 1 then 320 else 280
 			title.TextColor3 = Config.COLORS.Text
 			title.Text = word
 			title.Parent = gui
 
 			local stroke = Instance.new("UIStroke")
 			stroke.Color = Config.COLORS.NeonCyan
-			stroke.Thickness = 6
+			stroke.Thickness = 7
 			stroke.Parent = title
 		end
 	end
